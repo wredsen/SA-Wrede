@@ -1,0 +1,4 @@
+# ignore everything from
+
+*.ipynb_checkpoints
+*.drawio.bkp
