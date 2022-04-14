@@ -1,0 +1,12 @@
+# ignore everything from
+
+*.aux
+*.bcf
+*.lof
+*.log
+*.lot
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.toc
