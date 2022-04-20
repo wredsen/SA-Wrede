@@ -1,0 +1,36 @@
+Gliederung SA:
+
+1 Einleitung
+
+(Präzisierung der Aufgabenstellung?)
+
+2 Systembeschreibung und Modellierungsansatz
+2.1 Reale Systeme
+2.2 Demonstratorsytem
+2.3 Problembeschreibung und Zielsetzung
+2.4 Analytische Modellierung mittels Lagrange-Formalismus
+(2.5 Modellierung mittels Modelica)
+
+3 Analytische Modellbildung
+3.1 Analytisches Modell Einzelkran
+3.1 Analytisches Modell Doppelkran
+3.2 Systemidentifikation
+
+4 Regelungsstrategie
+4.1 Systematische Flachheitsanalyse Einzelkran
+4.2 Systematische Flachheitsanalyse Doppelkran
+4.3 Regelung zur Stabilisierung von Ruhelagen
+4.4 Trajektorienplanung
+4.5 Trajektorienfolgeregelung
+
+5 Simulation in Modelica
+5.1 Modellierung des Einzelkrans in Modelica
+5.2 Modellierung des Doppelkrans in Modelica
+5.3 Vergleich mit analytischem Modell
+5.4 Erprobung Regelstrategie in Modelica
+
+6 Regelung auf Grundlage Maschinellem Lernens
+6.1 Bestärkendes Lernen
+6.2 Optimierung vorhandener Regelung
+
+7 Fazit und Ausblick
