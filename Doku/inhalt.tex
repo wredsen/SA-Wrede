@@ -1,9 +1,66 @@
-\chapter{Erläuterungen zur Klasse ArbeitRST}
-
 % Ab hier arabische Seitenzählung und heading Seitenstil
 \pagestyle{scrheadings}
 \pagenumbering{arabic}
 
+\chapter{Einleitung}
+
+
+\chapter{Systembeschreibung und Modellierungsansatz}
+\section{Reale Systeme}
+
+\section{Demonstratorsytem}
+
+\section{Problembeschreibung und Zielsetzung}
+
+\section{Analytische Modellierung mittels Lagrange-Formalismus}
+
+\section{Generierung und Berechnung von DAE-Systemen}
+Standardform:
+	\begin{align}\label{eq:dae_std}
+		\dot{x} &= f(x, z, u, t) \\
+		0 &= g(x, z, u, t)
+	\end{align}
+mit $x$ Zustand, $z$ algebraischer Variablen (quasi Zustandsgrößen, die in Systemgleichungen nicht differentiell vorkommen), $u$ Systemeingang, $t$ Zeit.
+
+Differenzieller Index: Minimale Anzahl an Differentiation $\frac{d}{dt}$ der algebraischen Gleichungen (AGL) g (Zwangsbedingungen), damit unter Einbeziehung der Differentialgleichung ein explizites Differentialgleichungssystem aus dem DAE-System entsteht. (Vgl. Systementwurf Mechatronischer Systeme S. 139)
+
+Numerische Integration von DAE-Systemen: 
+\begin{itemize}
+\item mechanische Systeme mit starrer Kopplung als Zwangsbedingungen allgemein von Index 3
+\item Lösung über Indexreduktion auf Index 2 -> Integration über implizites Verfahren
+\item Lösung über Indexreduktion auf Index 1 -> Integration über explizites Verfahren + AGL-Löser
+\item Lösung über Indexreduktion auf Index 0 -> Integration über explizites oder implizites Verfahren
+\item Bestimmung der Anfangswerte der Integration aus gegebenen AGL oder Gleichungen, die sich im Laufe der Indexreduktion ergeben
+\end{itemize}
+
+Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL Solvers zur Lösung überbestimmter (mehr Gleichungen als Variablen, wieso?) Systeme (singulärer) impliziter DGL ($https://jmodelica.org/assimulo/DAE_OVER_ODASSL.html$). Zu DASSL: https:$//www.openmodelica.org/doc/OpenModelicaUsersGuide/latest/solving.html$
+
+
+\section{Identifikation linearer Systeme}
+
+\section{Systematische Flachheitsanalyse von MIMO-Systemen}
+
+
+\chapter{Analytische Modellbildung}
+\section{Analytisches Modell Einzelkran}
+
+\section{Analytisches Modell Doppelkran}
+
+\section{Systemidentifikation}
+
+
+\chapter{Regelungsstrategie}
+\section{Anwendung Flachheitsanalyse am Einzelkran}
+
+\section{Anwendung Flachheitsanalyse am Doppelkran}
+
+\section{Regelung zur Stabilisierung von Ruhelagen}
+
+\section{Trajektorienplanung}
+
+\section{Trajektorienfolgeregelung}
+
+\chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
 
 Die Vorlage wurde zuletzt am \today~getestet mit der folgenden Version von \KOMAScript: \KOMAScriptVersion 

@@ -9,8 +9,11 @@ Gliederung SA:
 2.2 Demonstratorsytem
 (2.3 Relevanz aufgrund regelungstechnischer Gesichtspunkte) -> in Einleitung
 2.3 Problembeschreibung und Zielsetzung
-2.4 Analytische Modellierung mittels Lagrange-Formalismus (Kinematische Schleifen, DAE-Systeme)
-(2.5 Modellierung mittels Modelica)
+2.4 Analytische Modellierung mittels Lagrange-Formalismus (Kinematische Schleifen)
+2.5 Generierung und Berechnung von DAE-Systemen
+2.6 Identifikation linearer Systeme
+2.7 Systematische Flachheitsanalyse von MIMO-Systemen allgemein erklären (Kochrezeptebene)
+(2.8 Modellierung mittels Modelica)
 
 3 Analytische Modellbildung
 3.1 Analytisches Modell Einzelkran
@@ -18,7 +21,6 @@ Gliederung SA:
 3.2 Systemidentifikation
 
 4 Regelungsstrategie
-- Systematische Flachheitsanalyse allgemein erklären (Kochrezeptebene)
 4.1 Anwendung Flachheitsanalyse am Einzelkran
 4.2 Anwendung Flachheitsanalyse am Doppelkran
 4.3 Regelung zur Stabilisierung von Ruhelagen
