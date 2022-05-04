@@ -13,6 +13,7 @@
 \section{Problembeschreibung und Zielsetzung}
 
 \section{Analytische Modellierung mittels Lagrange-Formalismus}
+-> dazu in Nextcloud/Präsis Folien zu modeltools, ggf. noch Diss von Knoll
 
 \section{Generierung und Berechnung von DAE-Systemen}
 Standardform:
@@ -28,11 +29,12 @@ Numerische Integration von DAE-Systemen:
 \begin{itemize}
 \item mechanische Systeme mit starrer Kopplung als Zwangsbedingungen allgemein von Index 3
 \item Lösung über Indexreduktion auf Index 2 -> Integration über implizites Verfahren
-\item Lösung über Indexreduktion auf Index 1 -> Integration über explizites Verfahren + AGL-Löser
+\item Lösung über Indexreduktion auf Index 1 -> Integration über explizites Verfahren + AGL-Löser oder implizites Verfahren
 \item Lösung über Indexreduktion auf Index 0 -> Integration über explizites oder implizites Verfahren
 \item Bestimmung der Anfangswerte der Integration aus gegebenen AGL oder Gleichungen, die sich im Laufe der Indexreduktion ergeben
 \end{itemize}
 
+modeltools führt dabei Reduktion von Index 3 System auf Index 1 System durch.
 Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL Solvers zur Lösung überbestimmter (mehr Gleichungen als Variablen, wieso?) Systeme (singulärer) impliziter DGL ($https://jmodelica.org/assimulo/DAE_OVER_ODASSL.html$). Zu DASSL: https:$//www.openmodelica.org/doc/OpenModelicaUsersGuide/latest/solving.html$
 
 
