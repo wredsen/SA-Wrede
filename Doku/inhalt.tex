@@ -18,10 +18,10 @@
 \section{Generierung und Berechnung von DAE-Systemen}
 Standardform:
 	\begin{align}\label{eq:dae_std}
-		\dot{x} &= f(x, z, u, t) \\
-		0 &= g(x, z, u, t)
+		\pmb{\dot{x}} &= \pmb{f}(\pmb{x}, \pmb{z}, \pmb{u}, t) \\
+		\pmb{0} &= \pmb{g}(\pmb{x}, \pmb{z}, \pmb{u}, t)
 	\end{align}
-mit $x$ Zustand, $z$ algebraischer Variablen (quasi Zustandsgrößen, die in Systemgleichungen nicht differentiell vorkommen), $u$ Systemeingang, $t$ Zeit.
+mit $\pmb{x}$ Zustand, $\pmb{z}$ algebraischer Variablen (quasi Zustandsgrößen, die in Systemgleichungen nicht differentiell vorkommen), $\pmb{u}$ Systemeingang, $t$ Zeit.
 
 Differenzieller Index: Minimale Anzahl an Differentiation $\frac{d}{dt}$ der algebraischen Gleichungen (AGL) g (Zwangsbedingungen), damit unter Einbeziehung der Differentialgleichung ein explizites Differentialgleichungssystem aus dem DAE-System entsteht. (Vgl. Systementwurf Mechatronischer Systeme S. 139)
 
@@ -37,11 +37,77 @@ Numerische Integration von DAE-Systemen:
 modeltools führt dabei Reduktion von Index 3 System auf Index 1 System durch.
 Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL Solvers zur Lösung überbestimmter (mehr Gleichungen als Variablen, wieso?) Systeme (singulärer) impliziter DGL ($https://jmodelica.org/assimulo/DAE_OVER_ODASSL.html$). Zu DASSL: https:$//www.openmodelica.org/doc/OpenModelicaUsersGuide/latest/solving.html$
 
+Zum weiterem Verständnis von DAEs: $https://reference.wolfram.com/language/tutorial/NDSolveDAE.html$
 
 \section{Identifikation linearer Systeme}
 
 \section{Systematische Flachheitsanalyse von MIMO-Systemen}
+Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
 
+Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:
+\begin{equation}\label{eq:flatness_implicit_ode}
+	\pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
+\end{equation}
+
+Wobei $\pmb{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zuständen und Systemeingängen entspricht.
+
+Das DAE-System besitzt die Zustandsvariable $\pmb{y}$ mit
+\begin{equation}
+	y
+	=
+	\begin{pmatrix}
+		\pmb{x} \\
+		\hline
+		\pmb{z}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		\pmb{\theta} \\
+		\pmb{\dot{\theta}} \\
+		\hline
+		\pmb{\lambda}
+	\end{pmatrix}
+\end{equation}
+
+Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\tau$ die implizite DGL gebildet:
+\begin{equation}
+	\pmb{0} = \pmb{F(w, \dot{w})} \text{ mit } \pmb{w} 
+	=
+	\begin{pmatrix}
+		\pmb{y} \\
+		\hline
+		\pmb{\tau}
+	\end{pmatrix}
+	= 
+	\begin{pmatrix}
+		\pmb{\theta} \\
+		\pmb{\dot{\theta}} \\
+		\pmb{\lambda} \\
+		\hline
+		\pmb{\tau}
+	\end{pmatrix}
+\end{equation}
+
+Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
+\begin{align}
+	\pmb{0} &= \pmb{M}(\pmb{\theta}) \pmb{\ddot{\theta}} + \pmb{C}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{K}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{G}(\pmb{\theta}) \pmb{\lambda} - \pmb{B}(\pmb{\theta}) \pmb{\tau} \\
+	\pmb{0} &= \pmb{g}(\pmb{\theta}) 
+\end{align}
+
+(für späteres Kapitel der SA!)
+Dieses Doppelkransystem mit den "verallgemeinerten Zuständen"
+\begin{align}
+	\pmb{w}
+	=
+	\begin{pmatrix}
+		p_1 \ p_2 \ p_3 \ q_1 \ q_2 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{q}_1 \ \dot{q}_2 \ \lambda_1 \ \lambda_2 \ \tau_1 \ \tau_2
+	\end{pmatrix}^T
+\end{align}
+
+So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:
+\begin{equation}
+	(\pmb{I_{5 x 5}}, \pmb{0_{5 x 9}}) \pmb{\dot{w}} = (\pmb{0_{5 x 5}}, \pmb{I_{5 x 5}}, \pmb{0_{5 x 4}}) \pmb{w}
+\end{equation}
 
 \chapter{Analytische Modellbildung}
 \section{Analytisches Modell Einzelkran}
