@@ -15,6 +15,23 @@
 \section{Analytische Modellierung mittels Lagrange-Formalismus}
 -> dazu in Nextcloud/Präsis Folien zu modeltools, ggf. noch Diss von Knoll
 
+Verschiedene Stufen zur Modellierung im Repo:
+
+Einzelkran:
+-model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs
+-DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt.
+
+Doppelkran (double crane notebooks, nur LK Aktuierung):
+Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen
+- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten
+- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T
+
+Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):
+Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)
+- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten
+- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt
+- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend
+
 \section{Generierung und Berechnung von DAE-Systemen}
 Standardform:
 	\begin{align}\label{eq:dae_std}
@@ -23,7 +40,7 @@ Standardform:
 	\end{align}
 mit $\pmb{x}$ Zustand, $\pmb{z}$ algebraischer Variablen (quasi Zustandsgrößen, die in Systemgleichungen nicht differentiell vorkommen), $\pmb{u}$ Systemeingang, $t$ Zeit.
 
-Differenzieller Index: Minimale Anzahl an Differentiation $\frac{d}{dt}$ der algebraischen Gleichungen (AGL) g (Zwangsbedingungen), damit unter Einbeziehung der Differentialgleichung ein explizites Differentialgleichungssystem aus dem DAE-System entsteht. (Vgl. Systementwurf Mechatronischer Systeme S. 139)
+Differenzieller Index: Minimale Anzahl an Differentiation $\frac{d}{dt}$ der algebraischen Gleichungen (AGL) $\pmb{g}$ (Zwangsbedingungen), damit unter Einbeziehung der Differentialgleichung ein explizites Differentialgleichungssystem aus dem DAE-System entsteht. (Vgl. Systementwurf Mechatronischer Systeme S. 139)
 
 Numerische Integration von DAE-Systemen: 
 \begin{itemize}
@@ -39,7 +56,10 @@ Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL
 
 Zum weiterem Verständnis von DAEs: $https://reference.wolfram.com/language/tutorial/NDSolveDAE.html$
 
-\section{Identifikation linearer Systeme}
+weitere Punkte zum behandeln:
+- Warum konsistenete AW bei DAE wichtig, Funktionsweise von modeltools mit DAE-Systemen ->DAE_System(object)->__init__? (Präsi zu modeltools unter Präsi in nextcloud)
+- Stichpunkte wie in modeltools DAEs aufgestellt werden
+- Schritte zur Reduktion auf Index 1 System in modeltoos verstehen, warum ist Reduktion wichtig?
 
 \section{Systematische Flachheitsanalyse von MIMO-Systemen}
 Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
@@ -95,7 +115,7 @@ Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werd
 \end{align}
 
 (für späteres Kapitel der SA!)
-Dieses Doppelkransystem mit den "verallgemeinerten Zuständen"
+Dieses Doppelkransystem mit den Systemgrößen
 \begin{align}
 	\pmb{w}
 	=
