@@ -57,7 +57,7 @@ Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL
 Zum weiterem Verständnis von DAEs: $https://reference.wolfram.com/language/tutorial/NDSolveDAE.html$
 
 weitere Punkte zum behandeln:
-- Warum konsistenete AW bei DAE wichtig, Funktionsweise von modeltools mit DAE-Systemen ->DAE_System(object)->__init__? (Präsi zu modeltools unter Präsi in nextcloud)
+- Warum konsistenete AW bei DAE wichtig, Funktionsweise von modeltools mit DAE-Systemen ->DAE System(object)->init? (Präsi zu modeltools unter Präsi in nextcloud)
 - Stichpunkte wie in modeltools DAEs aufgestellt werden
 - Schritte zur Reduktion auf Index 1 System in modeltoos verstehen, warum ist Reduktion wichtig?
 
@@ -120,13 +120,13 @@ Dieses Doppelkransystem mit den Systemgrößen
 	\pmb{w}
 	=
 	\begin{pmatrix}
-		p_1 \ p_2 \ p_3 \ q_1 \ q_2 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{q}_1 \ \dot{q}_2 \ \lambda_1 \ \lambda_2 \ \tau_1 \ \tau_2
+		p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
 	\end{pmatrix}^T
 \end{align}
 
 So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:
 \begin{equation}
-	(\pmb{I_{5 x 5}}, \pmb{0_{5 x 9}}) \pmb{\dot{w}} = (\pmb{0_{5 x 5}}, \pmb{I_{5 x 5}}, \pmb{0_{5 x 4}}) \pmb{w}
+	(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
 \end{equation}
 
 \chapter{Analytische Modellbildung}
