@@ -141,6 +141,45 @@ So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definit
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
+Herangezogen: ODE Modell des Gantrys aus Lagrange 1 (ODE flatness analysis simulation)
+-> relativ überschaubare mod.eqns (5 Gleichungen)
+- eqns.jacobian(ttau), um Spalten zu finden, in denen Größe nur 1 mal vorkommt, so dass keine widersprüchlichen Gleichungen für Bestimmung der Größe 
+-> eliminiere Gleichung und Größe aus Zeile, bei der solche Größe gefunden:
+-- zunächst tau1(tau2) in 1ter(2ter) Spalte und damit 4te(5te) Zeile/Gleichung zu eliminieren
+- bei weiteren Größen keine Spalten mehr in jacobimatrix, in denen Größen nur 1 mal vorkommen, außerdem nun Jacobi-Matrix der Dimension 3x2 
+-> Ziel: Durch Linearkombination (Multiplikationen von Links) soll Transformation in Form $\left(\begin{matrix}
+1 & 0\\
+0 & 1\\
+0 & 0
+\end{matrix}\right)$ gebracht werden
+-> Vorgehen: $w_1 \cdot B_1 = \left(\begin{matrix}
+I_2 \\
+0_{1 \times 2}
+\end{matrix}\right)$ 
+-> Bildung der Pseudo-Inversen von B1: $B_{1, pinv} = B_1^{L+}$ sowie Links-Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von B) $B_1^{L \perp}$, also $B^T B_1^{L \perp} = 0$
+=> $\left(\begin{matrix}
+B_1^{L+} 0 \\
+B_1^{L \perp}
+\end{matrix}\right)
+\left(\begin{matrix}
+B_{1, 1} \\
+B_{1,2}
+\end{matrix}\right)
+=
+\left(\begin{matrix}
+I_2 \\
+0_{1 \times 2}
+\end{matrix}\right)
+$
+mit der 3x3 Matrix w1 und 2x2 Matrix $B_{1,1}$, 1x2 Matrix $B_{1,2}$
+==> $w_1 = \left(\begin{matrix}
+B_1^{L+} \\
+B_1^{L\perp}
+\end{matrix} \right)$, so dass neuer Gleichungssatz eqns2 = w1 * eqns1, daraus analog wie Anfangs tau1,2 und beide Gleichungen eliminierbar
+==> in letzter Gleichung (Zeile) kommen q1,2 nur algebraisch vor:
+$s_{2} \left(\left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right) \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right) + \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{1} l_{2} m_{2} \left(g + \ddot{p}_{2}\right) - l_{1} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) - l_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)\right) + s_{2} \left(l_{1} l_{2} m_{2} \ddot{p}_{1} + l_{1} \tau_{4} \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) + l_{2} \tau_{3} \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{0} p_{2} \sin{\left(p_{3} \right)} - l_{0} s_{2} \sin^{2}{\left(p_{3} \right)} - 2 p_{1} p_{2} \sin{\left(p_{3} \right)} + 2 p_{2}^{2} \cos{\left(p_{3} \right)} + p_{2} q_{1} \sin{\left(p_{3} \right)} + p_{2} q_{2} \sin{\left(p_{3} \right)} + q_{1} s_{2} \sin^{2}{\left(p_{3} \right)} - q_{2} s_{2} \sin^{2}{\left(p_{3} \right)}\right) + \left(\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) - \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(J_{2} l_{1} l_{2} \ddot{p}_{3} + l_{1} s_{2} \tau_{4} \left(- l_{0} \sin{\left(p_{3} \right)} + p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{2} \sin{\left(p_{3} \right)}\right) + l_{2} s_{2} \tau_{3} \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right)\right) = 0$
+kurz:
+$\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so dass hieras OBdA q2 sowie die letzte Gleichung eliminiert werden kann. Die verbleibenden Systemgrößen des Flachenausgangs ergeben sich somit zu $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$. Alle anderen Systemgrößen können durch $\mathbf y(\cdot)$ und dessen Ableitungen parametriert werden. Die Zusammenhänge dafür folgen aus den im Vorhinein eliminierten Gleichungen.´ 
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
 
