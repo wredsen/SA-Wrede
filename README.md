@@ -1,5 +1,5 @@
 # SA-Wrede
- Studienarbeit Konstantin Wrede
+Student Research Project about modeling, flatness based control design and simulation of a gantry crane multibody system.
 
 Most Jupyter Notebooks rely on a Fork of https://github.com/TUD-RST/symbtools.
 
