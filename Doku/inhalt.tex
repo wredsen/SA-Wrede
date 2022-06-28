@@ -8,11 +8,16 @@
 \chapter{Systembeschreibung und Modellierungsansatz}
 
 \section{Demonstratorsytem}
-Im Rahmen vorangegangener Praktikumsarbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Dieses besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene heben. Aktuiert sind dabei beide Kräne auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor. Eine unterlagerte Kraftregelung ist dafür bereits implementiert. Langfristig gilt es, Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung zu veranschaulichen.
+Im Rahmen vorangegangener Praktikumsarbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig gilt es, Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung zu veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
+
+Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene heben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für die Motoransteuerung und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren. Auf diesen wurde bereits eine überlagerte Positionsregelung implementiert, wobei die 
+
+Aktuiert sind dabei beide Kräne auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor. Eine unterlagerte Kraftregelung ist dafür bereits implementiert.
+- Poti, ...
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.65\textwidth]{Pictures/real_gantry.jpg}
+	\includegraphics[width=1 \textwidth]{Pictures/real_gantry.jpg}
 	\caption{Doppelkran-Demonstratorsystem mit Laufkatzen und Last.}
 	\label{fig:demonstrator_real}
 \end{figure}
