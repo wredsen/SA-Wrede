@@ -8,42 +8,33 @@
 \chapter{Systembeschreibung und Modellierungsansatz}
 
 \section{Demonstratorsytem}
-Im Rahmen vorangegangener Praktikumsarbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig gilt es, Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung zu veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
-
-Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene heben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für die Motoransteuerung und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren. Auf diesen wurde bereits eine überlagerte Positionsregelung implementiert, wobei die 
-
-Aktuiert sind dabei beide Kräne auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor. Eine unterlagerte Kraftregelung ist dafür bereits implementiert.
-- Poti, ...
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=1 \textwidth]{Pictures/real_gantry.jpg}
+	\includegraphics[width=0.75 \textwidth]{Pictures/real_gantry.jpg}
 	\caption{Doppelkran-Demonstratorsystem mit Laufkatzen und Last.}
 	\label{fig:demonstrator_real}
 \end{figure}
 
+Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene anheben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
+
+Beide Kräne sind auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor aktuiert. Auf den STM32-Mikrocontroller ist bereits eine eine unterlagerte Strom- beziehungsweise Kraftregelung für diese implementiert.
+Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel werden mittels mitschwingender Potentiometer bestimmt.
+
+
+
 \section{Problembeschreibung und Zielsetzung}
-Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Dafür ist in dieser Studienarbeit bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen, so dass unter Vorgabe eines Sollposenverlaufs der Last in der Ebene eine Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht wird. Diese Überlegungen sollen auf Basis eines Modells des Mehrkörpersystems geschehen.
+Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel der Studienarbeit ist es deshalb,  bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in der Ebene und Folgeregelung zur Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystems geschehen. 
 
-\section{Analytische Modellierung mittels Lagrange-Formalismus}
--> dazu in Nextcloud/Präsis Folien zu modeltools, ggf. noch Diss von Knoll
+\section{Modellierung mittels Lagrange-Formalismus}
+\subsection{Lagrange-Gleichungen zweiter Art}
+Die Dynamik mechanischer Systeme lässt sich über Differentialgleichungen, den Lagrange-Gleichungen zweiter Art, beschreiben. Die Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten werden auch als Konfigurationskoordinaten oder Systemgrößen $\pmb{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitliche Änderung dieser sind die s (Konfigurations-)Geschwindigkeiten $\dot{\pmb{\theta}}$. Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T(\pmb{\theta}, \dot{\pmb{\theta}})$ sowie die potentielle Energie durch $V(\pmb{\theta})$ beschrieben.
 
-Verschiedene Stufen zur Modellierung im Repo:
+DissKnoll \cite{DissKnoll} dqwdqwdqw -> dazu in Nextcloud/Präsis Folien zu modeltools, ggf. noch Diss von Knoll
+\subsection{Lagrange-Gleichungen erster Art}
+Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen erster Art.  
 
-Einzelkran:
--model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs
--DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt.
-
-Doppelkran (double crane notebooks, nur LK Aktuierung):
-Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen
-- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten
-- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T
-
-Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):
-Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)
-- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten
-- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt
-- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend
 
 \section{Generierung und Berechnung von DAE-Systemen}
 Standardform:
@@ -143,6 +134,24 @@ So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definit
 \end{equation}
 
 \chapter{Analytische Modellbildung}
+
+Verschiedene Stufen zur Modellierung im Repo:
+
+Einzelkran:
+-model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs
+-DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt.
+
+Doppelkran (double crane notebooks, nur LK Aktuierung):
+Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen
+- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten
+- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T
+
+Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):
+Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)
+- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten
+- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt
+- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend
+
 \section{Analytisches Modell Einzelkran}
 
 \section{Analytisches Modell Doppelkran}
