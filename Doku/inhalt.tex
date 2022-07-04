@@ -29,11 +29,21 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 
 \section{Modellierung mittels Lagrange-Formalismus}
 \subsection{Lagrange-Gleichungen zweiter Art}
-Die Dynamik mechanischer Systeme lässt sich über Differentialgleichungen, den Lagrange-Gleichungen zweiter Art, beschreiben. Die Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten werden auch als Konfigurationskoordinaten oder Systemgrößen $\pmb{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitliche Änderung dieser sind die s (Konfigurations-)Geschwindigkeiten $\dot{\pmb{\theta}}$. Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T(\pmb{\theta}, \dot{\pmb{\theta}})$ sowie die potentielle Energie durch $V(\pmb{\theta})$ beschrieben.
+Die Dynamik mechanischer Systeme lässt sich über Differentialgleichungen, den so genannten Lagrange-Gleichungen zweiter Art, beschreiben. Dabei wird die Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\pmb{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitliche Änderungsrate dieser sind die (Konfigurations-)Geschwindigkeiten $\pmb{\dot{\theta}}$. Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Eine Lagrange-Funktion kann damit folgendermaßen definiert werden:
+\begin{equation}
+	L(\pmb{\theta}, \dot{\pmb{\theta}}) = T(\pmb{\theta}, \pmb{\dot{\theta}}) - V(\pmb{\theta}).
+\end{equation}
+Die Bewegungsgleichungen können daraus abgeleitet werden:
+\begin{equation}
+	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = Q_i, \quad i = 1, ..., n.
+\end{equation}
 
-DissKnoll \cite{DissKnoll} dqwdqwdqw -> dazu in Nextcloud/Präsis Folien zu modeltools, ggf. noch Diss von Knoll
+Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i$ entspricht der verallgemeinerten Kraft, welche sich aus äußeren (Stell-)Kräften sowie internen Reibungskräften zusammensetzt \cite[S.7]{DissKnoll}. Vorteile dieser Herangehensweise sind, dass Zwangskräfte nicht explizit bestimmt werden müssen und die Durchführung beispielsweise unter Nutzung des Python-Pakets \textit{symbtools} \cite{symbtools}.
+
+-> ggf. dazu in Nextcloud/Präsis Folien zu modeltools -> Matrixdarstellung mit M, C, K, B
+
 \subsection{Lagrange-Gleichungen erster Art}
-Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen erster Art.  
+Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen erster Art. \cite{Lagrange1}
 
 
 \section{Generierung und Berechnung von DAE-Systemen}
