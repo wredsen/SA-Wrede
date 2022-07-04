@@ -24,6 +24,7 @@ Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels In
 
 
 
+
 \section{Problembeschreibung und Zielsetzung}
 Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel der Studienarbeit ist es deshalb,  bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in der Ebene und Folgeregelung zur Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystems geschehen. 
 
@@ -38,12 +39,51 @@ Die Bewegungsgleichungen können daraus abgeleitet werden:
 	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = Q_i, \quad i = 1, ..., n.
 \end{equation}
 
-Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i$ entspricht der verallgemeinerten Kraft, welche sich aus äußeren (Stell-)Kräften sowie internen Reibungskräften zusammensetzt \cite[S.7]{DissKnoll}. Vorteile dieser Herangehensweise sind, dass Zwangskräfte nicht explizit bestimmt werden müssen und die Durchführung beispielsweise unter Nutzung des Python-Pakets \textit{symbtools} \cite{symbtools}.
+Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i = f_i - D_i$ entspricht der verallgemeinerten Kraft, welche sich aus äußeren (Stell-)Kräften $f_i$ sowie internen Reibungskräften $D_i$ zusammensetzt \cite[S.7]{DissKnoll}. Vorteile dieser Herangehensweise sind, dass Zwangskräfte nicht explizit bestimmt werden müssen und die Durchführung beispielsweise unter Nutzung des Python-Pakets \textit{symbtools} \cite{symbtools}.
 
 -> ggf. dazu in Nextcloud/Präsis Folien zu modeltools -> Matrixdarstellung mit M, C, K, B
 
+Virtuelle Arbeit:
+... but $Q_i$ are yet unknown → calculate them via the principle of virtual work:
+\begin{equation}
+\delta W = \sum_{i=1}^n \mathbf {F}_{i} \cdot \frac {\partial \mathbf {r}_i} {\partial q_1} \delta q_1 +\ldots + \sum_{i=1}^n \mathbf {F}_{i} \cdot \frac {\partial \mathbf {r}_i} {\partial q_m} \delta q_m.
+\end{equation}
+- $ \mathbf {F}_{i}$ applied forces, i.e.  $i=1,2$ → cart-forces, $i=3,4$ → rope-foces
+- $ \mathbf {r}_{i}$ position vectors of each particle (along the direction of forces): $i=1,3$ → cart, $i=2$ → load
+- $ \mathbf {\delta r}_{i}$ virtual displacement
+- $ \mathbf \delta q_{j} = \delta \theta_{j}$ virtual displacement of generalized coordinates
+
+The virtual work of a system of particles can be written in the form
+
+\begin{equation}
+\delta W = Q_1\delta q_1 + \ldots + Q_m\delta q_m,
+\end{equation}
+where
+
+\begin{equation}
+Q_j = \sum_{i=1}^n \frac {\partial \mathbf {r}_i} {\partial q_j} \cdot \mathbf {F}_{i}  ,\quad j=1,\ldots, m, 
+\end{equation}
+
+\cite[S. 65]{Lagrange1}
+
 \subsection{Lagrange-Gleichungen erster Art}
-Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen erster Art. \cite{Lagrange1}
+Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen erster Art. Mit diesen können Probleme mit Zwangsbedingungen und Zwangskräften beschrieben werden.
+
+\begin{equation}
+	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = \tilde{Q}_i + Q_i, \quad i = 1, ..., n.
+\end{equation}
+
+Mit $m$ Zwangsbedingungen $g_i(\pmb{\theta}) = 0$ und Zwangskraft $\tilde{Q}_i$ in Richtung der Koordinate $\theta_i$:
+\begin{equation}
+	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j G_{ji}(\pmb{\theta})
+\end{equation}
+
+Mit Lagrange-Multiplikatoren $\lambda_j$ und der Beziehung:
+\begin{equation}
+	\diff{g_j}{t} = \sum_{i = 1}^n G_{ji}(\pmb{\theta}) \dot{\theta}_i = 0 \quad j = 1, ..., m.
+\end{equation}
+
+\cite[S. 49]{Lagrange1}
 
 
 \section{Generierung und Berechnung von DAE-Systemen}
