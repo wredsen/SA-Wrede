@@ -179,6 +179,11 @@ So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definit
 	(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
 \end{equation}
 
+\section{Statische Eingangs-Ausgangs-Linearisierung}
+relativer grad ... (Buch von Röbenack) mit Definition 4.80 usw., aber nich Erzeugung von y Ableitungen
+
+\section{Quasistatische Eingangs-Ausgangs-Linearisierung} 
+
 \chapter{Analytische Modellbildung}
 
 Verschiedene Stufen zur Modellierung im Repo:
@@ -255,6 +260,40 @@ $\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so
 \section{Trajektorienplanung}
 
 \section{Trajektorienfolgeregelung}
+
+\subsection{Statische Rückführung}
+relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems [nach NLRT, S.194, Kapitel 4.5]:\\
+- Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
+- Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\pmb{\alpha} = \pmb{f} + \pmb{g} \pmb{\tau}$ rekursiv erzeugt: 
+\begin{equation}
+	y_i^{k} = L_{\pmb{\alpha}} y_i^{k-1}
+\end{equation}
+
+-In der folgenden Tabelle sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
+
+\begin{center}
+	\begin{tabular}{ |c||c|c|c|c| } 
+		\hline
+		$i$ & 1 & 2 & 3 & 4 \\ 
+		\hline
+		$r_i$ & 2 & 2 & 2 & 2\\ 
+		\hline
+		explizities Auftreten von $\tau_i$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		\hline
+	\end{tabular}
+\end{center}
+
+Das Fehlen von $\tau_2$ bei allen dieser Ableitungen bedeutet für die Matrix $\Lambda$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g}_2$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\\pmb{dot{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_2)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} h_i}{\dot{q_2}} = 0 \ \forall i$.
+
+Analog gilt für den alternativen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\Lambda$ impliziert.
+
+Daher ist $\Lambda$ in dieser Form nie regulär und $\pmb{r}$ nie wohldefiniert und dieses System nicht (statisch) eingangs-ausgangs-linearisierbar. 
+
+\subsection{Quasi-statische Rückführungen}
+
+\subsection{Dynamische Erweiterung}
+
+\subsection{Exact feedforward linearization}
 
 \chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
