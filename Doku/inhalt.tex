@@ -262,7 +262,7 @@ $\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so
 \section{Trajektorienfolgeregelung}
 
 \subsection{Statische Rückführung}
-relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems [nach NLRT, S.194, Kapitel 4.5]:\\
+relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{NLRT_Roebenack}:\\
 - Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
 - Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\pmb{\alpha} = \pmb{f} + \pmb{g} \pmb{\tau}$ rekursiv erzeugt: 
 \begin{equation}
@@ -271,27 +271,94 @@ relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems [nach NLRT, S.1
 
 -In der folgenden Tabelle sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
 
-\begin{center}
+\begin{table}[htbp]%
+	\centering
+	\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+	\label{tab:relative_degrees}
 	\begin{tabular}{ |c||c|c|c|c| } 
 		\hline
 		$i$ & 1 & 2 & 3 & 4 \\ 
 		\hline
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
-		explizities Auftreten von $\tau_i$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		explizities Auftreten von $\tau_i$ bei $y_i^{r_i}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
-Das Fehlen von $\tau_2$ bei allen dieser Ableitungen bedeutet für die Matrix $\Lambda$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g}_2$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\\pmb{dot{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_2)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} h_i}{\dot{q_2}} = 0 \ \forall i$.
+Das Fehlen von $\tau_2$ bei allen dieser Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\pmb{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g_2}$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\pmb{\dot{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} y_i}{\dot{q_2}} = 0 \ \forall i$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Ausgangsableitungen $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\pmb{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\pmb{g_j}} L_{\pmb{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:
+\begin{align}
+	\pmb{\Lambda} = 
+	\left(\begin{matrix}
+		0 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+		0 & 0 & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+		0 & 0 & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+		\frac{1}{m_{1}} & 0 & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+	\end{matrix}\right) .
+\end{align}
 
-Analog gilt für den alternativen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\Lambda$ impliziert.
+Analog gilt für den alternativen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\pmb{\Lambda}$ impliziert.
 
-Daher ist $\Lambda$ in dieser Form nie regulär und $\pmb{r}$ nie wohldefiniert und dieses System nicht (statisch) eingangs-ausgangs-linearisierbar. 
-
-\subsection{Quasi-statische Rückführungen}
+Daher ist $\pmb{\Lambda}$ in dieser Form nie regulär und $\pmb{r}$ nie wohldefiniert und dieses System nicht statisch eingangs-ausgangs-linearisierbar. 
+Stattdessen können zur Regelung Ansätze mit einer dynamischen Erweiterung oder quasistatischen Zustandsrückführung verfolgt werden. 
 
 \subsection{Dynamische Erweiterung}
+Die Entkopplungsmatrix $\pmb{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keine r Ausgangsableitung $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \pmb{\Lambda} = k = 3 < m = 4$. \\
+
+Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau_3$, $\tau_4$ in den entsprechenden Ausgangsableitungen. Dafür: \\
+- Ergänzung dieser Eingänge um  in diesem Fall jeweils zwei Integratoren, so dass die neuen Eingangskomponenten bei der selben Ableitungsordnung das erste mal explizit auftreten wie $\tau_2$ und Erweiterung der Systemgleichungen um die folgenden DGL:
+\begin{align}
+	\begin{split}
+	\dot{\tau_1} &= \tilde{\tau}_1 \\
+	\dot{\tilde{\tau}}_1 &= \tilde{\tilde{\tau}}_1 \\
+	\dot{\tau_2} &= \tilde{\tau}_2 \\
+	\dot{\tilde{\tau}}_2 &= \tilde{\tilde{\tau}}_2 \\
+	\dot{\tau_3} &= \tilde{\tau}_3 \\
+	\dot{\tilde{\tau}}_3 &= \tilde{\tilde{\tau}}_3 .
+	\end{split}
+\end{align}
+
+- Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\pmb{\tilde{\tau}} = ( \tilde{\tilde{\tau}}_1,  \tilde{\tilde{\tau}}_3,  \tilde{\tilde{\tau}}_4, \tau_2)^T$. \\
+
+- Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (x, \tau_1, \tau_3, \tau_4, \tilde{\tau}_1, \tilde{\tau}_3, \tilde{\tau}_4)^T$ \\
+
+- Umsortierung der Nullspalte von $\pmb{\Lambda}$ auf die letzte Position analog zum neuen Eingangsvektor \\
+
+Für dieses modifizierte System folgt somit stets für $r_i = 4 \ \forall i$. \\
+
+Problem:\\
+- Simulationsergebnis divergiert selbst bei reinem Vorsteuerungsfall, also ohne Anfangsfehler\\
+- Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
+\begin{align}
+	\pmb{\tilde{f}} =
+	\left(\begin{matrix}
+		\pmb{f} \\
+		\tilde{\tau_1} \\
+		\tilde{\tau_3} \\
+		\tilde{\tau_4} \\
+		0 \\
+		0 \\
+		0
+	\end{matrix}\right), \quad
+	\pmb{\tilde{g}} =
+	\left(\begin{matrix}
+		& \pmb{g} \\
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0 & 0 & 1 & 0
+	\end{matrix}\right)
+\end{align}
+
+und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch über:
+\begin{equation}
+	y_i^{(r_i)} = L_{\pmb{\tilde{f}}}^{r_i} y_i + L_{\pmb{\tilde{g}_1}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_1 + L_{\pmb{\tilde{g}_2}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_3 + L_{\pmb{\tilde{g}_3}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_4 + L_{\pmb{\tilde{g}_4}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tau_2 .
+\end{equation}
+und in Implementierung ist dies dann $y_i^{(r_i)} = 0$, da für $r_i = 4$ bereits ab $L_{\pmb{\tilde{f}}}^{2} y_i = 0 \ \forall i$. Entlang der Systemgleichungen $\pmb{\tilde{\alpha}}$ abgeleitet ist dies allerdings nicht der Fall ==> Wiederspruch!
+
+\subsection{Quasi-statische Rückführungen}
 
 \subsection{Exact feedforward linearization}
 
