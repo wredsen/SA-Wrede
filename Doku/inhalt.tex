@@ -275,18 +275,18 @@ relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{N
 	\centering
 	\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
 	\label{tab:relative_degrees}
-	\begin{tabular}{ |c||c|c|c|c| } 
+	\begin{tabular}{ |c| c c c c| } 
 		\hline
 		$i$ & 1 & 2 & 3 & 4 \\ 
 		\hline
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
-		explizities Auftreten von $\tau_i$ bei $y_i^{r_i}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		explizities Auftreten von $\tau_j$ bei $y_i^{r_i}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
 		\hline
 	\end{tabular}
 \end{table}
 
-Das Fehlen von $\tau_2$ bei allen dieser Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\pmb{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g_2}$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\pmb{\dot{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} y_i}{\dot{q_2}} = 0 \ \forall i$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Ausgangsableitungen $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\pmb{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\pmb{g_j}} L_{\pmb{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:
+Das Fehlen von $\tau_2$ bei allen dieser Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\pmb{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g_2}$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\pmb{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} y_i}{\dot{q}_2} = 0 \ \forall i$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Ausgangsableitungen $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\pmb{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\pmb{g_j}} L_{\pmb{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:
 \begin{align}
 	\pmb{\Lambda} = 
 	\left(\begin{matrix}
@@ -320,7 +320,7 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 
 - Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\pmb{\tilde{\tau}} = ( \tilde{\tilde{\tau}}_1,  \tilde{\tilde{\tau}}_3,  \tilde{\tilde{\tau}}_4, \tau_2)^T$. \\
 
-- Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (x, \tau_1, \tau_3, \tau_4, \tilde{\tau}_1, \tilde{\tau}_3, \tilde{\tau}_4)^T$ \\
+- Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (\pmb{x}, \ddot{\pmb{x}}, \tau_1, \tau_3, \tau_4, \tilde{\tau}_1, \tilde{\tau}_3, \tilde{\tau}_4)^T$ \\
 
 - Umsortierung der Nullspalte von $\pmb{\Lambda}$ auf die letzte Position analog zum neuen Eingangsvektor \\
 
@@ -330,26 +330,19 @@ Problem:\\
 - Simulationsergebnis divergiert selbst bei reinem Vorsteuerungsfall, also ohne Anfangsfehler\\
 - Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
 \begin{align}
-	\pmb{\tilde{f}} =
+	\pmb{\tilde{\alpha}} =
 	\left(\begin{matrix}
-		\pmb{f} \\
-		\tilde{\tau_1} \\
-		\tilde{\tau_3} \\
-		\tilde{\tau_4} \\
-		0 \\
-		0 \\
-		0
+	\pmb{\alpha} \\
+	\pmb{x}^{(3)} \\
+	\tilde{\tau_1} \\
+	\tilde{\tau_3} \\
+	\tilde{\tau_4} \\
+	\tilde{\tilde{\tau}}_1 \\
+	\tilde{\tilde{\tau}}_3 \\
+	\tilde{\tilde{\tau}}_4 \\	
 	\end{matrix}\right), \quad
-	\pmb{\tilde{g}} =
-	\left(\begin{matrix}
-		& \pmb{g} \\
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		1 & 0 & 0 & 0\\
-		0 & 1 & 0 & 0\\
-		0 & 0 & 1 & 0
-	\end{matrix}\right)
+	\pmb{\tilde{f}} = \pmb{\tilde{\alpha}}|_{\pmb{\tilde{\tau}} = 0}, \quad
+	\pmb{\tilde{g}} = \partiell{\pmb{\tilde{\alpha}}}{\pmb{\tilde{\tau}}}
 \end{align}
 
 und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch über:
@@ -359,8 +352,53 @@ und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch
 und in Implementierung ist dies dann $y_i^{(r_i)} = 0$, da für $r_i = 4$ bereits ab $L_{\pmb{\tilde{f}}}^{2} y_i = 0 \ \forall i$. Entlang der Systemgleichungen $\pmb{\tilde{\alpha}}$ abgeleitet ist dies allerdings nicht der Fall ==> Wiederspruch!
 
 \subsection{Quasi-statische Rückführungen}
+Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefiniertem relativen vektoriellen Grad im statischen Ansatz \cite[S. 206]{NLRT_Roebenack}.
+
+\begin{table}[htbp]%
+	\centering
+	\caption{Auftreten der Eingänge $\tau_j$ bei Ordnung $k$ der Ausgangsableitung $y_i$.}
+	\label{tab:relative_degrees}
+	\begin{tabular}{ c| c c c c } 
+		$k$ & $\tau_1$ & $\tau_2$ & $\tau_3$ & $\tau_4$ \\ 
+		\hline
+		$y_1^{(k)}$ & 4 & 4 & 2 & 2\\ 
+		$y_2^{(k)}$ & 4 & 4 & 2 & 2\\
+		$y_3^{(k)}$ & 4 & 4 & 2 & 2\\		
+		$y_4^{(k)}$ & 2 & >4 & 2 & 4\\
+		$(y_5^{(k)} = q_2^{(k)}$ & >4 & 2 & 4 & 2)\\
+	\end{tabular}
+\end{table}
+
+- Im Folgenden wird der flache Ausgang $\pmb{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T$ betrachtet. \\
+- Zeitliche Ableitungen werden durch Lie-Ableitungen bezüglich des erweiterten Zustandsvektors $\pmb{\tilde{x}} = (\pmb{x}, \pmb{\ddot{x}}, \pmb{\tau}, \pmb{\dot{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
+\begin{align}
+\pmb{\tilde{\alpha}} =
+\left(\begin{matrix}
+\pmb{f} + \pmb{g} \pmb{\tau}\\
+\pmb{x^{(3)}} \\
+\pmb{\dot{\tau}} \\
+\pmb{\ddot{\tau}}
+\end{matrix}\right)
+\end{align}
+
+- $\tau_3$ tritt das erste mal bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen anderen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle weiteren Eingänge, da der relative vektorielle Grad für $r_i = 2 \ \forall i$ nicht wohldefiniert ist. \\
+- Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. \\
+-> Widerspruch zu \cite[S. 206]{NLRT_Roebenack}, bei dem für Auftreten von  $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss! \\ 
+- $\tau_2$ tritt erst bei $r_2 = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$ auf. \\
+- $\tau_1$ tritt erst bei $r_4 = 2$ in $\ddot{y}_4$ auf. \\
+- Definition neuer Eingänge:
+\begin{align}
+\begin{split}
+	\ddot{y}_1 = \ddot{p}_1 &=: v_1 \\
+	y_2^{(4)} = p_2^{(4)} &=: v_2 \\
+	\ddot{y}_3 = \ddot{p}_3 &=: v_3 \\
+	\ddot{y}_4 = \ddot{q}_1 &=: v_4
+\end{split}
+\end{align}
 
 \subsection{Exact feedforward linearization}
+
+\subsubsection{Stabilitätsbetrachtung}
 
 \chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
