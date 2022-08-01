@@ -275,14 +275,12 @@ relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{N
 	\centering
 	\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
 	\label{tab:relative_degrees}
-	\begin{tabular}{ |c| c c c c| } 
-		\hline
+	\begin{tabular}{c| c c c c} 
 		$i$ & 1 & 2 & 3 & 4 \\ 
 		\hline
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
 		explizities Auftreten von $\tau_j$ bei $y_i^{r_i}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
-		\hline
 	\end{tabular}
 \end{table}
 
@@ -301,6 +299,14 @@ Analog gilt für den alternativen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_2
 
 Daher ist $\pmb{\Lambda}$ in dieser Form nie regulär und $\pmb{r}$ nie wohldefiniert und dieses System nicht statisch eingangs-ausgangs-linearisierbar. 
 Stattdessen können zur Regelung Ansätze mit einer dynamischen Erweiterung oder quasistatischen Zustandsrückführung verfolgt werden. 
+
+\subsubsection{Zustandsrückführung aus Fehlerdynamik}
+Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik, in diesem Fall allerdings bezüglich des Trajektorienfolgefehlers $e := y - y_{\text{ref}}$ und nicht eines Festwerts, angesetzt werden:
+\begin{equation}
+	e^{(n)} + c_{n-1} e^{(n-1)} + ... + c_{1} \dot{e} + c_{0} e = 0 
+	\Leftrightarrow y^{(n)} = y_{\text{ref}}^{(n)} - c_{n-1} e^{(n-1)} - ... - c_{1} \dot{e} - c_{0} e .
+\end{equation}
+Die Koeffizienten $c_i, \ i \in {0, 1, ..., n-1}$ müssen so gewählt werden, dass das charakteristische Polynom dieser Gleichung ausschließlich Polstellen mit negativem Realteil aufweist.
 
 \subsection{Dynamische Erweiterung}
 Die Entkopplungsmatrix $\pmb{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keine r Ausgangsableitung $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \pmb{\Lambda} = k = 3 < m = 4$. \\
@@ -321,25 +327,19 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 - Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\pmb{\tilde{\tau}} = ( \tilde{\tilde{\tau}}_1,  \tilde{\tilde{\tau}}_3,  \tilde{\tilde{\tau}}_4, \tau_2)^T$. \\
 
 - Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (\pmb{x}, \ddot{\pmb{x}}, \tau_1, \tau_3, \tau_4, \tilde{\tau}_1, \tilde{\tau}_3, \tilde{\tau}_4)^T$ \\
-
 - Umsortierung der Nullspalte von $\pmb{\Lambda}$ auf die letzte Position analog zum neuen Eingangsvektor \\
-
-Für dieses modifizierte System folgt somit stets für $r_i = 4 \ \forall i$. \\
-
-Problem:\\
-- Simulationsergebnis divergiert selbst bei reinem Vorsteuerungsfall, also ohne Anfangsfehler\\
 - Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
 \begin{align}
 	\pmb{\tilde{\alpha}} =
 	\left(\begin{matrix}
-	\pmb{\alpha} \\
-	\pmb{x}^{(3)} \\
-	\tilde{\tau_1} \\
-	\tilde{\tau_3} \\
-	\tilde{\tau_4} \\
-	\tilde{\tilde{\tau}}_1 \\
-	\tilde{\tilde{\tau}}_3 \\
-	\tilde{\tilde{\tau}}_4 \\	
+		\pmb{\alpha} \\
+		\pmb{x}^{(3)} \\
+		\tilde{\tau_1} \\
+		\tilde{\tau_3} \\
+		\tilde{\tau_4} \\
+		\tilde{\tilde{\tau}}_1 \\
+		\tilde{\tilde{\tau}}_3 \\
+		\tilde{\tilde{\tau}}_4 \\	
 	\end{matrix}\right), \quad
 	\pmb{\tilde{f}} = \pmb{\tilde{\alpha}}|_{\pmb{\tilde{\tau}} = 0}, \quad
 	\pmb{\tilde{g}} = \partiell{\pmb{\tilde{\alpha}}}{\pmb{\tilde{\tau}}}
@@ -349,7 +349,13 @@ und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch
 \begin{equation}
 	y_i^{(r_i)} = L_{\pmb{\tilde{f}}}^{r_i} y_i + L_{\pmb{\tilde{g}_1}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_1 + L_{\pmb{\tilde{g}_2}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_3 + L_{\pmb{\tilde{g}_3}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_4 + L_{\pmb{\tilde{g}_4}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tau_2 .
 \end{equation}
-und in Implementierung ist dies dann $y_i^{(r_i)} = 0$, da für $r_i = 4$ bereits ab $L_{\pmb{\tilde{f}}}^{2} y_i = 0 \ \forall i$. Entlang der Systemgleichungen $\pmb{\tilde{\alpha}}$ abgeleitet ist dies allerdings nicht der Fall ==> Wiederspruch!
+berechnet werden können.\\
+- Für dieses modifizierte System folgt somit stets für $r_i = 4 \ \forall i$. \\
+
+Problem:\\
+- Simulationsergebnis bei ungestörtem Vorsteuerungsfall mit sehr schlechtem Folgeverhalten, wenn auch stationärer Genauigkeit
+- divergiert bei bei Anfangsfehlern\\
+
 
 \subsection{Quasi-statische Rückführungen}
 Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefiniertem relativen vektoriellen Grad im statischen Ansatz \cite[S. 206]{NLRT_Roebenack}.
@@ -389,12 +395,46 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 - Definition neuer Eingänge:
 \begin{align}
 \begin{split}
-	\ddot{y}_1 = \ddot{p}_1 &=: v_1 \\
-	y_2^{(4)} = p_2^{(4)} &=: v_2 \\
-	\ddot{y}_3 = \ddot{p}_3 &=: v_3 \\
-	\ddot{y}_4 = \ddot{q}_1 &=: v_4
+	\ddot{y}_1 = \ddot{p}_1 &=: v_1 = \gamma_1(x, \tau_3, \tau_4) \\
+	y_2^{(4)} = p_2^{(4)} &=: v_2 = \gamma_2(x, \tau_1, \tau_2, \tau_3, \tau_4, \dot{\tau}_3, \dot{\tau}_4, \ddot{\tau}_3, \ddot{\tau}_4) \\
+	\ddot{y}_3 = \ddot{p}_3 &=: v_3 = \gamma_3(x, \tau_3, \tau_4) \\
+	\ddot{y}_4 = \ddot{q}_1 &=: v_4 = \gamma_4(x, \tau_1, \tau_3) .
 \end{split}
 \end{align}
+
+- Daraus ersichtlich, dass aus einem Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen alle Eingänge jeweils affin auftreten, eine explizite Darstellung von $\tau_1$, $\tau_3$ und $\tau_4$ möglich ist. \\
+-> im Gegensatz zu \cite[S. 207]{NLRT_Roebenack}, bei dem relative Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen vorher berechneter Eingänge und Umstellen der abgeleiteten Ausgänge genügt.\\
+- Die Berechnung von $\tau_2$ erfordert größeren Aufwand. Dabei Substitution bisheriger Eingangskomponenten und deren Ableitungen, welche aus Lie-Ableitung entlang von $\pmb{\tilde{\alpha}}$ generiert werden. Es folgt ein sehr umfangreicher Ausdruck für $\tau_2$, der bereits zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält. \\
+- Nach \cite[S. 208]{NLRT_Roebenack} kann eine lineare Fehlerdynamik $\pmb{v}$ entsprechend jeweiligem relativen Grad der Ausgangskomponente angesetzt werden. Für $v_1$, $v_3$ und $v_4$ diese jeweils nur von Zustandskomponenten abhängig, bei $v_2$ allerdings auch von $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$ :
+\begin{align}
+	\begin{split}
+		\ddot{p}_2 &= L_{\pmb{\tilde{\alpha}}} \dot{y}_2 = L_{\pmb{\tilde{\alpha}}} \dot{p}_2 \\
+		p_2^{(3)} &= L_{\pmb{\tilde{\alpha}}} \ddot{p}_2.
+	\end{split}
+\end{align}
+
+und Ableitungen der anderen Komponenten von $\pmb{v}$, die wie folgt berechnet werden:
+\begin{align}
+	\begin{split}
+	    \ddot{e} + c_1 \dot{e} + c_0 e &= 0 \\
+		e^{(3)} + c_1 \ddot{e} + c_0 \dot{e} &= 0 \\
+		e^{(3)} + c_1 (-c_1 \dot{e} - c_0 e) + c_0 \dot{e} &= 0 \\
+		e^{(3)} - c_1^2 \dot{e} + c_0 \dot{e} - c_0 c_1 e &= 0 \\
+		e^{(3)} + (c_0 - c_1^2) \dot{e} - c_0 c_1 e &= 0 \\
+		e^{(4)} + (c_0 - c_1^2) \ddot{e} - c_0 c_1 \dot{e} &= 0 \\
+		e^{(4)} + (c_0 - c_1^2) (-c_1 \dot{e} - c_0 e) - c_0 c_1 \dot{e} &= 0 \\
+		e^{(4)} + (c_1^2 - 2 c_0 c_1) \dot{e} + (c_0 c_1^2 - c_0^2) e &= 0 \\
+		\Rightarrow \text{ für } i = 1,3,4: \dot{v}_i = y_i^{(3)} &= y_{i, \text{ref}}^{(3)} - (c_{i, 0} - c_{i, 1}^2) \dot{e} + c_{i, 0} c_{i, 1} e \\
+		\ddot{v}_i = y_i^{(4)} &= y_{i, \text{ref}}^{(4)} - (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e} - (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e,
+	\end{split}
+\end{align}
+
+so dass sich der neue Eingang $v_2$ wie folgt ergibt:
+\begin{equation}
+	v_2 = y_2^{(4)} = y_{\text{ref}}^{(4)} - c_{2, 3} (y^{(3)} - y_{\text{ref}}^{(3)}) - c_{2, 2} (\ddot{y} - \ddot{y_{\text{ref}}}) - c_{2, 1} (\dot{y} - \dot{y_{\text{ref}}}) - c_{2, 0} (y - y_{\text{ref}})
+\end{equation} 
+
+- Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\pmb{x}$ vorkommen statt nur die von $\pmb{y}$ und seinen Ableitungen.
 
 \subsection{Exact feedforward linearization}
 
