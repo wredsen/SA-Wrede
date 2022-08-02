@@ -264,9 +264,9 @@ $\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so
 \subsection{Statische Rückführung}
 relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{NLRT_Roebenack}:\\
 - Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
-- Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\pmb{\alpha} = \pmb{f} + \pmb{g} \pmb{\tau}$ rekursiv erzeugt: 
+- Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\pmb{\delta} = \pmb{f} + \pmb{g} \pmb{\tau}$ rekursiv erzeugt: 
 \begin{equation}
-	y_i^{k} = L_{\pmb{\alpha}} y_i^{k-1}
+	y_i^{k} = L_{\pmb{\delta}} y_i^{k-1}
 \end{equation}
 
 -In der folgenden Tabelle sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
@@ -315,47 +315,48 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 - Ergänzung dieser Eingänge um  in diesem Fall jeweils zwei Integratoren, so dass die neuen Eingangskomponenten bei der selben Ableitungsordnung das erste mal explizit auftreten wie $\tau_2$ und Erweiterung der Systemgleichungen um die folgenden DGL:
 \begin{align}
 	\begin{split}
-	\dot{\tau_1} &= \tilde{\tau}_1 \\
-	\dot{\tilde{\tau}}_1 &= \tilde{\tilde{\tau}}_1 \\
-	\dot{\tau_2} &= \tilde{\tau}_2 \\
-	\dot{\tilde{\tau}}_2 &= \tilde{\tilde{\tau}}_2 \\
-	\dot{\tau_3} &= \tilde{\tau}_3 \\
-	\dot{\tilde{\tau}}_3 &= \tilde{\tilde{\tau}}_3 .
+		\dot{\tau_1} &=: \alpha_1 \\
+		\dot{\tau_3} &=: \alpha_3 \\
+		\dot{\tau_4} &=: \alpha_4 \\
+		\dot{\alpha_1} &=: \beta_1 \\
+		\dot{\alpha_3} &=: \beta_3 \\
+		\dot{\alpha_4} &=: \beta_4 .
 	\end{split}
 \end{align}
 
-- Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\pmb{\tilde{\tau}} = ( \tilde{\tilde{\tau}}_1,  \tilde{\tilde{\tau}}_3,  \tilde{\tilde{\tau}}_4, \tau_2)^T$. \\
+- Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\pmb{\tilde{\tau}} = (\beta_1,  \beta_3,  \beta_4, \tau_2)^T$. \\
 
-- Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (\pmb{x}, \ddot{\pmb{x}}, \tau_1, \tau_3, \tau_4, \tilde{\tau}_1, \tilde{\tau}_3, \tilde{\tau}_4)^T$ \\
+- Erweiterung des Zustandsvektors auf $\tilde{\pmb{x}} = (\pmb{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T$ \\
 - Umsortierung der Nullspalte von $\pmb{\Lambda}$ auf die letzte Position analog zum neuen Eingangsvektor \\
-- Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
+- Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\pmb{\tilde{\delta}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
 \begin{align}
-	\pmb{\tilde{\alpha}} =
+	\pmb{\tilde{\delta}} =
 	\left(\begin{matrix}
-		\pmb{\alpha} \\
-		\pmb{x}^{(3)} \\
-		\tilde{\tau_1} \\
-		\tilde{\tau_3} \\
-		\tilde{\tau_4} \\
-		\tilde{\tilde{\tau}}_1 \\
-		\tilde{\tilde{\tau}}_3 \\
-		\tilde{\tilde{\tau}}_4 \\	
+		\pmb{\delta} \\
+		\alpha_1 \\
+		\alpha_3 \\
+		\alpha_4 \\
+		\beta_1 \\
+		\beta_3 \\
+		\beta_4 \\	
 	\end{matrix}\right), \quad
-	\pmb{\tilde{f}} = \pmb{\tilde{\alpha}}|_{\pmb{\tilde{\tau}} = 0}, \quad
-	\pmb{\tilde{g}} = \partiell{\pmb{\tilde{\alpha}}}{\pmb{\tilde{\tau}}}
+	\pmb{\tilde{f}} = \pmb{\tilde{\delta}}|_{\pmb{\tilde{\tau}} = 0}, \quad
+	\pmb{\tilde{g}} = \partiell{\pmb{\tilde{\delta}}}{\pmb{\tilde{\tau}}}
 \end{align}
 
 und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch über:
 \begin{equation}
-	y_i^{(r_i)} = L_{\pmb{\tilde{f}}}^{r_i} y_i + L_{\pmb{\tilde{g}_1}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_1 + L_{\pmb{\tilde{g}_2}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_3 + L_{\pmb{\tilde{g}_3}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tilde{\tilde{\tau}}_4 + L_{\pmb{\tilde{g}_4}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tau_2 .
+	y_i^{(r_i)} = L_{\pmb{\tilde{f}}}^{r_i} y_i + L_{\pmb{\tilde{g}_1}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \beta_1 + L_{\pmb{\tilde{g}_2}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \beta_3 + L_{\pmb{\tilde{g}_3}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \beta_4 + L_{\pmb{\tilde{g}_4}} L_{\pmb{\tilde{f}}}^{r_i-1} y_i \tau_2 .
 \end{equation}
 berechnet werden können.\\
 - Für dieses modifizierte System folgt somit stets für $r_i = 4 \ \forall i$. \\
 
 Problem:\\
-- Simulationsergebnis bei ungestörtem Vorsteuerungsfall mit sehr schlechtem Folgeverhalten, wenn auch stationärer Genauigkeit
-- divergiert bei bei Anfangsfehlern\\
+- Pole müssen weiter links Platziert werden für gutes Folgeverhalten bei Anfangsfehlern (wegen der zusätzlichen Integratoren bei den Eingängen ???) \\
+- sehr lange Simulationsdauer
 
+\subsubsection{Änderungen der Trajektorienplanung}
+- an beiden Rändern für jede Referenztrajektorie jeweils 2 mal mehr stetig diffbar wegen weiterer differenzierender Zustände von $\tau_1$, $\tau_3$, $\tau_4$ notwendig -> Trajektorienordnung erhöht sich jeweils um 4
 
 \subsection{Quasi-statische Rückführungen}
 Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefiniertem relativen vektoriellen Grad im statischen Ansatz \cite[S. 206]{NLRT_Roebenack}.
@@ -376,12 +377,11 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 \end{table}
 
 - Im Folgenden wird der flache Ausgang $\pmb{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T$ betrachtet. \\
-- Zeitliche Ableitungen werden durch Lie-Ableitungen bezüglich des erweiterten Zustandsvektors $\pmb{\tilde{x}} = (\pmb{x}, \pmb{\ddot{x}}, \pmb{\tau}, \pmb{\dot{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\pmb{\tilde{\alpha}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
+- Zeitliche Ableitungen werden durch Lie-Ableitungen bezüglich des erweiterten Zustandsvektors $\pmb{\tilde{x}} = (\pmb{x}, \pmb{\tau}, \pmb{\dot{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\pmb{\tilde{\delta}} = \pmb{\tilde{f}} + \pmb{\tilde{g}} \pmb{\tilde{\tau}}$ mit
 \begin{align}
-\pmb{\tilde{\alpha}} =
+\pmb{\tilde{\delta}} =
 \left(\begin{matrix}
 \pmb{f} + \pmb{g} \pmb{\tau}\\
-\pmb{x^{(3)}} \\
 \pmb{\dot{\tau}} \\
 \pmb{\ddot{\tau}}
 \end{matrix}\right)
@@ -404,12 +404,12 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 
 - Daraus ersichtlich, dass aus einem Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen alle Eingänge jeweils affin auftreten, eine explizite Darstellung von $\tau_1$, $\tau_3$ und $\tau_4$ möglich ist. \\
 -> im Gegensatz zu \cite[S. 207]{NLRT_Roebenack}, bei dem relative Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen vorher berechneter Eingänge und Umstellen der abgeleiteten Ausgänge genügt.\\
-- Die Berechnung von $\tau_2$ erfordert größeren Aufwand. Dabei Substitution bisheriger Eingangskomponenten und deren Ableitungen, welche aus Lie-Ableitung entlang von $\pmb{\tilde{\alpha}}$ generiert werden. Es folgt ein sehr umfangreicher Ausdruck für $\tau_2$, der bereits zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält. \\
+- Die Berechnung von $\tau_2$ erfordert größeren Aufwand. Dabei Substitution bisheriger Eingangskomponenten und deren Ableitungen, welche aus Lie-Ableitung entlang von $\pmb{\tilde{\delta}}$ generiert werden. Es folgt ein sehr umfangreicher Ausdruck für $\tau_2$, der bereits zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält. \\
 - Nach \cite[S. 208]{NLRT_Roebenack} kann eine lineare Fehlerdynamik $\pmb{v}$ entsprechend jeweiligem relativen Grad der Ausgangskomponente angesetzt werden. Für $v_1$, $v_3$ und $v_4$ diese jeweils nur von Zustandskomponenten abhängig, bei $v_2$ allerdings auch von $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$ :
 \begin{align}
 	\begin{split}
-		\ddot{p}_2 &= L_{\pmb{\tilde{\alpha}}} \dot{y}_2 = L_{\pmb{\tilde{\alpha}}} \dot{p}_2 \\
-		p_2^{(3)} &= L_{\pmb{\tilde{\alpha}}} \ddot{p}_2.
+		\ddot{p}_2 &= L_{\pmb{\tilde{\delta}}} \dot{y}_2 = L_{\pmb{\tilde{\delta}}} \dot{p}_2 \\
+		p_2^{(3)} &= L_{\pmb{\tilde{\delta}}} \ddot{p}_2.
 	\end{split}
 \end{align}
 
