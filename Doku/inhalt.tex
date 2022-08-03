@@ -266,7 +266,7 @@ relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{N
 - Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
 - Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\pmb{\delta} = \pmb{f} + \pmb{g} \pmb{\tau}$ rekursiv erzeugt: 
 \begin{equation}
-	y_i^{k} = L_{\pmb{\delta}} y_i^{k-1}
+	y_i^{(k)} = L_{\pmb{\delta}} y_i^{(k-1)}
 \end{equation}
 
 -In der folgenden Tabelle sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
@@ -280,11 +280,11 @@ relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{N
 		\hline
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
-		explizities Auftreten von $\tau_j$ bei $y_i^{r_i}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
 	\end{tabular}
 \end{table}
 
-Das Fehlen von $\tau_2$ bei allen dieser Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\pmb{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g_2}$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f h_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\pmb{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} y_i}{\dot{q}_2} = 0 \ \forall i$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Ausgangsableitungen $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\pmb{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\pmb{g_j}} L_{\pmb{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:
+Das Fehlen von $\tau_2$ bei allen dieser Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\pmb{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\pmb{g_2}$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_f y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\pmb{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{L_{\pmb{f}} y_i}{\dot{q}_2} = 0 \ \forall i$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Ausgangsableitungen $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\pmb{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\pmb{g_j}} L_{\pmb{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:
 \begin{align}
 	\pmb{\Lambda} = 
 	\left(\begin{matrix}
@@ -315,12 +315,12 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 - Ergänzung dieser Eingänge um  in diesem Fall jeweils zwei Integratoren, so dass die neuen Eingangskomponenten bei der selben Ableitungsordnung das erste mal explizit auftreten wie $\tau_2$ und Erweiterung der Systemgleichungen um die folgenden DGL:
 \begin{align}
 	\begin{split}
-		\dot{\tau_1} &=: \alpha_1 \\
-		\dot{\tau_3} &=: \alpha_3 \\
-		\dot{\tau_4} &=: \alpha_4 \\
-		\dot{\alpha_1} &=: \beta_1 \\
-		\dot{\alpha_3} &=: \beta_3 \\
-		\dot{\alpha_4} &=: \beta_4 .
+		\dot{\tau}_1 &=: \alpha_1 \\
+		\dot{\tau}_3 &=: \alpha_3 \\
+		\dot{\tau}_4 &=: \alpha_4 \\
+		\dot{\alpha}_1 &=: \beta_1 \\
+		\dot{\alpha}_3 &=: \beta_3 \\
+		\dot{\alpha}_4 &=: \beta_4 .
 	\end{split}
 \end{align}
 
@@ -358,6 +358,8 @@ Problem:\\
 \subsubsection{Änderungen der Trajektorienplanung}
 - an beiden Rändern für jede Referenztrajektorie jeweils 2 mal mehr stetig diffbar wegen weiterer differenzierender Zustände von $\tau_1$, $\tau_3$, $\tau_4$ notwendig -> Trajektorienordnung erhöht sich jeweils um 4
 
+\subsubsection{Stabilitätsbetrachtung}
+
 \subsection{Quasi-statische Rückführungen}
 Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefiniertem relativen vektoriellen Grad im statischen Ansatz \cite[S. 206]{NLRT_Roebenack}.
 
@@ -382,8 +384,8 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 \pmb{\tilde{\delta}} =
 \left(\begin{matrix}
 \pmb{f} + \pmb{g} \pmb{\tau}\\
-\pmb{\dot{\tau}} \\
-\pmb{\ddot{\tau}}
+\dot{\pmb{\tau}} \\
+\ddot{\pmb{\tau}}
 \end{matrix}\right)
 \end{align}
 
@@ -431,14 +433,56 @@ und Ableitungen der anderen Komponenten von $\pmb{v}$, die wie folgt berechnet w
 
 so dass sich der neue Eingang $v_2$ wie folgt ergibt:
 \begin{equation}
-	v_2 = y_2^{(4)} = y_{\text{ref}}^{(4)} - c_{2, 3} (y^{(3)} - y_{\text{ref}}^{(3)}) - c_{2, 2} (\ddot{y} - \ddot{y_{\text{ref}}}) - c_{2, 1} (\dot{y} - \dot{y_{\text{ref}}}) - c_{2, 0} (y - y_{\text{ref}})
+	v_2 = y_2^{(4)} = y_{\text{ref}}^{(4)} - c_{2, 3} (y^{(3)} - y_{\text{ref}}^{(3)}) - c_{2, 2} (\ddot{y} - \ddot{y}_{\text{ref}}) - c_{2, 1} (\dot{y} - \dot{y}_{\text{ref}}) - c_{2, 0} (y - y_{\text{ref}})
 \end{equation} 
 
 - Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\pmb{x}$ vorkommen statt nur die von $\pmb{y}$ und seinen Ableitungen.
 
 \subsection{Exact feedforward linearization}
+An der Stelle einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung wird im Folgenden die Referenztrajektorie eingesetzt. \cite{Hagenmeyer2003}
+
+Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors angesetzt:
+\begin{equation}
+	\ddot{\pmb{\theta}} = \ddot{\pmb{\theta}}_{\text{ref}} - \pmb{c}_1^T \dot{\pmb{e}} - \pmb{c}_0^T \pmb{e}.
+\end{equation}
+
+Aus der Zusammensetzung des Zustandsvektors $\pmb{x} = (\pmb{\theta}, \dot{\pmb{\theta}})^T$ und der eingangsaffine Zustandsraumdarstellung kann außerdem der Zusammenhang:
+\begin{equation}
+	\ddot{\pmb{\theta}} = \pmb{f}_{[6, 10]}(\pmb{\theta}) + \pmb{g}_{[6, 10]}(\pmb{\theta}) \pmb{\tau}
+\end{equation}
+
+hergestellte werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da $\pmb{\tau} \in \mathbb{R}^4$ und $\pmb{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen von $\pmb{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
+\begin{equation}
+	\pmb{\tau}= \pmb{g}^{+}_{[6, 10]} (\pmb{\theta}) \ (\ddot{\pmb{\theta}}_{\text{ref}} - \pmb{c}_{1} \pmb{\dot{e}} - \pmb{c}_{0} \pmb{e} - \pmb{f}_{[6, 10]}(\pmb{\theta})).
+\end{equation} 
+
+Unter Einsetzen von $\pmb{\theta}_{\text{ref}}$ in $\pmb{g}_{[6, 10]}^+$ und $\pmb{f}_{[6, 10]}(\pmb{\theta}$ wird die Exact feedforward linearization realisiert:
+\begin{equation}
+\pmb{\tau}= \pmb{g}^{+}_{[6, 10]} (\pmb{\theta}_{\text{ref}}) \ (\ddot{\pmb{\theta}}_{\text{ref}} - \pmb{c}_{1} \pmb{\dot{e}} - \pmb{c}_{0} \pmb{e} - \pmb{f}_{[6, 10]}(\pmb{\theta}_{\text{ref}})).
+\end{equation} 
+
+\subsubsection{Vereinfachung mittels Ausgangsselektion}
+Statt der Nutzung einer Pseudo-Inversen kann auch eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\dot{\pmb{\theta}}$ vorgenommen werden. Symbolisch werde dies über eine Selektionsmatrix $S$ dargestellt:
+\begin{equation}
+	\pmb{S} \ddot{\pmb{\theta}} = \pmb{S}(\ddot{\pmb{\theta}}_{\text{ref}} - \pmb{c}_1^T \dot{\pmb{e}} - \pmb{c}_0^T \pmb{e}) = \pmb{S} \pmb{f}_{[6, 10]}(\pmb{\theta}) + \pmb{S} \pmb{g}_{[6, 10]}(\pmb{\theta}) \pmb{\tau}.
+\end{equation} 
+
+Durch die Wahl der letzten 4 Gleichungen kann eine direkte Inversion der somit quadratischen Eingangsmatrix $\pmb{g}_{[7, 10]} = \pmb{S} \pmb{g}_{[6, 10]}$ erfolgen:
+\begin{equation}
+	\pmb{\tau}= \pmb{g}^{-1}_{[7, 10]}(\pmb{\theta}_{\text{ref}}) \ \pmb{S}(\ddot{\pmb{\theta}}_{\text{ref}} - \pmb{c}_{1} \pmb{\dot{e}} - \pmb{c}_{0} \pmb{e} - \pmb{f}_{[6, 10]}(\pmb{\theta}_{\text{ref}})) \text{ mit } 
+	\pmb{S} = 
+	\begin{pmatrix}
+	0 & 1 & 0 & 0 & 0 \\
+	0 & 0 & 1 & 0 & 0 \\
+	0 & 0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 0 & 1 \\
+	\end{pmatrix}.
+\end{equation}
+
+Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung ein Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Es ergibt sich für Beispieltrajektorien mit Anfangsfehlern ein sehr gutes Folgeverhalten sowie eine stationäre Genauigkeit.
 
 \subsubsection{Stabilitätsbetrachtung}
+Ljapunows erste (indirekte) Methode zeigt, dass entlang ausgewählter Trajektorien zu späteren Zeitpunkten der Simulation Eigenwerte mit positiven Realteil vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf.
 
 \chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
