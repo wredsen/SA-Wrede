@@ -437,6 +437,11 @@ so dass sich der neue Eingang $v_2$ wie folgt ergibt:
 - Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\pmb{x}$ vorkommen statt nur die von $\pmb{y}$ und seinen Ableitungen.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
+In allen Stellgrößen $\pmb{\tau}$ treten in der Nähe von Ruhelagen Singularitäten auf. Diese äußern sich aufgrund numerischer Effekte, da es sich eigentlich beim Einsetzen solcher ... Bedingungen (measured quantities!) um Definitionslücken von rückgeführten Mess- bzw. Simulationsgrößen handelt. Es ist nicht auszuschließen, dass diese Definitionslücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter untersucht. Die CAS-Bibliothek \textit{SymPy} bietet mittels des Aufrufs \textit{smplf} ebenso bei relativ langer Rechenzeit kein Ergebnis.
+
+Zur Untersuchung bieten sich relativ einfache Terme der Nenner von $\tau_1$, $\tau_3$ und $\tau_4$ an ...
+
+Weiter interessant, wieso sich solche Lücken bei der Konstruktion der Trajektorie in den Ruhelagen ergeben ...
 
 \subsection{Exact feedforward linearization}
 An der Stelle einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung wird im Folgenden die Referenztrajektorie eingesetzt. \cite{Hagenmeyer2003}
