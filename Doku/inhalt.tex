@@ -215,22 +215,22 @@ berechnet zu 0.004553475 kg m m
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
-Herangezogen: ODE Modell des Gantrys aus Lagrange 1 (ODE flatness analysis simulation)
--> relativ überschaubare mod.eqns (5 Gleichungen)
-- eqns.jacobian(ttau), um Spalten zu finden, in denen Größe nur 1 mal vorkommt, so dass keine widersprüchlichen Gleichungen für Bestimmung der Größe 
--> eliminiere Gleichung und Größe aus Zeile, bei der solche Größe gefunden:
--- zunächst tau1(tau2) in 1ter(2ter) Spalte und damit 4te(5te) Zeile/Gleichung zu eliminieren
-- bei weiteren Größen keine Spalten mehr in jacobimatrix, in denen Größen nur 1 mal vorkommen, außerdem nun Jacobi-Matrix der Dimension 3x2 
+Herangezogen: ODE Modell des Gantrys aus Lagrange 1 (ODE flatness analysis simulation) \\
+-> relativ überschaubare mod.eqns (5 Gleichungen) \\
+- eqns.jacobian(ttau), um Spalten zu finden, in denen Größe nur 1 mal vorkommt, so dass keine widersprüchlichen Gleichungen für Bestimmung der Größe  \\
+-> eliminiere Gleichung und Größe aus Zeile, bei der solche Größe gefunden: \\
+- zunächst tau1(tau2) in 1ter(2ter) Spalte und damit 4te(5te) Zeile/Gleichung zu eliminieren \\
+- bei weiteren Größen keine Spalten mehr in jacobimatrix, in denen Größen nur 1 mal vorkommen, außerdem nun Jacobi-Matrix der Dimension 3x2 \\
 -> Ziel: Durch Linearkombination (Multiplikationen von Links) soll Transformation in Form $\left(\begin{matrix}
 1 & 0\\
 0 & 1\\
 0 & 0
-\end{matrix}\right)$ gebracht werden
+\end{matrix}\right)$ gebracht werden \\
 -> Vorgehen: $w_1 \cdot B_1 = \left(\begin{matrix}
 I_2 \\
 0_{1 \times 2}
-\end{matrix}\right)$ 
--> Bildung der Pseudo-Inversen von B1: $B_{1, pinv} = B_1^{L+}$ sowie Links-Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von B) $B_1^{L \perp}$, also $B^T B_1^{L \perp} = 0$
+\end{matrix}\right)$ \\
+-> Bildung der Pseudo-Inversen von B1: $B_{1, pinv} = B_1^{L+}$ sowie Links-Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von B) $B_1^{L \perp}$, also $B^T B_1^{L \perp} = 0$ \\
 => $\left(\begin{matrix}
 B_1^{L+} 0 \\
 B_1^{L \perp}
@@ -245,19 +245,43 @@ I_2 \\
 0_{1 \times 2}
 \end{matrix}\right)
 $
-mit der 3x3 Matrix w1 und 2x2 Matrix $B_{1,1}$, 1x2 Matrix $B_{1,2}$
+mit der 3x3 Matrix w1 und 2x2 Matrix $B_{1,1}$, 1x2 Matrix $B_{1,2}$ \\
 ==> $w_1 = \left(\begin{matrix}
 B_1^{L+} \\
 B_1^{L\perp}
-\end{matrix} \right)$, so dass neuer Gleichungssatz eqns2 = w1 * eqns1, daraus analog wie Anfangs tau1,2 und beide Gleichungen eliminierbar
+\end{matrix} \right)$, so dass neuer Gleichungssatz eqns2 = w1 * eqns1, daraus analog wie Anfangs tau1,2 und beide Gleichungen eliminierbar \\
 ==> in letzter Gleichung (Zeile) kommen q1,2 nur algebraisch vor:
-$s_{2} \left(\left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right) \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right) + \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{1} l_{2} m_{2} \left(g + \ddot{p}_{2}\right) - l_{1} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) - l_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)\right) + s_{2} \left(l_{1} l_{2} m_{2} \ddot{p}_{1} + l_{1} \tau_{4} \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) + l_{2} \tau_{3} \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{0} p_{2} \sin{\left(p_{3} \right)} - l_{0} s_{2} \sin^{2}{\left(p_{3} \right)} - 2 p_{1} p_{2} \sin{\left(p_{3} \right)} + 2 p_{2}^{2} \cos{\left(p_{3} \right)} + p_{2} q_{1} \sin{\left(p_{3} \right)} + p_{2} q_{2} \sin{\left(p_{3} \right)} + q_{1} s_{2} \sin^{2}{\left(p_{3} \right)} - q_{2} s_{2} \sin^{2}{\left(p_{3} \right)}\right) + \left(\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) - \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(J_{2} l_{1} l_{2} \ddot{p}_{3} + l_{1} s_{2} \tau_{4} \left(- l_{0} \sin{\left(p_{3} \right)} + p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{2} \sin{\left(p_{3} \right)}\right) + l_{2} s_{2} \tau_{3} \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right)\right) = 0$
+$s_{2} \left(\left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right) \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right) + \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{1} l_{2} m_{2} \left(g + \ddot{p}_{2}\right) - l_{1} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) - l_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)\right) + s_{2} \left(l_{1} l_{2} m_{2} \ddot{p}_{1} + l_{1} \tau_{4} \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) + l_{2} \tau_{3} \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{0} p_{2} \sin{\left(p_{3} \right)} - l_{0} s_{2} \sin^{2}{\left(p_{3} \right)} - 2 p_{1} p_{2} \sin{\left(p_{3} \right)} + 2 p_{2}^{2} \cos{\left(p_{3} \right)} + p_{2} q_{1} \sin{\left(p_{3} \right)} + p_{2} q_{2} \sin{\left(p_{3} \right)} + q_{1} s_{2} \sin^{2}{\left(p_{3} \right)} - q_{2} s_{2} \sin^{2}{\left(p_{3} \right)}\right) + \left(\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) - \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(J_{2} l_{1} l_{2} \ddot{p}_{3} + l_{1} s_{2} \tau_{4} \left(- l_{0} \sin{\left(p_{3} \right)} + p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{2} \sin{\left(p_{3} \right)}\right) + l_{2} s_{2} \tau_{3} \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right)\right) = 0$ \\
 kurz:
-$\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so dass hieras OBdA q2 sowie die letzte Gleichung eliminiert werden kann. Die verbleibenden Systemgrößen des Flachenausgangs ergeben sich somit zu $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$. Alle anderen Systemgrößen können durch $\mathbf y(\cdot)$ und dessen Ableitungen parametriert werden. Die Zusammenhänge dafür folgen aus den im Vorhinein eliminierten Gleichungen.´ 
+$\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so dass hieras OBdA q2 sowie die letzte Gleichung eliminiert werden kann. Die verbleibenden Systemgrößen des Flachenausgangs ergeben sich somit zu $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$. Alle anderen Systemgrößen können durch $\mathbf y(\cdot)$ und dessen Ableitungen parametriert werden. Die Zusammenhänge dafür folgen aus den im Vorhinein eliminierten Gleichungen.
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
 
-\section{Trajektorienplanung}
+\section{Trajektorienplanung des flachen Ausgangs}
+Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es keine festgelegten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
+
+Aufgrund der einfachen Einprägung von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse ist ersichtlich, dass der Eingang $\tau_2 = \Phi(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus der Ruhelage $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe ohne Sprünge an den Rändern in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
+\begin{align}
+	\begin{split}
+	y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
+	y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
+	\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
+	\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
+	\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = 0 \\
+	\dot{y}_4(t_e) &= \ddot{y}_4(t_e) = 0.
+	\end{split}
+\end{align}
+
+Es ergeben sich Ansatzfunktionen für die Trajektorien des flachen Ausgangs mit jeweiliger Ordnung $\alpha_i = 2 N_i - 1$, wobei $N_i$ der Anzahl der Randbedingungen des jeweiligen Ausgangs entspricht:
+\begin{align}
+	\begin{split}
+	y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; t_0 < t < t_e \\
+	y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+	\end{split}
+\end{align}
+
+Die Koeffizienten der Trajektorien $a_{i, j}$ können durch einsetzen der Randbedingungen und lösen des resultierenden linearen Gleichungssystems bestimmt werden. In der Simualtion wurde als Implementierung dafür die Funktion \textit{condition\_poly} der Bibliothek \textit{symbtools} verwendet.
+
 
 \section{Trajektorienfolgeregelung}
 
@@ -437,11 +461,17 @@ so dass sich der neue Eingang $v_2$ wie folgt ergibt:
 - Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\pmb{x}$ vorkommen statt nur die von $\pmb{y}$ und seinen Ableitungen.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
-In allen Stellgrößen $\pmb{\tau}$ treten in der Nähe von Ruhelagen Singularitäten auf. Diese äußern sich aufgrund numerischer Effekte, da es sich eigentlich beim Einsetzen solcher ... Bedingungen (measured quantities!) um Definitionslücken von rückgeführten Mess- bzw. Simulationsgrößen handelt. Es ist nicht auszuschließen, dass diese Definitionslücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter untersucht. Die CAS-Bibliothek \textit{SymPy} bietet mittels des Aufrufs \textit{smplf} ebenso bei relativ langer Rechenzeit kein Ergebnis.
+In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek \textit{SymPy} bietet mittels des Aufrufs \textit{smplf} allerdings keine keine Behebung dieses Problems in den Eingangsgrößen.
 
-Zur Untersuchung bieten sich relativ einfache Terme der Nenner von $\tau_1$, $\tau_3$ und $\tau_4$ an ...
+Für eine weitere Betrachtung würden sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$ anbieten:
+\begin{multline}
+	N_{1,3,4} = s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\ 
+	+ 4 pm_{1}^{2} \sin{(pm_{3})} - 4 pm_{1} pm_{2} \cos{(pm_{3})} - 4 pm_{1} qm_{1} \sin{(pm_{3})} - 4 pm_{1} qm_{2} \sin{(pm_{3})}\\ 
+	+ 2 pm_{2} qm_{1} \cos{(pm_{3})} + 2 pm_{2} qm_{2} \cos{(pm_{3})} + 4 qm_{1} qm_{2} \sin{(pm_{3})} - qm_{1} s_{2} \sin{(2 pm_{3})}\\ 
+	+ qm_{2} s_{2} \sin{(2 pm_{3})}).
+\end{multline}
 
-Weiter interessant, wieso sich solche Lücken bei der Konstruktion der Trajektorie in den Ruhelagen ergeben ...
+Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken bei der Konstruktion der Trajektorie in den Ruhelagen ergeben.
 
 \subsection{Exact feedforward linearization}
 An der Stelle einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung wird im Folgenden die Referenztrajektorie eingesetzt. \cite{Hagenmeyer2003}
@@ -487,7 +517,7 @@ Durch die Wahl der letzten 4 Gleichungen kann eine direkte Inversion der somit q
 Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung ein Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Es ergibt sich für Beispieltrajektorien mit Anfangsfehlern ein sehr gutes Folgeverhalten sowie eine stationäre Genauigkeit.
 
 \subsubsection{Stabilitätsbetrachtung}
-Ljapunows erste (indirekte) Methode zeigt, dass entlang ausgewählter Trajektorien zu späteren Zeitpunkten der Simulation Eigenwerte mit positiven Realteil vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf.
+Ljapunows erste (indirekte) Methode zeigt, dass entlang ausgewählter Trajektorien zu späteren Zeitpunkten der Simulation Eigenwerte mit positiven Realteil vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
 
 \chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
