@@ -23,8 +23,8 @@ Gliederung SA:
 
 4 Regelungsstrategien
 4.1 Regelung zur Stabilisierung von Ruhelagen (?)
-4.3 Trajektorienplanung des flachen Ausgangs
-4.4 Trajektorienfolgeregelung
+4.2 Trajektorienplanung des flachen Ausgangs
+4.3 Trajektorienfolgeregelung
 
 5 Fazit und Ausblick
 5.1 Fazit

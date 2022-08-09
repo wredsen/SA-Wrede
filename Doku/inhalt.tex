@@ -111,78 +111,6 @@ weitere Punkte zum behandeln:
 - Stichpunkte wie in modeltools DAEs aufgestellt werden
 - Schritte zur Reduktion auf Index 1 System in modeltoos verstehen, warum ist Reduktion wichtig?
 
-\section{Systematische Flachheitsanalyse von MIMO-Systemen}
-Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
-
-Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:
-\begin{equation}\label{eq:flatness_implicit_ode}
-	\pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
-\end{equation}
-
-Wobei $\pmb{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zustandskomponenten und Systemeingangsgrößen entspricht.
-
-Das DAE-System besitzt den Systemgrößenvektor $\pmb{y}$ mit
-\begin{equation}
-	y
-	=
-	\begin{pmatrix}
-		\pmb{x} \\
-		\hline
-		\pmb{z}
-	\end{pmatrix}
-	=
-	\begin{pmatrix}
-		\pmb{\theta} \\
-		\pmb{\dot{\theta}} \\
-		\hline
-		\pmb{\lambda}
-	\end{pmatrix}
-\end{equation}
-
-Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\pmb{\tau}$ die implizite DGL gebildet:
-\begin{equation}
-	\pmb{0} = \pmb{F(w, \dot{w})} \text{ mit } \pmb{w} 
-	=
-	\begin{pmatrix}
-		\pmb{y} \\
-		\hline
-		\pmb{\tau}
-	\end{pmatrix}
-	= 
-	\begin{pmatrix}
-		\pmb{\theta} \\
-		\pmb{\dot{\theta}} \\
-		\pmb{\lambda} \\
-		\hline
-		\pmb{\tau}
-	\end{pmatrix}
-\end{equation}
-
-Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
-\begin{align}
-	\pmb{0} &= \pmb{M}(\pmb{\theta}) \pmb{\ddot{\theta}} + \pmb{C}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{K}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{G}(\pmb{\theta}) \pmb{\lambda} - \pmb{B}(\pmb{\theta}) \pmb{\tau} \\
-	\pmb{0} &= \pmb{g}(\pmb{\theta}) 
-\end{align}
-
-(für späteres Kapitel der SA!)
-Dieses Doppelkransystem mit den Systemgrößen
-\begin{align}
-	\pmb{w}
-	=
-	\begin{pmatrix}
-		p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
-	\end{pmatrix}^T
-\end{align}
-
-So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:
-\begin{equation}
-	(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
-\end{equation}
-
-\section{Statische Eingangs-Ausgangs-Linearisierung}
-relativer grad ... (Buch von Röbenack) mit Definition 4.80 usw., aber nich Erzeugung von y Ableitungen
-
-\section{Quasistatische Eingangs-Ausgangs-Linearisierung} 
 
 \chapter{Analytische Modellbildung}
 
@@ -211,16 +139,13 @@ Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage
 Trägheitsmoment der Last nach %https://de.wikipedia.org/wiki/Tr%C3%A4gheitsmoment#:~:text=Ein%20Quader%2C%20der%20um%20eine%20Achse%20durch%20den%20Mittelpunkt%20rotiert%2C%20die%20parallel%20zu%20seinen%20Kanten%20c%20liegt.
 berechnet zu 0.004553475 kg m m
 
-\chapter{Regelungsstrategie}
-\section{Anwendung Flachheitsanalyse am Einzelkran}
+\chapter{Flachheitsanalyse}
 
-\section{Anwendung Flachheitsanalyse am Doppelkran}
-
-\subsection{Definition differentieller Flachheit}
+\section{Definition differentieller Flachheit}
 Ein System der Form $\dot{\pmb{x}} = \pmb{F}(\pmb{x}, \pmb{u})$ mit $\pmb{F}, \pmb{x} \in \mathbb{R}^n$ und $\pmb{u} \in \mathbb{R}^m$ ist (differentiell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\pmb{\Psi}$, $\pmb{\Theta}$ existieren, so dass:
 \begin{align}
-	\pmb{x} &= \pmb{\Psi}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
-	\pmb{u} &= \pmb{\Theta}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_u)}) \text{ mit } n_u < \infty.
+\pmb{x} &= \pmb{\Psi}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
+\pmb{u} &= \pmb{\Theta}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_u)}) \text{ mit } n_u < \infty.
 \end{align}
 
 Dabei ist $\pmb{y}$ ein flacher Ausgang \cite[S. 185]{NLRT_Roebenack}. 
@@ -230,45 +155,151 @@ Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend
 Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bekannt, allerdings ist der systematische Flachheitsnachweis und die Berechnung eines
 ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
 
-Herangezogen: ODE Modell des Gantrys aus Lagrange 1 (ODE flatness analysis simulation) \\
--> relativ überschaubare mod.eqns (5 Gleichungen) \\
-- eqns.jacobian(ttau), um Spalten zu finden, in denen Größe nur 1 mal vorkommt, so dass keine widersprüchlichen Gleichungen für Bestimmung der Größe  \\
--> eliminiere Gleichung und Größe aus Zeile, bei der solche Größe gefunden: \\
-- zunächst tau1(tau2) in 1ter(2ter) Spalte und damit 4te(5te) Zeile/Gleichung zu eliminieren \\
-- bei weiteren Größen keine Spalten mehr in jacobimatrix, in denen Größen nur 1 mal vorkommen, außerdem nun Jacobi-Matrix der Dimension 3x2 \\
--> Ziel: Durch Linearkombination (Multiplikationen von Links) soll Transformation in Form $\left(\begin{matrix}
-1 & 0\\
-0 & 1\\
-0 & 0
-\end{matrix}\right)$ gebracht werden \\
--> Vorgehen: $w_1 \cdot B_1 = \left(\begin{matrix}
-I_2 \\
+\section{Systematische Flachheitsanalyse von MIMO-Systemen}
+Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
+
+Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:
+\begin{equation}\label{eq:flatness_implicit_ode}
+\pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
+\end{equation}
+
+Wobei $\pmb{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zustandskomponenten und Systemeingangsgrößen entspricht.
+
+Das DAE-System besitzt den Systemgrößenvektor $\pmb{y}$ mit
+\begin{equation}
+y
+=
+\begin{pmatrix}
+\pmb{x} \\
+\hline
+\pmb{z}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\pmb{\theta} \\
+\pmb{\dot{\theta}} \\
+\hline
+\pmb{\lambda}
+\end{pmatrix}
+\end{equation}
+
+Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\pmb{\tau}$ die implizite DGL gebildet:
+\begin{equation}
+\pmb{0} = \pmb{F(w, \dot{w})} \text{ mit } \pmb{w} 
+=
+\begin{pmatrix}
+\pmb{y} \\
+\hline
+\pmb{\tau}
+\end{pmatrix}
+= 
+\begin{pmatrix}
+\pmb{\theta} \\
+\pmb{\dot{\theta}} \\
+\pmb{\lambda} \\
+\hline
+\pmb{\tau}
+\end{pmatrix}
+\end{equation}
+
+Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
+\begin{align}
+\pmb{0} &= \pmb{M}(\pmb{\theta}) \pmb{\ddot{\theta}} + \pmb{C}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{K}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{G}(\pmb{\theta}) \pmb{\lambda} - \pmb{B}(\pmb{\theta}) \pmb{\tau} \\
+\pmb{0} &= \pmb{g}(\pmb{\theta}) 
+\end{align}
+
+(für späteres Kapitel der SA!)
+Dieses Doppelkransystem mit den Systemgrößen
+\begin{align}
+\pmb{w}
+=
+\begin{pmatrix}
+p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
+\end{pmatrix}^T
+\end{align}
+
+So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:
+\begin{equation}
+(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
+\end{equation}
+
+\section{Anwendung Flachheitsanalyse am Einzelkran}
+
+\section{Anwendung Flachheitsanalyse am Doppelkran}
+
+Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_control.ipynb) \\
+-> Aus analytischer Modellbildung des Doppelkransystems folgen die 5 Systemgleichungen. \\
+- Bildung der Jacobi-Matrix dieser Gleichungen entlang bezüglich $\pmb{\tau}$:
+\begin{equation}
+	J_5 = 
+	\left(\begin{smallmatrix}
+	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & - \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & \frac{s_{2} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}}\\
+	-1 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & 0\\
+	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}
+	\end{smallmatrix}\right).
+\end{equation}
+- Dabei erkennt man, dass in den ersten beiden Spalten zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen.\\
+-> Dementsprechend können die letzten beiden Zeilen von $J_5$ eliminiert werden und jeweils eine Gleichung zur Bestimmung der Eingänge $\tau_1$, $\tau_2$ aus den übrigen Eingängen ermittelt werden.\\
+- Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es keine Spalten mehr in der darauf bezogenen Jacobimatrix $J_3$, in denen diese nur einmal vorkommen:
+\begin{equation}
+	J_3 =
+	\left(\begin{smallmatrix}
+	- \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
+	- \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
+	\frac{s_{2} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}}
+	\end{smallmatrix}\right).
+\end{equation}
+-> Aufgrund der nicht quadratischen Dimension von $J_3$, gilt es eine linke Pseudoinverse $J_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
+\begin{equation}
+	J_3^{L+} J_3 = I_{3 \times 2} = 
+	\left(\begin{matrix}
+	1 & 0\\
+	0 & 1\\
+	0 & 0
+	\end{matrix}\right)	
+\end{equation}
+sowie das linke Orthokomplement $J_3^{L\perp} \in \mathbb{R}^{1 \times 3}$:
+\begin{equation}
+	J_3^{L\perp} J_3 = 0_{1 \times 2} = 
+	\left(\begin{matrix}
+	0 & 0
+	\end{matrix}\right).
+\end{equation}
+
+%%% TODO:
+-> Dabei wird folgendermaßen vorgegangen: 
+$w \cdot J_3 = \left(\begin{matrix}
+I_{3 \times 2} \\
 0_{1 \times 2}
 \end{matrix}\right)$ \\
--> Bildung der Pseudo-Inversen von B1: $B_{1, pinv} = B_1^{L+}$ sowie Links-Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von B) $B_1^{L \perp}$, also $B^T B_1^{L \perp} = 0$ \\
+-> Bildung der Pseudo-Inversen von $J_3$: $J_{3, \text{pinv}} = J_3^{L+}$ sowie linkes Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von $J_3$) $J_3^{L \perp}$, also $J_3^T J_3^{L \perp} = 0$ \\
 => $\left(\begin{matrix}
-B_1^{L+} 0 \\
-B_1^{L \perp}
+J_3^{L+} 0 \\
+J_3^{L \perp}
 \end{matrix}\right)
 \left(\begin{matrix}
-B_{1, 1} \\
-B_{1,2}
+B_{3, 1} \\
+B_{3, 2}
 \end{matrix}\right)
 =
 \left(\begin{matrix}
-I_2 \\
+I_{3 \times 2} \\
 0_{1 \times 2}
 \end{matrix}\right)
 $
-mit der 3x3 Matrix w1 und 2x2 Matrix $B_{1,1}$, 1x2 Matrix $B_{1,2}$ \\
-==> $w_1 = \left(\begin{matrix}
-B_1^{L+} \\
-B_1^{L\perp}
+mit der 3x3 Matrix $w$ und 2x2 Matrix $J_{3,1}$, 1x2 Matrix $J_{3,2}$ \\
+==> $w = \left(\begin{matrix}
+J_3^{L+} \\
+J_3^{L\perp}
 \end{matrix} \right)$, so dass neuer Gleichungssatz eqns2 = w1 * eqns1, daraus analog wie Anfangs tau1,2 und beide Gleichungen eliminierbar \\
 ==> in letzter Gleichung (Zeile) kommen q1,2 nur algebraisch vor:
 $s_{2} \left(\left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right) \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right) + \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{1} l_{2} m_{2} \left(g + \ddot{p}_{2}\right) - l_{1} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) - l_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)\right) + s_{2} \left(l_{1} l_{2} m_{2} \ddot{p}_{1} + l_{1} \tau_{4} \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) + l_{2} \tau_{3} \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{0} p_{2} \sin{\left(p_{3} \right)} - l_{0} s_{2} \sin^{2}{\left(p_{3} \right)} - 2 p_{1} p_{2} \sin{\left(p_{3} \right)} + 2 p_{2}^{2} \cos{\left(p_{3} \right)} + p_{2} q_{1} \sin{\left(p_{3} \right)} + p_{2} q_{2} \sin{\left(p_{3} \right)} + q_{1} s_{2} \sin^{2}{\left(p_{3} \right)} - q_{2} s_{2} \sin^{2}{\left(p_{3} \right)}\right) + \left(\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) - \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(J_{2} l_{1} l_{2} \ddot{p}_{3} + l_{1} s_{2} \tau_{4} \left(- l_{0} \sin{\left(p_{3} \right)} + p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{2} \sin{\left(p_{3} \right)}\right) + l_{2} s_{2} \tau_{3} \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right)\right) = 0$ \\
 kurz:
 $\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so dass hieras OBdA q2 sowie die letzte Gleichung eliminiert werden kann. Die verbleibenden Systemgrößen des Flachenausgangs ergeben sich somit zu $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$. Alle anderen Systemgrößen können durch $\mathbf y(\cdot)$ und dessen Ableitungen parametriert werden. Die Zusammenhänge dafür folgen aus den im Vorhinein eliminierten Gleichungen.
+
+\chapter{Regelungsstrategie}
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
 
@@ -299,6 +330,9 @@ Die Koeffizienten der Trajektorien $a_{i, j}$ können durch einsetzen der Randbe
 
 
 \section{Trajektorienfolgeregelung}
+
+\subsection{Hintergrund}
+relativer grad ... (Buch von Röbenack) mit Definition 4.80 usw., aber nich Erzeugung von y Ableitungen
 
 \subsection{Statische Rückführung}
 relativer vektorieller relativer Grad $\pmb{r}$ des MIMO-Systems \cite[S. 194]{NLRT_Roebenack}:\\
@@ -533,6 +567,13 @@ Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operatio
 
 \subsubsection{Stabilitätsbetrachtung}
 Ljapunows erste (indirekte) Methode zeigt, dass entlang ausgewählter Trajektorien zu späteren Zeitpunkten der Simulation Eigenwerte mit positiven Realteil vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+
+\chapter{Fazit und Ausblick}
+\section{Fazit}
+bla
+
+\section{Ausblick}
+blub
 
 \chapter{war schon}
 In den folgenden Abschnitten werden einige Erläuterungen zur \LaTeX-Dokumentenklasse \texttt{ArbeitRST.cls} gegeben werden. Diese basiert auf der Klasse \texttt{scrbook} aus dem \KOMAScript-Paket und kann daher mit Hilfe der Methoden aus diesem Paket modifiziert werden. Für nähere Informationen dazu sei auf die KOMA-Script-Anleitung unter \url{http://www.ctan.org/pkg/koma-script} verwiesen. Das Wichtigste in Kürze gibt es auch in einem Cheatsheet unter \url{https://ctan.org/pkg/latex-refsheet}.
