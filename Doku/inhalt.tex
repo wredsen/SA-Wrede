@@ -215,6 +215,21 @@ berechnet zu 0.004553475 kg m m
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
+
+\subsection{Definition differentieller Flachheit}
+Ein System der Form $\dot{\pmb{x}} = \pmb{F}(\pmb{x}, \pmb{u})$ mit $\pmb{F}, \pmb{x} \in \mathbb{R}^n$ und $\pmb{u} \in \mathbb{R}^m$ ist (differentiell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\pmb{\Psi}$, $\pmb{\Theta}$ existieren, so dass:
+\begin{align}
+	\pmb{x} &= \pmb{\Psi}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
+	\pmb{u} &= \pmb{\Theta}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_u)}) \text{ mit } n_u < \infty.
+\end{align}
+
+Dabei ist $\pmb{y}$ ein flacher Ausgang \cite[S. 185]{NLRT_Roebenack}. 
+
+Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend aus dem Zustand $\pmb{x}$ und Eingang $\pmb{u}$ eindeutig aus dem flachen Ausgang $\pmb{y}$ und einer endlichen Anzahl dessen Zeitableitungen berechnet werden können, also keine Integrale dafür gelöst werden müssen. Eine alternative Formulierung des Flachheitsbegriffs verzichtet auf die Angabe der gleichen Dimension $m$ von Eingang und flachem Ausgang, fordert aber die differentielle Unabhängigkeit der Komponenten von $\pmb{y}$.
+
+Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bekannt, allerdings ist der systematische Flachheitsnachweis und die Berechnung eines
+ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
+
 Herangezogen: ODE Modell des Gantrys aus Lagrange 1 (ODE flatness analysis simulation) \\
 -> relativ überschaubare mod.eqns (5 Gleichungen) \\
 - eqns.jacobian(ttau), um Spalten zu finden, in denen Größe nur 1 mal vorkommt, so dass keine widersprüchlichen Gleichungen für Bestimmung der Größe  \\
