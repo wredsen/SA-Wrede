@@ -224,12 +224,62 @@ So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definit
 \end{equation}
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
+Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
+-> Aus analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen:
+\begin{align}
+		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} = 0 \label{single_flat_syseq1}\\
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} = 0\label{single_flat_syseq2}\\
+		m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} = 0\label{single_flat_syseq3}
+\end{align}
+- Bildung der Jacobi-Matrix dieser Gleichungen bezüglich $\pmb{\tau}$:
+\begin{equation}
+	\pmb{J}_3 =
+	\left(\begin{matrix}
+		0 & - \frac{p_{1} - q_{1}}{l_{1}}\\
+		0 & - \frac{p_{2}}{l_{1}}\\
+		-1 & \frac{p_{1} - q_{1}}{l_{1}}
+	\end{matrix}\right)
+\end{equation}
+- dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \ref{single_flat_syseq3} bestimmt werden kann. \\
+-> Dementsprechend kann die letzte Zeile von $\pmb{J}_3$ eliminiert werden. \\
+- Die verbleibenden ersten beiden Systemgleichungen \ref{single_flat_syseq1} und \ref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. Da in der zweiten Gleichung \ref{single_flat_syseq2} $\tau_2$ allein durch $p_2$ und die Ableitung $\ddot{p}_2$ dargestellt werden kann, wird diese Gleichung zur Elimination dieser Eingangskomponente genutzt, eine vorweggenommene Parametrisierung durch $p_2$ und $\ddot{p}_2$ ergibt:
+\begin{equation}
+	\tau_2 = \frac{l_{1} m_{2} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
+\end{equation}
+- Die letzte verbleibende Systemgleichung \ref{single_flat_syseq1} weist nach Substitution des soeben ermittelten $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p1, \ddot{p}_1, p2, \ddot{p}_2, q_1$ auf. Damit bietet sich die Elimination des allein algebraisch vorkommenden $q_1$ und auch an dieser stelle Vorwegnahme der Parametrisierung durch $p_1, p_2$ und deren Ableitungen an: 
+\begin{equation}
+	q_1 = \frac{p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}.
+\end{equation}
+
+Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \ref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
+\begin{multline}
+	\ddot{q}_1 =
+	\frac{-2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) }{\left(g + \ddot{p}_{2}\right)^{3}} \\	
+	+ \frac{\left(g + \ddot{p}_{2}\right)^{2} \left(p_{1} \ddddot{p}_{2} - p_{2} \ddddot{p}_{1} - 2 \dddot{p}_{1} \dot{p}_{2} + 2 \dddot{p}_{2} \dot{p}_{1} - \ddot{p}_{1} \ddot{p}_{2} + \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}}\\	
+	- \frac{\left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}}.
+\end{multline}
+
+Somit folgt:
+\begin{multline}
+	\frac{- m_{1} \left(2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) + \left(g + \ddot{p}_{2}\right)^{2} \left(- p_{1} \ddddot{p}_{2} + p_{2} \ddddot{p}_{1} + 2 \dddot{p}_{1} \dot{p}_{2} - 2 \dddot{p}_{2} \dot{p}_{1} + \ddot{p}_{1} \ddot{p}_{2} - \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) + \left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)\right) + m_{2} \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)^{3}}{\left(g + \ddot{p}_{2}\right)^{3}}
+\end{multline}
+
+Somit ist durch diese Parametrisierung gezeigt, dass es sich bei $\pmb{y} = (p_1, p_2)^T$ um einen flachen Ausgang handelt.
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
 
 Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_control.ipynb) \\
--> Aus analytischer Modellbildung des Doppelkransystems folgen die 5 Systemgleichungen. \\
-- Bildung der Jacobi-Matrix dieser Gleichungen entlang bezüglich $\pmb{\tau}$:
+-> Aus analytischer Modellbildung des Doppelkransystems folgen die 5 Systemgleichungen:
+{\tiny
+\begin{align}
+	m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
+	g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
+	J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} = 0 \label{double_flat_syseq3}\\
+	m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq4}\\
+	m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0 \label{double_flat_syseq5}.
+\end{align}
+}%
+- Bildung der Jacobi-Matrix dieser Gleichungen bezüglich $\pmb{\tau}$:
 \begin{equation}
 	\pmb{J}_5 = 
 	\left(\begin{smallmatrix}
@@ -240,7 +290,7 @@ Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\
 	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation}
-- Dabei erkennt man, dass in den ersten beiden Spalten der korrespondierenden Systemgleichungen zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen.\\
+- Dabei erkennt man, dass in den ersten beiden Spalten der zu den Systemgleichungen korrespondierenden Jacobi-Matrix zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen.\\
 -> Dementsprechend können die letzten beiden Zeilen von $\pmb{J}_5$ eliminiert werden und jeweils eine Gleichung zur Bestimmung der Eingänge $\tau_1$, $\tau_2$ aus den übrigen Eingängen ermittelt werden.\\
 - Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es keine Spalten mehr in der darauf bezogenen Jacobimatrix $\pmb{J}_3$, in denen diese nur einmal vorkommen:
 \begin{equation}
@@ -308,6 +358,8 @@ Die letzte verbleibende Systemgleichung enthält folgende Menge $M$ an Systemgr�
 	M = \{p_1, p_2, p_3, \ddot{p_1}, \ddot{p_2}, \ddot{p_3}, q_1, q_2 \}.
 \end{equation}
 In dieser Gleichung kommen also sowohl $q_1$ als auch $q_2$ rein algebraisch vor. Eine dieser beiden Größen kann also ebenso wie der Eingang $\pmb{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ $\pmb{y} = (p_1, p_2, p_3, q_2)^T$. Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang.
+
+Die konkreten Parametrisierungen aller Systemgrößen durch einen flachen Ausgang, die konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden können sind im \textit{Jupyter-Notebook} berechnet worden und bestehen aus zu vielen Operationen, um diese übersichtlich hier darzustellen.
 
 \chapter{Regelungsstrategie}
 
