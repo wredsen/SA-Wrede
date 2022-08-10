@@ -141,7 +141,8 @@ berechnet zu 0.004553475 kg m m
 
 \chapter{Flachheitsanalyse}
 
-\section{Definition differentieller Flachheit}
+\section{Definition differentieller Flachheit}\label{sec:Def_flatness}
+
 Ein System der Form $\dot{\pmb{x}} = \pmb{F}(\pmb{x}, \pmb{u})$ mit $\pmb{F}, \pmb{x} \in \mathbb{R}^n$ und $\pmb{u} \in \mathbb{R}^m$ ist (differentiell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\pmb{\Psi}$, $\pmb{\Theta}$ existieren, so dass:
 \begin{align}
 \pmb{x} &= \pmb{\Psi}(\pmb{y}, \dot{\pmb{y}}, ..., \pmb{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
@@ -155,10 +156,10 @@ Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend
 Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bekannt, allerdings ist der systematische Flachheitsnachweis und die Berechnung eines
 ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
 
-\section{Systematische Flachheitsanalyse von MIMO-Systemen}
-Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
+\section{Flachheitsanalyse von MIMO-Systemen}
+\sout{Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
 
-Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:
+Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:}
 \begin{equation}\label{eq:flatness_implicit_ode}
 \pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
 \end{equation}
@@ -218,10 +219,14 @@ p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_
 \end{pmatrix}^T
 \end{align}
 
-So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:
+\sout{So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:}
 \begin{equation}
 (\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
 \end{equation}
+
+Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert werden. Für eine systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
+
+Es sei ein nichtlineares Mehrgrößensystem der Form aus Abschnitt \ref{sec:Def_flatness} gegeben, dessen Eingang $\pmb{u}$ mittels der Systemgleichungen eliminiert werden kann, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination der übrigen Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $y$ der Dimension $n - p = m$ ergibt. 
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
