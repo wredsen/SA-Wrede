@@ -231,7 +231,7 @@ Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\
 -> Aus analytischer Modellbildung des Doppelkransystems folgen die 5 Systemgleichungen. \\
 - Bildung der Jacobi-Matrix dieser Gleichungen entlang bezüglich $\pmb{\tau}$:
 \begin{equation}
-	J_5 = 
+	\pmb{J}_5 = 
 	\left(\begin{smallmatrix}
 	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
 	0 & 0 & - \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
@@ -240,64 +240,74 @@ Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\
 	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation}
-- Dabei erkennt man, dass in den ersten beiden Spalten zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen.\\
--> Dementsprechend können die letzten beiden Zeilen von $J_5$ eliminiert werden und jeweils eine Gleichung zur Bestimmung der Eingänge $\tau_1$, $\tau_2$ aus den übrigen Eingängen ermittelt werden.\\
-- Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es keine Spalten mehr in der darauf bezogenen Jacobimatrix $J_3$, in denen diese nur einmal vorkommen:
+- Dabei erkennt man, dass in den ersten beiden Spalten der korrespondierenden Systemgleichungen zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen.\\
+-> Dementsprechend können die letzten beiden Zeilen von $\pmb{J}_5$ eliminiert werden und jeweils eine Gleichung zur Bestimmung der Eingänge $\tau_1$, $\tau_2$ aus den übrigen Eingängen ermittelt werden.\\
+- Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es keine Spalten mehr in der darauf bezogenen Jacobimatrix $\pmb{J}_3$, in denen diese nur einmal vorkommen:
 \begin{equation}
-	J_3 =
+	\pmb{J}_3 =
 	\left(\begin{smallmatrix}
 	- \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
 	- \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
 	\frac{s_{2} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation}
--> Aufgrund der nicht quadratischen Dimension von $J_3$, gilt es eine linke Pseudoinverse $J_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
+-> Aufgrund der nicht quadratischen Dimension von $\pmb{J}_3$, gilt es eine linke Pseudoinverse $\pmb{J}_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
-	J_3^{L+} J_3 = I_{3 \times 2} = 
+	\pmb{J}_3^{L+} \pmb{J}_3 = \pmb{I}_{3 \times 2} = 
 	\left(\begin{matrix}
 	1 & 0\\
 	0 & 1\\
 	0 & 0
 	\end{matrix}\right)	
 \end{equation}
-sowie das linke Orthokomplement $J_3^{L\perp} \in \mathbb{R}^{1 \times 3}$:
+sowie das linke Orthokomplement (Vektorraum aller Zeilen, die orthogonal zu allen Spalten von $\pmb{J}_3$ sind) $\pmb{J}_3^{L\perp} \in \mathbb{R}^{1 \times 3}$:
 \begin{equation}
-	J_3^{L\perp} J_3 = 0_{1 \times 2} = 
+	\pmb{J}_3^{L\perp} \pmb{J}_3 = \pmb{0}_{1 \times 2} = 
 	\left(\begin{matrix}
 	0 & 0
-	\end{matrix}\right).
+	\end{matrix}\right),
+\end{equation}
+
+so dass eine Transformation $\pmb{T}$ der übrigen Systemgleichungen erneut Spalten einer korrespondierenden Jacobi-Matrix impliziert mit jeweils nur einem konstanten nicht-Null-Eintrag:
+\begin{equation}
+	\pmb{T} \pmb{J}_3 =
+	\left(\begin{matrix}
+		\pmb{J}_3^{L+} \\
+		\pmb{J}_3^{L \perp}
+	\end{matrix}\right)
+	\pmb{J}¸_3 =
+	\left(\begin{matrix}
+		\pmb{I}_{3 \times 2} \\
+		\pmb{0}_{1 \times 2}
+	\end{matrix}\right) 
 \end{equation}
 
 %%% TODO:
--> Dabei wird folgendermaßen vorgegangen: 
-$w \cdot J_3 = \left(\begin{matrix}
-I_{3 \times 2} \\
-0_{1 \times 2}
-\end{matrix}\right)$ \\
--> Bildung der Pseudo-Inversen von $J_3$: $J_{3, \text{pinv}} = J_3^{L+}$ sowie linkes Orthokomplement (VR aller Zeilen, die orthogonal auf allen Spalten von $J_3$) $J_3^{L \perp}$, also $J_3^T J_3^{L \perp} = 0$ \\
-=> $\left(\begin{matrix}
-J_3^{L+} 0 \\
-J_3^{L \perp}
-\end{matrix}\right)
-\left(\begin{matrix}
-B_{3, 1} \\
-B_{3, 2}
-\end{matrix}\right)
-=
-\left(\begin{matrix}
-I_{3 \times 2} \\
-0_{1 \times 2}
-\end{matrix}\right)
-$
-mit der 3x3 Matrix $w$ und 2x2 Matrix $J_{3,1}$, 1x2 Matrix $J_{3,2}$ \\
-==> $w = \left(\begin{matrix}
-J_3^{L+} \\
-J_3^{L\perp}
-\end{matrix} \right)$, so dass neuer Gleichungssatz eqns2 = w1 * eqns1, daraus analog wie Anfangs tau1,2 und beide Gleichungen eliminierbar \\
-==> in letzter Gleichung (Zeile) kommen q1,2 nur algebraisch vor:
-$s_{2} \left(\left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right) \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right) + \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{1} l_{2} m_{2} \left(g + \ddot{p}_{2}\right) - l_{1} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) - l_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)\right) + s_{2} \left(l_{1} l_{2} m_{2} \ddot{p}_{1} + l_{1} \tau_{4} \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) + l_{2} \tau_{3} \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(l_{0} p_{2} \sin{\left(p_{3} \right)} - l_{0} s_{2} \sin^{2}{\left(p_{3} \right)} - 2 p_{1} p_{2} \sin{\left(p_{3} \right)} + 2 p_{2}^{2} \cos{\left(p_{3} \right)} + p_{2} q_{1} \sin{\left(p_{3} \right)} + p_{2} q_{2} \sin{\left(p_{3} \right)} + q_{1} s_{2} \sin^{2}{\left(p_{3} \right)} - q_{2} s_{2} \sin^{2}{\left(p_{3} \right)}\right) + \left(\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right) - \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)\right) \left(J_{2} l_{1} l_{2} \ddot{p}_{3} + l_{1} s_{2} \tau_{4} \left(- l_{0} \sin{\left(p_{3} \right)} + p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{2} \sin{\left(p_{3} \right)}\right) + l_{2} s_{2} \tau_{3} \left(- p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{1} \sin{\left(p_{3} \right)}\right)\right) = 0$ \\
-kurz:
-$\kappa_0 + \kappa_{1, 0} q_1+ \kappa_{0,1} q_2 + \kappa_{1, 1} q_1 q_2 = 0$, so dass hieras OBdA q2 sowie die letzte Gleichung eliminiert werden kann. Die verbleibenden Systemgrößen des Flachenausgangs ergeben sich somit zu $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$. Alle anderen Systemgrößen können durch $\mathbf y(\cdot)$ und dessen Ableitungen parametriert werden. Die Zusammenhänge dafür folgen aus den im Vorhinein eliminierten Gleichungen.
+-> Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung folgendermaßen vorgegangen werden: 
+\begin{equation}
+	\pmb{J}_3^{L+} =
+	\left(
+	\left(\begin{matrix}
+		J_{3, (1,1)} & J_{3, (1,2)}\\
+		J_{3, (2,1)} & J_{3, (2,2)}\\
+	\end{matrix}\right)^{-1}	
+	\pmb{0}_{2 \times 1}
+	\right), 		
+	\pmb{J}_3^{L\perp} =
+	\left(\begin{matrix}
+		J_{3, (2,1)} J_{3, (3,2)} - J_{3, (2,2)} J_{3, (3,1)} \\
+		-J_{3, (1,1)} J_{3, (3,2)} + J_{3, (1,2)} J_{3, (3,1)} \\
+		J_{3, (1,1)} J_{3, (2,2)} - J_{3, (1,2)} J_{3, (2,1)}
+	\end{matrix}\right)^T.
+\end{equation}
+
+Aus der Multiplikation der somit gefundenen Transformationsmatrix $\pmb{T}$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Forderung ihrer Konstruktion anschließend die verbleibenden Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie zwei transformierte Systemgleichungen eliminieren.
+
+Die letzte verbleibende Systemgleichung enthält folgende Menge $M$ an Systemgrößen und ihren Ableitungen:
+\begin{equation}
+	M = \{p_1, p_2, p_3, \ddot{p_1}, \ddot{p_2}, \ddot{p_3}, q_1, q_2 \}.
+\end{equation}
+In dieser Gleichung kommen also sowohl $q_1$ als auch $q_2$ rein algebraisch vor. Eine dieser beiden Größen kann also ebenso wie der Eingang $\pmb{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ $\pmb{y} = (p_1, p_2, p_3, q_2)^T$. Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang.
 
 \chapter{Regelungsstrategie}
 
