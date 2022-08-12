@@ -11,9 +11,12 @@
 Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
 
 \begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.75 \textwidth]{Pictures/real_gantry.jpg}
-	\caption{Doppelkran-Demonstratorsystem mit Laufkatzen und Last.}
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/real_gantry.jpg}
+	\end{center}
+	\caption[Doppelkran-Demonstratorsystem mit Laufkatzen und Last]
+	{Doppelkran-Demonstratorsystem mit Laufkatzen und Last.}
 	\label{fig:demonstrator_real}
 \end{figure}
 
@@ -111,27 +114,121 @@ weitere Punkte zum behandeln:
 - Stichpunkte wie in modeltools DAEs aufgestellt werden
 - Schritte zur Reduktion auf Index 1 System in modeltoos verstehen, warum ist Reduktion wichtig?
 
+\sout{Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
+	
+	Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:}
+\begin{equation}\label{eq:flatness_implicit_ode}
+	\pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
+\end{equation}
+
+Wobei $\pmb{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zustandskomponenten und Systemeingangsgrößen entspricht.
+
+Das DAE-System besitzt den Systemgrößenvektor $\pmb{y}$ mit
+\begin{equation}
+	y
+	=
+	\begin{pmatrix}
+		\pmb{x} \\
+		\hline
+		\pmb{z}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		\pmb{\theta} \\
+		\pmb{\dot{\theta}} \\
+		\hline
+		\pmb{\lambda}
+	\end{pmatrix}
+\end{equation}
+
+Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\pmb{\tau}$ die implizite DGL gebildet:
+\begin{equation}
+	\pmb{0} = \pmb{F(w, \dot{w})} \text{ mit } \pmb{w} 
+	=
+	\begin{pmatrix}
+		\pmb{y} \\
+		\hline
+		\pmb{\tau}
+	\end{pmatrix}
+	= 
+	\begin{pmatrix}
+		\pmb{\theta} \\
+		\pmb{\dot{\theta}} \\
+		\pmb{\lambda} \\
+		\hline
+		\pmb{\tau}
+	\end{pmatrix}
+\end{equation}
+
+Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
+\begin{align}
+	\pmb{0} &= \pmb{M}(\pmb{\theta}) \pmb{\ddot{\theta}} + \pmb{C}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{K}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{G}(\pmb{\theta}) \pmb{\lambda} - \pmb{B}(\pmb{\theta}) \pmb{\tau} \\
+	\pmb{0} &= \pmb{g}(\pmb{\theta}) 
+\end{align}
+
+(für späteres Kapitel der SA!)
+Dieses Doppelkransystem mit den Systemgrößen
+\begin{align}
+	\pmb{w}
+	=
+	\begin{pmatrix}
+		p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
+	\end{pmatrix}^T
+\end{align}
+
+\sout{So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:}
+\begin{equation}
+	(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
+\end{equation}
 
 \chapter{Analytische Modellbildung}
 
 Verschiedene Stufen zur Modellierung im Repo:
 
 Einzelkran:
--model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs
--DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt.
+-model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs \\
+-DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt. \\
 
-Doppelkran (double crane notebooks, nur LK Aktuierung):
-Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen
-- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten
-- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T
+Doppelkran (double crane notebooks, nur LK Aktuierung): \\
+Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen \\
+- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten\\
+- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T\\
 
-Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):
-Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)
-- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten
-- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt
-- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend
+Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):\\
+Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)\\
+- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten\\
+- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt\\
+- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend\\
 
 \section{Analytisches Modell Einzelkran}
+(Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
+
+Zur Modellierung wird mittels der Lagrange-Gleichungen zweiter Art ein ODE-Modell des Einzelkrans erzeugt. Diese Modellierung hat den Vorteil, dass mittels der generalisierten Kräfte gerade die Stellkraft im Seil gut abgebildet werden kann sowie keine Zwangsbedingungen im späteren Flachheitsnachweis berücksichtigt werden müssen.
+
+Als aktuierte Koordinate wird zunächst nur die $x$-Verschiebung der $q_1$ Laufkatzenposition ($B_1 = G_1 = S_1$) ausgewählt, als passive Koordinaten die $x$- und $y$-Auslenkungen $(p_1, p_2)$ der Last aus dem Ursprung. Die variable Seillänge wird mit $l_1$ bezeichnet, die durch die Koordinaten auch mittels:
+\begin{equation}
+	l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}
+\end{equation}
+ausgedrückt werden kann.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/ODE_flatness_analysis_single_crane_diagram}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig:single_crane_diagram}
+\end{figure}
+
+Definition der Geometrie ...
+
+Energien ...
+
+Systemgleichungen...
+
+Ersetzen der generalisierten Kräfte durch Stellkräfte ... 
+
 
 \section{Analytisches Modell Doppelkran}
 
@@ -157,78 +254,12 @@ Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bek
 ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
 
 \section{Flachheitsanalyse von MIMO-Systemen}
-\sout{Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
 
-Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:}
-\begin{equation}\label{eq:flatness_implicit_ode}
-\pmb{0} = \pmb{F}(\pmb{x}, \pmb{\dot{x}}), \ \pmb{x}(t) \in \mathbb{R}^n
-\end{equation}
-
-Wobei $\pmb{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zustandskomponenten und Systemeingangsgrößen entspricht.
-
-Das DAE-System besitzt den Systemgrößenvektor $\pmb{y}$ mit
-\begin{equation}
-y
-=
-\begin{pmatrix}
-\pmb{x} \\
-\hline
-\pmb{z}
-\end{pmatrix}
-=
-\begin{pmatrix}
-\pmb{\theta} \\
-\pmb{\dot{\theta}} \\
-\hline
-\pmb{\lambda}
-\end{pmatrix}
-\end{equation}
-
-Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\pmb{\tau}$ die implizite DGL gebildet:
-\begin{equation}
-\pmb{0} = \pmb{F(w, \dot{w})} \text{ mit } \pmb{w} 
-=
-\begin{pmatrix}
-\pmb{y} \\
-\hline
-\pmb{\tau}
-\end{pmatrix}
-= 
-\begin{pmatrix}
-\pmb{\theta} \\
-\pmb{\dot{\theta}} \\
-\pmb{\lambda} \\
-\hline
-\pmb{\tau}
-\end{pmatrix}
-\end{equation}
-
-Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
-\begin{align}
-\pmb{0} &= \pmb{M}(\pmb{\theta}) \pmb{\ddot{\theta}} + \pmb{C}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{K}(\pmb{\theta}, \pmb{\dot{\theta}}) + \pmb{G}(\pmb{\theta}) \pmb{\lambda} - \pmb{B}(\pmb{\theta}) \pmb{\tau} \\
-\pmb{0} &= \pmb{g}(\pmb{\theta}) 
-\end{align}
-
-(für späteres Kapitel der SA!)
-Dieses Doppelkransystem mit den Systemgrößen
-\begin{align}
-\pmb{w}
-=
-\begin{pmatrix}
-p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
-\end{pmatrix}^T
-\end{align}
-
-\sout{So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:}
-\begin{equation}
-(\pmb{I_{6 x 6}}, \pmb{0_{6 x 17}}) \pmb{\dot{w}} = (\pmb{0_{6 x 6}}, \pmb{I_{6 x 6}}, \pmb{0_{6 x 11}}) \pmb{w}
-\end{equation}
-
-Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert werden. Für eine systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
+Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert werden. Für eine mathematisch fundierte und systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
 
 Es sei ein nichtlineares Mehrgrößensystem der Form aus Abschnitt \ref{sec:Def_flatness} gegeben. Dessen Eingang $\pmb{u}$ kommt in affiner Form vor und könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination $p$ übriger Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $\pmb{y}$ der Dimension $n - p = m$ ergibt. 
 
-Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Elimination bietet sich die Bildung der Jacobi-Matrix $\pmb{J}_i$ der zu diesem Zeitpunkt noch $i$ betrachteten Systemgleichungen bezüglich des Eingangs $\pmb{u}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
+Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Elimination bietet sich die Bildung der Jacobi-Matrix $\pmb{J}_i$ der zu diesem Zeitpunkt noch $i$ betrachteten Systemgleichungen bezüglich des Eingangs $\pmb{u}_{m-(n-i)}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
 \begin{equation}
 	\begin{pmatrix}
 	* & \cdots & * & 0 & * & \cdots & *\\
@@ -245,38 +276,60 @@ Falls keine solcher Spalten zu finden ist, kann eine Transformation $\pmb{T}$ de
 \begin{equation}
 	\pmb{T} \pmb{J}_i = 
 	\begin{pmatrix}
-		\pmb{I}_{i-m}
+		\pmb{I}_{m-(n-i)} \\
+		\pmb{0}_{(n-m) \times (m-(n-i))}
 	\end{pmatrix}.
 \end{equation}
 
+Wobei $\pmb{T}$ über die Eigenschaften von $\pmb{J}_i^{L +}$ und  $\pmb{J}_i^{L \perp}$ folgendermaßen gebildet werden kann:
+\begin{align}
+	\pmb{J}_i^{L +} \pmb{J}_i = \pmb{I}_i \\
+	\pmb{J}_i^{L \perp} \pmb{J}_i = \pmb{0}_{(n-m) \times (m-(n-i))} \\
+	\Rightarrow \pmb{T} = 
+	\begin{pmatrix}
+		\pmb{J}_i^{L +} \\
+		\pmb{J}_i^{L \perp}
+	\end{pmatrix} .
+\end{align}
 
+Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden kann analog durch Bildung einer Jacobi-Matrix bezüglich der noch vorhandenen Systemgrößen vorgenommen werden. Der Flache Ausgang $\pmb{y}$ besteht aus der Menge an Systemgrößen, welche nach Elimination aller Gleichungen übrig ist. Mittels der Zusammenhänge aus den Systemgleichungen können nach \ref{sec:Def_flatness} alle Systemgrößen allein durch $(\pmb{y}, \dot{\pmb{y}}, \ddot{\pmb{y}}, ...)$ parametrisiert werden.
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
 -> Aus analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen:
 \begin{align}
-		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} = 0 \label{single_flat_syseq1}\\
-		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} = 0\label{single_flat_syseq2}\\
-		m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} = 0\label{single_flat_syseq3}
+	m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\label{single_flat_syseq1}\\
+	g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\label{single_flat_syseq2}\\
+	m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\label{single_flat_syseq3}
 \end{align}
 - Bildung der Jacobi-Matrix dieser Gleichungen bezüglich $\pmb{\tau}$:
 \begin{equation}
 	\pmb{J}_3 =
 	\left(\begin{matrix}
-		0 & - \frac{p_{1} - q_{1}}{l_{1}}\\
-		0 & - \frac{p_{2}}{l_{1}}\\
-		-1 & \frac{p_{1} - q_{1}}{l_{1}}
+		0 & - \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+		0 & - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+		-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
 	\end{matrix}\right)
 \end{equation}
 - dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \ref{single_flat_syseq3} bestimmt werden kann. \\
 -> Dementsprechend kann die letzte Zeile von $\pmb{J}_3$ eliminiert werden. \\
 - Die verbleibenden ersten beiden Systemgleichungen \ref{single_flat_syseq1} und \ref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. Da in der zweiten Gleichung \ref{single_flat_syseq2} $\tau_2$ allein durch $p_2$ und die Ableitung $\ddot{p}_2$ dargestellt werden kann, wird diese Gleichung zur Elimination dieser Eingangskomponente genutzt, eine vorweggenommene Parametrisierung durch $p_2$ und $\ddot{p}_2$ ergibt:
 \begin{equation}
+	\label{eq:pre_single_crane_tau2_w_q1}
 	\tau_2 = \frac{l_{1} m_{2} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
 \end{equation}
+
+- Dabei ist zu bemerken, dass in dieser Beschreibung von $\tau2$ die Koordinaten $p_1, p_2, q_1$ zusätzlich durch $l_1$ enthalten sind. Diese können nach Parametrisierung durch einen flachen Ausgang anschließend ersetzt werden. 
+
 - Die letzte verbleibende Systemgleichung \ref{single_flat_syseq1} weist nach Substitution des soeben ermittelten $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p1, \ddot{p}_1, p2, \ddot{p}_2, q_1$ auf. Damit bietet sich die Elimination des allein algebraisch vorkommenden $q_1$ und auch an dieser stelle Vorwegnahme der Parametrisierung durch $p_1, p_2$ und deren Ableitungen an: 
 \begin{equation}
 	q_1 = \frac{p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}.
+\end{equation}
+
+Somit kann die Substitution von $q_1$ in der flachen Darstellung \ref{eq:pre_single_crane_tau2_w_q1} von $\tau_2$ erfolgen:
+\begin{equation}
+	\tau_2 =
+	\frac{m_{2} \sqrt{\frac{p_{2}^{2} \left(g + \ddot{p}_{2}\right)^{2} + \left(- g p_{1} - p_{1} \ddot{p}_{2} + p_{1} \left(g + \ddot{p}_{2}\right) + p_{2} \ddot{p}_{1}\right)^{2}}{\left(g + \ddot{p}_{2}\right)^{2}}} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
 \end{equation}
 
 Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \ref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
@@ -337,11 +390,10 @@ Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\
 \end{equation}
 -> Aufgrund der nicht quadratischen Dimension von $\pmb{J}_3$, gilt es eine linke Pseudoinverse $\pmb{J}_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
-	\pmb{J}_3^{L+} \pmb{J}_3 = \pmb{I}_{3 \times 2} = 
+	\pmb{J}_3^{L+} \pmb{J}_3 = \pmb{I}_{2} = 
 	\left(\begin{matrix}
 	1 & 0\\
 	0 & 1\\
-	0 & 0
 	\end{matrix}\right)	
 \end{equation}
 sowie das linke Orthokomplement (Vektorraum aller Zeilen, die orthogonal zu allen Spalten von $\pmb{J}_3$ sind) $\pmb{J}_3^{L\perp} \in \mathbb{R}^{1 \times 3}$:
@@ -361,9 +413,11 @@ so dass eine Transformation $\pmb{T}$ der übrigen Systemgleichungen erneut Spal
 	\end{matrix}\right)
 	\pmb{J}_3 =
 	\left(\begin{matrix}
-		\pmb{I}_{3 \times 2} \\
+		\pmb{I}_{2} \\
 		\pmb{0}_{1 \times 2}
-	\end{matrix}\right) 
+	\end{matrix}\right)
+	=
+	\pmb{I}_{3 \times 2}. 
 \end{equation}
 
 %%% TODO:
@@ -393,7 +447,7 @@ Die letzte verbleibende Systemgleichung enthält folgende Menge $M$ an Systemgr�
 \end{equation}
 In dieser Gleichung kommen also sowohl $q_1$ als auch $q_2$ rein algebraisch vor. Eine dieser beiden Größen kann also ebenso wie der Eingang $\pmb{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\pmb{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ $\pmb{y} = (p_1, p_2, p_3, q_2)^T$. Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang.
 
-Die konkreten Parametrisierungen aller Systemgrößen durch einen flachen Ausgang, die konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden können sind im \textit{Jupyter-Notebook} berechnet worden und bestehen aus zu vielen Operationen, um diese übersichtlich hier darzustellen.
+Die konkreten Parametrisierungen aller Systemgrößen durch einen flachen Ausgang, die konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden können sind im Jupyter-Notebook berechnet worden und bestehen aus zu vielen Operationen, um diese übersichtlich hier darzustellen.
 
 \chapter{Regelungsstrategie}
 
@@ -527,7 +581,7 @@ Problem:\\
 \begin{figure}[ht]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
-		\includegraphics[scale=0.25]{Pictures/dyn_controller_initial_error}
+		\includegraphics[scale=1]{Pictures/dyn_controller_initial_error}
 	\end{center}
 	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
 	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
