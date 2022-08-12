@@ -226,7 +226,30 @@ p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_
 
 Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert werden. Für eine systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
 
-Es sei ein nichtlineares Mehrgrößensystem der Form aus Abschnitt \ref{sec:Def_flatness} gegeben, dessen Eingang $\pmb{u}$ mittels der Systemgleichungen eliminiert werden kann, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination der übrigen Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $y$ der Dimension $n - p = m$ ergibt. 
+Es sei ein nichtlineares Mehrgrößensystem der Form aus Abschnitt \ref{sec:Def_flatness} gegeben. Dessen Eingang $\pmb{u}$ kommt in affiner Form vor und könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination $p$ übriger Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $\pmb{y}$ der Dimension $n - p = m$ ergibt. 
+
+Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Elimination bietet sich die Bildung der Jacobi-Matrix $\pmb{J}_i$ der zu diesem Zeitpunkt noch $i$ betrachteten Systemgleichungen bezüglich des Eingangs $\pmb{u}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
+\begin{equation}
+	\begin{pmatrix}
+	* & \cdots & * & 0 & * & \cdots & *\\
+	\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+	* & \cdots & * & 0 & * & \cdots & *  \\
+	* & \cdots & * & \varepsilon & * & \cdots & * \\
+	* & \cdots & * & 0 & * & \cdots & *  \\
+	\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+	* & \cdots & * & 0 & * & \cdots & *\\
+	\end{pmatrix}.
+\end{equation}
+
+Falls keine solcher Spalten zu finden ist, kann eine Transformation $\pmb{T}$ der Systemgleichungen durchgeführt werden, welche mittels linkem Orthokomplement $\pmb{J}_i^{L \perp}$ und linker Pseudoinverser $\pmb{J}_i^{L +}$ der Jacobi-Matrix das System in eine geeignete Form überführt \cite[Abschnitt 2.1.2]{Fritzsche2016}:
+\begin{equation}
+	\pmb{T} \pmb{J}_i = 
+	\begin{pmatrix}
+		\pmb{I}_{i-m}
+	\end{pmatrix}.
+\end{equation}
+
+
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
@@ -257,17 +280,24 @@ Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/
 \end{equation}
 
 Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \ref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
-\begin{multline}
-	\ddot{q}_1 =
+\begin{align}
+	\begin{split}
+	\ddot{q}_1 &=
 	\frac{-2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) }{\left(g + \ddot{p}_{2}\right)^{3}} \\	
-	+ \frac{\left(g + \ddot{p}_{2}\right)^{2} \left(p_{1} \ddddot{p}_{2} - p_{2} \ddddot{p}_{1} - 2 \dddot{p}_{1} \dot{p}_{2} + 2 \dddot{p}_{2} \dot{p}_{1} - \ddot{p}_{1} \ddot{p}_{2} + \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}}\\	
-	- \frac{\left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}}.
-\end{multline}
+	&+ \frac{\left(g + \ddot{p}_{2}\right)^{2} \left(p_{1} \ddddot{p}_{2} - p_{2} \ddddot{p}_{1} - 2 \dddot{p}_{1} \dot{p}_{2} + 2 \dddot{p}_{2} \dot{p}_{1} - \ddot{p}_{1} \ddot{p}_{2} + \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}}\\	
+	&- \frac{\left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}}.
+	\end{split}
+\end{align}
 
 Somit folgt:
-\begin{multline}
-	\frac{- m_{1} \left(2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) + \left(g + \ddot{p}_{2}\right)^{2} \left(- p_{1} \ddddot{p}_{2} + p_{2} \ddddot{p}_{1} + 2 \dddot{p}_{1} \dot{p}_{2} - 2 \dddot{p}_{2} \dot{p}_{1} + \ddot{p}_{1} \ddot{p}_{2} - \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) + \left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)\right) + m_{2} \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)^{3}}{\left(g + \ddot{p}_{2}\right)^{3}}
-\end{multline}
+\begin{align}
+	\begin{split}
+	\tau_1 &=
+	\frac{- m_{1} 2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}} \\	
+	&+ \frac{- m_{1} \left(g + \ddot{p}_{2}\right)^{2} \left(- p_{1} \ddddot{p}_{2} + p_{2} \ddddot{p}_{1} + 2 \dddot{p}_{1} \dot{p}_{2} - 2 \dddot{p}_{2} \dot{p}_{1} + \ddot{p}_{1} \ddot{p}_{2} - \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}} \\
+	&+ \frac{-m_1 \left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}} + \frac{m_{2} \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)^{3}}{\left(g + \ddot{p}_{2}\right)^{3}}
+	\end{split}
+\end{align}
 
 Somit ist durch diese Parametrisierung gezeigt, dass es sich bei $\pmb{y} = (p_1, p_2)^T$ um einen flachen Ausgang handelt.
 
@@ -275,15 +305,14 @@ Somit ist durch diese Parametrisierung gezeigt, dass es sich bei $\pmb{y} = (p_1
 
 Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_control.ipynb) \\
 -> Aus analytischer Modellbildung des Doppelkransystems folgen die 5 Systemgleichungen:
-{\tiny
-\begin{align}
-	m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
-	g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
-	J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} = 0 \label{double_flat_syseq3}\\
-	m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq4}\\
-	m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0 \label{double_flat_syseq5}.
-\end{align}
-}%
+\begin{flalign}
+	&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
+	&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
+	&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} \nonumber \\
+	&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} = 0 \label{double_flat_syseq3}\\
+	&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq4}\\
+	&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0 \label{double_flat_syseq5}.
+\end{flalign}
 - Bildung der Jacobi-Matrix dieser Gleichungen bezüglich $\pmb{\tau}$:
 \begin{equation}
 	\pmb{J}_5 = 
@@ -330,7 +359,7 @@ so dass eine Transformation $\pmb{T}$ der übrigen Systemgleichungen erneut Spal
 		\pmb{J}_3^{L+} \\
 		\pmb{J}_3^{L \perp}
 	\end{matrix}\right)
-	\pmb{J}¸_3 =
+	\pmb{J}_3 =
 	\left(\begin{matrix}
 		\pmb{I}_{3 \times 2} \\
 		\pmb{0}_{1 \times 2}
@@ -495,7 +524,18 @@ Problem:\\
 - Pole müssen weiter links Platziert werden für gutes Folgeverhalten bei Anfangsfehlern (wegen der zusätzlichen Integratoren bei den Eingängen ???) \\
 - sehr lange Simulationsdauer
 
-\subsubsection{Änderungen der Trajektorienplanung}
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=0.25]{Pictures/dyn_controller_initial_error}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig_dyn_controller_initial_error}
+\end{figure}
+
+
+\subsubsection{Anpassung der Trajektorienplanung}
 - an beiden Rändern für jede Referenztrajektorie jeweils 2 mal mehr stetig diffbar wegen weiterer differenzierender Zustände von $\tau_1$, $\tau_3$, $\tau_4$ notwendig -> Trajektorienordnung erhöht sich jeweils um 4
 
 \subsection{Quasi-statische Rückführungen}
@@ -577,15 +617,17 @@ so dass sich der neue Eingang $v_2$ wie folgt ergibt:
 - Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\pmb{x}$ vorkommen statt nur die von $\pmb{y}$ und seinen Ableitungen.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
-In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek \textit{SymPy} bietet mittels des Aufrufs \textit{smplf} allerdings keine keine Behebung dieses Problems in den Eingangsgrößen.
+In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine keine Behebung dieses Problems in den Eingangsgrößen.
 
 Für eine weitere Betrachtung würden sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$ anbieten:
-\begin{multline}
-	N_{1,3,4} = s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\ 
-	+ 4 pm_{1}^{2} \sin{(pm_{3})} - 4 pm_{1} pm_{2} \cos{(pm_{3})} - 4 pm_{1} qm_{1} \sin{(pm_{3})} - 4 pm_{1} qm_{2} \sin{(pm_{3})}\\ 
-	+ 2 pm_{2} qm_{1} \cos{(pm_{3})} + 2 pm_{2} qm_{2} \cos{(pm_{3})} + 4 qm_{1} qm_{2} \sin{(pm_{3})} - qm_{1} s_{2} \sin{(2 pm_{3})}\\ 
-	+ qm_{2} s_{2} \sin{(2 pm_{3})}).
-\end{multline}
+\begin{flalign}
+	\begin{split}
+	N_{1,3,4} &= s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\
+	&+ 4 pm_{1}^{2} \sin{(pm_{3})} - 4 pm_{1} pm_{2} \cos{(pm_{3})}- 4 pm_{1} qm_{1} \sin{(pm_{3})} - 4 pm_{1} qm_{2} \sin{(pm_{3})}\\
+	&+ 2 pm_{2} qm_{1} \cos{(pm_{3})} + 2 pm_{2} qm_{2} \cos{(pm_{3})} + 4 qm_{1} qm_{2} \sin{(pm_{3})} - qm_{1} s_{2} \sin{(2 pm_{3})}\\
+	&+ qm_{2} s_{2} \sin{(2 pm_{3})}).
+	\end{split}
+\end{flalign}
 
 Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken bei der Konstruktion der Trajektorie in den Ruhelagen ergeben.
 
