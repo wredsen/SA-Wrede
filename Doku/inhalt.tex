@@ -5,7 +5,7 @@
 \chapter{Einleitung}
 
 
-\chapter{Systembeschreibung und Modellierungsansatz}
+\chapter{System- und Problembeschreibung}
 
 \section{Demonstratorsytem}
 Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
@@ -31,9 +31,35 @@ Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels In
 \section{Problembeschreibung und Zielsetzung}
 Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel der Studienarbeit ist es deshalb,  bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in der Ebene und Folgeregelung zur Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystems geschehen. 
 
+\chapter{Analytische Modellbildung}
+
+\section{Allgemeine Modellannahmen}
+- planar, kein Schwingen aus Ebene \\
+- Seile Masselos, kein Trägheitsmoment, Last mit homogener Masseverteilung, keine dissipativen Kräfte, ...\\
+
+jeweils gerechtfertigt, weil ...\\
+
+Verschiedene Stufen zur Modellierung im Repo:
+
+Einzelkran:
+-model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs \\
+-DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt. \\
+
+Doppelkran (double crane notebooks, nur LK Aktuierung): \\
+Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen \\
+- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten\\
+- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T\\
+
+Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):\\
+Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)\\
+- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten\\
+- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt\\
+- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend\\
+
 \section{Modellierung mittels Lagrange-Formalismus}
 
 \subsection{Lagrange-Gleichungen erster Art}
+\label{sec:Lagrange1_theory}
 Die Dynamik mechanischer Systeme lässt sich über Differentialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\mathbf{\dot{\theta}}$ \cite[S.7]{DissKnoll}. 
 
 Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Eine Lagrange-Funktion kann damit folgendermaßen definiert werden:
@@ -185,26 +211,6 @@ Dieses Doppelkransystem mit den Systemgrößen
 	(\mathbf{I_{6 x 6}}, \mathbf{0_{6 x 17}}) \mathbf{\dot{w}} = (\mathbf{0_{6 x 6}}, \mathbf{I_{6 x 6}}, \mathbf{0_{6 x 11}}) \mathbf{w}
 \end{equation}
 
-\chapter{Analytische Modellbildung}
-
-Verschiedene Stufen zur Modellierung im Repo:
-
-Einzelkran:
--model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs \\
--DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt. \\
-
-Doppelkran (double crane notebooks, nur LK Aktuierung): \\
-Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen \\
-- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten\\
-- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T\\
-
-Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):\\
-Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)\\
-- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten\\
-- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt\\
-- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend\\
-- Seile Masselos, kein Trägheitsmoment, Last mit homogener Masseverteilung, ...
-
 \section{Analytisches Modell Einzelkran}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
 
@@ -286,6 +292,8 @@ Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen
 \end{align}
 
 \section{Analytisches Modell Doppelkran}
+
+\subsection{Ansatz über ein ODE-System}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis.ipynb)
 
 Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die generalisierte Kraft gerade die Stellkraft im Seil gut abgebildet werden kann sowie keine Zwangsbedingungen im späteren Flachheitsnachweis berücksichtigt werden müssen.
@@ -307,7 +315,6 @@ ausgedrückt werden kann.
 	\label{fig:double_crane_diagram}
 \end{figure}
 
-%%%%%%
 Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die Koordinaten beschrieben werden:
 \begin{equation}
 	\mathbf{S}_1 =
@@ -403,11 +410,149 @@ Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen
 	&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0.
 \end{flalign}
 
-%%%%%%
+Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrieben werden:
+\begin{align}
+	\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{\tau}, \nonumber \\ \mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \nonumber \\
+	\mathbf{f}(\mathbf{x}) &= 
+	(\dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2}, 0, -g, 0, 0, 0)^T, \nonumber \\ 
+	\mathbf{g}(\mathbf{x}) &=
+	\left(\begin{matrix}
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		0 & 0 & 0 & 0\\
+		0 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{2}}\\
+		0 & 0 & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2} m_{2}}\\
+		0 & 0 & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{1}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{2}}\\
+		\frac{1}{m_{1}} & 0 & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{1}} & 0\\
+		0 & \frac{1}{m_{3}} & 0 & \frac{l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{3}}
+	\end{matrix}\right).
+\end{align}
+
+\subsection{Ansatz über ein DAE-System}
+(Im Folgenden genutztes Notebook: double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb)
+
+Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die Einprägung von Zwangsbedingungen die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\mathbf{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Längen dieser eine Umformulierung des Problems mit den Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)
+
+Als aktuierte Koordinate werden nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_4 = \mathbf{S}_5$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Gelenks $\mathbf{G}_2 (= \mathbf{S}_2)$ sowie $(p_3, p_4)$ des Gelenks $\mathbf{G}_3 = (\mathbf{S}_4)$. 
+
+Für konstante Seillängen können folgende Zwangsbedingungen formuliert werden:
+\begin{align}
+	l_{1} - \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} &= 0\\
+	l_{2} - \sqrt{p_{4}^{2} + \left(- l_{0} + p_{3} - q_{2}\right)^{2}} &= 0.	
+\end{align}
+
+Die konstante Lastlänge wird durch
+\begin{equation}
+	2 s_{3} - \sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}
+\end{equation}
+ausgedrückt.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/DAE_double_crane_cartesian_diagram.pdf}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig:DAE_double_crane_diagram}
+\end{figure}
+
+Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die Koordinaten beschrieben werden:
+\begin{align}
+	\mathbf{S}_1 =
+	\begin{pmatrix}
+		q_1 \\
+		0
+	\end{pmatrix}, 
+	\
+	\mathbf{S}_2 =
+	\begin{pmatrix}
+		p_1 \\
+		p_2
+	\end{pmatrix},
+	\
+	\mathbf{S}_3 =
+	\frac{1}{2}(\mathbf{S}_2 + \mathbf{S}_4) =
+	\frac{1}{2}
+	\begin{pmatrix}
+		p_1 + p_3 \\
+		p_2 + p_4
+	\end{pmatrix},
+	\nonumber \\
+	\mathbf{S}_4 =
+	\left(\begin{matrix}
+		p_3 \\
+		p_4
+	\end{matrix}\right),
+	\
+	\mathbf{S}_5 =
+	\left(\begin{matrix}
+		l_0 + q_2 \\
+		0
+	\end{matrix}\right).
+\end{align}
+
+Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie $T$ (Theoretische Begründung wieso !?!) vorhanden sind. Dies wäre bei einer Modellierung der Last mit homogener Masseverteilung und Trägheitsmoment nicht der Fall. Deshalb wird die Last durch ein System aus drei Massen ($m_2$, $m_3$, $m_4$) beschrieben, das sich simulativ äquivalent verhalten sollte und folgenden Gleichungen genügt:
+\begin{align}
+	m_{\mathrm{ges}} &= m_2 + m_3 + m_4\\
+	m_2 &= m_4\\
+	J &= m_2 s_3^2 + m_4 s_3^2 = 2 m_2 s_3^2\\
+	\Rightarrow m_2 &= m_4 = \frac{J}{2 s_3^2} \\
+	\Rightarrow m_3 &= m_{\mathrm{ges}} - m_2 -m_4.
+\end{align}
+
+Die größen $m_{\mathrm{ges}}$ und $J$ beziehen sich auf die identifizierten Systemparameter, die so auch bei der Modellbildung des Doppelkrans als ODE-System genutzt wurden.
+
+Somit ist es möglich die kinetische und potentielle Energie des Systems zu formulieren:
+\begin{align}
+	T &= \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 + \frac{m_3}{2} \dot{\mathbf{S}}_3^T \dot{\mathbf{S}}_3 + \frac{m_4}{2} \dot{\mathbf{S}}_4^T \dot{\mathbf{S}}_4 + \frac{m_5}{2} \dot{\mathbf{S}}_5^T \dot{\mathbf{S}}_5 \nonumber \\  
+	&= \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \cdot 0.25 \left(\dot{p}_{1} + \dot{p}_{3}\right)^{2}}{2} + \frac{m_{3} \cdot 0.25 \left(\dot{p}_{2} + \dot{p}_{4}\right)^{2}}{2} \nonumber \\
+	&+ \frac{m_{4} \dot{p}_{3}^{2}}{2} + \frac{m_{4} \dot{p}_{4}^{2}}{2} + \frac{m_{5} \dot{q}_{2}^{2}}{2} \\
+	V &= (m_2 \ g \ \mathbf{S}_2^T + m_3 \ g \ \mathbf{S}_3^T + m_4 \ g \ \mathbf{S}_4^T) \mathbf{e}_y \nonumber \\ &= g \left(m_{2} p_{2} + m_{3} \left(0.5 p_{2} + 0.5 p_{4}\right) + m_{4} p_{4}\right).
+\end{align}
+
+Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ lassen sich die Systemgleichungen ausdrücken:
+\begin{flalign}
+	&- \frac{\lambda_{1} p_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} + \frac{\lambda_{1} q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{1}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
+	&+ \frac{\lambda_{2} p_{3}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + m_{2} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{3} = 0\\
+	&g m_{2} + 0.5 g m_{3} - \frac{\lambda_{1} p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
+	&+ m_{2} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} = 0\\
+	&\frac{\lambda_{2} \left(p_{1} - p_{3}\right)}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{3} \left(l_{0} - p_{3} + q_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + \frac{m_{3} \left(0.5 \ddot{p}_{1} + 0.5 \ddot{p}_{3}\right)}{2} + m_{4} \ddot{p}_{3} = 0\\
+	&0.5 g m_{3} + g m_{4} + \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} - \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\ 
+	&- \frac{\lambda_{3} p_{4}}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} + m_{4} \ddot{p}_{4} = 0\\
+	&\frac{\lambda_{1} \left(p_{1} - q_{1}\right) + \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} \left(m_{1} \ddot{q}_{1} - \tau_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\\
+	&\frac{- \lambda_{3} \left(l_{0} - p_{3} + q_{2}\right) + \sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}} \left(m_{5} \ddot{q}_{2} - \tau_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} = 0.
+\end{flalign}
 
 \section{Systemidentifikation}
-Trägheitsmoment der Last nach %https://de.wikipedia.org/wiki/Tr%C3%A4gheitsmoment#:~:text=Ein%20Quader%2C%20der%20um%20eine%20Achse%20durch%20den%20Mittelpunkt%20rotiert%2C%20die%20parallel%20zu%20seinen%20Kanten%20c%20liegt.
-berechnet zu 0.004553475 kg m m
+
+Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messen mit einem Lineal oder einer Wage bestimmen. Nur das Trägheitsmoment der Last kann entsprechend der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt, die in die Ebene zeigt, berechnet werden:
+%https://de.wikipedia.org/wiki/Tr%C3%A4gheitsmoment#:~:text=Ein%20Quader%2C%20der%20um%20eine%20Achse%20durch%20den%20Mittelpunkt%20rotiert%2C%20die%20parallel%20zu%20seinen%20Kanten%20c%20liegt.
+\begin{equation}
+	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
+\end{equation}
+
+Dabei entspricht $h$ der Höhe der Last, welche zu $h = 90$ mm
+bestimmt wurde.
+
+\begin{table}[htbp]%
+	\centering
+	\caption{Physikalische Parameter des Doppelkrandemonstratorsystems.}
+	\label{tab:relative_degrees}
+	\begin{tabular}{c c c} 
+		Parameter & Bezeichnung im ODE-Modell & Wert \\ 
+		\hline
+		Masse Laufkatze 1 & $m_1$ & 0,45 {kg} \\
+		Masse Laufkatze 2 & $m_3$ & 0,45 {kg} \\
+ 		Masse Last & $m_2$ & 0,557 {kg} \\
+		Länge Last & $2 s_2$ & 0,15 {m} \\
+		Initialer Laufkatzenabstand & $l_0$ & 0,3 {m} \\
+		Trägheitsmoment Last & $J_2$ & 0,00455 $\text{kgm}^2$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 \chapter{Flachheitsanalyse}
 
@@ -677,6 +822,7 @@ relativer vektorieller relativer Grad $\mathbf{r}$ des MIMO-Systems \cite[S. 194
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
 		explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		\bottomrule
 	\end{tabular}
 \end{table}
 
@@ -780,6 +926,7 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 		$y_3^{(k)}$ & 4 & 4 & 2 & 2\\		
 		$y_4^{(k)}$ & 2 & >4 & 2 & 4\\
 		$(y_5^{(k)} = q_2^{(k)}$ & >4 & 2 & 4 & 2)\\
+		\bottomrule
 	\end{tabular}
 \end{table}
 

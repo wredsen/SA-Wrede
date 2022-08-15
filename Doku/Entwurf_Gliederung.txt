@@ -2,18 +2,16 @@ Gliederung SA:
 
 1 Einleitung (zum Schluss schreiben)
 
-(Präzisierung der Aufgabenstellung?) (optional)
-
-2 Systembeschreibung und Modellierungsansatz
+2 System- und Problembeschreibung
 2.1 Demonstratorsytem
 2.2 Problembeschreibung und Zielsetzung
-2.3 Modellierung mittels Lagrange-Formalismus (Kinematische Schleifen)
-2.4 Generierung und Berechnung von DAE-Systemen
 
 3 Analytische Modellbildung
-3.1 Analytisches Modell Einzelkran
-3.1 Analytisches Modell Doppelkran
-3.2 Systemidentifikation
+3.1 Modellierung mittels Lagrange-Formalismus
+3.2 Generierung und Berechnung von DAE-Systemen
+3.3 Analytisches Modell Einzelkran
+3.4 Analytisches Modell Doppelkran
+3.5 Systemidentifikation
 
 4 Flachheitsanalyse
 4.1 Definition differentielle Flachheit
