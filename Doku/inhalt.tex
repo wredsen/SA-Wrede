@@ -3,7 +3,7 @@
 \pagenumbering{arabic}
 
 \chapter{Einleitung}
-
+- ganz am Ende
 
 \chapter{System- und Problembeschreibung}
 
@@ -34,27 +34,10 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 \chapter{Analytische Modellbildung}
 
 \section{Allgemeine Modellannahmen}
-- planar, kein Schwingen aus Ebene \\
-- Seile Masselos, kein Trägheitsmoment, Last mit homogener Masseverteilung, keine dissipativen Kräfte, ...\\
 
-jeweils gerechtfertigt, weil ...\\
+In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die gesamte Bewegung aller Komponenten nur in einer $x$-$y$-Ebene betrachtet. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser nur in einer Ebene zulässt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen und der Last als masselos angenommen sowie nicht mit einem Trägheitsmoment behaftet. Die Last wird trotz seiner Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären CAD-Daten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Es wird aus Gründen der Einfachheit auf die Abbildung dissipativer Kräfte verzichtet. Zudem können diese bei einer funktionierenden unterlagerten Regelung als kompensiert angenommen werden.
 
-Verschiedene Stufen zur Modellierung im Repo:
-
-Einzelkran:
--model single crane -> ODE System zur kollokierten partiellen Linearisierung, Simulation von ODEs \\
--DAE lift actuated single crane -> Darstellung als DAE-System mit Hubaktuierung, so dass Regelung mittels virtueller Kraft auf Ruhelage, wenn Schneckengetriebe sperrt. \\
-
-Doppelkran (double crane notebooks, nur LK Aktuierung): \\
-Prinzipielles Problem, dass in kinetischer Energie T für Lagrange alle abgeleiteten p,q vorkommen müssen \\
-- DAE double crane w1 angle -> G2 in kartesischen Koordinaten und absoluter Lastwinkel, so dass für T nur Trägheitsmoment von Last, nicht Seilen nötig, damit alle p, q enthalten\\
-- DAE double crane w1 angle -> 3 relative Winkel, deshalb auch J in Seilen für T\\
-
-Doppelkran (lift actuated double crane notebooks, vollständige Aktuierung):\\
-Prinzipielles Problem, dass effiziente Berechnung und Hubaktuierung bei Ruhelage und Schwerkraft wirken (Vgl. Einzelkran DAE lift actuated single crane)\\
-- DAE double crane fully actuated -> 3 Winkel als passive Koordinaten, aber ungelöstes Problem des Findens von konsistenten Anfangswerten\\
-- DAE double crane cartesian -> Gelenke als kartesische Koordinaten, 3 ZB in euklidischen Abständen -> keine cos, sin Terme (daher effiziente Simulation), Längen l1, l2 zunächst als feste Parameter und dann später manuell durch weitere Zustände im Modell mod ergänzt, Trick mit diskreten Massen statt homogener Last wie in Notebook erklärt\\
-- weitere Versuche der Beschreibung mit Winkeln durch Probleme bei T (alle pdot) oder seeehr lange Simulationsdauern nicht zielführend\\
+Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst Problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein im Allgemeinen effizient zu simulierendes ODE-System ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last bietet sich alternativ zum vorherigen Vorgehen auch die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein DAE-System zur Simulation generiert werden. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung.
 
 \section{Modellierung mittels Lagrange-Formalismus}
 
@@ -528,8 +511,7 @@ Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ lassen sich die Systemgle
 
 \section{Systemidentifikation}
 
-Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messen mit einem Lineal oder einer Wage bestimmen. Nur das Trägheitsmoment der Last kann entsprechend der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt, die in die Ebene zeigt, berechnet werden:
-%https://de.wikipedia.org/wiki/Tr%C3%A4gheitsmoment#:~:text=Ein%20Quader%2C%20der%20um%20eine%20Achse%20durch%20den%20Mittelpunkt%20rotiert%2C%20die%20parallel%20zu%20seinen%20Kanten%20c%20liegt.
+Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messen mit einem Lineal oder einer Wage bestimmen. Nur das Trägheitsmoment der Last kann entsprechend der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt, die in die Ebene zeigt, berechnet werden \cite{LastTraegheit}:
 \begin{equation}
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
@@ -544,12 +526,12 @@ bestimmt wurde.
 	\begin{tabular}{c c c} 
 		Parameter & Bezeichnung im ODE-Modell & Wert \\ 
 		\hline
-		Masse Laufkatze 1 & $m_1$ & 0,45 {kg} \\
-		Masse Laufkatze 2 & $m_3$ & 0,45 {kg} \\
- 		Masse Last & $m_2$ & 0,557 {kg} \\
-		Länge Last & $2 s_2$ & 0,15 {m} \\
-		Initialer Laufkatzenabstand & $l_0$ & 0,3 {m} \\
-		Trägheitsmoment Last & $J_2$ & 0,00455 $\text{kgm}^2$ \\
+		Masse Laufkatze 1 & $m_1$ & 0,45 \si{\kg} \\
+		Masse Laufkatze 2 & $m_3$ & 0,45 \si{\kg} \\
+ 		Masse Last & $m_2$ & 0,557 \si{\kg} \\
+		Länge Last & $2 s_2$ & 0,15 \si{\m} \\
+		Initialer Laufkatzenabstand & $l_0$ & 0,3 \si{\m} \\
+		Trägheitsmoment Last & $J_2$ & 0,00455 $\si{\kg\m^2}$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -770,6 +752,7 @@ Die konkreten Parametrisierungen aller Systemgrößen durch einen flachen Ausgan
 \chapter{Regelungsstrategie}
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
+- notwendig???
 
 \section{Trajektorienplanung des flachen Ausgangs}
 Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es keine festgelegten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
