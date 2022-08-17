@@ -43,7 +43,7 @@ Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst Problemlos mögli
 
 \subsection{Lagrange-Gleichungen erster Art}
 \label{sec:Lagrange1_theory}
-Die Dynamik mechanischer Systeme lässt sich über Differentialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\mathbf{\dot{\theta}}$ \cite[S.7]{DissKnoll}. 
+Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\mathbf{\dot{\theta}}$ \cite[S.7]{DissKnoll}. 
 
 Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Eine Lagrange-Funktion kann damit folgendermaßen definiert werden:
 \begin{equation}
@@ -74,7 +74,7 @@ Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichun
 	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = Q_i, \quad i = 1, ..., n.
 \end{equation} 
 
-Eine stark automatisierte Durchführung dieses Formalismus ist unter Nutzung des Python-Pakets \textit{symbtools} \cite{symbtools} möglich.
+Eine stark automatisierte Durchführung dieses Formalismus ist unter Nutzung des Python-Pakets symbtools \cite{symbtools} möglich.
 
 -> ggf. dazu in Nextcloud/Präsis Folien zu modeltools -> Matrixdarstellung mit M, C, K, B
 
@@ -98,102 +98,32 @@ Q_i = \sum_{k=1}^l \frac {\partial \mathbf{r_k}} {\partial \theta_i} \cdot \math
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
-Differenzial-algebraische Gleichungssysteme (DAE-Systeme) sind gewöhnliche Differenzialgleichungssysteme (ODE-Systeme), welche um algebraische Nebenbedingungen ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
+Differenzial-algebraische Gleichungssysteme (DAE-Systeme) sind gewöhnliche Differenzialgleichungssysteme (DGL-, ODE-Systeme), welche um algebraische Gleichungen (AGL) oder Nebenbedingungen ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
 
-Ein DAE-System lässt sich unter anderem in einer semi-expliziten Form aufstellen :
+Ein DAE-System lässt sich unter anderem in einer semi-expliziten Form aufstellen:
 	\begin{align}\label{eq:dae_std}
 		\mathbf{\dot{x}} &= \mathbf{f}(\mathbf{x}, \mathbf{z}, \mathbf{u}, t) \\
 		\mathbf{0} &= \mathbf{g}(\mathbf{x}, \mathbf{z}, t),
 	\end{align}
-wobei $\mathbf{x}$ Zustand, $\mathbf{z}$ algebraischer Variablen (quasi Zustandsgrößen, die in Systemgleichungen nicht differentiell vorkommen), $\mathbf{u}$ Systemeingang, $t$ Zeit.
+wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen nicht differenziell vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht.
 
-Differenzieller Index: Minimale Anzahl an Differentiation $\frac{d}{dt}$ der algebraischen Gleichungen (AGL) $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der Differentialgleichung ein explizites Differentialgleichungssystem aus dem DAE-System entsteht. (Vgl. Systementwurf Mechatronischer Systeme S. 139)
+Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i = 0$. Die Differenzierung AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet.
 
-Numerische Integration von DAE-Systemen: 
+Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i = 3$ und können über folgende Bewegungsgleichungen dargestellt werden:
+\begin{align}
+\mathbf{0} &= \mathbf{M}(\mathbf{\theta}) \ddot{\mathbf{\theta}} + \mathbf{C}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{K}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{G}(\mathbf{\theta}) \mathbf{\lambda} - \mathbf{B}(\mathbf{\theta}) \mathbf{\tau} \\
+\mathbf{0} &= \mathbf{g}(\mathbf{\theta}).
+\end{align}
+
+Zur Integration davon gibt es verschiedene Möglichkeiten: 
 \begin{itemize}
-\item mechanische Systeme mit starrer Kopplung als Zwangsbedingungen allgemein von Index 3
-\item Lösung über Indexreduktion auf Index 2 -> Integration über implizites Verfahren
-\item Lösung über Indexreduktion auf Index 1 -> Integration über explizites Verfahren + AGL-Löser oder implizites Verfahren
-\item Lösung über Indexreduktion auf Index 0 -> Integration über explizites oder implizites Verfahren
-\item Bestimmung der Anfangswerte der Integration aus gegebenen AGL oder Gleichungen, die sich im Laufe der Indexreduktion ergeben
+\item  Indexreduktion auf Index $i = 2$ und anschließende Integration über ein implizites Verfahren
+\item Indexreduktion auf Index $i = 1$ und anschließende Integration über ein explizites Verfahren mit AGL-Löser oder ein implizites Verfahren
+\item Indexreduktion auf Index  $i = 0$ und anschließende Integration über ein explizites oder implizites Verfahren.
 \end{itemize}
+Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools führt die Reduktion von Index-3-Systemen auf Index-1-Systeme durch. Zur numerischen Berechnung kann daraufhin der Solver ODASSL des Python-Pakets assimulo \cite{assimulo} verwendet werden.
 
-modeltools führt dabei Reduktion von Index 3 System auf Index 1 System durch.
-Hier wird als Solver ODASSL verwendet. Dieser ist modifizierte Version des DASSL Solvers zur Lösung überbestimmter (mehr Gleichungen als Variablen, wieso?) Systeme (singulärer) impliziter DGL ($https://jmodelica.org/assimulo/DAE_OVER_ODASSL.html$). Zu DASSL: https:$//www.openmodelica.org/doc/OpenModelicaUsersGuide/latest/solving.html$
-
-Zum weiterem Verständnis von DAEs: $https://reference.wolfram.com/language/tutorial/NDSolveDAE.html$
-
-weitere Punkte zum behandeln:
-- Warum konsistenete AW bei DAE wichtig, Funktionsweise von modeltools mit DAE-Systemen ->DAE System(object)->init? (Präsi zu modeltools unter Präsi in nextcloud)
-- Stichpunkte wie in modeltools DAEs aufgestellt werden
-- Schritte zur Reduktion auf Index 1 System in modeltoos verstehen, warum ist Reduktion wichtig?
-
-\sout{Paper Fritzsche, Franke, Knoll Systematische Flachheitsanalyse und Algorithmische $Anleitung: https://github.com/klim-/uc_algorithm/blob/master/doc/user_guide.pdf$
-	
-	Mathematische Beschreibung eines nichtlinearen Systems in impliziter Form:}
-\begin{equation}\label{eq:flatness_implicit_ode}
-	\mathbf{0} = \mathbf{F}(\mathbf{x}, \mathbf{\dot{x}}), \ \mathbf{x}(t) \in \mathbb{R}^n
-\end{equation}
-
-Wobei $\mathbf{x}$ nicht dem Zustandsvektor allein sondern allen Systemgrößen, also Zustandskomponenten und Systemeingangsgrößen entspricht.
-
-Das DAE-System besitzt den Systemgrößenvektor $\mathbf{y}$ mit
-\begin{equation}
-	y
-	=
-	\begin{pmatrix}
-		\mathbf{x} \\
-		\hline
-		\mathbf{z}
-	\end{pmatrix}
-	=
-	\begin{pmatrix}
-		\mathbf{\theta} \\
-		\mathbf{\dot{\theta}} \\
-		\hline
-		\mathbf{\lambda}
-	\end{pmatrix}
-\end{equation}
-
-Somit wird unter Berücksichtigung der verallgemeinerten Stellkräfte $\mathbf{\tau}$ die implizite DGL gebildet:
-\begin{equation}
-	\mathbf{0} = \mathbf{F(w, \dot{w})} \text{ mit } \mathbf{w} 
-	=
-	\begin{pmatrix}
-		\mathbf{y} \\
-		\hline
-		\mathbf{\tau}
-	\end{pmatrix}
-	= 
-	\begin{pmatrix}
-		\mathbf{\theta} \\
-		\mathbf{\dot{\theta}} \\
-		\mathbf{\lambda} \\
-		\hline
-		\mathbf{\tau}
-	\end{pmatrix}
-\end{equation}
-
-Mechanische Systeme können über folgende Bewegungsgleichungen dargestellt werden ($2019_Knoll_Heedt_Roebenack_Lagrangian_Modeltools.pdf$):
-\begin{align}
-	\mathbf{0} &= \mathbf{M}(\mathbf{\theta}) \mathbf{\ddot{\theta}} + \mathbf{C}(\mathbf{\theta}, \mathbf{\dot{\theta}}) + \mathbf{K}(\mathbf{\theta}, \mathbf{\dot{\theta}}) + \mathbf{G}(\mathbf{\theta}) \mathbf{\lambda} - \mathbf{B}(\mathbf{\theta}) \mathbf{\tau} \\
-	\mathbf{0} &= \mathbf{g}(\mathbf{\theta}) 
-\end{align}
-
-(für späteres Kapitel der SA!)
-Dieses Doppelkransystem mit den Systemgrößen
-\begin{align}
-	\mathbf{w}
-	=
-	\begin{pmatrix}
-		p_1 \ p_2 \ p_3 \ p_4 \ q_1 \ q_2 \ q_3 \ q_4 \ \dot{p}_1 \ \dot{p}_2 \ \dot{p}_3 \ \dot{p}_4 \ \dot{q}_1 \ \dot{q}_2 \ \dot{q}_3 \ \dot{q}_4 \ \lambda_1 \ \lambda_2 \ \lambda_3 \ \tau_1 \ \tau_2 \ \tau_3 \ \tau_4
-	\end{pmatrix}^T
-\end{align}
-
-\sout{So kann das implizite DAE-System aus den Bewegungsgleichungen und diesen definitorischen Gleichungen beschrieben werden:}
-\begin{equation}
-	(\mathbf{I_{6 x 6}}, \mathbf{0_{6 x 17}}) \mathbf{\dot{w}} = (\mathbf{0_{6 x 6}}, \mathbf{I_{6 x 6}}, \mathbf{0_{6 x 11}}) \mathbf{w}
-\end{equation}
+Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse \cite[S.207]{JanschekSystementwurf}.
 
 \section{Analytisches Modell Einzelkran}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
@@ -539,9 +469,9 @@ bestimmt wurde.
 
 \chapter{Flachheitsanalyse}
 
-\section{Definition differentieller Flachheit}\label{sec:Def_flatness}
+\section{Definition differenzieller Flachheit}\label{sec:Def_flatness}
 
-Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ ist (differentiell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\mathbf{\Theta}$ existieren, so dass:
+Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ ist (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\mathbf{\Theta}$ existieren, so dass:
 \begin{align}
 \mathbf{x} &= \mathbf{\Psi}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
 \mathbf{u} &= \mathbf{\Theta}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_u)}) \text{ mit } n_u < \infty.
@@ -549,7 +479,7 @@ Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit 
 
 Dabei ist $\mathbf{y}$ ein flacher Ausgang \cite[S. 185]{NLRT_Roebenack}. 
 
-Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend aus dem Zustand $\mathbf{x}$ und Eingang $\mathbf{u}$ eindeutig aus dem flachen Ausgang $\mathbf{y}$ und einer endlichen Anzahl dessen Zeitableitungen berechnet werden können, also keine Integrale dafür gelöst werden müssen. Eine alternative Formulierung des Flachheitsbegriffs verzichtet auf die Angabe der gleichen Dimension $m$ von Eingang und flachem Ausgang, fordert aber die differentielle Unabhängigkeit der Komponenten von $\mathbf{y}$.
+Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend aus dem Zustand $\mathbf{x}$ und Eingang $\mathbf{u}$ eindeutig aus dem flachen Ausgang $\mathbf{y}$ und einer endlichen Anzahl dessen Zeitableitungen berechnet werden können, also keine Integrale dafür gelöst werden müssen. Eine alternative Formulierung des Flachheitsbegriffs verzichtet auf die Angabe der gleichen Dimension $m$ von Eingang und flachem Ausgang, fordert aber die differenzielle Unabhängigkeit der Komponenten von $\mathbf{y}$.
 
 Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bekannt, allerdings ist der systematische Flachheitsnachweis und die Berechnung eines
 ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
@@ -778,16 +708,32 @@ Es ergeben sich Ansatzfunktionen für die Trajektorien des flachen Ausgangs mit 
 	\end{split}
 \end{align}
 
-Die Koeffizienten der Trajektorien $a_{i, j}$ können durch einsetzen der Randbedingungen und lösen des resultierenden linearen Gleichungssystems bestimmt werden. In der Simualtion wurde als Implementierung dafür die Funktion \textit{condition\_poly} der Bibliothek \textit{symbtools} verwendet.
+Die Koeffizienten der Trajektorien $a_{i, j}$ können durch einsetzen der Randbedingungen und lösen des resultierenden linearen Gleichungssystems bestimmt werden. In der Simualtion wurde als Implementierung dafür die Funktion \texttt{condition\_poly} der Bibliothek symbtools verwendet.
 
 
 \section{Trajektorienfolgeregelung}
 
-\subsection{Hintergrund}
-relativer grad ... (Buch von Röbenack) mit Definition 4.80 usw., aber nich Erzeugung von y Ableitungen
+\subsection{Vektorieller relativer Grad}
+Es wird ein Mehrgrößensystem mit $m$ Ein- und Ausgangskomponenten $u_1, ..., u_m$ und $y_1, ...m y_m$ betrachtet \cite[S. 194]{NLRT_Roebenack}:
+\begin{equation}
+	\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x}).
+\end{equation}
+Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{g}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M \subseteq \Reals^{n}$. Dieses System hat an der Stelle $\mathbf{p} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+\begin{enumerate}
+	\item $L_{\mathbf{g}_j} L_{\mathbf{f}}^k \mathbf{h}_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\mathbf{p}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
+	\item die Matrix
+	\begin{equation*}
+		\mathbf{\Lambda} = 
+		\left(\begin{matrix}
+		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} \mathbf{h}_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} \mathbf{h}_1(\mathbf{x}) \\
+		\vdots & \ddots & \vdots \\
+		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} \mathbf{h}_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} \mathbf{h}_m(\mathbf{x})
+		\end{matrix}\right) 
+	\end{equation*}
+	im Punkt $\mathbf{x} = \mathbf{p}$ regulär ist.
+\end{enumerate}
 
 \subsection{Statische Rückführung}
-relativer vektorieller relativer Grad $\mathbf{r}$ des MIMO-Systems \cite[S. 194]{NLRT_Roebenack}:\\
 - Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
 - Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\mathbf{\delta} = \mathbf{f} + \mathbf{g} \mathbf{\tau}$ rekursiv erzeugt: 
 \begin{equation}
@@ -975,7 +921,7 @@ so dass sich der neue Eingang $v_2$ wie folgt ergibt:
 - Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\mathbf{x}$ vorkommen statt nur die von $\mathbf{y}$ und seinen Ableitungen.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
-In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine keine Behebung dieses Problems in den Eingangsgrößen.
+In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen.
 
 Für eine weitere Betrachtung würden sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$ anbieten:
 \begin{flalign}
@@ -1012,6 +958,16 @@ Unter Einsetzen von $\mathbf{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+$ u
 \mathbf{\tau}= \mathbf{g}^{+}_{[6, 10]} (\mathbf{\theta}_{\text{ref}}) \ (\ddot{\mathbf{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\mathbf{\theta}_{\text{ref}})).
 \end{equation} 
 
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/feedforward_lin_pseudo_controller_initial_error}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig_feedforward_pseudo_controller_initial_error}
+\end{figure}
+
 \subsubsection{Vereinfachung mittels Ausgangsselektion}
 Statt der Nutzung einer Pseudo-Inversen kann auch eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\dot{\mathbf{\theta}}$ vorgenommen werden. Symbolisch werde dies über eine Selektionsmatrix $S$ dargestellt:
 \begin{equation}
@@ -1032,8 +988,34 @@ Durch die Wahl der letzten 4 Gleichungen kann eine direkte Inversion der somit q
 
 Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung ein Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Es ergibt sich für Beispieltrajektorien mit Anfangsfehlern ein sehr gutes Folgeverhalten sowie eine stationäre Genauigkeit.
 
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig_feedforward_selec_controller_initial_error}
+\end{figure}
+
 \subsubsection{Stabilitätsbetrachtung}
-Ljapunows erste (indirekte) Methode zeigt, dass entlang ausgewählter Trajektorien zu späteren Zeitpunkten der Simulation Eigenwerte mit positiven Realteil vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
+\begin{align}
+	\mathbf{e} := \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
+	\dot{\mathbf{e}} = \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \mathbf{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
+	\mathbf{J}_{\dot{\mathbf{e}}} = \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
+\end{align}
+mit positiven Realteilen vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt. Eine andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_ljapunov1}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig_feedforward_selec_controller_ljapunov1}
+\end{figure}
 
 \chapter{Fazit und Ausblick}
 \section{Fazit}
