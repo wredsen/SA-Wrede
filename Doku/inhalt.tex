@@ -8,7 +8,7 @@
 \chapter{System- und Problembeschreibung}
 
 \section{Demonstratorsytem}
-Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung veranschaulichen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersuchen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -35,19 +35,21 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 
 \section{Allgemeine Modellannahmen}
 
-In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die gesamte Bewegung aller Komponenten nur in einer $x$-$y$-Ebene betrachtet. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser nur in einer Ebene zulässt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen und der Last als masselos angenommen sowie nicht mit einem Trägheitsmoment behaftet. Die Last wird trotz seiner Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären CAD-Daten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Es wird aus Gründen der Einfachheit auf die Abbildung dissipativer Kräfte verzichtet. Zudem können diese bei einer funktionierenden unterlagerten Regelung als kompensiert angenommen werden.
+In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die gesamte Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser nur in einer Ebene zulässt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen und der Last als masselos angenommen sowie nicht mit einem Trägheitsmoment behaftet. Die Last wird trotz ihrer Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären CAD-Daten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Es wird aus Gründen der Einfachheit auf die Abbildung dissipativer Kräfte verzichtet. Zudem können diese bei einer funktionierenden unterlagerten Regelung als kompensiert angenommen werden.
 
-Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst Problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein im Allgemeinen effizient zu simulierendes ODE-System ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last bietet sich alternativ zum vorherigen Vorgehen auch die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein DAE-System zur Simulation generiert werden. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung.
+Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein typischerweise effizient zu simulierendes gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE systems) ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) zur Simulation generiert wird, nahe. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist stattdessen eine Modellierung mit den Lagrange-Gleichungen zweiter Art möglich. Es folgt nun eine kurzer theoretischer Überblick zu beiden erwähnten Arten des Lagrange-Formalismus.
 
 \section{Modellierung mittels Lagrange-Formalismus}
 
+Eine stark automatisierte Durchführung dieses Formalismus ist unter Nutzung des Python-Pakets symbtools \cite{symbtools} möglich.
+
 \subsection{Lagrange-Gleichungen erster Art}
 \label{sec:Lagrange1_theory}
-Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\mathbf{\dot{\theta}}$ \cite[S.7]{DissKnoll}. 
+Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\dot{\mathbf{\theta}}$ \cite[S.7]{DissKnoll}. 
 
-Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Eine Lagrange-Funktion kann damit folgendermaßen definiert werden:
+Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Die Lagrange-Funktion kann damit folgendermaßen definiert werden:
 \begin{equation}
-	L(\mathbf{\theta}, \dot{\mathbf{\theta}}) = T(\mathbf{\theta}, \mathbf{\dot{\theta}}) - V(\mathbf{\theta}).
+	L(\mathbf{\theta}, \dot{\mathbf{\theta}}) = T(\mathbf{\theta}, \dot{\mathbf{\theta}}) - V(\mathbf{\theta}).
 \end{equation}
 
 Mit den Lagrange-Gleichungen erster Art können Probleme mit Zwangsbedingungen und -kräften dargestellt werden:
@@ -55,50 +57,45 @@ Mit den Lagrange-Gleichungen erster Art können Probleme mit Zwangsbedingungen u
 	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = \tilde{Q}_i + Q_i, \quad i = 1, ..., n.
 \end{equation}
 
-Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i = f_i - D_i$ entspricht der verallgemeinerten Kraft, welche sich aus äußeren (Stell-)Kräften $f_i$ sowie internen Reibungskräften $D_i$ zusammensetzt \cite[S. 49]{Lagrange}.
+Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i = f_i - D_i$ entspricht der verallgemeinerten Kraft, welche sich aus der äußeren (Stell-)Kraft $f_i$ sowie internen Reibungskraft $D_i$ zusammensetzt \cite[S. 49]{Lagrange}.
 
-Aus den $m$ holonomen Zwangsbedingungen $g_i(\mathbf{\theta}) = 0$ folgen die Zwangskräfte $\tilde{Q}_i$ in Richtung der Koordinate $\theta_i$:
+Es können $m$ holonomen Zwangsbedingungen $g_1(\mathbf{\theta}) = ... = g_m(\mathbf{\theta}) = 0$ eingeführt werden, aus denen die Zwangskraft $\tilde{Q}_i$ in Richtung der Koordinate $\theta_i$ folgt:
 \begin{equation}
-	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j G_{ji}(\mathbf{\theta})
+	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j \left(\partiell{g_j}{\mathbf{\theta}}\right)^T.
 \end{equation}
-
-Dabei werden die Lagrange-Multiplikatoren $\lambda_j$ unter dieser Beziehung genutzt:
-\begin{equation}
-	\diff{g_j}{t} = \sum_{i = 1}^n G_{ji}(\mathbf{\theta}) \dot{\theta}_i = 0 \quad j = 1, ..., m.
-\end{equation}
+In dieser Beziehung bezeichnet $\lambda_j$ den jeweiligen Lagrange-Multiplikator.
 
 \subsection{Lagrange-Gleichungen zweiter Art}
 \label{sec:Lagrange2_theory}
-Eine alternative Herleitung solcher Systemgleichungen sind die Lagrange-Gleichungen zweiter Art. Bei diesen müssen Zwangskräfte nicht explizit bestimmt werden. Die Bewegungsgleichungen können folgendermaßen aus der Lagrange-Funktion abgeleitet werden:
+Die Lagrange-Gleichungen zweiter Art beschreiben bezüglich des Vorhergehenden den Spezialfall ohne Zwangsbedingungen, also $m = 0$. Zwangskräfte müssen dabei nicht explizit bestimmt werden. Die Bewegungsgleichungen können folgendermaßen aus der Lagrange-Funktion abgeleitet werden:
 \begin{equation}
 	\diff{}{t}\left(\partiell{L}{\dot{\theta}_i} \right) - \partiell{L}{\theta_i} = Q_i, \quad i = 1, ..., n.
 \end{equation} 
 
-Eine stark automatisierte Durchführung dieses Formalismus ist unter Nutzung des Python-Pakets symbtools \cite{symbtools} möglich.
-
 -> ggf. dazu in Nextcloud/Präsis Folien zu modeltools -> Matrixdarstellung mit M, C, K, B
 
-Zur Bestimmung der Komponenten der generalisierten Kraft $Q_i$ wird das Prinzip der virtuellen Arbeit hinzugezogen \cite{VirtualWork}:
+Zur Bestimmung der Komponenten $Q_i$ der verallgemeinerten Kraft wird das Prinzip der virtuellen Arbeit herangezogen \cite{VirtualWork}:
 \begin{equation}
 	\delta W = \sum_{k=1}^l \mathbf{F_k} \cdot \frac{\partial \mathbf{r_k}}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F_k} \cdot \frac{\partial \mathbf{r_k}}{\partial \theta_n} \delta \theta_n.
 \end{equation}
 
-Dabei entspricht bei einem System von $l$ (massebehafteten) Teilchen $\mathbf{r_k}$ dem Richtungsvektor zum $k$-ten Partikel, $\mathbf{F_k}$ der jeweils entlang dieses Richtungsvektoren angewandten Stellkraft, $\delta \mathbf{r_{k}}$ der virtuellen Verschiebung und $\delta \mathbf{\theta}_{i}$ der virtuellen Verschiebung der Koordinaten mit:
+Dabei entspricht bei einem System von $l$ (massebehafteten) Teilchen $\mathbf{r_k}$ dem Richtungsvektor zum $k$-ten Partikel, $\mathbf{F_k}$ der jeweils entlang dieses Richtungsvektoren angewandten Stellkraft, $\delta \mathbf{r_{k}}$ der virtuellen Verschiebung des Partikels im Raum und $\delta \mathbf{\theta}_{i}$ der virtuellen Verschiebung der Koordinate $\theta_i$, welche der Beziehung
 \begin{equation}
 	\delta \mathbf{r_{k}} = \sum_{i = 1}^{n} \partiell{\mathbf{r_{k}}}{\theta_i} \delta \theta_i.
 \end{equation}
+genügt.
 
 Die gesamte virtuelle Arbeit des Systems dieser Teilchen kann also ebenso durch
 \begin{equation}
 \delta W = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k
 \end{equation}
-dargestellt werden, wobei sich die Komponenten der generalisierten Kraft zu
+dargestellt werden, wobei sich die Komponenten der verallgemeinerten Kraft zu
 \begin{equation}
 Q_i = \sum_{k=1}^l \frac {\partial \mathbf{r_k}} {\partial \theta_i} \cdot \mathbf {F}_{k} = \partiell{\delta W}{\delta \theta_i} ,\quad i=1,\ldots, n 
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
-Differenzial-algebraische Gleichungssysteme (DAE-Systeme) sind gewöhnliche Differenzialgleichungssysteme (DGL-, ODE-Systeme), welche um algebraische Gleichungen (AGL) oder Nebenbedingungen ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
+DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebenbedingungen) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
 
 Ein DAE-System lässt sich unter anderem in einer semi-expliziten Form aufstellen:
 	\begin{align}\label{eq:dae_std}
@@ -431,9 +428,10 @@ Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ lassen sich die Systemgle
 \begin{flalign}
 	&- \frac{\lambda_{1} p_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} + \frac{\lambda_{1} q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{1}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
 	&+ \frac{\lambda_{2} p_{3}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + m_{2} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{3} = 0\\
-	&g m_{2} + 0.5 g m_{3} - \frac{\lambda_{1} p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
+	&g m_{2} + 0.5 g m_{3} - \frac{\lambda_{1} p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{2} + \lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
 	&+ m_{2} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} = 0\\
-	&\frac{\lambda_{2} \left(p_{1} - p_{3}\right)}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{3} \left(l_{0} - p_{3} + q_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + \frac{m_{3} \left(0.5 \ddot{p}_{1} + 0.5 \ddot{p}_{3}\right)}{2} + m_{4} \ddot{p}_{3} = 0\\
+	&\frac{\lambda_{2} \left(p_{1} - p_{3}\right)}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{3} \left(l_{0} - p_{3} + q_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} \noindent \\
+	&+ \frac{m_{3} \left(0.5 \ddot{p}_{1} + 0.5 \ddot{p}_{3}\right)}{2} + m_{4} \ddot{p}_{3} = 0\\
 	&0.5 g m_{3} + g m_{4} + \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} - \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\ 
 	&- \frac{\lambda_{3} p_{4}}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} + m_{4} \ddot{p}_{4} = 0\\
 	&\frac{\lambda_{1} \left(p_{1} - q_{1}\right) + \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} \left(m_{1} \ddot{q}_{1} - \tau_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\\
