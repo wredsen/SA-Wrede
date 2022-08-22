@@ -8,7 +8,24 @@
 \chapter{System- und Problembeschreibung}
 
 \section{Demonstratorsytem}
-Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersuchen. Der Demonstrator ist in Abbildung \ref{fig:demonstrator_real} dargestellt.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=0.5]{Pictures/Veritas_demo_CAD.png}
+	\end{center}
+	\caption[CAD-Zeichnung des Doppelkransystems]
+	{CAD-Zeichnung des Doppelkran-Demonstratorsystems ohne Verkabelung.}
+	\label{fig:demonstrator_CAD}
+\end{figure}
+
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersuchen. Das Konzept des Demonstrators ist in Abbildung \ref{fig:demonstrator_CAD} dargestellt.
+
+Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene anheben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
+
+Beide Kräne sind auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor aktuiert. Auf den STM32-Mikrocontroller ist bereits eine eine unterlagerte Strom- beziehungsweise Kraftregelung für diese implementiert.
+Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel werden mittels mitschwingender Potentiometer bestimmt. Abbildung \ref{fig:demonstrator_real} zeigt
+eine Photographie der realen Anordnung des Demonstrators.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -19,14 +36,6 @@ Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für
 	{Doppelkran-Demonstratorsystem mit Laufkatzen und Last.}
 	\label{fig:demonstrator_real}
 \end{figure}
-
-Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene anheben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
-
-Beide Kräne sind auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem DC-Motor aktuiert. Auf den STM32-Mikrocontroller ist bereits eine eine unterlagerte Strom- beziehungsweise Kraftregelung für diese implementiert.
-Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel werden mittels mitschwingender Potentiometer bestimmt.
-
-
-
 
 \section{Problembeschreibung und Zielsetzung}
 Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel der Studienarbeit ist es deshalb,  bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in der Ebene und Folgeregelung zur Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystems geschehen. 
@@ -87,51 +96,47 @@ genügt.
 
 Die gesamte virtuelle Arbeit des Systems dieser Teilchen kann also ebenso durch
 \begin{equation}
+\label{eq:virtual_work}
 \delta W = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k
 \end{equation}
 dargestellt werden, wobei sich die Komponenten der verallgemeinerten Kraft zu
 \begin{equation}
+\label{eq:virtual_work_force}
 Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \partiell{\delta W}{\delta \theta_i} ,\quad i=1,\ldots, n 
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
 DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebenbedingungen) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
 
-Ein DAE-System lässt sich unter anderem in einer semi-expliziten Form aufstellen:
+DAE-Systeme lassen sich typischerweise in einer semi-expliziten Form darstellen:
 	\begin{align}\label{eq:dae_std}
 		\mathbf{\dot{x}} &= \mathbf{f}(\mathbf{x}, \mathbf{z}, \mathbf{u}, t) \\
 		\mathbf{0} &= \mathbf{g}(\mathbf{x}, \mathbf{z}, t),
 	\end{align}
-wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen nicht differenziell vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht.
+wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen nicht abgeleitet vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht.
 
-Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i = 0$. Die Differenzierung AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet.
+Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet.
 
-Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i = 3$ und können über folgende Bewegungsgleichungen dargestellt werden:
+Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i_\mathrm{d} = 3$ und können über folgende Bewegungsgleichungen beschrieben werden:
 \begin{align}
 \mathbf{0} &= \mathbf{M}(\mathbf{\theta}) \ddot{\mathbf{\theta}} + \mathbf{C}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{K}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{G}(\mathbf{\theta}) \mathbf{\lambda} - \mathbf{B}(\mathbf{\theta}) \mathbf{\tau} \\
 \mathbf{0} &= \mathbf{g}(\mathbf{\theta}).
 \end{align}
 
-Zur Integration davon gibt es verschiedene Möglichkeiten: 
+Zur Integration davon gibt es verschiedene Möglichkeiten \cite[Kap. 8]{ModSimSkript}: 
 \begin{itemize}
-\item  Indexreduktion auf Index $i = 2$ und anschließende Integration über ein implizites Verfahren
-\item Indexreduktion auf Index $i = 1$ und anschließende Integration über ein explizites Verfahren mit AGL-Löser oder ein implizites Verfahren
-\item Indexreduktion auf Index  $i = 0$ und anschließende Integration über ein explizites oder implizites Verfahren.
+\item  Indexreduktion auf Index $i_\mathrm{d} = 2$ und anschließende Integration über ein implizites\footnote{Auf der linken und rechten Seite seite der zu integrierenden Gleichungen sind die gesuchten Näherungswerte von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ enthalten.} Verfahren
+\item Indexreduktion auf Index $i_\mathrm{d} = 1$ und anschließende Integration über ein explizites\footnote{Zur Berechnung des Näherungswertes von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ wird einzig der zuletzt berechnete Näherungswert von $\mathbf{x}(t_{i})$ an der Stelle $t_{i+1}$ benötigt.} Verfahren mit AGL-Löser oder ein implizites Verfahren
+\item Indexreduktion auf Index  $i_\mathrm{d} = 0$ und anschließende Integration über ein explizites oder implizites Verfahren.
 \end{itemize}
 Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools führt die Reduktion von Index-3-Systemen auf Index-1-Systeme durch. Zur numerischen Berechnung kann daraufhin der Solver ODASSL des Python-Pakets assimulo \cite{assimulo} verwendet werden.
 
-Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse \cite[S.207]{JanschekSystementwurf}.
+Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i_\mathrm{d} \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse \cite[S.207]{JanschekSystementwurf}.
 
 \section{Analytisches Modell Einzelkran}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
 
-Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Einzelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die generalisierte Kraft gerade die Stellkraft im Seil gut abgebildet werden kann sowie keine Zwangsbedingungen im späteren Flachheitsnachweis berücksichtigt werden müssen.
-
-Als aktuierte Koordinate wird zunächst nur die $x$-Verschiebung $q_1$ der Laufkatzenposition ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$) ausgewählt, als passive Koordinaten die $x$- und $y$-Auslenkungen $(p_1, p_2)$ der Last $\mathbf{S}_2$ aus dem Ursprung. Die variable Seillänge wird mit $l_1$ bezeichnet, die durch die Koordinaten auch mittels:
-\begin{equation}
-	l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}
-\end{equation}
-ausgedrückt werden kann.
+Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Einzelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die generalisierte Kraft gerade die Stellkraft im Seil gut abgebildet werden kann sowie eine Vielzahl verschiedener Integrationsverfahren für eine effiziente Lösung des ODE-Systems nutzbar ist. Abbildung \ref{fig:single_crane_diagram} zeigt die Konfiguration des Einzelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -142,6 +147,12 @@ ausgedrückt werden kann.
 	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
 	\label{fig:single_crane_diagram}
 \end{figure}
+
+Als aktuierte Koordinate wird zunächst nur die $x$-Verschiebung $q_1$ der Laufkatzenposition ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$) ausgewählt, als passive Koordinaten die $x$- und $y$-Auslenkungen $(p_1, p_2)$ der Last $\mathbf{S}_2$ aus dem Ursprung. Die variable Seillänge wird mit $l_1$ bezeichnet, die durch die Koordinaten auch mittels:
+\begin{equation}
+	l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}
+\end{equation}
+ausgedrückt werden kann.
 
 Die Position der beiden Massenschwerpunkte kann somit wie folgt durch die Koordinaten beschrieben werden:
 \begin{equation}
@@ -171,7 +182,7 @@ Die Systemgleichungen können durch die Lagrange-Gleichungen zweiter Art zunäch
 	- Q_{3} + m_{1} \ddot{q}_{1} &= 0.
 \end{align}
 
-Die Eingangskomponenten $\tau_1$, $\tau_2$ des Systems können können über Stellkräfte vektoriell dargestellt werden:
+Die Eingangskomponenten $\tau_1$, $\tau_2$ des Systems entsprechen den unterlagert geregelten Kräften auf die Laufkatze bzw. das Seil. Sie können über Stellkräfte vektoriell dargestellt werden:
 \begin{equation}
 	\mathbf{F}_1 =
 	\left(\begin{matrix}
@@ -185,7 +196,7 @@ Die Eingangskomponenten $\tau_1$, $\tau_2$ des Systems können können über Ste
 	\end{matrix}\right).
 \end{equation}
 
-Durch die Anwendung des Prinzips der virtuellen Arbeit ist es möglich, die generalisierte Kraft durch diese Stellkräfte bzw. den Systemeingang auszudrücken:
+Durch die Anwendung des Prinzips der virtuellen Arbeit nach Gleichung \eqref{eq:virtual_work} und \eqref{eq:virtual_work_force} ist es möglich, die generalisierte Kraft durch diese Stellkräfte bzw. den Systemeingang auszudrücken:
 \begin{equation}
 	\mathbf{Q}=
 	\left(\begin{matrix}
@@ -207,14 +218,7 @@ Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen
 \subsection{Ansatz über ein ODE-System}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis.ipynb)
 
-Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die generalisierte Kraft gerade die Stellkraft im Seil gut abgebildet werden kann sowie keine Zwangsbedingungen im späteren Flachheitsnachweis berücksichtigt werden müssen.
-
-Als aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_6 = \mathbf{S}_3$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Lastschwerpunkts ($\mathbf{S}_2$) sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen. Die variable Seillänge wird mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels:
-\begin{align}
-	l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}} \\
-	l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}
-\end{align}
-ausgedrückt werden kann.
+Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Abbildung \ref{fig:double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -225,6 +229,14 @@ ausgedrückt werden kann.
 	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
 	\label{fig:double_crane_diagram}
 \end{figure}
+
+
+Als aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_6 = \mathbf{S}_3$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Lastschwerpunkts ($\mathbf{S}_2$) sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen. Die variable Seillänge wird mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels:
+\begin{align}
+	l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}} \\
+	l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}
+\end{align}
+ausgedrückt werden kann.
 
 Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die Koordinaten beschrieben werden:
 \begin{equation}
@@ -344,7 +356,17 @@ Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrie
 \subsection{Ansatz über ein DAE-System}
 (Im Folgenden genutztes Notebook: double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb)
 
-Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die Einprägung von Zwangsbedingungen die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\mathbf{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Längen dieser eine Umformulierung des Problems mit den Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)
+Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die Einprägung von Zwangsbedingungen die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\mathbf{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Längen dieser eine Umformulierung des Problems mit den Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???) Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/DAE_double_crane_cartesian_diagram.pdf}
+	\end{center}
+	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
+	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\label{fig:DAE_double_crane_diagram}
+\end{figure}
 
 Als aktuierte Koordinate werden nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_4 = \mathbf{S}_5$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Gelenks $\mathbf{G}_2 (= \mathbf{S}_2)$ sowie $(p_3, p_4)$ des Gelenks $\mathbf{G}_3 = (\mathbf{S}_4)$. 
 
@@ -359,16 +381,6 @@ Die konstante Lastlänge wird durch
 	2 s_{3} - \sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}
 \end{equation}
 ausgedrückt.
-
-\begin{figure}[ht]
-	\begin{center}
-		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
-		\includegraphics[scale=1]{Pictures/DAE_double_crane_cartesian_diagram.pdf}
-	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
-	\label{fig:DAE_double_crane_diagram}
-\end{figure}
 
 Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die Koordinaten beschrieben werden:
 \begin{align}
