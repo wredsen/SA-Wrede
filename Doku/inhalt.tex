@@ -49,17 +49,19 @@ In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet,
 Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein typischerweise effizient zu simulierendes gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE systems) ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) zur Simulation generiert wird, nahe. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist stattdessen eine Modellierung mit den Lagrange-Gleichungen zweiter Art möglich. Es folgt nun eine kurzer theoretischer Überblick zu beiden erwähnten Arten des Lagrange-Formalismus.
 
 \section{Modellierung mittels Lagrange-Formalismus}
+Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\dot{\mathbf{\theta}}$. \textcolor{red}{Anfänglich wurde der Literatur \cite[S.10]{DissKnoll} folgend eine Unterteilung der Systemgrößen in ``aktive'' und ``passive'' Koordinaten vorgenommen. Im Verlauf dieser Arbeit ist bemerkt worden, dass die 
+Aufgliederung $\mathbf{\theta} = (\mathbf{q}, \mathbf{p})^T$ in die direkt aktuierten Koordinaten $\mathbf{q}$ und nicht direkt aktuierten Koordinaten $\mathbf{p}$ eine treffendere Bezeichnung darstellt.}
+\cite[S.7]{DissKnoll} 
+
+Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Die Lagrange-Funktion kann damit folgendermaßen definiert werden:
+\begin{equation}
+L(\mathbf{\theta}, \dot{\mathbf{\theta}}) = T(\mathbf{\theta}, \dot{\mathbf{\theta}}) - V(\mathbf{\theta}).
+\end{equation}
 
 Eine stark automatisierte Durchführung dieses Formalismus ist unter Nutzung des Python-Pakets symbtools \cite{symbtools} möglich.
 
 \subsection{Lagrange-Gleichungen erster Art}
 \label{sec:Lagrange1_theory}
-Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\mathbf{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\dot{\mathbf{\theta}}$ \cite[S.7]{DissKnoll}. 
-
-Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Die Lagrange-Funktion kann damit folgendermaßen definiert werden:
-\begin{equation}
-	L(\mathbf{\theta}, \dot{\mathbf{\theta}}) = T(\mathbf{\theta}, \dot{\mathbf{\theta}}) - V(\mathbf{\theta}).
-\end{equation}
 
 Mit den Lagrange-Gleichungen erster Art können Probleme mit Zwangsbedingungen und -kräften dargestellt werden:
 \begin{equation}
@@ -70,7 +72,7 @@ Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i = f_
 
 Es können $m$ holonomen Zwangsbedingungen $g_1(\mathbf{\theta}) = ... = g_m(\mathbf{\theta}) = 0$ eingeführt werden, aus denen die Zwangskraft $\tilde{Q}_i$ in Richtung der Koordinate $\theta_i$ folgt:
 \begin{equation}
-	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j \left(\partiell{g_j}{\mathbf{\theta}}\right)^T.
+	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j \textcolor{red}{\partiell{g_j}{\theta_i}}.
 \end{equation}
 In dieser Beziehung bezeichnet $\lambda_j$ den jeweiligen Lagrange-Multiplikator.
 
@@ -106,32 +108,30 @@ Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \righ
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
-DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebenbedingungen) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden \cite[S.137]{JanschekSystementwurf}. 
-
-DAE-Systeme lassen sich typischerweise in einer semi-expliziten Form darstellen:
+DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebenbedingungen) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von Zwangsbedingungen der Lagrange-Gleichungen erster Art genutzt werden. DAE-Systeme lassen sich typischerweise in einer semi-expliziten Form darstellen:
 	\begin{align}\label{eq:dae_std}
 		\mathbf{\dot{x}} &= \mathbf{f}(\mathbf{x}, \mathbf{z}, \mathbf{u}, t) \\
 		\mathbf{0} &= \mathbf{g}(\mathbf{x}, \mathbf{z}, t),
 	\end{align}
-wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen nicht abgeleitet vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht.
+wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen nicht abgeleitet vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht. \cite[S.137]{JanschekSystementwurf}
 
-Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet.
+Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet. \cite[S.139]{JanschekSystementwurf}
 
 Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i_\mathrm{d} = 3$ und können über folgende Bewegungsgleichungen beschrieben werden:
 \begin{align}
-\mathbf{0} &= \mathbf{M}(\mathbf{\theta}) \ddot{\mathbf{\theta}} + \mathbf{C}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{K}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{G}(\mathbf{\theta}) \mathbf{\lambda} - \mathbf{B}(\mathbf{\theta}) \mathbf{\tau} \\
+\mathbf{0} &= \mathbf{M}(\mathbf{\theta}) \ddot{\mathbf{\theta}} + \mathbf{C}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{K}(\mathbf{\theta}, \dot{\mathbf{\theta}}) + \mathbf{G}(\mathbf{\theta}) \mathbf{\lambda} - \mathbf{B}(\mathbf{\theta}) \mathbf{\tau} \label{eq:implicit_mechanical_system}\\
 \mathbf{0} &= \mathbf{g}(\mathbf{\theta}).
 \end{align}
 
 Zur Integration davon gibt es verschiedene Möglichkeiten \cite[Kap. 8]{ModSimSkript}: 
 \begin{itemize}
-\item  Indexreduktion auf Index $i_\mathrm{d} = 2$ und anschließende Integration über ein implizites\footnote{Auf der linken und rechten Seite seite der zu integrierenden Gleichungen sind die gesuchten Näherungswerte von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ enthalten.} Verfahren
-\item Indexreduktion auf Index $i_\mathrm{d} = 1$ und anschließende Integration über ein explizites\footnote{Zur Berechnung des Näherungswertes von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ wird einzig der zuletzt berechnete Näherungswert von $\mathbf{x}(t_{i})$ an der Stelle $t_{i+1}$ benötigt.} Verfahren mit AGL-Löser oder ein implizites Verfahren
+\item  Indexreduktion auf Index $i_\mathrm{d} = 2$ und anschließende Integration über ein implizites\footnote{Auf der linken und rechten Seite der zu integrierenden Gleichungen sind die gesuchten Näherungswerte von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ enthalten.} Verfahren
+\item Indexreduktion auf Index $i_\mathrm{d} = 1$ und anschließende Integration über ein explizites\footnote{Zur Berechnung des Näherungswertes von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ wird einzig der zuletzt berechnete Näherungswert von $\mathbf{x}(t_{i})$ an der Stelle $t_{i}$ benötigt.} Verfahren mit AGL-Löser oder ein implizites Verfahren
 \item Indexreduktion auf Index  $i_\mathrm{d} = 0$ und anschließende Integration über ein explizites oder implizites Verfahren.
 \end{itemize}
 Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools führt die Reduktion von Index-3-Systemen auf Index-1-Systeme durch. Zur numerischen Berechnung kann daraufhin der Solver ODASSL des Python-Pakets assimulo \cite{assimulo} verwendet werden.
 
-Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i_\mathrm{d} \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse \cite[S.207]{JanschekSystementwurf}.
+Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i_\mathrm{d} \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse. \cite[S.207]{JanschekSystementwurf}
 
 \section{Analytisches Modell Einzelkran}
 (Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
@@ -148,7 +148,7 @@ Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell de
 	\label{fig:single_crane_diagram}
 \end{figure}
 
-Als aktuierte Koordinate wird zunächst nur die $x$-Verschiebung $q_1$ der Laufkatzenposition ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$) ausgewählt, als passive Koordinaten die $x$- und $y$-Auslenkungen $(p_1, p_2)$ der Last $\mathbf{S}_2$ aus dem Ursprung. Die variable Seillänge wird mit $l_1$ bezeichnet, die durch die Koordinaten auch mittels:
+Als direkt aktuierte Koordinate wird nur die $x$-Verschiebung $q_1$ der Laufkatzenposition ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$) ausgewählt, als nicht direkt aktuierte Koordinaten die $x$- und $y$-Auslenkungen $(p_1, p_2)$ der Last $\mathbf{S}_2$ aus dem Ursprung. Die variable Seillänge wird mit $l_1$ bezeichnet, die durch die Koordinaten auch mittels:
 \begin{equation}
 	l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}
 \end{equation}
@@ -176,13 +176,16 @@ Damit ist es möglich die kinetische und potentielle Energie des Systems zu form
 \end{align}
 
 Die Systemgleichungen können durch die Lagrange-Gleichungen zweiter Art zunächst in Abhängigkeit der Komponenten der generalisierten Kraft $Q_i$ bestimmt werden:
-\begin{align}
-	- Q_{1} + m_{2} \ddot{p}_{1} &= 0\\
-	- Q_{2} + g m_{2} + m_{2} \ddot{p}_{2} &= 0\\
-	- Q_{3} + m_{1} \ddot{q}_{1} &= 0.
-\end{align}
+\begin{subequations}
+	\begin{align}
+		- Q_{1} + m_{2} \ddot{p}_{1} &= 0\\
+		- Q_{2} + g m_{2} + m_{2} \ddot{p}_{2} &= 0\\
+		- Q_{3} + m_{1} \ddot{q}_{1} &= 0.
+	\end{align}
+\end{subequations}
 
-Die Eingangskomponenten $\tau_1$, $\tau_2$ des Systems entsprechen den unterlagert geregelten Kräften auf die Laufkatze bzw. das Seil. Sie können über Stellkräfte vektoriell dargestellt werden:
+
+Die Eingangskomponenten $\tau_1$, $\tau_2$ des Systems entsprechen den unterlagert geregelten Kräften der Motoren der Laufkatze bzw. der Seilwinde. Sie können über Stellkräfte vektoriell dargestellt werden:
 \begin{equation}
 	\mathbf{F}_1 =
 	\left(\begin{matrix}
@@ -207,11 +210,14 @@ Durch die Anwendung des Prinzips der virtuellen Arbeit nach Gleichung \eqref{eq:
 \end{equation}
 
 Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen des Einzelkrans bilden:
-\begin{align}
-	m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0 \label{single_flat_syseq1}\\
-	g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\label{single_flat_syseq2}\\
-	m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\label{single_flat_syseq3}.
-\end{align}
+\begin{subequations}
+	\begin{align}
+		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0 \label{single_flat_syseq1}\\
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\label{single_flat_syseq2}\\
+		m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\label{single_flat_syseq3}.
+	\end{align}
+\end{subequations}
+
 
 \section{Analytisches Modell Doppelkran}
 
@@ -231,7 +237,7 @@ Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell de
 \end{figure}
 
 
-Als aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_6 = \mathbf{S}_3$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Lastschwerpunkts ($\mathbf{S}_2$) sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen. Die variable Seillänge wird mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels:
+Als direkt aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_6 = \mathbf{S}_3$) ausgewählt, als nicht direkt aktuierte Koordinaten die absolute Position $(p_1, p_2)$ des Lastschwerpunkts ($\mathbf{S}_2$) sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen. Die variable Seillänge wird mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels:
 \begin{align}
 	l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}} \\
 	l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}
@@ -240,38 +246,40 @@ ausgedrückt werden kann.
 
 Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die Koordinaten beschrieben werden:
 \begin{equation}
-	\mathbf{S}_1 =
-	\begin{pmatrix}
-		q_1 \\
-		0
-	\end{pmatrix}, 
-	\
-	\mathbf{S}_2 =
-	\begin{pmatrix}
-		p_1 \\
-		p_2
-	\end{pmatrix},
-	\
-	\mathbf{S}_3 =
-	\begin{pmatrix}
-		l_0 + q_2 \\
-		0
-	\end{pmatrix},
-	\
-	\mathbf{G}_3 =
-	\left(\begin{matrix}
-		p_{1} - s_{2} \cos{\left(p_{3} \right)}\\
-		p_{2} - s_{2} \sin{\left(p_{3} \right)}
-	\end{matrix}\right),
-	\
-	\mathbf{G}_4 =
-	\left(\begin{matrix}
-		p_{1} + s_{2} \cos{\left(p_{3} \right)}\\
-		p_{2} + s_{2} \sin{\left(p_{3} \right)}
-	\end{matrix}\right).
+	\begin{smallmatrix}
+		\mathbf{S}_1 =
+		\begin{pmatrix}
+			q_1 \\
+			0
+		\end{pmatrix}, 
+		\
+		\mathbf{S}_2 =
+		\begin{pmatrix}
+			p_1 \\
+			p_2
+		\end{pmatrix},
+		\
+		\mathbf{S}_3 =
+		\begin{pmatrix}
+			l_0 + q_2 \\
+			0
+		\end{pmatrix},
+		\
+		\mathbf{G}_3 =
+		\left(\begin{matrix}
+			p_{1} - s_{2} \cos{\left(p_{3} \right)}\\
+			p_{2} - s_{2} \sin{\left(p_{3} \right)}
+		\end{matrix}\right),
+		\
+		\mathbf{G}_4 =
+		\left(\begin{matrix}
+			p_{1} + s_{2} \cos{\left(p_{3} \right)}\\
+			p_{2} + s_{2} \sin{\left(p_{3} \right)}
+		\end{matrix}\right)
+	\end{smallmatrix}.
 \end{equation}
 
-Damit ist es möglich die kinetische und potentielle Energie des Systems zu formulieren:
+Damit ist es möglich, die kinetische und potentielle Energie des Systems zu formulieren:
 \begin{align}
 	T &= \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 + \frac{J_2}{2} \dot{p}_3^2 + \frac{m_3}{2} \dot{\mathbf{S}}_3^T \dot{\mathbf{S}}_3 \nonumber \\  
 	&= \frac{J_{2} \dot{p}_{3}^{2}}{2} + \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \dot{q}_{2}^{2}}{2} \\
@@ -279,84 +287,93 @@ Damit ist es möglich die kinetische und potentielle Energie des Systems zu form
 \end{align}
 
 Die Systemgleichungen können durch die Lagrange-Gleichungen zweiter Art zunächst in Abhängigkeit der Komponenten der generalisierten Kraft $Q_i$ bestimmt werden:
-\begin{align}
-	- Q_{1} + m_{2} \ddot{p}_{1} &= 0\\
-	- Q_{2} + g m_{2} + m_{2} \ddot{p}_{2} &= 0\\
-	J_{2} \ddot{p}_{3} - Q_{3} &= 0\\
-	- Q_{4} + m_{1} \ddot{q}_{1} &= 0\\
-	- Q_{5} + m_{3} \ddot{q}_{2} &= 0.
-\end{align}
+\begin{subequations}
+	\begin{align}
+		- Q_{1} + m_{2} \ddot{p}_{1} &= 0\\
+		- Q_{2} + g m_{2} + m_{2} \ddot{p}_{2} &= 0\\
+		J_{2} \ddot{p}_{3} - Q_{3} &= 0\\
+		- Q_{4} + m_{1} \ddot{q}_{1} &= 0\\
+		- Q_{5} + m_{3} \ddot{q}_{2} &= 0.
+	\end{align}
+\end{subequations}
 
 Die Komponenten des Systemeingangs $\mathbf{\tau}$ können über Stellkräfte vektoriell dargestellt werden:
 \begin{equation}
-	\mathbf{F}_1 =
-	\left(\begin{matrix}
-		\tau_{1} \\
-		0
-	\end{matrix}\right), \
-	\mathbf{F}_2 =
-	\left(\begin{matrix}
-		\tau_{2} \\
-		0
-	\end{matrix}\right), \
-	\mathbf{F}_3 =
-	\left(\begin{matrix}
-		\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
-		\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
-	\end{matrix}\right), \
-	\mathbf{F}_4 =
-	\left(\begin{matrix}
-		\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
-		\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
-	\end{matrix}\right).
+	\begin{smallmatrix}
+		\mathbf{F}_1 =
+		\left(\begin{matrix}
+			\tau_{1} \\
+			0
+		\end{matrix}\right), \
+		\mathbf{F}_2 =
+		\left(\begin{matrix}
+			\tau_{2} \\
+			0
+		\end{matrix}\right), \
+		\mathbf{F}_3 =
+		\left(\begin{matrix}
+			\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
+			\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
+		\end{matrix}\right), \
+		\mathbf{F}_4 =
+		\left(\begin{matrix}
+			\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
+			\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
+		\end{matrix}\right)
+	\end{smallmatrix}.
 \end{equation}
 
-Durch die Anwendung des Prinzips der virtuellen Arbeit ist es möglich, die generalisierte Kraft durch diese Stellkräfte bzw. den Systemeingang auszudrücken:
+Durch die Anwendung des Prinzips der virtuellen Arbeit ist es möglich, die generalisierte Kraft durch diese Stellkräfte bzw. den Systemeingang auszudrücken (Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
 \begin{equation}
 	\mathbf{Q}=
 	\left(\begin{smallmatrix}
-		\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
-		\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}\\
-		\frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} - \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} - \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} + \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}}\\
-		\tau_{1} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
-		\tau_{2} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}
+		\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3}}\right)}{l_{1}}\\
+		\frac{\tau_{4} \left(p_{2} + s_{2} \mathrm{s}_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{2} - s_{2} \mathrm{s}_{p_{3}}\right)}{l_{1}}\\
+		\frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \mathrm{s}_{p_{3}}\right) \mathrm{c}_{p_{3} }}{l_{2}} - \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3} }\right) \mathrm{s}_{p_{3}}}{l_{2}} - \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \mathrm{s}_{p_{3}}\right) \mathrm{c}_{p_{3}}}{l_{1}} + \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3}}\right) \mathrm{s}_{p_{3}}}{l_{1}}\\
+		\tau_{1} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3} }\right)}{l_{1}}\\
+		\tau_{2} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3} }\right)}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation}
 
-Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen des Doppelkrans bilden:
-\begin{flalign}
-	&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
-	&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
-	&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} \nonumber\\
-	&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} = 0 \label{double_flat_syseq3}\\
-	&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq4}\\
-	&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0\label{double_flat_syseq5}.
-\end{flalign}
+Durch Einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen des Doppelkrans bilden:
+\begin{subequations}
+	\begin{flalign}
+		&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
+		&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
+		&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}} \nonumber\\
+		&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} = 0 \label{double_flat_syseq3}\\
+		&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq4}\\
+		&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} = 0\label{double_flat_syseq5}.
+	\end{flalign}
+\end{subequations}
 
 Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrieben werden:
 \begin{align}
-	\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{\tau}, \nonumber \\ \mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \nonumber \\
-	\mathbf{f}(\mathbf{x}) &= 
-	(\dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2}, 0, -g, 0, 0, 0)^T, \nonumber \\ 
-	\mathbf{g}(\mathbf{x}) &=
-	\left(\begin{matrix}
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		0 & 0 & 0 & 0\\
-		0 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{2}}\\
-		0 & 0 & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2} m_{2}}\\
-		0 & 0 & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{1}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{2}}\\
-		\frac{1}{m_{1}} & 0 & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{1}} & 0\\
-		0 & \frac{1}{m_{3}} & 0 & \frac{l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{3}}
-	\end{matrix}\right).
+	\begin{split}
+		\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{\tau} \text{ mit } \\ 
+		\mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \\
+		\mathbf{f}(\mathbf{x}) &= 
+		(\dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2}, 0, -g, 0, 0, 0)^T, \\ 
+		\mathbf{g}(\mathbf{x}) &=
+		\left(\begin{smallmatrix}
+			0 & 0 & 0 & 0\\
+			0 & 0 & 0 & 0\\
+			0 & 0 & 0 & 0\\
+			0 & 0 & 0 & 0\\
+			0 & 0 & 0 & 0\\
+			0 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{2}}\\
+			0 & 0 & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1} m_{2}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2} m_{2}}\\
+			0 & 0 & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{1}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} l_{2}}\\
+			\frac{1}{m_{1}} & 0 & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{l_{1} m_{1}} & 0\\
+			0 & \frac{1}{m_{3}} & 0 & \frac{l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}}{l_{2} m_{3}}
+		\end{smallmatrix}\right).
+	\end{split}
 \end{align}
 
 \subsection{Ansatz über ein DAE-System}
 (Im Folgenden genutztes Notebook: double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb)
 
-Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die Einprägung von Zwangsbedingungen die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\mathbf{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Längen dieser eine Umformulierung des Problems mit den Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???) Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung ist trotzdem sinnvoll. Durch die Einprägung von Zwangsbedingungen kann die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\mathbf{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Seillängen eine Umformulierung des Problems mit diesen Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???) Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -368,7 +385,7 @@ Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des
 	\label{fig:DAE_double_crane_diagram}
 \end{figure}
 
-Als aktuierte Koordinate werden nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_4 = \mathbf{S}_5$) ausgewählt, als passive Koordinaten die absolute Position $(p_1, p_2)$ des Gelenks $\mathbf{G}_2 (= \mathbf{S}_2)$ sowie $(p_3, p_4)$ des Gelenks $\mathbf{G}_3 = (\mathbf{S}_4)$. 
+Als direkt aktuierte Koordinate werden nur die $x$-Verschiebungen $q_1$ und $q_2$ der Laufkatzenpositionen ($\mathbf{B}_1 = \mathbf{G}_1 = \mathbf{S}_1$, $\mathbf{B}_2 = \mathbf{G}_4 = \mathbf{S}_5$) ausgewählt, als nicht direkt aktuierte Koordinaten die absolute Position $(p_1, p_2)$ des Gelenks $\mathbf{G}_2 (= \mathbf{S}_2)$ sowie $(p_3, p_4)$ des Gelenks $\mathbf{G}_3 (=\mathbf{S}_4)$. 
 
 Für konstante Seillängen können folgende Zwangsbedingungen formuliert werden:
 \begin{align}
@@ -417,7 +434,7 @@ Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die K
 	\end{matrix}\right).
 \end{align}
 
-Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie $T$ (Theoretische Begründung wieso !?!) vorhanden sind. Dies wäre bei einer Modellierung der Last mit homogener Masseverteilung und Trägheitsmoment nicht der Fall. Deshalb wird die Last durch ein System aus drei Massen ($m_2$, $m_3$, $m_4$) beschrieben, das sich simulativ äquivalent verhalten sollte und folgenden Gleichungen genügt:
+Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie $T$ vorhanden sind, damit die Massenmatrix $\mathbf{M}(\mathbf{\theta})$ in Gleichung \eqref{eq:implicit_mechanical_system} regulär ist \cite[S. 7]{DissKnoll}. Dies wäre bei einer Modellierung der Last mit homogener Masseverteilung und Trägheitsmoment nicht der Fall. Deshalb wird die Last durch ein System aus drei Massen ($m_2$, $m_3$, $m_4$) beschrieben, das sich simulativ äquivalent verhält und folgenden Gleichungen genügt:
 \begin{align}
 	m_{\mathrm{ges}} &= m_2 + m_3 + m_4\\
 	m_2 &= m_4\\
@@ -426,9 +443,9 @@ Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie 
 	\Rightarrow m_3 &= m_{\mathrm{ges}} - m_2 -m_4.
 \end{align}
 
-Die größen $m_{\mathrm{ges}}$ und $J$ beziehen sich auf die identifizierten Systemparameter, die so auch bei der Modellbildung des Doppelkrans als ODE-System genutzt wurden.
+Die Größen $m_{\mathrm{ges}}$ und $J$ beziehen sich auf die in Abschnitt \ref{sec:SysIdent} identifizierten Systemparameter, die so auch bei der Modellbildung des Doppelkrans als ODE-System genutzt wurden.
 
-Somit ist es möglich die kinetische und potentielle Energie des Systems zu formulieren:
+Somit ist es möglich, die kinetische und potentielle Energie des Systems zu formulieren:
 \begin{align}
 	T &= \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 + \frac{m_3}{2} \dot{\mathbf{S}}_3^T \dot{\mathbf{S}}_3 + \frac{m_4}{2} \dot{\mathbf{S}}_4^T \dot{\mathbf{S}}_4 + \frac{m_5}{2} \dot{\mathbf{S}}_5^T \dot{\mathbf{S}}_5 \nonumber \\  
 	&= \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \cdot 0.25 \left(\dot{p}_{1} + \dot{p}_{3}\right)^{2}}{2} + \frac{m_{3} \cdot 0.25 \left(\dot{p}_{2} + \dot{p}_{4}\right)^{2}}{2} \nonumber \\
@@ -437,33 +454,36 @@ Somit ist es möglich die kinetische und potentielle Energie des Systems zu form
 \end{align}
 
 Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ lassen sich die Systemgleichungen ausdrücken:
-\begin{flalign}
-	&- \frac{\lambda_{1} p_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} + \frac{\lambda_{1} q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{1}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
-	&+ \frac{\lambda_{2} p_{3}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + m_{2} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{3} = 0\\
-	&g m_{2} + 0.5 g m_{3} - \frac{\lambda_{1} p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{2} + \lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
-	&+ m_{2} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} = 0\\
-	&\frac{\lambda_{2} \left(p_{1} - p_{3}\right)}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{3} \left(l_{0} - p_{3} + q_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} \noindent \\
-	&+ \frac{m_{3} \left(0.5 \ddot{p}_{1} + 0.5 \ddot{p}_{3}\right)}{2} + m_{4} \ddot{p}_{3} = 0\\
-	&0.5 g m_{3} + g m_{4} + \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} - \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\ 
-	&- \frac{\lambda_{3} p_{4}}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} + m_{4} \ddot{p}_{4} = 0\\
-	&\frac{\lambda_{1} \left(p_{1} - q_{1}\right) + \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} \left(m_{1} \ddot{q}_{1} - \tau_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\\
-	&\frac{- \lambda_{3} \left(l_{0} - p_{3} + q_{2}\right) + \sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}} \left(m_{5} \ddot{q}_{2} - \tau_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} = 0.
-\end{flalign}
+\begin{subequations}
+	\begin{flalign}
+		&- \frac{\lambda_{1} p_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} + \frac{\lambda_{1} q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{1}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
+		&+ \frac{\lambda_{2} p_{3}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + m_{2} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{1} + 0.25 m_{3} \ddot{p}_{3} = 0\\
+		&g m_{2} + 0.5 g m_{3} - \frac{\lambda_{1} p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{2} + \lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
+		&+ m_{2} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} = 0\\
+		&\frac{\lambda_{2} \left(p_{1} - p_{3}\right)}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} + \frac{\lambda_{3} \left(l_{0} - p_{3} + q_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} \noindent \\
+		&+ \frac{m_{3} \left(0.5 \ddot{p}_{1} + 0.5 \ddot{p}_{3}\right)}{2} + m_{4} \ddot{p}_{3} = 0\\
+		&0.5 g m_{3} + g m_{4} + \frac{\lambda_{2} p_{2}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} - \frac{\lambda_{2} p_{4}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\ 
+		&- \frac{\lambda_{3} p_{4}}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} + 0.25 m_{3} \ddot{p}_{2} + 0.25 m_{3} \ddot{p}_{4} + m_{4} \ddot{p}_{4} = 0\\
+		&\frac{\lambda_{1} \left(p_{1} - q_{1}\right) + \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} \left(m_{1} \ddot{q}_{1} - \tau_{1}\right)}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} = 0\\
+		&\frac{- \lambda_{3} \left(l_{0} - p_{3} + q_{2}\right) + \sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}} \left(m_{5} \ddot{q}_{2} - \tau_{2}\right)}{\sqrt{p_{4}^{2} + \left(l_{0} - p_{3} + q_{2}\right)^{2}}} = 0.
+	\end{flalign}
+\end{subequations}
 
 \section{Systemidentifikation}
+\label{sec:SysIdent}
 
-Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messen mit einem Lineal oder einer Wage bestimmen. Nur das Trägheitsmoment der Last kann entsprechend der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt, die in die Ebene zeigt, berechnet werden \cite{LastTraegheit}:
+Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messen mit einem Lineal oder einer Wage bestimmen. Nur für das Trägheitsmoment der Last $J$ ist eine direkte experimentelle Bestimmung (z.B. durch einen Pendelversuch) zu aufwendig. Daher wird dieser Parameter, unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt, die in die Ebene zeigt, berechnet \cite{LastTraegheit}:
 \begin{equation}
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
 
 Dabei entspricht $h$ der Höhe der Last, welche zu $h = 90$ mm
-bestimmt wurde.
+bestimmt wurde. Die numerische Belegung der Systemparameter ist in Tabelle \ref{tab:sys_params} zusammengefasst.
 
 \begin{table}[htbp]%
 	\centering
 	\caption{Physikalische Parameter des Doppelkrandemonstratorsystems.}
-	\label{tab:relative_degrees}
+	\label{tab:sys_params}
 	\begin{tabular}{c c c} 
 		Parameter & Bezeichnung im ODE-Modell & Wert \\ 
 		\hline
@@ -481,26 +501,26 @@ bestimmt wurde.
 
 \section{Definition differenzieller Flachheit}\label{sec:Def_flatness}
 
-Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ ist (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\mathbf{\Theta}$ existieren, so dass:
+Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ heißt (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\mathbf{\Theta}$ existieren, so dass:
 \begin{align}
 \mathbf{x} &= \mathbf{\Psi}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
 \mathbf{u} &= \mathbf{\Theta}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_u)}) \text{ mit } n_u < \infty.
 \end{align}
 
-Dabei ist $\mathbf{y}$ ein flacher Ausgang \cite[S. 185]{NLRT_Roebenack}. 
+Dabei ist $\mathbf{y}$ ein flacher Ausgang. 
 
-Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend aus dem Zustand $\mathbf{x}$ und Eingang $\mathbf{u}$ eindeutig aus dem flachen Ausgang $\mathbf{y}$ und einer endlichen Anzahl dessen Zeitableitungen berechnet werden können, also keine Integrale dafür gelöst werden müssen. Eine alternative Formulierung des Flachheitsbegriffs verzichtet auf die Angabe der gleichen Dimension $m$ von Eingang und flachem Ausgang, fordert aber die differenzielle Unabhängigkeit der Komponenten von $\mathbf{y}$.
+Aus der Existenz eines flachen Ausgangs folgt, dass die Systemgrößen bestehend aus dem Zustand $\mathbf{x}$ und Eingang $\mathbf{u}$ eindeutig aus dem flachen Ausgang $\mathbf{y}$ und einer endlichen Anzahl dessen Zeitableitungen berechnet werden können, also keine Differenzialgleichungen durch Integration dafür gelöst werden müssen. Eine alternative Formulierung des Flachheitsbegriffs verzichtet auf die Angabe der gleichen Dimension $m$ von Eingang und flachem Ausgang, fordert aber die differenzielle Unabhängigkeit der Komponenten von $\mathbf{y}$.
 
 Die Existenzbedingungen eines ﬂachen Ausgangs sind bei Eingrößensystemen bekannt, allerdings ist der systematische Flachheitsnachweis und die Berechnung eines
-ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst.
+ﬂachen Ausgangs bei Mehrgrößensystemen im Allgemeinen nicht abschließend gelöst. \cite[S. 185]{NLRT_Roebenack}
 
 \section{Flachheitsanalyse von MIMO-Systemen}
 
-Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert werden. Für eine mathematisch fundierte und systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
+Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert. Für eine mathematisch fundierte und systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
 
 Es sei ein nichtlineares Mehrgrößensystem der Form aus Abschnitt \ref{sec:Def_flatness} gegeben. Dessen Eingang $\mathbf{u}$ kommt in affiner Form vor und könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination $p$ übriger Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $\mathbf{y}$ der Dimension $n - p = m$ ergibt. 
 
-Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Elimination bietet sich die Bildung der Jacobi-Matrix $\mathbf{J}_i$ der zu diesem Zeitpunkt noch $i$ betrachteten Systemgleichungen bezüglich des Eingangs $\mathbf{u}_{m-(n-i)}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
+Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Elimination bietet sich die Bildung der Jacobi-Matrix $\mathbf{J}_i$ der  \textcolor{red}{zu diesem Zeitpunkt noch $i$ verbleibenden Systemgleichungen} bezüglich des Eingangs $\mathbf{u}_{m-(n-i)}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
 \begin{equation}
 	\begin{pmatrix}
 	* & \cdots & * & 0 & * & \cdots & *\\
@@ -513,27 +533,29 @@ Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Eli
 	\end{pmatrix}.
 \end{equation}
 
-Falls keine solcher Spalten zu finden ist, kann eine Transformation $\mathbf{T}$ der Systemgleichungen durchgeführt werden, welche mittels linkem Orthokomplement $\mathbf{J}_i^{L \perp}$ und linker Pseudoinverser $\mathbf{J}_i^{L +}$ der Jacobi-Matrix das System in eine geeignete Form überführt \cite[Abschnitt 2.1.2]{Fritzsche2016}:
+Falls keine solcher Spalten zu finden ist, kann eine Transformation $\mathbf{T}_i$ der Systemgleichungen durchgeführt werden, welche mittels linkem Orthokomplement $\mathbf{J}_i^{L \perp}$ und linker Pseudoinverser $\mathbf{J}_i^{L +}$ der Jacobi-Matrix das System in eine geeignete Form überführt \cite[Abschnitt 2.1.2]{Fritzsche2016}:
 \begin{equation}
-	\mathbf{T} \mathbf{J}_i = 
+	\mathbf{T}_i \mathbf{J}_i = 
 	\begin{pmatrix}
 		\mathbf{I}_{m-(n-i)} \\
 		\mathbf{0}_{(n-m) \times (m-(n-i))}
 	\end{pmatrix}.
 \end{equation}
 
-Wobei $\mathbf{T}$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mathbf{J}_i^{L \perp}$ folgendermaßen gebildet werden kann:
+Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mathbf{J}_i^{L \perp}$ folgendermaßen gebildet werden kann:
 \begin{align}
 	\mathbf{J}_i^{L +} \mathbf{J}_i = \mathbf{I}_i \\
 	\mathbf{J}_i^{L \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \\
-	\Rightarrow \mathbf{T} = 
+	\Rightarrow \mathbf{T}_i = 
 	\begin{pmatrix}
 		\mathbf{J}_i^{L +} \\
 		\mathbf{J}_i^{L \perp}
 	\end{pmatrix} .
 \end{align}
 
-Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden kann analog durch Bildung einer Jacobi-Matrix bezüglich der noch vorhandenen Systemgrößen vorgenommen werden. Der Flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche nach Elimination aller Gleichungen übrig ist. Mittels der Zusammenhänge aus den Systemgleichungen können nach \ref{sec:Def_flatness} alle Systemgrößen allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert werden.
+\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Mittels der Zusammenhänge aus den Systemgleichungen können dann nach Abschnitt \ref{sec:Def_flatness} alle Systemgrößen allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert werden.}
+
+\textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen. Diese stellen eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall dar. Der skizzierte Alogrithmus ist deshalb nur als hinreichend aber nicht als notwendig zu betrachten.}
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
@@ -633,9 +655,9 @@ sowie das linke Orthokomplement (der Vektorraum aller Zeilen, die orthogonal zu 
 	0 & 0
 	\end{matrix}\right),
 \end{equation}
-so dass eine Transformation $\mathbf{T}$ der übrigen Systemgleichungen erneut Spalten einer korrespondierenden Jacobi-Matrix impliziert mit jeweils nur einem konstanten nicht-Null-Eintrag:
+so dass eine Transformation $\mathbf{T}_3$ der übrigen Systemgleichungen erneut Spalten einer korrespondierenden Jacobi-Matrix impliziert mit jeweils nur einem konstanten nicht-Null-Eintrag:
 \begin{equation}
-	\mathbf{T} \mathbf{J}_3 =
+	\mathbf{T}_3 \mathbf{J}_3 =
 	\left(\begin{matrix}
 		\mathbf{J}_3^{L+} \\
 		\mathbf{J}_3^{L \perp}
@@ -667,7 +689,7 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Forderung ihrer Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierte Systemgleichungen eliminieren.
+Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Forderung ihrer Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierte Systemgleichungen eliminieren.
 
 Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
@@ -677,7 +699,7 @@ In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten.
 
 Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Im Konkreten ist die Parametrisierung im Jupyter-Notebook (LINK!) berechnet worden, besteht allerdings aus zu vielen Operationen, um diese übersichtlich an dieser Stelle darzustellen.
 
-\chapter{Regelungsstrategie}
+\chapter{Steuerungs- und Regelungsentwurf}
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
 - notwendig???
