@@ -553,13 +553,16 @@ Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mat
 	\end{pmatrix} .
 \end{align}
 
-\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Mittels der Zusammenhänge aus den Systemgleichungen können dann nach Abschnitt \ref{sec:Def_flatness} alle Systemgrößen allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert werden.}
+\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend Abschnitt \ref{sec:Def_flatness} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert ist.}
 
-\textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen. Diese stellen eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall dar. Der skizzierte Alogrithmus ist deshalb nur als hinreichend aber nicht als notwendig zu betrachten.}
+\textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen. Diese stellen eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall dar. Der skizzierte Alogrithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.}
+
+\textcolor{red}{Anm. bez. ParametriSIerung vs Parametrierung: Ich hatte mal gelesen, dass ersteres für die symbolische Darstellung mit Parametern genutzt wird, zweiteres für die Belegung der Parameter durch Werte. Ich finde allerdings gerade keine Quelle dafür ...}
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
+\textcolor{red}{BITTE ABSCHNITT NOCH EINMAL KOMPLETT LESEN.}\\
 Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
-Aus der analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen \ref{single_flat_syseq1}, \ref{single_flat_syseq2} und \ref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
+Aus der analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\mathbf{\tau}$ gebildet:
 \begin{equation}
@@ -570,27 +573,29 @@ Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\mathbf{\tau}$ g
 		-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
 	\end{matrix}\right).
 \end{equation}
-Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \ref{single_flat_syseq3} bestimmt werden kann. Dementsprechend kann die letzte Zeile von $\mathbf{J}_3$ eliminiert werden.
+Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \eqref{single_flat_syseq3} bestimmt werden kann. Dementsprechend kann die letzte Zeile von $\mathbf{J}_3$ eliminiert werden. Eine Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_2, q_1, \ddot{q}_1, \tau_2)$ ist möglich.
 
-Die verbleibenden ersten beiden Systemgleichungen \ref{single_flat_syseq1} und \ref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. Da in der zweiten Gleichung \ref{single_flat_syseq2} $\tau_2$ allein durch $p_2$ und die Ableitung $\ddot{p}_2$ dargestellt werden kann, wird diese Gleichung zur Elimination von $\tau_2$ genutzt. Eine vorweggenommene Parametrisierung durch $p_2$ und $\ddot{p}_2$ ergibt:
+Die verbleibenden ersten beiden Systemgleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. So kann ohne Einschränkung auf diese Wahl die zweiten Gleichung \eqref{single_flat_syseq2} zur Elimination von $\tau_2$ genutzt werden. Eine Parametrisierung $\tau_2 = \mathrm{func}(p_1, p_2, \ddot{p}_2, q_1)$ erfolgt.
+
+Die letzte verbleibende Systemgleichung \eqref{single_flat_syseq1} weist nach Substitution des zuvor eliminierten $\tau_1$ und $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1$ auf. Daher bietet sich die Elimination der allein algebraisch auftretenden Größe $q_1$ an. Daher folgt als Kandidat für einen flachen Ausgang
+$\mathbf{y} = (p_1, p_2)^T$. Mit diesem ist nun die konkrete Parametrisierung aller Systemgrößen durchzuführen.
+
+Eine erste Parametrisierung von $\tau_2$ ergibt sich zu:
 \begin{equation}
 	\label{eq:pre_single_crane_tau2_w_q1}
-	\tau_2 = \frac{l_{1} m_{2} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
+	\tau_2 = \frac{m_{2} \left(g + \ddot{p}_{2}\right) \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}{p_{2}}.
 \end{equation}
-Es ist zu bemerken, dass in dieser Beschreibung von $\tau2$ die Koordinaten $p_1, p_2, q_1$ zusätzlich durch $l_1$ enthalten sind. Diese können nach der Parametrisierung durch einen flachen Ausgang anschließend ersetzt werden. 
-
-Die letzte verbleibende Systemgleichung \ref{single_flat_syseq1} weist nach Substitution des soeben ermittelten $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p1, \ddot{p}_1, p2, \ddot{p}_2, q_1$ auf. Daher bietet sich die Elimination des allein algebraisch auftretenden $q_1$ und auch an dieser stelle die Vorwegnahme der Parametrisierung dessen durch $p_1, p_2$ und deren Ableitungen an: 
+Es ist zu bemerken, dass dabei die Koordinate $q_1$ neben den Komponenten des flachen Ausgangs und seinen Ableitungen enthalten ist. Durch Einsetzen dieser vorläufigen Darstellung von $\tau_2$ in Gleichung \eqref{single_flat_syseq1} ergibt eine flache Parametrisierung von $q_1$:
 \begin{equation}
 	q_1 = \frac{p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}.
 \end{equation}
-
-Somit kann auch die Substitution von $q_1$ in $l_1$ zu einer flachen Darstellung von \ref{eq:pre_single_crane_tau2_w_q1} erfolgen:
+Durch Einsetzen davon in Gleichung \label{eq:pre_single_crane_tau2_w_q1} erfolgt eine flache Parametrisierung von $\tau_2$:
 \begin{equation}
 	\tau_2 =
 	\frac{m_{2} \sqrt{\frac{p_{2}^{2} \left(g + \ddot{p}_{2}\right)^{2} + \left(- g p_{1} - p_{1} \ddot{p}_{2} + p_{1} \left(g + \ddot{p}_{2}\right) + p_{2} \ddot{p}_{1}\right)^{2}}{\left(g + \ddot{p}_{2}\right)^{2}}} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
 \end{equation}
 
-Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \ref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
+Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \eqref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
 \begin{align}
 	\begin{split}
 	\ddot{q}_1 &=
@@ -599,7 +604,6 @@ Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszu
 	&- \frac{\left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}}.
 	\end{split}
 \end{align}
-
 Daraus folgt:
 \begin{align}
 	\begin{split}
@@ -610,35 +614,36 @@ Daraus folgt:
 	\end{split}
 \end{align}
 
-Diese Parametrisierung zeigt, dass es sich bei $\mathbf{y} = (p_1, p_2)^T$ um einen flachen Ausgang handelt.
+Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeigt, dass es sich bei diesen um einen flachen Ausgang handelt.
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
+\label{sec:flatness_analysis_double_crane}
 
-Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_control.ipynb) \\
-Aus der analytischer Modellbildung des Doppelkransystems mit dem Lagrange-Formalismus zweiter Art folgen die 5 Systemgleichungen \ref{double_flat_syseq1} bis \ref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
+Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ $flatness_notebooks/ODE_flatness_analysis.ipynb$ \\
+Aus der analytischer Modellbildung des Doppelkransystems mit dem Lagrange-Formalismus zweiter Art folgen die 5 Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
 
-Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\mathbf{\tau}$ gebildet:
-\begin{equation}
+Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\mathbf{\tau}$ gebildet(Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
+\begin{equation*}
 	\mathbf{J}_5 = 
 	\left(\begin{smallmatrix}
-	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
-	0 & 0 & - \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
-	0 & 0 & \frac{s_{2} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}}\\
-	-1 & 0 & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & 0\\
-	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}
+	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & - \frac{p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & \frac{s_{2} \left(p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
+	-1 & 0 & \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & 0\\
+	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
-\end{equation}
-Dabei ist zu erkennen, dass in den ersten beiden Spalten der zu den Systemgleichungen korrespondierenden Jacobi-Matrix zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen. Dementsprechend können die letzten beiden Zeilen von $\mathbf{J}_5$ eliminiert werden und jeweils eine Gleichung zur Bestimmung der Eingänge $\tau_1$, $\tau_2$ aus den übrigen Eingängen ermittelt werden.
+\end{equation*}
+Dabei ist zu erkennen, dass in den ersten beiden Spalten der zu den Systemgleichungen korrespondierenden Jacobi-Matrix zwei Eingangsgrößen jeweils isoliert vorkommen. Es ergeben sich zur Bestimmung der Größen $\tau_1$ und $\tau_2$ keine redundanten Gleichungen. Dementsprechend können die letzten beiden Zeilen von $\mathbf{J}_5$ eliminiert werden. Eine vorläufige Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_3, q_1, \ddot{q}_1, \tau_3)$ und $\tau_2 = \mathrm{func}(p_1, p_3, q_2, \ddot{q}_2, \tau_4)$ ist möglich.
 
-Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es in der darauf bezogenen Jacobimatrix $\mathbf{J}_3$ keine Spalten mehr, in denen diese Eingangskomponenten nur einmal vorkommen:
-\begin{equation}
+Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es in der darauf bezogenen Jacobimatrix $\mathbf{J}_3$ zu den ersten drei Systemgleichungen  \eqref{double_flat_syseq1}, \eqref{double_flat_syseq2} und \eqref{double_flat_syseq3} keine Spalten mehr, in denen diese Eingangskomponenten nur einmal vorkommen:
+\begin{equation*}
 	\mathbf{J}_3 =
 	\left(\begin{smallmatrix}
-	- \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{l_{2}}\\
-	- \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{l_{2}}\\
-	\frac{s_{2} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right) \cos{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right) \sin{\left(p_{3} \right)}}{l_{2}}
+	- \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}\\
+	- \frac{p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
+	\frac{s_{2} \left(p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
-\end{equation}
+\end{equation*}
 
 Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$, gilt es eine linke Pseudoinverse $\mathbf{J}_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
@@ -689,25 +694,36 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Forderung ihrer Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierte Systemgleichungen eliminieren.
+Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierten Systemgleichungen eliminieren. Eine vorläufige Parametrisierung ${\tau_3 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ und ${\tau_4 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ ist möglich.
 
 Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
-	M = \{p_1, p_2, p_3, \ddot{p_1}, \ddot{p_2}, \ddot{p_3}, q_1, q_2 \}.
+	M = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}.
 \end{equation}
-In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten. Eine dieser beiden Größen kann also ebenso wie der Eingang $\mathbf{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ $\mathbf{y} = (p_1, p_2, p_3, q_2)^T$. 
+In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten. Eine dieser beiden Größen kann also ebenso wie der Eingang $\mathbf{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ ${\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T}$.
 
-Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Im Konkreten ist die Parametrisierung im Jupyter-Notebook (LINK!) berechnet worden, besteht allerdings aus zu vielen Operationen, um diese übersichtlich an dieser Stelle darzustellen.
+Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Auf die konkrete Angabe der Parametrisierungen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das Jupyter-Notebook (LINK! $flatness_notebooks/ODE_flatness_analysis.ipynb$) verwiesen.
+
+Eine abschließende flache Parametrisierung aller Systemgrößen durch den flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ enthält folgende Zusammenhänge:
+\begin{subequations}
+	\begin{align}
+		q_2 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1) \\
+		\tau_1 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1, \ddot{q}_1) \\
+		\tau_2 &= \mathrm{func}(p_1, \dot{p}_1, \ddot{p}_1, p_1^{(3)}, p_1^{(4)}, p_2, \dot{p}_2, \ddot{p}_2, p_2^{(3)}, p_2^{(4)}, p_3, \dot{p}_3, \ddot{p}_3, p_3^{(3)}, p_3^{(4)}, q_1, \dot{q}_1, \ddot{q}_1) \\
+		\tau_3 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1) \\
+		\tau_4 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1).
+	\end{align}
+\end{subequations}
 
 \chapter{Steuerungs- und Regelungsentwurf}
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
 - notwendig???
 
-\section{Trajektorienplanung des flachen Ausgangs}
-Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es keine festgelegten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
+\section{Trajektorienplanung für den flachen Ausgang}
+Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
 
-Aufgrund der einfachen Einprägung von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse ist ersichtlich, dass der Eingang $\tau_2 = \Phi(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus der Ruhelage $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe ohne Sprünge an den Rändern in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
+Aufgrund der einfachen Einprägung von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die Wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse in Abschnitt \ref{sec:flatness_analysis_double_crane} ist ersichtlich, dass für den flachen Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ der Eingang $\tau_2 = \Phi(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus der Ruhelage $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe ohne Sprünge an den Rändern in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
 \begin{align}
 	\begin{split}
 	y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
@@ -727,20 +743,20 @@ Es ergeben sich Ansatzfunktionen für die Trajektorien des flachen Ausgangs mit 
 	\end{split}
 \end{align}
 
-Die Koeffizienten der Trajektorien $a_{i, j}$ können durch einsetzen der Randbedingungen und lösen des resultierenden linearen Gleichungssystems bestimmt werden. In der Simualtion wurde als Implementierung dafür die Funktion \texttt{condition\_poly} der Bibliothek symbtools verwendet.
+Die Koeffizienten der Trajektorien $a_{i, j}$ können durch Einsetzen der Randbedingungen und Lösen des resultierenden linearen Gleichungssystems bestimmt werden. In der Simualtion wurde als Implementierung dafür die Funktion \texttt{condition\_poly} der Bibliothek symbtools verwendet.
 
 
 \section{Trajektorienfolgeregelung}
 
 \subsection{Vektorieller relativer Grad}
-Es wird ein Mehrgrößensystem mit $m$ Ein- und Ausgangskomponenten $u_1, ..., u_m$ und $y_1, ...m y_m$ betrachtet \cite[S. 194]{NLRT_Roebenack}:
+Es wird ein Mehrgrößensystem mit $m$ Ein- und Ausgangskomponenten $u_1, ..., u_m$ und $y_1, ... y_m$ betrachtet:
 \begin{equation}
 	\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x}).
 \end{equation}
-Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{g}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M \subseteq \Reals^{n}$. Dieses System hat an der Stelle $\mathbf{p} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{g}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M$ eine offene Teilmenge $M \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\mathbf{p} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
 \begin{enumerate}
 	\item $L_{\mathbf{g}_j} L_{\mathbf{f}}^k \mathbf{h}_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\mathbf{p}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
-	\item die Matrix
+	\item die sogenannte Entkopplungsmatrix
 	\begin{equation*}
 		\mathbf{\Lambda} = 
 		\left(\begin{matrix}
@@ -751,6 +767,7 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 	\end{equation*}
 	im Punkt $\mathbf{x} = \mathbf{p}$ regulär ist.
 \end{enumerate}
+\cite[S. 194]{NLRT_Roebenack}
 
 \subsection{Statische Rückführung}
 - Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
@@ -1020,9 +1037,9 @@ Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operatio
 \subsubsection{Stabilitätsbetrachtung}
 Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
 \begin{align}
-	\mathbf{e} := \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
-	\dot{\mathbf{e}} = \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \mathbf{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
-	\mathbf{J}_{\dot{\mathbf{e}}} = \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
+	\mathbf{e} :&= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
+	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \mathbf{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
+	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
 \end{align}
 mit positiven Realteilen vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt. Eine andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
 
