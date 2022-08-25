@@ -120,6 +120,7 @@ Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleic
 \mathbf{0} &= \mathbf{M}(\boldsymbol{\theta}) \ddot{\boldsymbol{\theta}} + \mathbf{C}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) + \mathbf{K}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) + \mathbf{G}(\boldsymbol{\theta}) \boldsymbol{\lambda} - \mathbf{B}(\boldsymbol{\theta}) \boldsymbol{\tau} \label{eq:implicit_mechanical_system}\\
 \mathbf{0} &= \mathbf{g}(\boldsymbol{\theta}).
 \end{align}
+\cite[S.240]{JanschekSystementwurf}
 
 Zur Integration davon gibt es verschiedene Möglichkeiten \cite[Kap. 8]{ModSimSkript}: 
 \begin{itemize}
@@ -347,6 +348,7 @@ Durch Einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen
 
 Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrieben werden:
 \begin{align}
+	\label{eq:state_space_double_crane}
 	\begin{split}
 		\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\ 
 		\mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \\
@@ -716,7 +718,7 @@ Eine abschließende flache Parametrisierung aller Systemgrößen durch den flach
 \chapter{Steuerungs- und Regelungsentwurf}
 
 \section{Regelung zur Stabilisierung von Ruhelagen}
-- notwendig???
+- \textcolor{red}{notwendig???}
 
 \section{Trajektorienplanung für den flachen Ausgang}
 Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
@@ -753,29 +755,38 @@ Es wird ein Mehrgrößensystem mit $m$ Ein- und Ausgangskomponenten $u_1, ..., u
 \end{equation}
 Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{g}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M$ eine offene Teilmenge $M \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\mathbf{p} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
 \begin{enumerate}
-	\item $L_{\mathbf{g}_j} L_{\mathbf{f}}^k \mathbf{h}_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\mathbf{p}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
+	\item $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\mathbf{p}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 	\item die sogenannte Entkopplungsmatrix
-	\begin{equation*}
+	\begin{equation}
+		\label{eq:decoupling_matrix}
 		\boldsymbol{\Lambda} = 
 		\left(\begin{matrix}
-		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} \mathbf{h}_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} \mathbf{h}_1(\mathbf{x}) \\
+		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
 		\vdots & \ddots & \vdots \\
-		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} \mathbf{h}_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} \mathbf{h}_m(\mathbf{x})
+		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
 		\end{matrix}\right) 
-	\end{equation*}
+	\end{equation}
 	im Punkt $\mathbf{x} = \mathbf{p}$ regulär ist.
 \end{enumerate}
 \cite[S. 194]{NLRT_Roebenack}
 
 \subsection{Statische Rückführung}
-- Durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ kann die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmen. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt.\\
-- Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds der Systemgleichungen $\boldsymbol{\delta} = \mathbf{f} + \mathbf{g} \boldsymbol{\tau}$ rekursiv erzeugt: 
+Ziel dieses Ansatzes ist es, die nichtlinearen Eingangs-Ausgangs-Verkopplungen eines Systems mit dem Verhalten
 \begin{equation}
-	y_i^{(k)} = L_{\boldsymbol{\delta}} y_i^{(k-1)}
+	\mathbf{y} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \boldsymbol{u} \text{ mit } \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+\end{equation}
+durch eine statische (Zustands-)Rückführung
+\begin{equation}
+	\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow u = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+\end{equation}
+unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ zu kompensieren. Die Zusammensetzung dieses virtuellen Eingangs ist in Abschnitt \ref{sec:error_dynamics} erklärt. \cite[S. 195]{NLRT_Roebenack}
+
+Bei dem vorliegenden Doppelkransystem kann durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmt werden. Diese entspricht der Ableitungsordnung, bei der das erste mal ein Eingang explizit auftritt. Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds des Zustandsraummodells des Systems $\boldsymbol{\delta} := \dot{\mathbf{x}} = \mathbf{f} + \mathbf{g} \boldsymbol{\tau}$, welches in Gleichung \eqref{eq:state_space_double_crane} bestimmt wurde, rekursiv erzeugt: 
+\begin{equation}
+	y_i^{(k)} = L_{\boldsymbol{\delta}} y_i^{(k-1)} .
 \end{equation}
 
--In der Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
-
+In der Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
 \begin{table}[htbp]%
 	\centering
 	\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
@@ -785,12 +796,14 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 		\hline
 		$r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
-		explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\ 
+		explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+		\hline
+		$y_j^{(k)}$ mit minimalem $k$ bis erstes Auftreten von $\tau_i$ & $y_4^{(2)}$ & $y_{1,2,3}^{(4)}$ & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ (auf Section Statische Eingangs-Ausgangs-Linearisierung verweisen) eine Singularität aufgrund der zweiten Nullspalte, denn der einzige von Null verschiedene Eintrag in $\mathbf{g}_2$ erfolgt durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. \textcolor{red}{So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i = 0 \mathrm{ für } i = 1,..., 4$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g_j}} L_{\mathbf{f}}^{r_i-1} y_i = 0$ gilt \cite[S. 201]{NLRT_Roebenack}:}
+Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ gemäß Gleichung \eqref{eq:decoupling_matrix} eine Singularität, weil die ihre Spalte nur Nulleinträge enthält. Der einzige von Null verschiedene Eintrag in der zweiten Spalte $\mathbf{g}_2$ der Eingangsmatrix $\mathbf{g}$ erfolgt nämlich durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. \textcolor{red}{So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i \cdot g_{10, 2} = \partiell{}{\dot{q}_2} \dot{y}_i \cdot g_{10, 2} = 0$ für $i = 1,..., 4$, weil $\dot{q}_2 \not\in \dot{\mathbf{y}}$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^{r_i-1} y_i = 0$ mit $i = 1, ..., m$ gilt \cite[S. 201]{NLRT_Roebenack}:}
 \begin{align}
 	\boldsymbol{\Lambda} = 
 	\left(\begin{smallmatrix}
@@ -801,24 +814,24 @@ Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Ent
 	\end{smallmatrix}\right) .
 \end{align}
 
-Analog gilt für den alternativen flachen Ausgang $\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\boldsymbol{\Lambda}$ impliziert.
+Analog gilt dies für den alternativen flachen Ausgang $\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\boldsymbol{\Lambda}$ impliziert.
 
-Daher ist $\boldsymbol{\Lambda}$ in dieser Form nie regulär und $\mathbf{r}$ nie wohldefiniert und dieses System nicht statisch eingangs-ausgangs-linearisierbar. 
-Stattdessen können zur Regelung Ansätze mit einer dynamischen Erweiterung oder quasistatischen Zustandsrückführung verfolgt werden. 
+Daher ist die Entkopplungsmatrix $\boldsymbol{\Lambda}$ in dieser Form nie regulär und der vektorielle relative Grad $\mathbf{r}$ nie wohldefiniert. Dieses System ist nicht statisch eingangs-ausgangs-linearisierbar. Stattdessen können zur Regelung Ansätze mit einer dynamischen Erweiterung oder quasi-statischen Zustandsrückführung verfolgt werden. 
 
-\subsubsection{Zustandsrückführung aus Fehlerdynamik}
-Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik (in diesem Fall allerdings bezüglich des Trajektorienfolgefehlers und nicht wie in der Literatur beschrieben bezüglich eines Festwerts) $e_i := y_i - y_{i, \text{ref}}$ und nicht eines Festwerts, angesetzt werden:
-\begin{equation}
-	e_i^{(n)} + c_{n-1} e_i^{(n-1)} + ... + c_{1} \dot{e}_i + c_{0} e_i = 0 
-	\Leftrightarrow y_i^{(n)} = y_{i, \text{ref}}^{(n)} - c_{n-1} e_i^{(n-1)} - ... - c_{1} \dot{e}_i - c_{0} e_i.
-\end{equation}
-Die Koeffizienten $c_i, \ i \in {0, 1, ..., n-1}$ müssen so gewählt werden, dass das charakteristische Polynom dieser Gleichung ausschließlich Polstellen mit negativem Realteil aufweist.
+\subsection{Zustandsrückführung aus Fehlerdynamik}
+\label{sec:error_dynamics}
+Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ (mit $y_{i, \text{ref}} = \mathrm{func}(t)$ und nicht wie in der Literatur an dieser Stelle beschrieben bezüglich einer Abweichung von einem Festwert $y_{i, \text{ref}} = \mathrm{const.}$) angesetzt werden und damit auch die Komponenten des virtuellen Eingangs gewählt werden:
+\begin{align}
+	e_i^{(r_i)} + c_{r_i-1} e_i^{(r_i-1)} + ... + c_{1} \dot{e}_i + c_{0} e_i = 0 
+	\\
+	\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{r_i-1} e_i^{(r_i-1)} - ... - c_{1} \dot{e}_i - c_{0} e_i.
+\end{align}
+Die Koeffizienten $c_i, \ i \in {0, 1, ..., r_i-1}$ sind für eine Stabilisierung des Systems so zu wählen, dass das charakteristische Polynom dieser Gleichung ausschließlich Polstellen mit negativem Realteil aufweist.
 
 \subsection{Dynamische Erweiterung}
-Die Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keine r Ausgangsableitung $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} = k = 3 < m = 4$. \\
+Die Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} = k = 3 < m = 4$. Es gilt für eine reguläre Matrix $\tilde{\boldsymbol{\Lambda}}$ zu verhindern, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen frühzeitig zur Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack}
 
-Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau_3$, $\tau_4$ in den entsprechenden Ausgangsableitungen. Dafür: \\
-- Ergänzung dieser Eingänge um  in diesem Fall jeweils zwei Integratoren, so dass die neuen Eingangskomponenten bei der selben Ableitungsordnung das erste mal explizit auftreten wie $\tau_2$ und Erweiterung der Systemgleichungen um die folgenden DGL:
+So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erst mal bei der Ableitungsordnung 4 explizit auf. Der neue vektorielle relative Grad folgt mit $r_i = 2$ für $i = 1, ..., 4$. Die Systemgleichungen werden um die folgenden DGL dynamisch erweitert:
 \begin{align}
 	\begin{split}
 		\dot{\tau}_1 &=: \alpha_1 \\
@@ -830,13 +843,10 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 	\end{split}
 \end{align}
 
-- Definition des neuen Eingangsvektors unter Einsortierung der zuvor abwesenden Komponente $\tau_2$ zuletzt $\mathbf{\tilde{\tau}} = (\beta_1,  \beta_3,  \beta_4, \tau_2)^T$. \\
-
-- Erweiterung des Zustandsvektors auf $\tilde{\mathbf{x}} = (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T$ \\
-- Umsortierung der Nullspalte von $\boldsymbol{\Lambda}$ auf die letzte Position analog zum neuen Eingangsvektor \\
-- Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\mathbf{\tilde{\delta}} = \mathbf{\tilde{f}} + \mathbf{\tilde{g}} \mathbf{\tilde{\tau}}$ mit
+Daraus folgt die Definition eines neuen Eingangsvektors unter Umsortierung der Komponente $\tau_2$ an die letzte Stelle $\tilde{\boldsymbol{\tau}} = (\beta_1,  \beta_3,  \beta_4, \tau_2)^T$. Der Zustandsvektors wird auf $\tilde{\mathbf{x}} = (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T$ erweitert.\\
+- Herleitung des Ausgangsableitungen über Lie-Ableitungen entlang erweiterter Zustandsgleichungen  $\tilde{\boldsymbol{\delta}} = \mathbf{\tilde{f}} + \mathbf{\tilde{g}} \tilde{\boldsymbol{\tau}}$ mit
 \begin{align}
-	\mathbf{\tilde{\delta}} =
+	\tilde{\boldsymbol{\delta}} =
 	\left(\begin{matrix}
 		\boldsymbol{\delta} \\
 		\alpha_1 \\
@@ -846,16 +856,17 @@ Verhindern von frühzeitigem auftreten der 3 Eingangskomponenten $\tau_1$, $\tau
 		\beta_3 \\
 		\beta_4 \\	
 	\end{matrix}\right), \quad
-	\mathbf{\tilde{f}} = \mathbf{\tilde{\delta}}|_{\mathbf{\tilde{\tau}} = 0}, \quad
-	\mathbf{\tilde{g}} = \partiell{\mathbf{\tilde{\delta}}}{\mathbf{\tilde{\tau}}}
+	\mathbf{\tilde{f}} = \tilde{\boldsymbol{\delta}}|_{\tilde{\boldsymbol{\tau}} = 0}, \quad
+	\mathbf{\tilde{g}} = \partiell{\boldsymbol{\tilde{\delta}}}{\tilde{\boldsymbol{\tau}}}
 \end{align}
 
 und diese sollen nach \cite[S. 195]{NLRT_Roebenack} Gleichung 4.157 jeweils auch über:
 \begin{equation}
-	y_i^{(r_i)} = L_{\mathbf{\tilde{f}}}^{r_i} y_i + L_{\mathbf{\tilde{g}_1}} L_{\mathbf{\tilde{f}}}^{r_i-1} y_i \beta_1 + L_{\mathbf{\tilde{g}_2}} L_{\mathbf{\tilde{f}}}^{r_i-1} y_i \beta_3 + L_{\mathbf{\tilde{g}_3}} L_{\mathbf{\tilde{f}}}^{r_i-1} y_i \beta_4 + L_{\mathbf{\tilde{g}_4}} L_{\mathbf{\tilde{f}}}^{r_i-1} y_i \tau_2 .
+	y_i^{(r_i)} = L_{\tilde{\mathbf{f}}}^{r_i} y_i + L_{\tilde{\mathbf{g}_1}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_1 + L_{\tilde{\mathbf{g}_2}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_3 + L_{\tilde{\mathbf{g}_3}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_4 + L_{\tilde{\mathbf{g}_4}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \tau_2 .
 \end{equation}
 berechnet werden können.\\
 - Für dieses modifizierte System folgt somit stets für $r_i = 4 \ \forall i$. \\
+- relativer Grad wohldefiniert? -> wenn ja: entsprechend Zustandsrückführung nach Gleichung ... in Section statische ZRF möglich. Dabei handelt es sich um eine dynamische Rückführung.
 
 Problem:\\
 - Pole müssen weiter links Platziert werden für gutes Folgeverhalten bei Anfangsfehlern (wegen der zusätzlichen Integratoren bei den Eingängen ???) \\
@@ -1035,7 +1046,7 @@ Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operatio
 \subsubsection{Stabilitätsbetrachtung}
 Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
 \begin{align}
-	\mathbf{e} :&= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
+	\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
 	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
 	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
 \end{align}
