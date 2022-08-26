@@ -46,7 +46,7 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 
 In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die gesamte Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser nur in einer Ebene zulässt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen und der Last als masselos angenommen sowie nicht mit einem Trägheitsmoment behaftet. Die Last wird trotz ihrer Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären CAD-Daten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Es wird aus Gründen der Einfachheit auf die Abbildung dissipativer Kräfte verzichtet. Zudem können diese bei einer funktionierenden unterlagerten Regelung als kompensiert angenommen werden.
 
-Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein typischerweise effizient zu simulierendes gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE systems) ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) zur Simulation generiert wird, nahe. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist stattdessen eine Modellierung mit den Lagrange-Gleichungen zweiter Art möglich. Es folgt nun eine kurzer theoretischer Überblick zu beiden erwähnten Arten des Lagrange-Formalismus.
+Die Modellbildung erfolgt in mehreren Stufen. Es ist zunächst problemlos möglich mittels der Lagrange-Gleichungen erster oder auch zweiter Art den Einzelkran darzustellen. Dabei hat die Modellierung zweiter Art den Vorteil, dass Stellkräfte einfacher abgebildet werden können und sich ein typischerweise effizient zu simulierendes gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE system) ergibt. Ausgehend von den Erkenntnissen und aufgrund geringer Komplexität der überschaubaren Terme des Einzelkrans, kann die prinzipielle Methodik verifiziert werden. Daran anschließend wird eine Erweiterung auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Wegen der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der Lagrange-Gleichungen erster Art, bei der mittels algebraischer Zwangsbedingungen ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) zur Simulation generiert wird, nahe. Allerdings ist dabei eine Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim physischen Demonstrator sperrt das Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist stattdessen eine Modellierung mit den Lagrange-Gleichungen zweiter Art möglich. Es folgt nun eine kurzer theoretischer Überblick zu beiden erwähnten Arten des Lagrange-Formalismus.
 
 \section{Modellierung mittels Lagrange-Formalismus}
 Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den so genannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ auftretenden und zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\boldsymbol{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Die zeitlichen Änderungsraten dieser sind die (Konfigurations-)Geschwindigkeiten $\dot{\boldsymbol{\theta}}$. \textcolor{red}{Anfänglich wurde der Literatur \cite[S.10]{DissKnoll} folgend eine Unterteilung der Systemgrößen in ``aktive'' und ``passive'' Koordinaten vorgenommen. Im Verlauf dieser Arbeit ist bemerkt worden, dass die 
@@ -133,7 +133,7 @@ Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools 
 Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i_\mathrm{d} \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr allein aus AGL bestimmbar ist. Es ist notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls es andernfalls zu inkonsistenten Anfangswerten kommt, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse. \cite[S.207]{JanschekSystementwurf}
 
 \section{Analytisches Modell Einzelkran}
-(Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb)
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
 
 Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Einzelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Diese Modellierung hat den Vorteil, dass durch die generalisierte Kraft gerade die Stellkraft im Seil gut abgebildet werden kann sowie eine Vielzahl verschiedener Integrationsverfahren für eine effiziente Lösung des ODE-Systems nutzbar ist. Abbildung \ref{fig:single_crane_diagram} zeigt die Konfiguration des Einzelkransystems.
 
@@ -221,7 +221,7 @@ Durch einsetzen dieser lässt sich ein abschließender Satz an Systemgleichungen
 \section{Analytisches Modell Doppelkran}
 
 \subsection{Ansatz über ein ODE-System}
-(Im Folgenden genutztes Notebook: flatness\_notebooks/ODE\_flatness\_analysis.ipynb)
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
 
 Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Abbildung \ref{fig:double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
@@ -371,7 +371,7 @@ Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrie
 \end{align}
 
 \subsection{Ansatz über ein DAE-System}
-(Im Folgenden genutztes Notebook: double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb)
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb]{SAGithub} zu finden.
 
 Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend der Erläuterungen aus Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung ist trotzdem sinnvoll. Durch die Einprägung von Zwangsbedingungen kann die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden kann. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine spätere effiziente Simulation mit aktuierten Seilwinden wäre gerade bei konstanten Seillängen eine Umformulierung des Problems mit diesen Längen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???) Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
@@ -561,7 +561,8 @@ Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mat
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
 \textcolor{red}{BITTE ABSCHNITT NOCH EINMAL KOMPLETT LESEN.}\\
-Herangezogen: ODE Modell des Einzelkrans aus Lagrange 2 \\ (flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb) \\
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
+
 Aus der analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau}$ gebildet:
@@ -619,7 +620,8 @@ Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeig
 \section{Anwendung Flachheitsanalyse am Doppelkran}
 \label{sec:flatness_analysis_double_crane}
 
-Herangezogen: ODE Modell des Gantrys aus Lagrange 2 \\ $flatness_notebooks/ODE_flatness_analysis.ipynb$ \\
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
+
 Aus der analytischer Modellbildung des Doppelkransystems mit dem Lagrange-Formalismus zweiter Art folgen die 5 Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau}$ gebildet(Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
@@ -702,7 +704,7 @@ Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrö
 \end{equation}
 In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten. Eine dieser beiden Größen kann also ebenso wie der Eingang $\boldsymbol{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ ${\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T}$.
 
-Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Auf die konkrete Angabe der Parametrisierungen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das Jupyter-Notebook (LINK! $flatness_notebooks/ODE_flatness_analysis.ipynb$) verwiesen.
+Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Auf die konkrete Angabe der Parametrisierungen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen.
 
 Eine abschließende flache Parametrisierung aller Systemgrößen durch den flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ enthält folgende Zusammenhänge:
 \begin{subequations}
@@ -834,6 +836,9 @@ Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich de
 Die Koeffizienten $c_{i, k}, \ k \in {0, 1, ..., r_i-1}$ sind für eine Stabilisierung des Systems so zu wählen, dass das charakteristische Polynom dieser Gleichung ausschließlich Polstellen mit negativem Realteil aufweist.
 
 \subsection{Dynamische Erweiterung}
+\label{sec_dynamic_extension_control}
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation\_dyn.ipynb]{SAGithub} zu finden.
+
 Die Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} = k = 3 < m = 4$. Es gilt für eine reguläre Matrix $\tilde{\boldsymbol{\Lambda}}$ zu verhindern, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen frühzeitig zur Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack}
 
 So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erst mal bei der Ableitungsordnung 4 explizit auf. Der neue vektorielle relative Grad folgt mit $r_i = 2$ für $i = 1, ..., 4$. Die Systemgleichungen werden um die folgenden DGL dynamisch erweitert:
@@ -872,6 +877,16 @@ Für dieses modifizierte System folgt somit stets $r_i = 4$ für $i = 1, ..., 4$
 
 Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20'000 Operationen je Eingangsgröße folgen können. 
 
+Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+\begin{subequations}
+	\begin{align}
+		\beta_1 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\beta_3 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\beta_4 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}).
+	\end{align}
+\end{subequations}
+
 \begin{figure}[ht]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
@@ -887,7 +902,10 @@ Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems
 Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen $\beta_1$, $\beta_3$ und $\beta_4$ ist an beide Rändern jeder Referenztrajektorie der flachen Ausgangskomponenten $y_i$ auch eine um  jeweils zwei Ordnungen höhere Forderung an die stetige Differenzierbarkeit zu stellen. Das Vorgehen nach Abschnitt \ref{sec:trajectory_flat_output} kann erneut analog durchgeführt werden mit jeweils um vier Ordnungen höheren Polynomen der Ausgangstrajektorien.
 
 \subsection{Quasi-statische Rückführungen}
-Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefinierten relativen vektoriellen Grad im statischen Ansatz \cite[S. 206]{NLRT_Roebenack} zur Stabilisierung des Systems angesetzt werden.
+\label{sec:quasi_static_control}
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation\_qstat.ipynb]{SAGithub} zu finden.
+
+Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefinierten relativen vektoriellen Grad im statischen Ansatz zur Stabilisierung des Systems angesetzt werden. Dafür wird das Vorgehen nach \cite[S. 206]{NLRT_Roebenack} im Folgenden nachvollzogen und am Doppelkransystem angewendet. Tabelle \ref{tab:input_occurence} stellt für jede Eingangskomponente die Ableitungsordnung jeder Ausgangskomponente von $\mathbf{y}$ gegenüber.
 
 \begin{table}[htbp]%
 	\centering
@@ -905,23 +923,22 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 	\end{tabular}
 \end{table}
 
-- Im Folgenden wird der flache Ausgang $\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T$ betrachtet. \\
-- Zeitliche Ableitungen werden durch Lie-Ableitungen bezüglich des erweiterten Zustandsvektors $\tilde{\mathbf{x}} = (\mathbf{x}, \boldsymbol{\tau}, \dot{\boldsymbol{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\tilde{\boldsymbol{\delta}} = \tilde{\mathbf{f}} + \tilde{\mathbf{g}} \tilde{\boldsymbol{\tau}}$ mit
-\begin{align}
+Erneut wird o.B.d.A. der flache Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ betrachtet. Die zeitlichen Ausgangsableitungen können wieder rekursiv gemäß Gleichung \eqref{eq:Lie_time_deriv} mittels Lie-Ableitungen bezüglich des hierfür erweiterten Zustandsvektors $\tilde{\mathbf{x}} = (\mathbf{x}, \boldsymbol{\tau}, \dot{\boldsymbol{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\tilde{\boldsymbol{\delta}} = \tilde{\mathbf{f}} + \tilde{\mathbf{g}} \tilde{\boldsymbol{\tau}}$ mit
+\begin{equation}
 \tilde{\boldsymbol{\delta}} =
 \left(\begin{matrix}
 \mathbf{f} + \mathbf{g} \boldsymbol{\tau}\\
 \dot{\boldsymbol{\tau}} \\
 \ddot{\boldsymbol{\tau}}
 \end{matrix}\right)
-\end{align}
+\end{equation}
+generiert werden.
 
-- $\tau_3$ tritt das erste mal bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen anderen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle weiteren Eingänge, da der relative vektorielle Grad für $r_i = 2 \ \forall i$ nicht wohldefiniert ist. \\
-- Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. \\
--> Widerspruch zu \cite[S. 206]{NLRT_Roebenack}, bei dem für Auftreten von  $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss! \\ 
-- $\tau_2$ tritt erst bei $r_2 = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$ auf. \\
-- $\tau_1$ tritt erst bei $r_4 = 2$ in $\ddot{y}_4$ auf. \\
-- Definition neuer Eingänge:
+Die Eingangskomponente $\tau_3$ tritt das erste mal bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen sonstigen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle Eingangskomponenten, da der relative vektorielle Grad für $r_i = 2$ für $i = 1, ..., 4$ nicht wohldefiniert ist.
+
+Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. Dies entspricht nicht der in \cite[S. 206]{NLRT_Roebenack} dargestellten Form, bei der für das Auftreten von $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss. $\tau_2$ erscheint das erste Mal explizit bei $r_i = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$, $\tau_1$ zuerst bei $r_4 = 2$ in $\ddot{y}_4$.
+
+Eine Definition der neuen virtuellen Eingänge $v_i$ ist so möglich:
 \begin{align}
 \begin{split}
 	\ddot{y}_1 = \ddot{p}_1 &=: v_1 = \mathrm{func}(x, \tau_3, \tau_4) \\
@@ -931,18 +948,20 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 \end{split}
 \end{align}
 
-- Daraus ersichtlich, dass aus einem Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen alle Eingänge jeweils affin auftreten, eine explizite Darstellung von $\tau_1$, $\tau_3$ und $\tau_4$ möglich ist. \\
--> im Gegensatz zu \cite[S. 207]{NLRT_Roebenack}, bei dem relative Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen vorher berechneter Eingänge und Umstellen der abgeleiteten Ausgänge genügt.\\
-- Die Berechnung von $\tau_2$ erfordert größeren Aufwand. Dabei Substitution bisheriger Eingangskomponenten und deren Ableitungen, welche aus Lie-Ableitung entlang von $\mathbf{\tilde{\delta}}$ generiert werden. Es folgt ein sehr umfangreicher Ausdruck für $\tau_2$, der bereits zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält. \\
-- Nach \cite[S. 208]{NLRT_Roebenack} kann eine lineare Fehlerdynamik $\mathbf{v}$ entsprechend jeweiligem relativen Grad der Ausgangskomponente angesetzt werden. Für $v_1$, $v_3$ und $v_4$ diese jeweils nur von Zustandskomponenten abhängig, bei $v_2$ allerdings auch von $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$ :
+Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser möglich ist. Dies steht im Gegensatz zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge genügt.
+ 
+Die Berechnung von $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Dabei ist die Substitution bisheriger Eingangskomponenten und deren Ableitungen notwendig, welche analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang von $\tilde{\boldsymbol{\delta}}$ generiert werden können. Es folgt ein relativ umfangreicher Ausdruck für $\tau_2$, der zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält.
+
+Nach \cite[S. 208]{NLRT_Roebenack} kann eine lineare Fehlerdynamik $\mathbf{v}$ entsprechend des jeweiligen relativen Grades der Ausgangskomponente zur Stabilisierung des Systems angesetzt werden. Für $v_1$, $v_3$ und $v_4$ diese jeweils nur von Zustandskomponenten $\tilde{\mathbf{x}}$ abhängig, $v_2$ allerdings auch von $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$, die durch Lie-Ableitungen berechnet werden können:
 \begin{align}
+	\label{eq:p2_derivs_Lie}
 	\begin{split}
-		\ddot{p}_2 &= L_{\tilde{\boldsymbol{\delta}}} \dot{y}_2 = L_{\tilde{\boldsymbol{\delta}}} \dot{p}_2 \\
-		p_2^{(3)} &= L_{\tilde{\boldsymbol{\delta}}} \ddot{p}_2.
+		\ddot{p}_2 &= \ddot{y}_2 = L_{\tilde{\boldsymbol{\delta}}} \dot{y}_2 = L_{\tilde{\boldsymbol{\delta}}} \dot{p}_2 \\
+		p_2^{(3)} &= y_2^{(3)} = L_{\tilde{\boldsymbol{\delta}}} \ddot{p}_2.
 	\end{split}
 \end{align}
 
-und Ableitungen der anderen Komponenten von $\mathbf{v}$, die wie folgt berechnet werden:
+Außerdem werden in der Darstellung von $\tau_2$ Ableitungen der Eingangskomponenten $v_1$, $v_3$ und $v_4$ benötigt, die aus deren Fehlerdynamiken zweiter Ordnung folgen:
 \begin{align}
 	\begin{split}
 	    \ddot{e}_i + c_{i,1} \dot{e}_i + c_{i, 0} e_i &= 0 \\
@@ -954,21 +973,31 @@ und Ableitungen der anderen Komponenten von $\mathbf{v}$, die wie folgt berechne
 		e_i^{(4)} + (c_{i, 0} - c_{i, 1}^2) (-c_{i, 1} \dot{e}_i - c_{i, 0} e_i) - c_{i, 0} c_{i, 1} \dot{e}_i &= 0 \\
 		e_i^{(4)} + (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i + (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i &= 0 \\
 		\Rightarrow \text{ für } i = 1,3,4: \dot{v}_i = y_i^{(3)} &= y_{i, \text{ref}}^{(3)} - (c_{i, 0} - c_{i, 1}^2) \dot{e}_i + c_{i, 0} c_{i, 1} e_i \\
-		\ddot{v}_i = y_i^{(4)} &= y_{i, \text{ref}}^{(4)} - (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i - (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i,
+		\ddot{v}_i = y_i^{(4)} &= y_{i, \text{ref}}^{(4)} - (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i - (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i.
 	\end{split}
 \end{align}
 
-so dass sich der neue Eingang $v_2$ wie folgt ergibt:
+Die Komponente $v_2$ ergibt sich nach einem Ansatz vierter Ordnung unter Nutzung des Zusammenhangs \eqref{eq:p2_derivs_Lie}:
 \begin{equation}
 	v_2 = y_2^{(4)} = y_{2, \text{ref}}^{(4)} - c_{2, 3} (y_2^{(3)} - y_{2, \text{ref}}^{(3)}) - c_{2, 2} (\ddot{y}_2 - \ddot{y}_{2, \text{ref}}) - c_{2, 1} (\dot{y}_2 - \dot{y}_{2, \text{ref}}) - c_{2, 0} (y_2 - y_{2, \text{ref}})
 \end{equation} 
 
-- Problem mit Singularitäten wenn in den Berechneten Stellgrößen wirklich alle gemessenen Zustandskomponenten $\mathbf{x}$ vorkommen statt nur die von $\mathbf{y}$ und seinen Ableitungen.
+Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:quasi_static_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+\begin{subequations}
+	\begin{align}
+		\tau_1 &= \mathrm{func}(\mathbf{x}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}) \\
+		\tau_2 &= \mathrm{func}(\mathbf{x}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\tau_3 &=\mathrm{func}(\mathbf{x}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}) \\
+		\tau_4 &= \mathrm{func}(\mathbf{x}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}).
+	\end{align}
+\end{subequations}
+
+Bei der simulativen Untersuchung dieses Ansatzes ergibt sich bereits im reinen Vorsteuerungsfall, also ohne Anfangsfehler oder Störungen des Systems ein Problem mit Singularitäten in den berechneten Stellgrößen. Wenn im Stellgesetz allerdings nicht alle Zustandskomponenten $\mathbf{x}$ vorkommen, sondern nur solche, welche auch Teil des flachen Ausgangs $\mathbf{y}$ und seiner Ableitungen sind, treten keine Singularitäten auf. Eine Simulation dieses Regelungsansatzes ist daher erschwert und kann erst weiter verfolgt werden, wenn dieses Problem gelöst ist.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
-In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen werden Null. Es ist nicht auszuschließen, dass diese durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen.
+In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen $\boldsymbol{\tau}$ werden Null. Es ist nicht auszuschließen, dass diese Lücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen.
 
-Für eine weitere Betrachtung würden sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$ anbieten:
+Für eine weitere Betrachtung eignen sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$:
 \begin{flalign}
 	\begin{split}
 	N_{1,3,4} &= s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\
@@ -981,7 +1010,10 @@ Für eine weitere Betrachtung würden sich die einfacheren Terme der Nenner $N_{
 Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken bei der Konstruktion der Trajektorie in den Ruhelagen ergeben.
 
 \subsection{Exact feedforward linearization}
-An der Stelle einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung wird im Folgenden die Referenztrajektorie eingesetzt \cite{Hagenmeyer2003}.
+\label{sec:exact_feedforward_lin_control}
+Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation.ipynb]{SAGithub} zu finden.
+
+Bei der Exact feedforward linearization wird ein Ansatz verfolgt, bei dem statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie eingesetzt wird \cite{Hagenmeyer2003}.
 
 Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors angesetzt:
 \begin{equation}
@@ -990,18 +1022,20 @@ Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des K
 
 Aus der Zusammensetzung des Zustandsvektors $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ und der eingangsaffinen Zustandsraumdarstellung kann außerdem der Zusammenhang:
 \begin{equation}
-	\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \boldsymbol{\tau}
+	\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}
 \end{equation}
 
-hergestellte werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da $\boldsymbol{\tau} \in \mathbb{R}^4$ und $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen von $\mathbf{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
+hergestellte werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da für den Systemeingang $\boldsymbol{\tau} \in \mathbb{R}^4$ und für die Eingangsmatrix $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen $\mathbf{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
 \begin{equation}
 	\boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta})).
 \end{equation} 
 
-Unter Einsetzen von $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+$ und $\mathbf{f}_{[6, 10]}(\boldsymbol{\theta}$ wird die Exact feedforward linearization realisiert:
+Durch Einsetzen von $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+(\boldsymbol{\theta})$ und $\mathbf{f}_{[6, 10]}(\boldsymbol{\theta})$ wird die Exact feedforward linearization realisiert:
 \begin{equation}
 \boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})).
 \end{equation} 
+
+Abbildung \ref{fig_feedforward_pseudo_controller_initial_error} zeigt prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler für diesen Regelungsansatz.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -1014,7 +1048,7 @@ Unter Einsetzen von $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^
 \end{figure}
 
 \subsubsection{Vereinfachung mittels Ausgangsselektion}
-Statt der Nutzung einer Pseudo-Inversen kann auch eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\dot{\boldsymbol{\theta}}$ vorgenommen werden. Symbolisch werde dies über eine Selektionsmatrix $\mathbf{S}$ dargestellt:
+Statt der Nutzung einer Pseudo-Inversen wird im Folgenden eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\ddot{\boldsymbol{\theta}}$ vorgenommen. Symbolisch wird dies über eine Selektionsmatrix $\mathbf{S}$ dargestellt:
 \begin{equation}
 	\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} = \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}.
 \end{equation} 
@@ -1031,7 +1065,17 @@ Durch die Wahl der letzten 4 Gleichungen kann eine direkte Inversion der somit q
 	\end{pmatrix}.
 \end{equation}
 
-Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung ein Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Es ergibt sich für Beispieltrajektorien mit Anfangsfehlern ein sehr gutes Folgeverhalten sowie eine stationäre Genauigkeit.
+Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung auf einem Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Abbildung \ref{fig_feedforward_selec_controller_initial_error} zeigt, dass sich für Beispieltrajektorien mit Anfangsfehlern ebenso wie bei den vorherigen Ansätzen ein sehr gutes Folgeverhalten sowie eine stationäre Genauigkeit ergibt.
+
+Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen dennoch verzichtet, da jede Eingangskomponente trotzdem mehr als einhundert Rechenoperationen beinhaltet. Stattdessen wird auf das zu Beginn dieses Abschnitts \ref{sec:exact_feedforward_lin_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+\begin{subequations}
+	\begin{align}
+		\tau_1 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}) \\
+		\tau_2 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}) \\
+		\tau_3 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}) \\
+		\tau_4 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}).
+	\end{align}
+\end{subequations}
 
 \begin{figure}[ht]
 	\begin{center}
@@ -1044,13 +1088,13 @@ Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operatio
 \end{figure}
 
 \subsubsection{Stabilitätsbetrachtung}
-Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
+Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
 \begin{align}
 	\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
 	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
 	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
 \end{align}
-mit positiven Realteilen vorkommen. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt. Eine andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+mit positiven Realteilen vorkommen. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} veranschaulicht dies. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
 
 \begin{figure}[ht]
 	\begin{center}
