@@ -115,10 +115,10 @@ wobei $\mathbf{x}$ dem Zustand, $\mathbf{z}$ den algebraischen Variablen (weiter
 
 Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimale Anzahl an Differenziation $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenzielle Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet. \cite[S.139]{JanschekSystementwurf}
 
-Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i_\mathrm{d} = 3$ und können über folgende Bewegungsgleichungen beschrieben werden:
+Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind im Allgemeinen solche mit starrer Kopplung als Zwangsbedingungen vom Index $i_\mathrm{d} = 3$ und können über folgende Bewegungsgleichungen mittels der Matrizen $\mathbf{M}$, $\mathbf{C}$, $\mathbf{K}$, $\mathbf{G}$ und $\mathbf{B}$ beschrieben werden:
 \begin{align}
-\mathbf{0} &= \mathbf{M}(\boldsymbol{\theta}) \ddot{\boldsymbol{\theta}} + \mathbf{C}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) + \mathbf{K}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) + \mathbf{G}(\boldsymbol{\theta}) \boldsymbol{\lambda} - \mathbf{B}(\boldsymbol{\theta}) \boldsymbol{\tau} \label{eq:implicit_mechanical_system}\\
-\mathbf{0} &= \mathbf{g}(\boldsymbol{\theta}).
+\mathbf{0} &= \mathbf{M}(\mathbf{x}) \ddot{\mathbf{x}} + \mathbf{C}(\mathbf{x}, \dot{\mathbf{x}}) + \mathbf{K}(\mathbf{x}, \dot{\mathbf{x}}) + \mathbf{G}(\mathbf{x}) \mathbf{z} - \mathbf{B}(v) \mathbf{u} \label{eq:implicit_mechanical_system}\\
+\mathbf{0} &= \mathbf{g}(\mathbf{x}).
 \end{align}
 \cite[S.240]{JanschekSystementwurf}
 
@@ -142,8 +142,8 @@ Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell de
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/ODE_flatness_analysis_single_crane_diagram}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Planare Geometrie des Einzelkransystems]
+	{Planare Geometrie des Einzelkransystems mit Systemgrößen und weiteren Bezeichnungen.}
 	\label{fig:single_crane_diagram}
 \end{figure}
 
@@ -230,8 +230,8 @@ Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell de
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/ODE_flatness_analysis_double_crane_diagram}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Planare Geometrie des Doppellkransystems im ODE-Modell]
+	{Planare Geometrie des Doppellkransystems im ODE-Modell mit Systemgrößen und weiteren Bezeichnungen.}
 	\label{fig:double_crane_diagram}
 \end{figure}
 
@@ -380,8 +380,8 @@ Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/DAE_double_crane_cartesian_diagram.pdf}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Planare Geometrie des Doppellkransystems im DAE-Modell]
+	{Planare Geometrie des Doppellkransystems im DAE-Modell mit Systemgrößen und weiteren Bezeichnungen.}
 	\label{fig:DAE_double_crane_diagram}
 \end{figure}
 
@@ -783,7 +783,7 @@ Ziel dieses Ansatzes ist es, die nichtlinearen Eingangs-Ausgangs-Verkopplungen e
 durch eine statische (Zustands-)Rückführung
 \begin{equation}
 	\label{eq:static_state_feedback}
-	\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow u = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+	\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow \mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
 \end{equation}
 unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ zu kompensieren. Die Zusammensetzung dieses virtuellen Eingangs ist in Abschnitt \ref{sec:error_dynamics} erklärt. \cite[S. 195]{NLRT_Roebenack}
 
@@ -873,7 +873,7 @@ gebildet. Eine alternative Berechnungsvorschrift zur Bestätigung des vorangegan
 	y_i^{(r_i)} = L_{\tilde{\mathbf{f}}}^{r_i} y_i + L_{\tilde{\mathbf{g}_1}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_1 + L_{\tilde{\mathbf{g}_2}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_3 + L_{\tilde{\mathbf{g}_3}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_4 + L_{\tilde{\mathbf{g}_4}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \tau_2 .
 \end{equation}
 
-Für dieses modifizierte System folgt somit stets $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad scheint wohldefiniert zu sein, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und für prototypische Trajektorien die Inverse der Entkopplungsmatrix stets existiert, $\boldsymbol{\Lambda}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} in Abschnitt \ref{sec:static_state_feedback} möglich. Dabei handelt es sich um eine dynamische Rückführung. Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt.
+Für dieses modifizierte System folgt somit stets $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad scheint wohldefiniert zu sein, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und für prototypische Trajektorien die Inverse der Entkopplungsmatrix stets existiert, $\boldsymbol{\Lambda}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} in Abschnitt \ref{sec:static_state_feedback} möglich. Dabei handelt es sich um eine dynamische Rückführung. Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Zwiebelschalendiagramme zeigen eine geometrische Veranschaulichung des selben Sachverhalts in Abbildung \ref{onion_skinned_dyn_controller_initial_error}.
 
 Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20'000 Operationen je Eingangsgröße folgen können. 
 
@@ -887,19 +887,28 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 	\end{align}
 \end{subequations}
 
-\begin{figure}[ht]
+\subsubsection{Anpassung der Trajektorienplanung}
+Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen $\beta_1$, $\beta_3$ und $\beta_4$ ist an beide Rändern jeder Referenztrajektorie der flachen Ausgangskomponenten $y_i$ auch eine um  jeweils zwei Ordnungen höhere Forderung an die stetige Differenzierbarkeit zu stellen. Das Vorgehen nach Abschnitt \ref{sec:trajectory_flat_output} kann erneut analog durchgeführt werden mit jeweils um vier Ordnungen höheren Polynomen der Ausgangstrajektorien.
+
+\begin{figure}[H]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/dyn_controller_initial_error}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Trajektorien Ruhelagenüberführung mit Regelung über dynamische Erweiterung]
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung.}
 	\label{fig_dyn_controller_initial_error}
 \end{figure}
 
-
-\subsubsection{Anpassung der Trajektorienplanung}
-Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen $\beta_1$, $\beta_3$ und $\beta_4$ ist an beide Rändern jeder Referenztrajektorie der flachen Ausgangskomponenten $y_i$ auch eine um  jeweils zwei Ordnungen höhere Forderung an die stetige Differenzierbarkeit zu stellen. Das Vorgehen nach Abschnitt \ref{sec:trajectory_flat_output} kann erneut analog durchgeführt werden mit jeweils um vier Ordnungen höheren Polynomen der Ausgangstrajektorien.
+\begin{figure}[H]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/onion_skinned_dynamic}
+	\end{center}
+	\caption[Zwiebelschalendiagramm Ruhelagenüberführung mit Regelung über dynamische Erweiterung]
+	{Zwiebelschalendiagramme prototypischer Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung (dunkler für spätere Simulationszeiten).}
+	\label{onion_skinned_dyn_controller_initial_error}
+\end{figure}
 
 \subsection{Quasi-statische Rückführungen}
 \label{sec:quasi_static_control}
@@ -1037,13 +1046,13 @@ Durch Einsetzen von $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^
 
 Abbildung \ref{fig_feedforward_pseudo_controller_initial_error} zeigt prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler für diesen Regelungsansatz.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/feedforward_lin_pseudo_controller_initial_error}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Trajektorien Ruhelagenüberführung mit Regelung über Exact feedforward linearization (Pseudoinverse)]
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die Exact feedforward linearization mit Pseudoinverser.}
 	\label{fig_feedforward_pseudo_controller_initial_error}
 \end{figure}
 
@@ -1077,16 +1086,6 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 	\end{align}
 \end{subequations}
 
-\begin{figure}[ht]
-	\begin{center}
-		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
-		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
-	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
-	\label{fig_feedforward_selec_controller_initial_error}
-\end{figure}
-
 \subsubsection{Stabilitätsbetrachtung}
 Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
 \begin{align}
@@ -1101,9 +1100,19 @@ mit positiven Realteilen vorkommen. Abbildung \ref{fig_feedforward_selec_control
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_ljapunov1}
 	\end{center}
-	\caption[Kurzbeschreibung für Abbildungsverzeichnis]
-	{Langbeschreibung, die gerne auch über mehrer Zeilen gehen darf.}
+	\caption[Eigenwerte der Jacobimatrix bei Trajektorienfolge mit Regelung über Exact feedforward linearization (Selektionsmatrix)]
+	{Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ bei der Folge einer prototypischen Referenztrajektorie bei der Regelung über Exact feedforward linearization mit Selektionsmatrix.}
 	\label{fig_feedforward_selec_controller_ljapunov1}
+\end{figure}
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
+	\end{center}
+	\caption[Trajektorien Ruhelagenüberführung mit Regelung über Exact feedforward linearization (Selektionsmatrix)]
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die Exact feedforward linearization mit Selektionsmatrix.}
+	\label{fig_feedforward_selec_controller_initial_error}
 \end{figure}
 
 \chapter{Fazit und Ausblick}
