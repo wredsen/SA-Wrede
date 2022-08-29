@@ -7,25 +7,25 @@
 
 \chapter{System- und Problembeschreibung}
 
-\section{Demonstratorsytem}
+\section{Reales Demonstratorsytem}
 
 \begin{figure}[ht]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=0.5]{Pictures/Veritas_demo_CAD.png}
 	\end{center}
-	\caption[CAD-Zeichnung des Doppelkransystems]
-	{CAD-Zeichnung des Doppelkran-Demonstratorsystems ohne Verkabelung.}
+	\caption[Konstruktionsmodell des Doppelkransystems]
+	{Konstruktionsmodell des Doppelkran-Demonstratorsystems ohne Verkabelung.}
 	\label{fig:demonstrator_CAD}
 \end{figure}
 
-Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Langfristig soll dieses Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersuchen. Eine Grafik, die während des Konstruktionsprozesses des Demonstrators entstanden ist, ist in Abbildung \ref{fig:demonstrator_CAD} dargestellt.
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Eine Grafik, die während des Konstruktionsprozesses des Demonstrators entstanden ist, ist in Abbildung \ref{fig:demonstrator_CAD} dargestellt.
 
-Das Demonstratorsystems besteht aus zwei Brückenkränen, die eine gemeinsame Last in einer festen Ebene anheben. Die Kräne befinden sich auf Schienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
+Das Demonstratorsystem besteht aus zwei Brückenkränen, die eine gemeinsame Last in der vertikalen Ebene anheben. Die Kräne befinden sich auf zwei horizontalen Führungsschienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für die Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
 
-Die Kräne sind auf Schienen in horizontaler Richtung sowie die Seillängen mit jeweils einem Gleichstrommotor aktuiert. Auf den STM32-Mikrocontroller ist bereits eine unterlagerte Strom- beziehungsweise Kraftregelung für diese Motoren implementiert.
-Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel werden mittels mitschwingender Potentiometer bestimmt. Abbildung \ref{fig:demonstrator_real} zeigt
-eine Photographie der realen Anordnung des Demonstrators.
+Die Kräne sind als Laufkatzen entlang der Schienen sowie Seilwinden darauf mit jeweils einem Gleichstrommotor aktuiert. Auf den STM32-Mikrocontrollern ist bereits eine unterlagerte Strom- beziehungsweise Kraftregelung für diese Motoren implementiert.
+Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel zur Horizontalen werden mittels mitschwingender Potentiometer bestimmt. Abbildung \ref{fig:demonstrator_real} zeigt
+eine Fotographie der realen Anordnung des Demonstrators.
 
 \begin{figure}[ht]
 	\begin{center}
