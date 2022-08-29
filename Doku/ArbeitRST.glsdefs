@@ -1,0 +1,30 @@
+\ifglsentryexists{symb:Pi}{}%
+{%
+\gls@defglossaryentry{symb:Pi}%
+{%
+name={\ensuremath {\pi }},%
+sort={\ensuremath {\pi }},%
+type={symbolslist},%
+first={\protect \ensuremath {\pi }},%
+firstplural={\protect \ensuremath {\pi }s},%
+text={\protect \ensuremath {\pi }},%
+plural={\protect \ensuremath {\pi }s},%
+description={Geometrical value},%
+descriptionplural={Geometrical value},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
