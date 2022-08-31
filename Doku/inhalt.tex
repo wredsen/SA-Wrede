@@ -306,7 +306,7 @@ Somit ist es möglich, die kinetische und potentielle Energie des Systems zu for
 	V &= (m_2 \ g \ \mathbf{S}_2^T + m_3 \ g \ \mathbf{S}_3^T + m_4 \ g \ \mathbf{S}_4^T) \mathbf{e}_y \nonumber \\ &= g \left(m_{2} p_{2} + m_{3} \left(0.5 p_{2} + 0.5 p_{4}\right) + m_{4} p_{4}\right).
 \end{align}
 
-Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ lassen sich die Systemgleichungen ausdrücken durch:
+Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ ist es möglich die Systemgleichungen auszudrücken als:
 \begin{subequations}
 	\begin{flalign}
 		&- \frac{\lambda_{1} p_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} + \frac{\lambda_{1} q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} - \frac{\lambda_{2} p_{1}}{\sqrt{\left(p_{1} - p_{3}\right)^{2} + \left(p_{2} - p_{4}\right)^{2}}} \nonumber \\
@@ -476,7 +476,7 @@ Alternativ kann das Doppelkransystem auch eingangsaffin im Zustandsraum beschrie
 \section{Systemidentifikation}
 \label{sec:SysIdent}
 
-Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment der Last $J$ ist eine direkte experimentelle Bestimmung (z.B. durch einen Pendelversuch) zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in die vertikale Ebene berechnet \cite{LastTraegheit}:
+Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natur oder Massen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment der Last $J$ ist eine direkte experimentelle Bestimmung (z.B. durch einen Pendelversuch) zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in der vertikalen Ebene nach \cite{LastTraegheit} berechnet :
 \begin{equation}
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
@@ -537,7 +537,7 @@ Zur Auswahl einer geeigneten Systemgleichung und Eingangskomponente für die Eli
 	\end{pmatrix}.
 \end{equation}
 
-Falls keine solcher Spalten zu finden ist, kann eine Transformation $\mathbf{T}_i$ der Systemgleichungen durchgeführt werden, welche mittels linkem Orthokomplement $\mathbf{J}_i^{L \perp}$ und linker Pseudoinverser $\mathbf{J}_i^{L +}$ der Jacobi-Matrix das System in eine geeignete Form überführt \cite[Abschnitt 2.1.2]{Fritzsche2016}:
+Falls keine solcher Spalten zu finden ist, kann eine Transformation $\mathbf{T}_i$ der Systemgleichungen durchgeführt werden, welche mittels des linken Orthokomplements $\mathbf{J}_i^{L \perp}$ und der linken Pseudoinversen $\mathbf{J}_i^{L +}$ der Jacobi-Matrix das System in eine geeignete Form überführt \cite[Abschnitt 2.1.2]{Fritzsche2016}:
 \begin{equation}
 	\mathbf{T}_i \mathbf{J}_i = 
 	\begin{pmatrix}
@@ -557,7 +557,7 @@ Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mat
 	\end{pmatrix} .
 \end{align}
 
-\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend Abschnitt \ref{sec:Def_flatness} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert ist.}
+\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend Abschnitt \ref{sec:Def_flatness} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert sind.}
 
 \textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen. Diese stellen eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall dar. Der skizzierte Alogrithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.}
 
@@ -567,7 +567,7 @@ Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mat
 \textcolor{red}{BITTE ABSCHNITT NOCH EINMAL KOMPLETT LESEN.}\\
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
 
-Aus der analytischer Modellbildung des Einzelkransystems folgen die 3 Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
+Aus der analytischen Modellbildung des Einzelkransystems folgen die drei Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau}$ gebildet:
 \begin{equation}
@@ -580,7 +580,7 @@ Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau
 \end{equation}
 Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \eqref{single_flat_syseq3} bestimmt werden kann. Dementsprechend kann die letzte Zeile von $\mathbf{J}_3$ eliminiert werden. Eine Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_2, q_1, \ddot{q}_1, \tau_2)$ ist möglich.
 
-Die verbleibenden ersten beiden Systemgleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. So kann ohne Einschränkung auf diese Wahl die zweiten Gleichung \eqref{single_flat_syseq2} zur Elimination von $\tau_2$ genutzt werden. Eine Parametrisierung $\tau_2 = \mathrm{func}(p_1, p_2, \ddot{p}_2, q_1)$ erfolgt.
+Die verbleibenden ersten beiden Systemgleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. So kann ohne Einschränkung auf diese Wahl die zweiten Gleichung \eqref{single_flat_syseq2} zur Elimination von $\tau_2$ genutzt werden. Eine Parametrisierung ${\tau_2 = \mathrm{func}(p_1, p_2, \ddot{p}_2, q_1)}$ erfolgt.
 
 Die letzte verbleibende Systemgleichung \eqref{single_flat_syseq1} weist nach Substitution des zuvor eliminierten $\tau_1$ und $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1$ auf. Daher bietet sich die Elimination der allein algebraisch auftretenden Größe $q_1$ an. Daher folgt als Kandidat für einen flachen Ausgang
 $\mathbf{y} = (p_1, p_2)^T$. Mit diesem ist nun die konkrete Parametrisierung aller Systemgrößen durchzuführen.
@@ -626,7 +626,7 @@ Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeig
 
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
 
-Aus der analytischer Modellbildung des Doppelkransystems mit dem Lagrange-Formalismus zweiter Art folgen die 5 Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
+Aus der analytischen Modellbildung des Doppelkransystems mit dem Lagrange-Formalismus zweiter Art folgen die fünf Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau}$ gebildet(Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
 \begin{equation*}
@@ -651,7 +651,7 @@ Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es in der darauf bezog
 	\end{smallmatrix}\right).
 \end{equation*}
 
-Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$, gilt es eine linke Pseudoinverse $\mathbf{J}_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
+Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es eine linke Pseudoinverse $\mathbf{J}_3^{L+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
 	\mathbf{J}_3^{L+} \mathbf{J}_3 = \mathbf{I}_{2} = 
 	\left(\begin{matrix}
@@ -700,7 +700,7 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen 3 Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierten Systemgleichungen eliminieren. Eine vorläufige Parametrisierung ${\tau_3 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ und ${\tau_4 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ ist möglich.
+Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierten Systemgleichungen eliminieren. Eine vorläufige Parametrisierung ${\tau_3 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ und ${\tau_4 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ ist möglich.
 
 Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
@@ -728,7 +728,7 @@ Eine abschließende flache Parametrisierung aller Systemgrößen durch den flach
 
 \section{Trajektorienplanung für den flachen Ausgang}
 \label{sec:trajectory_flat_output}
-Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen.
+Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Anforderungen bezüglich Grenzwerten von etwa Beschleunigungen oder Geschwindigkeiten, die bei der Abfahrt von Trajektorien auftreten dürfen. \textcolor{red}{Aus physikalischer beziehungsweise technischer Sicht ist es sinnvoll, eine Planung der Referenztrajektorien so vorzunehmen, dass die Stell- bzw. Eingangsgrößen des Systems stetig verlaufen ohne Sprünge.}
 
 Aufgrund der einfachen Einprägung von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die Wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse in Abschnitt \ref{sec:flatness_analysis_double_crane} ist ersichtlich, dass für den flachen Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ der Eingang $\tau_2 = \mathrm{func}(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus der Ruhelage $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe ohne Sprünge an den Rändern in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
 \begin{align}
@@ -765,7 +765,7 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 \begin{enumerate}
 	\item $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 	\item die sogenannte Entkopplungsmatrix
-	\begin{equation}
+		\begin{equation}
 		\label{eq:decoupling_matrix}
 		\boldsymbol{\Lambda} = 
 		\left(\begin{matrix}
@@ -774,6 +774,7 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 		L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
 		\end{matrix}\right) 
 	\end{equation}
+	
 	im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist.
 \end{enumerate}
 \cite[S. 194]{NLRT_Roebenack}
@@ -797,7 +798,7 @@ Bei dem vorliegenden Doppelkransystem kann durch Zeitableitungen der jeweiligen 
 	y_i^{(k)} = L_{\boldsymbol{\delta}} y_i^{(k-1)} .
 \end{equation}
 
-In der Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
+In Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade sowie die dabei explizit auftretenden Eingänge aufgelistet.
 \begin{table}[htbp]%
 	\centering
 	\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
@@ -831,7 +832,7 @@ Daher ist die Entkopplungsmatrix $\boldsymbol{\Lambda}$ in dieser Form nie regul
 
 \subsection{Zustandsrückführung aus Fehlerdynamik}
 \label{sec:error_dynamics}
-Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ (mit $y_{i, \text{ref}} = \mathrm{func}(t)$ und nicht wie in der Literatur an dieser Stelle beschrieben bezüglich einer Abweichung von einem Festwert $y_{i, \text{ref}} = \mathrm{const.}$) angesetzt werden und damit auch die Komponenten des virtuellen Eingangs gewählt werden:
+Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ mit dem Messwert bzw. simuliertem Wert $y_i$ und dem Wert der Referenztrajektorie $y_{i, \text{ref}} = \mathrm{func}(t)$ (und nicht wie in der Literatur an dieser Stelle beschrieben bezüglich einer Abweichung von einem Festwert $y_{i, \text{ref}} = \mathrm{const.}$) angesetzt werden. Damit können auch die Komponenten des virtuellen Eingangs gewählt werden:
 \begin{align}
 	e_i^{(r_i)} + c_{i, r_i-1} e_i^{(r_i-1)} + ... + c_{i, 1} \dot{e}_i + c_{i, 0} e_i = 0 
 	\\
@@ -843,7 +844,7 @@ Die Koeffizienten $c_{i, k}, \ k \in {0, 1, ..., r_i-1}$ sind für eine Stabilis
 \label{sec_dynamic_extension_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation\_dyn.ipynb]{SAGithub} zu finden.
 
-Die Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} = k = 3 < m = 4$. Es gilt für eine reguläre Matrix $\tilde{\boldsymbol{\Lambda}}$ zu verhindern, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen frühzeitig zur Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack}
+Die Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} = k = 3 < m = 4$. Es gilt für eine reguläre Matrix $\tilde{\boldsymbol{\Lambda}}$ zu verhindern, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen frühzeitig zur Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste Mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack}
 
 So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erst mal bei der Ableitungsordnung 4 explizit auf. Der neue vektorielle relative Grad folgt mit $r_i = 2$ für $i = 1, ..., 4$. Die Systemgleichungen werden um die folgenden DGL dynamisch erweitert:
 \begin{align}
@@ -857,7 +858,7 @@ So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erst mal bei der
 	\end{split}
 \end{align}
 
-Daraus folgt die Definition eines neuen Eingangsvektors unter Umsortierung der Komponente $\tau_2$ an die letzte Stelle $\tilde{\boldsymbol{\tau}} = (\beta_1,  \beta_3,  \beta_4, \tau_2)^T$. Der Zustandsvektors wird auf $\tilde{\mathbf{x}} = (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T$ erweitert. Die Ausgangsableitungen werden erneut gemäß \eqref{eq:Lie_time_deriv} rekursiv über Lie-Ableitungen entlang der erweiterten Zustandsgleichungen  $\tilde{\boldsymbol{\delta}} = \mathbf{\tilde{f}} + \mathbf{\tilde{g}} \tilde{\boldsymbol{\tau}}$ mit
+Daraus folgt die Definition eines neuen Eingangsvektors unter Umsortierung der Komponente $\tau_2$ an die letzte Stelle $\tilde{\boldsymbol{\tau}} = (\beta_1,  \beta_3,  \beta_4, \tau_2)^T$. Der Zustandsvektor wird auf $\tilde{\mathbf{x}} = (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T$ erweitert. Die Ausgangsableitungen werden erneut gemäß \eqref{eq:Lie_time_deriv} rekursiv über Lie-Ableitungen entlang der erweiterten Zustandsgleichungen  $\tilde{\boldsymbol{\delta}} = \mathbf{\tilde{f}} + \mathbf{\tilde{g}} \tilde{\boldsymbol{\tau}}$ mit
 \begin{align}
 	\tilde{\boldsymbol{\delta}} =
 	\left(\begin{matrix}
@@ -872,16 +873,16 @@ Daraus folgt die Definition eines neuen Eingangsvektors unter Umsortierung der K
 	\mathbf{\tilde{f}} = \tilde{\boldsymbol{\delta}}|_{\tilde{\boldsymbol{\tau}} = 0}, \quad
 	\mathbf{\tilde{g}} = \partiell{\boldsymbol{\tilde{\delta}}}{\tilde{\boldsymbol{\tau}}}
 \end{align}
-gebildet. Eine alternative Berechnungsvorschrift zur Bestätigung des vorangegangenen Vorgehens ist für die hochsten Zeitableitungen der Ausgangskomponenten $y_i^{(r_i)}$ gemäß \cite[S. 195]{NLRT_Roebenack} möglich:
+gebildet. Eine alternative Berechnungsvorschrift zur Bestätigung des vorangegangenen Vorgehens ist für die höchsten Zeitableitungen der Ausgangskomponenten $y_i^{(r_i)}$ gemäß \cite[S. 195]{NLRT_Roebenack} möglich:
 \begin{equation}
 	y_i^{(r_i)} = L_{\tilde{\mathbf{f}}}^{r_i} y_i + L_{\tilde{\mathbf{g}_1}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_1 + L_{\tilde{\mathbf{g}_2}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_3 + L_{\tilde{\mathbf{g}_3}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \beta_4 + L_{\tilde{\mathbf{g}_4}} L_{\tilde{\mathbf{f}}}^{r_i-1} y_i \tau_2 .
 \end{equation}
 
-Für dieses modifizierte System folgt somit stets $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad scheint wohldefiniert zu sein, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und für prototypische Trajektorien die Inverse der Entkopplungsmatrix stets existiert, $\boldsymbol{\Lambda}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} in Abschnitt \ref{sec:static_state_feedback} möglich. Dabei handelt es sich um eine dynamische Rückführung. Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Zwiebelschalendiagramme zeigen eine geometrische Veranschaulichung des selben Sachverhalts in Abbildung \ref{onion_skinned_dyn_controller_initial_error}.
+Für dieses modifizierte System folgt somit stets $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad ist für eine Auswahl prototypischer Referenztrajektorien wohldefiniert, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und die Inverse der Entkopplungsmatrix stets existiert, $\boldsymbol{\Lambda}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} in Abschnitt \ref{sec:static_state_feedback} möglich. Dabei handelt es sich um eine dynamische Rückführung. Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Die Zwiebelschalendiagramme in Abbildung \ref{onion_skinned_dyn_controller_initial_error} zeigen eine geometrische Veranschaulichung des selben Sachverhalts. Dabei ist die Bewegung der vier Gelenke sowie der beiden Seile und der Last, welche diese verbinden dargestellt. Für spätere Simulationszeitpunkte sind diese Momentaufnahmen der Konfiguration des Doppelkransystems dunkler dargestellt.
 
 Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20'000 Operationen je Eingangsgröße folgen können. 
 
-Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Teilabschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
 \begin{subequations}
 	\begin{align}
 		\beta_1 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
@@ -910,7 +911,7 @@ Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen
 		\includegraphics[scale=1]{Pictures/onion_skinned_dynamic}
 	\end{center}
 	\caption[Zwiebelschalendiagramm Ruhelagenüberführung mit Regelung über dynamische Erweiterung]
-	{Zwiebelschalendiagramme prototypischer Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung (dunkler für spätere Simulationszeiten).}
+	{Zwiebelschalendiagramme der Bewegung der vier Gelenke sowie der beiden Seile und der Last für prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung.}
 	\label{onion_skinned_dyn_controller_initial_error}
 \end{figure}
 
@@ -947,7 +948,7 @@ Erneut wird o.B.d.A. der flache Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = 
 \end{equation}
 generiert werden.
 
-Die Eingangskomponente $\tau_3$ tritt das erste mal bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen sonstigen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle Eingangskomponenten, da der relative vektorielle Grad für $r_i = 2$ für $i = 1, ..., 4$ nicht wohldefiniert ist.
+Die Eingangskomponente $\tau_3$ tritt das erste Mal bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen sonstigen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle Eingangskomponenten, da der relative vektorielle Grad für $r_i = 2$ für $i = 1, ..., 4$ nicht wohldefiniert ist.
 
 Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. Dies entspricht nicht der in \cite[S. 206]{NLRT_Roebenack} dargestellten Form, bei der für das Auftreten von $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss. $\tau_2$ erscheint das erste Mal explizit bei $r_i = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$, $\tau_1$ zuerst bei $r_4 = 2$ in $\ddot{y}_4$.
 
@@ -961,7 +962,7 @@ Eine Definition der neuen virtuellen Eingänge $v_i$ ist so möglich:
 \end{split}
 \end{align}
 
-Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser möglich ist. Dies steht im Gegensatz zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge genügt.
+Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser Komponenten möglich ist. Dies steht im Gegensatz zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind, so dass kein Gleichungssystem gelöst werden muss, sondern sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge genügt.
  
 Die Berechnung von $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Dabei ist die Substitution bisheriger Eingangskomponenten und deren Ableitungen notwendig, welche analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang von $\tilde{\boldsymbol{\delta}}$ generiert werden können. Es folgt ein relativ umfangreicher Ausdruck für $\tau_2$, der zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält.
 
@@ -1005,7 +1006,7 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 	\end{align}
 \end{subequations}
 
-Bei der simulativen Untersuchung dieses Ansatzes ergibt sich bereits im reinen Vorsteuerungsfall, also ohne Anfangsfehler oder Störungen des Systems ein Problem mit Singularitäten in den berechneten Stellgrößen. Wenn im Stellgesetz allerdings nicht alle Zustandskomponenten $\mathbf{x}$ vorkommen, sondern nur solche, welche auch Teil des flachen Ausgangs $\mathbf{y}$ und seiner Ableitungen sind, treten keine Singularitäten auf. Eine Simulation dieses Regelungsansatzes ist daher erschwert und kann erst weiter verfolgt werden, wenn dieses Problem gelöst ist.
+Bei der simulativen Untersuchung dieses Ansatzes ergibt sich bereits im reinen Vorsteuerungsfall, also ohne Anfangsfehler oder Störungen des Systems, ein Problem mit Singularitäten in den berechneten Stellgrößen. Wenn im Stellgesetz allerdings nicht alle Zustandskomponenten $\mathbf{x}$ vorkommen, sondern nur solche, welche auch Teil des flachen Ausgangs $\mathbf{y}$ und seiner Ableitungen sind, treten keine Singularitäten auf. Eine Simulation dieses Regelungsansatzes ist daher erschwert und kann erst weiter verfolgt werden, wenn dieses Problem gelöst ist.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
 In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen $\boldsymbol{\tau}$ werden Null. Es ist nicht auszuschließen, dass diese Lücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen.
@@ -1026,9 +1027,9 @@ Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken be
 \label{sec:exact_feedforward_lin_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation.ipynb]{SAGithub} zu finden.
 
-Bei der Exact feedforward linearization wird ein Ansatz verfolgt, bei dem statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie eingesetzt wird \cite{Hagenmeyer2003}.
+Bei der Exact feedforward linearization wird ein Ansatz verfolgt, bei dem statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt wird \cite{Hagenmeyer2003}.
 
-Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors angesetzt:
+Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors (nicht nur solchen, die auch Teil des flachen Ausgangs sind!) angesetzt:
 \begin{equation}
 	\ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}.
 \end{equation}
@@ -1038,7 +1039,7 @@ Aus der Zusammensetzung des Zustandsvektors $\mathbf{x} = (\boldsymbol{\theta}, 
 	\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}
 \end{equation}
 
-hergestellte werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da für den Systemeingang $\boldsymbol{\tau} \in \mathbb{R}^4$ und für die Eingangsmatrix $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen $\mathbf{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
+hergestellt werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da für den Systemeingang $\boldsymbol{\tau} \in \mathbb{R}^4$ und für die Eingangsmatrix $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen $\mathbf{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
 \begin{equation}
 	\boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta})).
 \end{equation} 
@@ -1066,7 +1067,7 @@ Statt der Nutzung einer Pseudo-Inversen wird im Folgenden eine Selektion von vie
 	\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} = \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}.
 \end{equation} 
 
-Durch die Wahl der letzten 4 Gleichungen kann eine direkte Inversion der somit quadratischen Eingangsmatrix $\mathbf{g}_{[7, 10]} = \mathbf{S} \cdot \mathbf{g}_{[6, 10]}$ erfolgen:
+Durch die Wahl der letzten vier Gleichungen kann eine direkte Inversion der somit quadratischen Eingangsmatrix $\mathbf{g}_{[7, 10]} = \mathbf{S} \cdot \mathbf{g}_{[6, 10]}$ erfolgen:
 \begin{equation}
 	\boldsymbol{\tau}= \mathbf{g}^{-1}_{[7, 10]}(\boldsymbol{\theta}_{\text{ref}}) \cdot \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) \text{ mit } 
 	\mathbf{S} = 
@@ -1091,13 +1092,13 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 \end{subequations}
 
 \subsubsection{Stabilitätsbetrachtung}
-Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik:
+Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz die Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik
 \begin{align}
 	\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
 	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
 	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
 \end{align}
-mit positiven Realteilen vorkommen. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} veranschaulicht dies. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl von Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+mit positiven Realteilen vorkommen. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} veranschaulicht dies. Es ist möglich, dass aufgrund des bis dahin abgeklungenen Folgefehlers keine weitere Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulationen weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl der Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
 
 \begin{figure}[ht]
 	\begin{center}
