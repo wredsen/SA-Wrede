@@ -21,7 +21,7 @@
 
 Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist der Einfluss von Störungen und Verzögerungen der Kommunikation zwischen den Recheneinheiten zu evaluieren. Eine Grafik, die während des Konstruktionsprozesses des Demonstrators entstanden ist, ist in Abbildung \ref{fig:demonstrator_CAD} dargestellt.
 
-Das Demonstratorsystem besteht aus zwei Brückenkränen, die eine gemeinsame Last in der vertikalen Ebene anheben. Die Kräne befinden sich auf zwei horizontalen Führungsschienen und verfügen jeweils über einen Raspberry Pi 4B als Hauptrecheneinheit sowie einen STM32-Mikrocontroller für die Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
+Das Demonstratorsystem besteht aus zwei Brückenkränen, die eine gemeinsame Last in der vertikalen Ebene anheben. Die Kräne befinden sich auf zwei horizontalen Führungsschienen und verfügen jeweils über einen Raspberry Pi 4B\footnote{Spezifikationen: 8GB DDR4 RAM, 64-bit ARM64 SoC, 5.0 GHz WLAN, Bluetooth 5.0, BLE, Gigabit Ethernet; Betriebsystem: Ubuntu 20.04 \cite{RpiSpecs}} als Hauptrecheneinheit sowie einen STM32-Mikrocontroller\footnote{Spezifikationen: STM32F303K8 mit 32-bit Arm Cortex-M4, 64 kB Flash-Speicher, 12-bit ADCs \cite{STM32Specs}} für die Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
 
 Die Kräne sind als Laufkatzen entlang der Schienen sowie Seilwinden darauf mit jeweils einem Gleichstrommotor aktuiert. Auf den STM32-Mikrocontrollern ist bereits eine unterlagerte Strom- beziehungsweise Kraftregelung für diese Motoren implementiert.
 Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel zur Horizontalen werden mittels mitschwingender Potentiometer bestimmt. Abbildung \ref{fig:demonstrator_real} zeigt eine Fotografie der realen Anordnung des Demonstrators.
@@ -43,9 +43,9 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 
 \section{Allgemeine Modellannahmen}
 
-\textcolor{red}{In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser senkrecht zur vertikalen Ebene unterdrückt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen sowie der Last als masselos angenommen und nicht mit einem Trägheitsmoment versehen. Die Last wird trotz ihrer Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären Konstruktionsdaten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Zur Reduktion weiterer Komplexität wird auf die Abbildung dissipativer Kräfte im System verzichtet. Zudem können diese durch eine unterlagerte Kraftregelung kompensiert werden.}
+\textcolor{red}{In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen dieser senkrecht zur vertikalen Ebene unterdrückt. Die Seile werden aufgrund der geringen Dicke und auch im Vergleich zu den Laufkatzen sowie der Last als masselos angenommen und nicht mit einem Trägheitsmoment versehen. Die Last wird trotz ihrer Aussparungen mit einer homogenen Masseverteilung modelliert. Für eine exakte Beschreibung wären Konstruktionsdaten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Zur Reduktion weiterer Komplexität wird auf die Abbildung dissipativer Kräfte im System verzichtet.}
 
-\textcolor{red}{Die Modellbildung erfolgt in mehreren Stufen. Zunächst ist es möglich mittels der Lagrange-Gleichungen erster Art den Einzelkran darzustellen, woraus ein gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE system) folgt. Alternativ kann ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt werden, wodurch sich ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) ergibt. Ausgehend davon und aufgrund der geringen Komplexität der Terme des Einzelkrans, kann diese prinzipielle Methodik verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.}
+\textcolor{red}{Die Modellbildung erfolgt in mehreren Stufen. Zunächst ist es möglich mittels der Lagrange-Gleichungen erster Art einen Einzelkran darzustellen, woraus ein gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE system) folgt. Alternativ kann ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt werden, wodurch sich ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) ergibt. Ausgehend davon und aufgrund der geringen Komplexität der Terme des Einzelkrans, kann diese prinzipielle Methodik verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.}
 
 \textcolor{red}{Nun wird ein kurzer theoretischer Überblick zu beiden erwähnten Arten des Lagrange-Formalismus gegeben.}
 
@@ -226,7 +226,7 @@ Durch einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single
 \subsection{Ansatz über ein DAE-System (Lagrange 1)}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb]{SAGithub} zu finden.
 
-Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung ist trotzdem sinnvoll. Durch die Einprägung von Zwangsbedingungen kann die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre gerade bei konstanten Seillängen eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. (Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???) Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung ist trotzdem sinnvoll. Durch die Einprägung von Zwangsbedingungen kann die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden. Aufgrund der algebraischen Gleichungen würde sich ein Flachheitsnachweis anders als bei den ODE-Systemen gestalten. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre gerade bei konstanten Seillängen eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. \textcolor{red}{(Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)} Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -287,7 +287,7 @@ Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt durch die K
 	\end{matrix}\right).
 \end{align}
 
-Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie $T$ vorhanden sind, damit die Massenmatrix $\mathbf{M}(\boldsymbol{\theta})$ in Gleichung \eqref{eq:implicit_mechanical_system} regulär ist \cite[${\text{S. 7}}$]{DissKnoll}. Dies wäre bei einer Modellierung der Last mit homogener Masseverteilung und homogenem Trägheitsmoment nicht der Fall. Deshalb wird die Last durch ein System aus drei Massen ($m_2$, $m_3$, $m_4$) beschrieben, das sich simulativ äquivalent verhält und folgenden Gleichungen genügt:
+Es ist notwendig, dass alle abgeleiteten Koordinaten in der kinetischen Energie $T$ vorhanden sind, damit die Massenmatrix $\mathbf{M}(\boldsymbol{\theta})$ in Gleichung \eqref{eq:implicit_mechanical_system} regulär ist \cite[${\text{S. 7}}$]{DissKnoll}. Dies wäre bei einer Modellierung der Last mit homogener Masseverteilung und homogenem Trägheitsmoment nicht der Fall. Deshalb wird die Last durch ein System aus drei Massen ($m_2$, $m_3$, $m_4$) beschrieben, das sich simulativ äquivalent verhält und den folgenden Gleichungen genügt:
 \begin{align}
 	m_{\mathrm{ges}} &= m_2 + m_3 + m_4\\
 	m_2 &= m_4\\
@@ -481,8 +481,7 @@ Die meisten in den Modellen vorkommenden Systemparameter sind geometrischer Natu
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
 
-Dabei entspricht $h$ der Höhe der Last, welche zu $h = 90$ mm
-bestimmt wurde. Die numerische Belegung der Systemparameter ist in Tabelle \ref{tab:sys_params} zusammengefasst.
+Dabei entspricht $h$ der Höhe der Last, $s_2$ der halben Lastlänge und $m_2$ der Masse der Last. Die numerische Belegung der Systemparameter ist in Tabelle \ref{tab:sys_params} zusammengefasst.
 
 \begin{table}[htbp]%
 	\centering
@@ -495,6 +494,7 @@ bestimmt wurde. Die numerische Belegung der Systemparameter ist in Tabelle \ref{
 		Masse Laufkatze 2 & $m_3$ & 0,45 \si{\kg} \\
  		Masse Last & $m_2$ & 0,557 \si{\kg} \\
 		Länge Last & $2 s_2$ & 0,15 \si{\m} \\
+		Höhe Last & $h$ & 0,09 \si{\m} \\
 		Initialer Laufkatzenabstand & $l_0$ & 0,3 \si{\m} \\
 		Trägheitsmoment Last & $J_2$ & 0,00455 $\si{\kg\m^2}$ \\
 		\bottomrule
@@ -505,10 +505,10 @@ bestimmt wurde. Die numerische Belegung der Systemparameter ist in Tabelle \ref{
 
 \section{Definition differenzieller Flachheit}\label{sec:Def_flatness}
 
-Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ heißt (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\boldsymbol{\theta}$ existieren, so dass:
+Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ heißt (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\boldsymbol{\theta}$ existieren, so dass
 \begin{align}
 \mathbf{x} &= \mathbf{\Psi}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
-\mathbf{u} &= \boldsymbol{\theta}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_u)}) \text{ mit } n_u < \infty.
+\mathbf{u} &= \boldsymbol{\theta}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_u)}) \text{ mit } n_u < \infty \text{ gilt.}
 \end{align}
 
 Dabei ist $\mathbf{y}$ ein flacher Ausgang. 
@@ -557,7 +557,7 @@ Wobei $\mathbf{T}_i$ über die Eigenschaften von $\mathbf{J}_i^{L +}$ und  $\mat
 	\end{pmatrix} .
 \end{align}
 
-\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser vorgenommen werden. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend Abschnitt \ref{sec:Def_flatness} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert sind.}
+\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser erfolgen. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend Abschnitt \ref{sec:Def_flatness} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert sind.}
 
 \textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen. Diese stellen eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall dar. Der skizzierte Alogrithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.}
 
@@ -815,7 +815,7 @@ In Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade
 	\end{tabular}
 \end{table}
 
-Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ gemäß Gleichung \eqref{eq:decoupling_matrix} eine Singularität, weil die ihre Spalte nur Nulleinträge enthält. Der einzige von Null verschiedene Eintrag in der zweiten Spalte $\mathbf{g}_2$ der Eingangsmatrix $\mathbf{g}$ erfolgt nämlich durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. \textcolor{red}{So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i \cdot g_{10, 2} = \partiell{}{\dot{q}_2} \dot{y}_i \cdot g_{10, 2} = 0$ für $i = 1,..., 4$, weil $\dot{q}_2 \not\in \dot{\mathbf{y}}$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^{r_i-1} y_i = 0$ mit $i = 1, ..., m$ gilt \cite[S. 201]{NLRT_Roebenack}:}
+Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ gemäß Gleichung \eqref{eq:decoupling_matrix} eine Singularität, weil ihre Spalte nur Nulleinträge enthält. Der einzige von Null verschiedene Eintrag in der zweiten Spalte $\mathbf{g}_2$ der Eingangsmatrix $\mathbf{g}$ erfolgt nämlich durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. \textcolor{red}{So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i \cdot g_{10, 2} = \partiell{}{\dot{q}_2} \dot{y}_i \cdot g_{10, 2} = 0$ für $i = 1,..., 4$, weil $\dot{q}_2 \not\in \dot{\mathbf{y}}$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^{r_i-1} y_i = 0$ mit $i = 1, ..., m$ gilt \cite[S. 201]{NLRT_Roebenack}:}
 \begin{align}
 	\boldsymbol{\Lambda} = 
 	\left(\begin{smallmatrix}
@@ -966,7 +966,7 @@ Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_
  
 Die Berechnung von $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Dabei ist die Substitution bisheriger Eingangskomponenten und deren Ableitungen notwendig, welche analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang von $\tilde{\boldsymbol{\delta}}$ generiert werden können. Es folgt ein relativ umfangreicher Ausdruck für $\tau_2$, der zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält.
 
-Nach \cite[S. 208]{NLRT_Roebenack} kann eine lineare Fehlerdynamik $\mathbf{v}$ entsprechend des jeweiligen relativen Grades der Ausgangskomponente zur Stabilisierung des Systems angesetzt werden. Für $v_1$, $v_3$ und $v_4$ diese jeweils nur von Zustandskomponenten $\tilde{\mathbf{x}}$ abhängig, $v_2$ allerdings auch von $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$, die durch Lie-Ableitungen berechnet werden können:
+Nach \cite[S. 208]{NLRT_Roebenack} können lineare Fehlerdynamiken und daraus $\mathbf{v}$ entsprechend der jeweiligen relativen Grade der Ausgangskomponenten zur Stabilisierung des Systems angesetzt werden. Die Komponenten des virtuellen Eingangs $v_1$, $v_3$ und $v_4$ sind jeweils nur von den Zustandskomponenten $\tilde{\mathbf{x}}$ abhängig. Die Komponente $v_2$ hängt allerdings auch von den Ableitungen $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$ ab, welche durch Lie-Ableitungen berechnet werden können:
 \begin{align}
 	\label{eq:p2_derivs_Lie}
 	\begin{split}
@@ -1011,7 +1011,7 @@ Bei der simulativen Untersuchung dieses Ansatzes ergibt sich bereits im reinen V
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
 In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aus numerischen Effekten. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen $\boldsymbol{\tau}$ werden Null. Es ist nicht auszuschließen, dass diese Lücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen.
 
-Für eine weitere Betrachtung eignen sich die einfacheren Terme der Nenner $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$:
+Für eine weitere Betrachtung eignen sich die einfacheren Terme des Nenners $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$:
 \begin{flalign}
 	\begin{split}
 	N_{1,3,4} &= s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\
@@ -1092,7 +1092,7 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 \end{subequations}
 
 \subsubsection{Stabilitätsbetrachtung}
-Die Betrachtung einer prototypischen Trajektorien zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz die Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik
+Die Betrachtung einer prototypischen Trajektorie zeigt, dass zu späteren Zeitpunkten der Simulation mit dem zuletzt vorgestellten Regelungsansatz die Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik
 \begin{align}
 	\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
 	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
