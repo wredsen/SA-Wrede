@@ -1041,7 +1041,7 @@ Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken be
 \label{sec:exact_feedforward_lin_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation.ipynb]{SAGithub} zu finden.
 
-Bei der Exact feedforward linearization wird ein Ansatz verfolgt, bei dem statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt wird \cite{Hagenmeyer2003}.
+Bei der exact feedforward linearization wird ein Ansatz verfolgt, bei dem statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt wird \cite{Hagenmeyer2003}.
 
 Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind!) angesetzt:
 \begin{equation}
@@ -1058,7 +1058,7 @@ hergestellt werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswa
 	\boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta})).
 \end{equation}
 
-Durch Einsetzen der Referenztrajektorien der Koordinaten $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+(\boldsymbol{\theta})$ und $\mathbf{f}_{[6, 10]}(\boldsymbol{\theta})$ wird die Exact feedforward linearization realisiert:
+Durch Einsetzen der Referenztrajektorien der Koordinaten $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+(\boldsymbol{\theta})$ und $\mathbf{f}_{[6, 10]}(\boldsymbol{\theta})$ wird die exact feedforward linearization realisiert:
 \begin{equation}
 \label{eq:control_law__ff_lin_pseudo}
 \boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})).
@@ -1071,8 +1071,8 @@ Abbildung \ref{fig_feedforward_pseudo_controller_initial_error} zeigt prototypis
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/feedforward_lin_pseudo_controller_initial_error}
 	\end{center}
-	\caption[Trajektorien Ruhelagenüberführung mit Regelung über Exact feedforward linearization (Pseudoinverse)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die Exact feedforward linearization mit Pseudoinverser.}
+	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Pseudoinverse)]
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Pseudoinverser.}
 	\label{fig_feedforward_pseudo_controller_initial_error}
 \end{figure}
 
@@ -1120,8 +1120,8 @@ sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedfor
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_ljapunov1}
 	\end{center}
-	\caption[Eigenwerte der Jacobimatrix bei Trajektorienfolge mit Regelung über Exact feedforward linearization (Selektionsmatrix)]
-	{Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ bei der Folge einer prototypischen Referenztrajektorie bei der Regelung über Exact feedforward linearization mit Selektionsmatrix.}
+	\caption[Eigenwerte der Jacobimatrix bei Trajektorienfolge mit Regelung über exact feedforward linearization (Selektionsmatrix)]
+	{Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ bei der Folge einer prototypischen Referenztrajektorie bei der Regelung über exact feedforward linearization mit Selektionsmatrix.}
 	\label{fig_feedforward_selec_controller_ljapunov1}
 \end{figure}
 
@@ -1130,17 +1130,27 @@ sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedfor
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
 		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
 	\end{center}
-	\caption[Trajektorien Ruhelagenüberführung mit Regelung über Exact feedforward linearization (Selektionsmatrix)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die Exact feedforward linearization mit Selektionsmatrix.}
+	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Selektionsmatrix)]
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Selektionsmatrix.}
 	\label{fig_feedforward_selec_controller_initial_error}
 \end{figure}
 
 \chapter{Fazit und Ausblick}
 \section{Fazit}
-bla
+Für das zu untersuchende Brückenkransystem wurden analytische Modelle unter Nutzung des Lagrange-Formalismus ermittelt. Diese ergaben sich für die Lagrange-Gleichungen erster Art zu DGL- und für die Lagrange-Gleichungen zweiter Art zu DAE-Systemen. Für eine bessere Nachvollziehbarkeit der zugrunde liegenden Methodik wurde dieses Vorgehen zunächst anhand eines Einzelkransystems durchgeführt. Es erfolgte eine Identifikation aller zumeist geometrischen Modellparameter.
+
+Die DGL-Modelle von Einzel- und Doppelkransystem wurden auf differenzielle Flachheit untersucht. Dabei wurde eine allgemeine Vorgehensweise für Mehrgrößensysteme skizziert, welche ein systematisches vorgehen beschreibt. Dieses konnte auf Gleichungsebene anhand des Einzelkransystems veranschaulicht werden. Für das Doppelkransystem wurde wegen Praktikabilitätsgründen auf eine explizite Darstellung der Ergebnisse verzichtet. Unter Zuhilfenahme von Computeralgebrasystemen war eine Beschreibung funktionaler Zusammenhänge allerdings möglich.
+
+Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs können polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang ist es möglich daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Zur Folgeregelung ist eine statische Rückführung aufgrund eines nicht wohldefinierten vektoriellen relativen Grades nicht möglich. Stattdessen konnte mit einer dynamischen Rückführung eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen an die Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete in numerischen Problemen aufgrund von Singularitäten in der Nähe von Ruhelagen, welche im Rahmen dieser Arbeit nicht behoben wurden. Mittels der exact feedforward Linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem durch vereinfachende Annahmen der Fehlerdynamik sowie der Selektion von Zustandskomponenten als Ausgang ein kompaktes Stellgesetz folgt. Dieses eignet sich ebenso zur Stabilisierung bei Anfangsfehlern verstößt aber gegen formale Stabilitätsbedingungen.
+
+Die Durchführung umfangreicher symbolischer Berechnungen wie auch die numerisch simulative Verfikation von dabei ermittelten Steurungs- und Regelungsgesetzen erfolgte dabei in Python. Über eine Robustheit der Regelungsansätze wurde keine Aussage getroffen. Gerade bei nichtlinearen Systemen wie diesem können bereits geringe Modellabweichungen zur Instabilität bei Methoden der exakten Linearisierung führen, woraus hohe Genauigkeitsanforderungen für die Modellbildung entstehen.
 
 \section{Ausblick}
-blub
+- Implementierung auf Demonstratorsystem, ggf. Problem von Echtzeitfähigkeit bei numerisch umfangreichen Stellgesetzen 
+- Vorsteuerung allein sollte zu keinem instabilen Verhalten, dann vorsichtig Regelungsansätze
+- Reinforcement Learning, ggf. auf Basis von Trajektorien der exakten Linearisierung
+- physikalisch präziseres Modell mit Reibung etc.
+- Untersuchung und Hebung von ggf. Definitionslücken bei quasi-statischer Rückführung
 
 %%% Local Variables:
 %%% mode: latex
