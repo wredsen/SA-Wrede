@@ -4,17 +4,15 @@
 
 \chapter{Einleitung}
 
-Heute existierenden Anwendungen wird ein zentrales Management für die Steuerung der IoT-Geräte und der Kollaboration eingesetzt. Durch das agile Zusammenwirken der einzelnen Teilsysteme ist einerseits eine besonders hohe Flexibilität und Wandlungsfähigkeit der Produktion möglich. Andererseits sind die IoT-Geräte durch den zentralistischen Ansatz in hohem Maße von der Verfügbarkeit und Verlässlichkeit der Vernetzung abhängig. Besonders bei mobilen IoT-Geräten stellt die drahtlose Vernetzung auf den letzten Metern bis zu Maschine eine große Herausforderung dar. Darüber hinaus ist dieser Ansatz mit steigender Zahl der Maschinen und Komplexität der Software immer schlechter beherrschbar.
+In einer Vielzahl heutiger industrieller Anwendungen wird ein zentrales Management zur Steuerung von Geräten im Kontext des Internets der Dinge \footnote{``Mit dem „Internet der Dinge“ (engl: Internet of things, IoT) oder „Allesnetz“ wird die Vernetzung von 
+Gegenständen mit dem Internet verstanden, so dass diese Gegenstände über das Internet 
+selbstständig kommunizieren und einen Material- oder Produktionsfluss festlegen.'' \cite{BegriffeIndustrie40}} und deren Kollaboration eingesetzt. Durch das agile Zusammenwirken der einzelnen Teilsysteme ist einerseits eine besonders hohe Flexibilität und Adaptivität von Produktionsprozessen möglich. Andererseits sind die IoT-Geräte durch den zentralistischen Ansatz in hohem Maße von der Verfügbarkeit und Verlässlichkeit ihrer Vernetzung zur Steuerung abhängig. Gerade bei mobilen Geräten stellt die drahtlose Kommunikation auf den letzten Metern bis zur Maschine eine enorme Herausforderung dar.
 
-Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist damit der Einfluss von Störungen und Verzögerungen der Kommunikation zwischen den Recheneinheiten zu evaluieren.
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist damit der Einfluss von Störungen und Verzögerungen der (drahtlosen) Kommunikation zwischen den Recheneinheiten zu evaluieren.
 
-Für diese Aufgabe soll das Regelungskonzept der Flachheit angewandt werden. Die
-flachheitsbasierte Trajektorienplanung und Folgeregelung bietet für sogenannte flache
-Systeme durch möglichst vollständige Modellierung des zu optimierenden Systems
-die Möglichkeit, Bewegungsvorgänge präzise so zu definieren und zu korrigieren, dass
-Schwingungen gar nicht erst auftreten. Focus auf MIMO!
+In dieser Studienarbeit soll eine analytische Modellbildung durchgeführt werden sowie eine zentrale Referenzregelstrategie für das Demonstratorsystem entworfen werden. Die dabei ermittelten Ansätze zur (Vor-)Steuerung und Folgeregelung sind simulativ zu verifizieren.
 
-In dieser Studienarbeit soll eine analytische Modellbildung durchgeführt werden sowie eine zentrale Referenzregelstrategie entworfen werden. Die dabei ermittelten Ansätze zur (Vor-) Steuerung und Folgeregelung sind simulativ zu verifizieren.
+Da es sich beim Demonstrator um einen Brückenkran handelt, bietet sich eine kinetische Beschreibung des Systems mittels des Lagrange-Formalismus an. Aus einer algebraischen Untersuchung eines solchen nichtlinearen Mehrgrößensystems kann bei Nachweis der Flachheitseigenschaft eine flachheitsbasierte Trajektorienplanung der Ausgangsgrößen und Parametrisierung der Stellgrößen daraus erfolgen. Die Korrektur von Abweichungen von den Referenzverläufen wäre dann durch eine ebenfalls flachheitsbasierte Folgeregelung möglich.
 
 \chapter{System- und Problembeschreibung}
 
