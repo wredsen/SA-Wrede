@@ -3,7 +3,18 @@
 \pagenumbering{arabic}
 
 \chapter{Einleitung}
-- ganz am Ende
+
+Heute existierenden Anwendungen wird ein zentrales Management für die Steuerung der IoT-Geräte und der Kollaboration eingesetzt. Durch das agile Zusammenwirken der einzelnen Teilsysteme ist einerseits eine besonders hohe Flexibilität und Wandlungsfähigkeit der Produktion möglich. Andererseits sind die IoT-Geräte durch den zentralistischen Ansatz in hohem Maße von der Verfügbarkeit und Verlässlichkeit der Vernetzung abhängig. Besonders bei mobilen IoT-Geräten stellt die drahtlose Vernetzung auf den letzten Metern bis zu Maschine eine große Herausforderung dar. Darüber hinaus ist dieser Ansatz mit steigender Zahl der Maschinen und Komplexität der Software immer schlechter beherrschbar.
+
+Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist damit der Einfluss von Störungen und Verzögerungen der Kommunikation zwischen den Recheneinheiten zu evaluieren.
+
+Für diese Aufgabe soll das Regelungskonzept der Flachheit angewandt werden. Die
+flachheitsbasierte Trajektorienplanung und Folgeregelung bietet für sogenannte flache
+Systeme durch möglichst vollständige Modellierung des zu optimierenden Systems
+die Möglichkeit, Bewegungsvorgänge präzise so zu definieren und zu korrigieren, dass
+Schwingungen gar nicht erst auftreten. Focus auf MIMO!
+
+In dieser Studienarbeit soll eine analytische Modellbildung durchgeführt werden sowie eine zentrale Referenzregelstrategie entworfen werden. Die dabei ermittelten Ansätze zur (Vor-) Steuerung und Folgeregelung sind simulativ zu verifizieren.
 
 \chapter{System- und Problembeschreibung}
 
@@ -12,16 +23,14 @@
 \begin{figure}[ht]
 	\begin{center}
 		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
-		\includegraphics[scale=0.5]{Pictures/Veritas_demo_CAD.png}
+		\includegraphics[scale=0.55]{Pictures/Veritas_demo_CAD.png}
 	\end{center}
 	\caption[Konstruktionsmodell des Doppelkransystems]
 	{Konstruktionsmodell des Doppelkran-Demonstratorsystems ohne Verkabelung.}
 	\label{fig:demonstrator_CAD}
 \end{figure}
 
-Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist der Einfluss von Störungen und Verzögerungen der Kommunikation zwischen den Recheneinheiten zu evaluieren. Ein Modell des Aufbaus, das während des Konstruktionsprozesses des Demonstrators entstanden ist, ist in Abbildung \ref{fig:demonstrator_CAD} dargestellt.
-
-Das Demonstratorsystem besteht aus zwei Brückenkränen, die eine gemeinsame Last in der vertikalen Ebene anheben. Die Kräne befinden sich auf zwei horizontalen Führungsschienen und verfügen jeweils über einen Raspberry Pi 4B\footnote{Spezifikationen: 8GB DDR4 RAM, 64-bit ARM64 SoC, 5.0 GHz WLAN, Bluetooth 5.0, BLE, Gigabit Ethernet; Betriebsystem: Ubuntu 20.04 \cite{RpiSpecs}} als Hauptrecheneinheit sowie einen STM32-Mikrocontroller\footnote{Spezifikationen: STM32F303K8 mit 32-bit Arm Cortex-M4, 64 kB Flash-Speicher, 12-bit ADCs \cite{STM32Specs}} für die Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
+Das Demonstratorsystem besteht aus zwei Brückenkränen, die eine gemeinsame Last in der vertikalen Ebene anheben. Abbildung \ref{fig:demonstrator_CAD} stellt ein Modell des Aufbaus dar, das während des Konstruktionsprozesses entstanden ist. Die Kräne befinden sich auf zwei horizontalen Führungsschienen und verfügen jeweils über einen Raspberry Pi 4B\footnote{Spezifikationen: 8GB DDR4 RAM, 64-bit ARM64 SoC, 5.0 GHz WLAN, Bluetooth 5.0, BLE, Gigabit Ethernet; Betriebsystem: Ubuntu 20.04 \cite{RpiSpecs}} als Hauptrecheneinheit sowie einen STM32-Mikrocontroller\footnote{Spezifikationen: STM32F303K8 mit 32-bit Arm Cortex-M4, 64 kB Flash-Speicher, 12-bit ADCs \cite{STM32Specs}} für die Motoransteuerungen und Messungen. Beide Raspberry Pis können über eine LAN-Verbindung miteinander kommunizieren.
 
 Die Kräne sind als Laufkatzen entlang der Schienen sowie Seilwinden darauf mit jeweils einem Gleichstrommotor aktuiert. Auf den STM32-Mikrocontrollern ist bereits eine unterlagerte Strom- beziehungsweise Kraftregelung für diese Motoren implementiert.
 Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels Inkrementalgebern nach einem anfänglichen Kalibrierungsvorgang. Die Seilwinkel zur Horizontalen werden mittels mitschwingender Potentiometer bestimmt. Abbildung \ref{fig:demonstrator_real} zeigt eine Fotografie der realen Anordnung des Demonstrators.
