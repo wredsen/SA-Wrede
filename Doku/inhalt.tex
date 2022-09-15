@@ -4,15 +4,15 @@
 
 \chapter{Einleitung}
 
-In einer Vielzahl heutiger industrieller Anwendungen wird eine zentrale Organisation zur Steuerung von Geräten im Kontext des Internets der Dinge \footnote{``Mit dem „Internet der Dinge“ (engl: Internet of things, IoT) oder „Allesnetz“ wird die Vernetzung von 
+In einer Vielzahl heutiger industrieller Anwendungen wird eine zentrale Organisation zur Steuerung von Geräten im Kontext des Internets der Dinge\footnote{„Mit dem „Internet der Dinge“ (engl.: Internet of things, IoT) oder „Allesnetz“ wird die Vernetzung von 
 Gegenständen mit dem Internet verstanden, so dass diese Gegenstände über das Internet 
 selbstständig kommunizieren und einen Material- oder Produktionsfluss festlegen.'' \cite{BegriffeIndustrie40}} und deren Kollaboration eingesetzt. Das agile Zusammenarbeiten einzelner Teilsysteme ermöglicht eine besonders hohe Flexibilität und Adaptivität von Produktionsprozessen. Allerdings sind die IoT-Geräte aufgrund des zentralen Ansatzes auch in hohem Maße von der Verfügbarkeit und Verlässlichkeit ihrer Verbindung zur Steuerung abhängig. Gerade bei mobilen Geräten stellt die drahtlose Kommunikation auf den letzten Metern eine enorme Herausforderung dar.
 
 Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für Integrierte Schaltungen IIS, Institutsteil Entwicklung Adaptiver Systeme EAS \cite{fraunhoferIISEAS} in Dresden ein Demonstratorsystem entwickelt worden. Mit diesem System sollen perspektivisch Vorteile von Regelungsstrategien auf verteilten Recheneinheiten gegenüber einer zentralen Messgrößenverarbeitung und Stellgrößenberechnung untersucht werden. Außerdem ist es möglich, damit den Einfluss von Störungen und Verzögerungen der (drahtlosen) Kommunikation zwischen den Recheneinheiten zu evaluieren.
 
-In dieser Studienarbeit soll eine analytische Modellbildung durchgeführt werden sowie eine zentrale Referenzregelstrategie für das Demonstratorsystem entworfen werden. Die dabei ermittelten Ansätze zur (Vor-)Steuerung und Folgeregelung sind simulativ zu verifizieren.
+In dieser Studienarbeit soll eine analytische Modellbildung durchgeführt werden sowie eine zentrale Referenzregelstrategie für das Demonstratorsystem entworfen werden. Die dabei ermittelten Ansätze zur VorSteuerung und Folgeregelung sind simulativ zu verifizieren.
 
-Da es sich beim Demonstrator um einen Brückenkran handelt, bietet sich eine kinetische Beschreibung des Systems mittels des Lagrange-Formalismus an. Aus einer algebraischen Untersuchung eines solchen nichtlinearen Mehrgrößensystems kann bei Nachweis der sogenannten Flachheitseigenschaft eine flachheitsbasierte Trajektorienplanung der Ausgangsgrößen und Parametrisierung der Stellgrößen daraus erfolgen. Die Korrektur von Abweichungen von den Referenzverläufen wäre dann durch eine ebenfalls flachheitsbasierte Folgeregelung möglich.
+Da es sich beim Demonstrator um einen Brückenkran handelt, bietet sich eine kinetische Beschreibung des Systems mittels des Lagrange-Formalismus an. Aus einer algebraischen Untersuchung eines solchen nichtlinearen Mehrgrößensystems kann bei Nachweis der sogenannten Flachheitseigenschaft eine flachheitsbasierte Trajektorienplanung der Ausgangsgrößen und Parametrisierung der Stellgrößen dadurch erfolgen. Die Korrektur von Abweichungen von den Referenzverläufen wäre dann durch eine ebenfalls flachheitsbasierte Folgeregelung möglich.
 
 \chapter{System- und Problembeschreibung}
 
@@ -42,7 +42,7 @@ Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels In
 \end{figure}
 
 \section{Problembeschreibung und Zielsetzung}
-Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel dieser Studienarbeit ist es deshalb,  bezüglich des vorhandenen Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in der Ebene und eine Folgeregelung zur Überführung dieser zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystems geschehen. 
+Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel dieser Studienarbeit ist es deshalb, für das vorhandene Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in ihrer vertikalen Aufhängungsebene und eine Folgeregelung zur Überführung der Last zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystem geschehen. 
 
 \chapter{Analytische Modellbildung}
 
@@ -53,7 +53,7 @@ Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der H
 \textcolor{red}{Die Modellbildung erfolgt in mehreren Stufen. Zunächst soll mittels der Lagrange-Gleichungen erster Art ein Einzelkran dargestellt werden, woraus ein gewöhnliches Differenzialgleichungssystem (DGL-System, engl. ODE system) folgt. Alternativ wird ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt werden, wodurch sich ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) ergibt. Ausgehend vom Einzelkransystem kann die prinzipielle Methodik der Modellbildung verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.}
 
 \section{Modellierung mittels Lagrange-Formalismus}
-Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den sogenannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\boldsymbol{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Deren zeitliche Änderungsraten werden im Vektor der (Konfigurations-) Geschwindigkeiten $\dot{\boldsymbol{\theta}}$ zusammengefasst. \textcolor{red}{Es wird eine Unterteilung der Systemgrößen $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$ in die direkt aktuierten Koordinaten $\mathbf{q}$ und nicht direkt aktuierten Koordinaten $\mathbf{p}$ vorgenommen. \footnote{Anfänglich wurde der Literatur \cite[S.10]{DissKnoll} folgend eine Unterteilung der Systemgrößen in ``aktive'' und ``passive'' Koordinaten vorgenommen. Im Verlauf dieser Arbeit ist bemerkt worden, dass die Bezeichnung ``direkt aktuierte'' und ``nicht direkt aktuierte'' Koordinaten eine treffendere Bezeichnung darstellt.}} \cite[S.7]{DissKnoll} 
+Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den sogenannten Lagrange-Gleichungen beschreiben. Dabei wird eine Menge aus $n$ zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\boldsymbol{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Deren zeitliche Änderungsraten werden im Vektor der Konfigurationsgeschwindigkeiten $\dot{\boldsymbol{\theta}}$ zusammengefasst. \textcolor{red}{Es wird eine Unterteilung der Systemgrößen $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$ in die direkt aktuierten Koordinaten $\mathbf{q}$ und nicht direkt aktuierten Koordinaten $\mathbf{p}$ vorgenommen.\footnote{Anfänglich wurde der Literatur \cite[S.10]{DissKnoll} folgend eine Unterteilung der Systemgrößen in ``aktive'' und ``passive'' Koordinaten vorgenommen. Im Verlauf dieser Arbeit ist bemerkt worden, dass die Bezeichnung ``direkt aktuierte'' und ``nicht direkt aktuierte'' Koordinaten eine treffendere Bezeichnung darstellt.}} \cite[S.7]{DissKnoll} 
 
 Die kinetische Energie eines Systems wird im Folgenden durch die Funktion $T$ sowie die potentielle Energie durch $V$ beschrieben. Die Lagrange-Funktion kann damit folgendermaßen definiert werden:
 \begin{equation}
@@ -116,7 +116,7 @@ DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebe
 	\end{subequations}
 wobei $\mathbf{x}$ dem Systemzustand, $\mathbf{z}$ den algebraischen Variablen (weitere Systemgrößen, die in den Systemgleichungen ohne Ableitung vorkommen), $\mathbf{u}$ dem Systemeingang sowie $t$ der Zeit entspricht. \cite[S.137]{JanschekSystementwurf}
 
-Eine Möglichkeit zu Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimalen Anzahl an Differenziationen $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenziellen Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet. \cite[S.139]{JanschekSystementwurf}
+Eine Möglichkeit zur Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimalen Anzahl an Differenziationen $\frac{d}{dt}$ der AGL $\mathbf{g}$ (Zwangsbedingungen), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenziellen Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet. \cite[S.139]{JanschekSystementwurf}
 
 Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind solche mit starrer Kopplung als Zwangsbedingungen vom Index $i_\mathrm{d} = 3$ und können für den Zustandsvektor $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ über folgende Bewegungsgleichungen mittels der Matrizen $\mathbf{M}$, $\mathbf{C}$, $\mathbf{K}$, $\mathbf{G}$ und $\mathbf{B}$ beschrieben werden:
 \begin{subequations}
@@ -134,7 +134,7 @@ Zur Integration des Systems der Gleichungen \eqref{eq:dae_std} beziehungsweise \
 \item Indexreduktion auf Index $i_\mathrm{d} = 1$ und anschließende Integration über ein explizites\footnote{Zur Berechnung des Näherungswertes von $\mathbf{x}(t_{i+1})$ an der Stelle $t_{i+1}$ wird einzig der zuletzt berechnete Näherungswert von $\mathbf{x}(t_{i})$ an der Stelle $t_{i}$ benötigt.} Verfahren mit AGL-Löser oder ein implizites Verfahren
 \item Indexreduktion auf Index  $i_\mathrm{d} = 0$ und anschließende Integration über ein explizites oder implizites Verfahren.
 \end{itemize}
-Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools führt die Reduktion von Index-3-Systemen auf Index-1-Systeme durch. Zur numerischen Berechnung kann daraufhin der Solver ODASSL des Python-Pakets assimulo \cite{assimulo} verwendet werden.
+Die im Python-Paket symbtools \cite{symbtools} enthaltene Bibliothek modeltools führt die Reduktion von Systemen mit Index $i_\mathrm{d} = 3$ auf $i_\mathrm{d} = 1$ durch. Zur numerischen Berechnung kann daraufhin der Solver ODASSL des Python-Pakets assimulo \cite{assimulo} verwendet werden.
 
 Zur Erfüllung der AGL zu Simulationsbeginn müssen konsistente Anfangswerte $\mathbf{x}(0)$ und $\mathbf{z}(0)$ bestimmt werden. Bei DAE-Systemen mit Index $i_\mathrm{d} \geq 2$  kann $\mathbf{x}(0)$ nicht mehr frei gewählt werden, da $\mathbf{z}(0)$ nicht mehr ausschließlich aus AGL bestimmbar ist. Daher ist es notwendig, zusätzliche algebraische Bedingungen an $\mathbf{x}$ und $\mathbf{z}$ aus den DGL abzuleiten. Die Bibliothek modeltools berechnet konsistente Anfangswerte mit der Funktion \texttt{calc\_consistent\_init\_vals}. Falls sich andernfalls inkonsistente Anfangswerte ergeben, folgen daraus Simulationsfehler in den ersten Schritten oder sogar vollständig falsche Ergebnisse. \cite[S.207]{JanschekSystementwurf}
 
@@ -213,7 +213,7 @@ Durch die Anwendung des Prinzips der virtuellen Arbeit nach Gleichung \eqref{eq:
 	\end{matrix}\right).
 \end{equation}
 
-Durch einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single_crane_sys_w_Q} lässt sich ein abschließender Satz an Systemgleichungen des Einzelkrans bilden:
+Durch Einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single_crane_sys_w_Q} lässt sich ein abschließender Satz an Systemgleichungen des Einzelkrans bilden:
 \begin{subequations}
 	\begin{align}
 		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0 \label{single_flat_syseq1}\\
@@ -226,10 +226,10 @@ Durch einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single
 \section{Analytisches Modell des Doppelkrans}
 \textcolor{red}{Aufbauend auf der Modellierung eines Einzelkrans wird in diesem Abschnitt eine Erweiterung des Systems auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Aufgrund der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der Lagrange-Gleichungen erster Art nahe. Bei dieser wird mittels algebraischer Zwangsbedingungen ein DAE-System erzeugt. Allerdings ist dabei die Beschreibung der Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim realen Demonstrator sperrt ein Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist wieder eine Modellierung mit den Lagrange-Gleichungen zweiter Art möglich.}
 
-\subsection{Ansatz über ein DAE-System (Lagrange 1)}
+\subsection{Ansatz über ein DAE-System}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb]{SAGithub} zu finden.
 
-Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung wird trotzdem als sinnvoll erachtet. Durch die Einprägung von Zwangsbedingungen kann die kinematische Kette\footnote{Diese Bezeichnung zielt auf den Vergleich des Systems mit einem Viergelenk aus der Literatur ab, durch die gemeinsame Last wird die Kette "geschlossen".} wegen der gemeinsamen Last intuitiv abgebildet werden. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. \textcolor{red}{(Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)} Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+Mittels der Lagrange-Gleichungen erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung wird trotzdem als sinnvoll erachtet. Durch die Einprägung von Zwangsbedingungen kann die kinematische Kette\footnote{Diese Bezeichnung zielt auf den Vergleich des Systems mit einem Viergelenk aus der Literatur ab, durch die gemeinsame Last wird die Kette „geschlossen“.} wegen der gemeinsamen Last intuitiv abgebildet werden. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. \textcolor{red}{(Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)} Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -325,7 +325,7 @@ Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ ist es mittels der Lagran
 	\end{flalign}
 \end{subequations}
 
-\subsection{Ansatz über ein ODE-System (Lagrange 2)}
+\subsection{Ansatz über ein ODE-System}
 \label{subsec:double_crane_lagrange2}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
 
@@ -342,12 +342,12 @@ Mittels der Lagrange-Gleichungen zweiter Art wird im Folgenden ein ODE-Modell de
 \end{figure}
 
 
-Als direkt aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ der Position der linken Laufkatze $\mathbf{S}_1$ $(= \mathbf{G}_1 = \mathbf{B}_1)$ und $q_2$ der Position der rechten Laufkatze $\mathbf{S}_3$ $( = \mathbf{B}_2 = \mathbf{G}_6)$ ausgewählt. Die absolute Position $(p_1, p_2)$ des Lastschwerpunkts $\mathbf{S}_2$ sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen entsprechen den nicht direkt aktuierte Koordinaten. Die variable Seillänge wird mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels
+Als direkt aktuierte Koordinate werden zunächst nur die $x$-Verschiebungen $q_1$ der Position der linken Laufkatze $\mathbf{S}_1$ $(= \mathbf{G}_1 = \mathbf{B}_1)$ und $q_2$ der Position der rechten Laufkatze $\mathbf{S}_3$ $( = \mathbf{B}_2 = \mathbf{G}_6)$ ausgewählt. Die absolute Position $(p_1, p_2)$ des Lastschwerpunkts $\mathbf{S}_2$ sowie die Orientierung der Last $p_3$ gegenüber der Horizontalen entsprechen den nicht direkt aktuierte Koordinaten. Die variablen Seillängen werden mit $l_1$ sowie $l_2$ bezeichnet, die durch die Koordinaten auch mittels
 \begin{align}
 l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}, \\
 l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}
 \end{align}
-ausgedrückt werden kann. Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt beschrieben werden:
+ausgedrückt werden können. Die Position der Massenschwerpunkte und Gelenke kann somit wie folgt beschrieben werden:
 \begin{equation}
 \begin{smallmatrix}
 \mathbf{S}_1 =
@@ -478,7 +478,7 @@ Alternativ kann das Doppelkransystem für spätere regelungstechnische Untersuch
 \section{Identifikation der Systemparameter}
 \label{sec:SysIdent}
 
-Die meisten Systemparameter der Modelle sind geometrischer Natur oder Massen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment der Last $J$ ist eine direkte experimentelle Bestimmung (z.B. durch einen Pendelversuch) zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in der vertikalen Ebene nach \cite{LastTraegheit} berechnet :
+Die meisten Systemparameter der Modelle sind Massen oder geometrische Größen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment $J$ der Last ist eine direkte experimentelle Bestimmung, etwa durch einen Pendelversuch, zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in der vertikalen Aufhängungsebene nach \cite{LastTraegheit} berechnet :
 \begin{equation}
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
@@ -730,7 +730,7 @@ Auf Grundlage der Flachheitsanalyse des Brückenkransystems ist es im Folgenden 
 
 \section{Trajektorienplanung für den flachen Ausgang}
 \label{sec:trajectory_flat_output}
-Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. An den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Grenzwerten für die Beschleunigungen oder die maximalen Geschwindigkeiten seiner Komponenten. \textcolor{red}{Aus physikalischer beziehungsweise technischer Sicht ist es sinnvoll, eine Planung der Referenztrajektorien so vorzunehmen, dass die Stell- bzw. Eingangsgrößen des Systems stetig verlaufen.}
+Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. Für den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Grenzwerten für die Beschleunigungen oder die maximalen Geschwindigkeiten seiner Komponenten. \textcolor{red}{Aus physikalischer beziehungsweise technischer Sicht ist es sinnvoll, eine Planung der Referenztrajektorien so vorzunehmen, dass die Stell- bzw. Eingangsgrößen des Systems stetig verlaufen.}
 
 Aufgrund der einfachen Vorgabe von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die Wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse in Abschnitt \ref{sec:flatness_analysis_double_crane} ist ersichtlich, dass für den flachen Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ der Eingang $\tau_2 = \mathrm{func}(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus den Ruhelagen $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe (ohne Sprünge an den Rändern) in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
 \begin{align}
@@ -888,7 +888,7 @@ Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dies
 
 Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Die Zwiebelschalendiagramme in Abbildung \ref{onion_skinned_dyn_controller_initial_error} zeigen eine geometrische Veranschaulichung des selben Sachverhalts. Dabei ist die Bewegung der vier Gelenke sowie der beiden Seile und der Last dargestellt. Für spätere Simulationszeitpunkte sind diese Momentaufnahmen der Konfiguration des Doppelkransystems dunkler dargestellt.
 
-Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20'000 Operationen je Eingangsgröße folgen. 
+Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20 000 Operationen je Eingangsgröße folgen. 
 
 Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Teilabschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
 \begin{subequations}
