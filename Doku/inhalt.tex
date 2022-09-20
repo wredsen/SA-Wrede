@@ -478,7 +478,7 @@ Alternativ kann das Doppelkransystem für spätere regelungstechnische Untersuch
 \section{Identifikation der Systemparameter}
 \label{sec:SysIdent}
 
-Die meisten Systemparameter der Modelle sind Massen oder geometrische Größen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment $J$ der Last ist eine direkte experimentelle Bestimmung, etwa durch einen Pendelversuch, zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in der vertikalen Aufhängungsebene nach \cite{LastTraegheit} berechnet :
+Die meisten Systemparameter der Modelle sind Massen oder geometrische Größen und lassen sich durch Messungen mit einem Lineal oder einer Wage empirisch bestimmen. Lediglich für das Trägheitsmoment $J$ der Last ist eine direkte experimentelle Bestimmung, etwa durch einen Pendelversuch, zu aufwendig. Daher wird dieser Parameter unter der Annahme eines Quaders mit homogener Masseverteilung und Rotationsachse durch seinen Mittelpunkt in der vertikalen Aufhängungsebene nach \cite{LastTraegheit} berechnet:
 \begin{equation}
 	J = \frac{1}{12} m_2 ((2 s_2)^2 + h^2).
 \end{equation}
@@ -809,9 +809,9 @@ In Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade
 	\label{tab:relative_degrees}
 	\begin{tabular}{c| c c c c} 
 		\toprule
-		$i$ & 1 & 2 & 3 & 4 \\ 
+		Index $i$ & 1 & 2 & 3 & 4 \\ 
 		\hline
-		$r_i$ & 2 & 2 & 2 & 2\\ 
+		Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
 		\hline
 		explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
 		\hline
@@ -838,7 +838,7 @@ Daher ist die Entkopplungsmatrix $\boldsymbol{\Lambda}$ in dieser Form nie regul
 
 \subsection{Zustandsrückführung aus Fehlerdynamik}
 \label{sec:error_dynamics}
-Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ mit dem Messwert bzw. simuliertem Wert $y_i$ und dem Wert der Referenztrajektorie $y_{i, \text{ref}} = \mathrm{func}(t)$ (nicht wie in der Literatur an dieser Stelle beschrieben bezüglich einer Abweichung von einem Festwert $y_{i, \text{ref}} = \mathrm{const.}$) angesetzt werden. Damit können auch die Komponenten des virtuellen Eingangs gewählt werden:
+Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ mit dem Messwert bzw. simuliertem Wert $y_i$ und dem Wert der Referenztrajektorie $y_{i, \text{ref}} = \mathrm{func}(t)$. In der Literatur wird an dieser Stelle lediglich die Abweichung bezüglich eines Festwerts $y_{i, \text{ref}} = \mathrm{const.}$ angesetzt. Damit können auch die Komponenten des virtuellen Eingangs gewählt werden:
 \begin{align}
 	e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 
 	\\
@@ -909,7 +909,7 @@ Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen
 		\includegraphics[scale=1]{Pictures/dyn_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über dynamische Erweiterung]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
 	\label{fig_dyn_controller_initial_error}
 \end{figure}
 
@@ -946,7 +946,7 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 	\end{tabular}
 \end{table}
 
-Erneut wird o.B.d.A. der flache Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ betrachtet. Die zeitlichen Ausgangsableitungen können wieder rekursiv gemäß Gleichung \eqref{eq:Lie_time_deriv} mittels Lie-Ableitungen bezüglich des hierfür erweiterten Zustandsvektors $\tilde{\mathbf{x}} = (\mathbf{x}, \boldsymbol{\tau}, \dot{\boldsymbol{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\tilde{\boldsymbol{\delta}} = \tilde{\mathbf{f}} + \tilde{\mathbf{g}} \tilde{\boldsymbol{\tau}}$ mit
+Erneut wird o. B. d. A. der flache Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ betrachtet. Die zeitlichen Ausgangsableitungen können wieder rekursiv gemäß Gleichung \eqref{eq:Lie_time_deriv} mittels Lie-Ableitungen bezüglich des hierfür erweiterten Zustandsvektors $\tilde{\mathbf{x}} = (\mathbf{x}, \boldsymbol{\tau}, \dot{\boldsymbol{\tau}})^T$ entlang des Vektorfelds der Zustandsgleichungen $\tilde{\boldsymbol{\delta}} = \tilde{\mathbf{f}} + \tilde{\mathbf{g}} \tilde{\boldsymbol{\tau}}$ mit
 \begin{equation}
 \tilde{\boldsymbol{\delta}} =
 \left(\begin{matrix}
@@ -969,7 +969,7 @@ Eine Definition der neuen virtuellen Eingänge $v_i$ ist so möglich:
 \end{split}
 \end{align}
 
-Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_4$ in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser Komponenten möglich ist. Dies steht im Gegensatz zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind. Dabei muss kein Gleichungssystem gelöst werden, sondern es genügt das sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge.
+Daraus ist ersichtlich, dass durch ein Gleichungssystem aus $v_1$, $v_3$ und $v_4$, in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser Komponenten möglich ist. Dies steht im Gegensatz zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind. Dabei muss kein Gleichungssystem gelöst werden, sondern es genügt das sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge.
  
 Die Berechnung von $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Dabei ist die Substitution bisheriger Eingangskomponenten und deren Ableitungen notwendig, welche analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang $\tilde{\boldsymbol{\delta}}$ generiert werden können. Es folgt ein relativ umfangreicher Ausdruck für $\tau_2$, der zu diesem Zeitpunkt mehr als einhunderttausend Rechenoperationen enthält.
 
@@ -1016,7 +1016,7 @@ Auf die konkrete symbolische Angabe der Stellgesetze wird aus Praktikabilitätsg
 Bei der simulativen Untersuchung dieses Ansatzes ergibt sich bereits im reinen Vorsteuerungsfall, also ohne Anfangsfehler oder Störungen des Systems, ein Problem mit Singularitäten in den berechneten Stellgrößen. Wenn im Stellgesetz allerdings nicht alle Zustandskomponenten $\mathbf{x}$ vorkommen, sondern nur solche, welche auch Teil des flachen Ausgangs $\mathbf{y}$ und seiner Ableitungen sind, treten keine Singularitäten auf. Eine Simulation dieses Regelungsansatzes ist daher erschwert und kann erst weiter verfolgt werden, wenn dieses Problem gelöst ist.
 
 \subsubsection{Singularitäten in der Nähe von Ruhelagen}
-In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aufgrund numerischer Effekte. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken, sowohl Zähler als auch Nenner der Eingangsgrößen $\boldsymbol{\tau}$ werden Null. Es ist nicht auszuschließen, dass diese Lücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen. Für eine weitere Analyse dieses Problems eignen sich die einfacheren Terme des Nenners $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$:
+In allen Eingangsgrößen treten bei diesem quasi-statischen Rückführungsentwurf in der Nähe von Ruhelagen Singularitäten auf. Diese ergeben sich aufgrund numerischer Effekte. Beim Einsetzen einer zuvor ermittelten Ruhelage entstehen Definitionslücken: Sowohl der Zähler als auch der Nenner der Eingangsgrößen $\boldsymbol{\tau}$ werden Null. Es ist nicht auszuschließen, dass diese Lücken durch algebraische Manipulation hebbar sind. Allerdings ist eine weitere händische Untersuchung dieses Zusammenhangs mit hohem Aufwand verbunden und wird im Rahmen dieser Arbeit nicht weiter verfolgt. Die CAS-Bibliothek SymPy bietet mittels des Aufrufs \texttt{simplify} allerdings keine Lösung dieses Problems in den Eingangsgrößen. Für eine weitere Analyse dieses Problems eignen sich die einfacheren Terme des Nenners $N_{1,3,4}$ von $\tau_1$, $\tau_3$ und $\tau_4$:
 \begin{flalign}
 	\begin{split}
 	N_{1,3,4} &= s_{2} (- 4 l_{0} pm_{1} \sin{(pm_{3})} + 2 l_{0} pm_{2} \cos{(pm_{3})} + 4 l_{0} qm_{1} \sin{(pm_{3})} + l_{0} s_{2} \sin{(2 pm_{3})}\\
@@ -1063,7 +1063,7 @@ Abbildung \ref{fig_feedforward_pseudo_controller_initial_error} zeigt prototypis
 		\includegraphics[scale=1]{Pictures/feedforward_lin_pseudo_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Pseudoinverse)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Pseudoinverser.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Pseudoinverser. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
 	\label{fig_feedforward_pseudo_controller_initial_error}
 \end{figure}
 
@@ -1104,7 +1104,7 @@ Im Folgenden wird die Simulation einer prototypischen Referenztrajektorie mit de
 	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
 	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
 \end{align}
-sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} zeigt, dass diese Eigenwerte in diesem Fall im Zeitraum von 5 $\si{s}$ bis 9 $\si{s}$ einen positiven Realteil aufweisen. Es ist möglich, dass aufgrund des bis dahin bereits stark abgeklungenen Folgefehlers keine ausreichende Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulation weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl der Rückführung (keine lineare Dynamik) könnte dieses Problem lösen.
+sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} zeigt, dass diese Eigenwerte in diesem Fall im Zeitraum von 5 $\si{s}$ bis 9 $\si{s}$ einen positiven Realteil aufweisen. Es ist möglich, dass aufgrund des bis dahin bereits stark abgeklungenen Folgefehlers keine ausreichende Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulation weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl der Rückführung, etwa ohne lineare Dynamik, könnte dieses Problem lösen.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -1122,7 +1122,7 @@ sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedfor
 		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Selektionsmatrix)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Selektionsmatrix.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Selektionsmatrix. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
 	\label{fig_feedforward_selec_controller_initial_error}
 \end{figure}
 
@@ -1132,7 +1132,7 @@ Für das zu untersuchende Brückenkransystem wurden analytische nichtlineare Mod
 
 Die DGL-Modelle von Einzel- und Doppelkransystem wurden auf differenzielle Flachheit untersucht. Dabei wurde eine systematische Vorgehensweise für Mehrgrößensysteme skizziert. Dieses konnte auf Gleichungsebene anhand des Einzelkransystems veranschaulicht werden. Für das Doppelkransystem wurde aus Praktikabilitätsgründen auf eine explizite Darstellung der umfangreichen Ausdrücke in den Ergebnissen verzichtet. Unter Zuhilfenahme von Computeralgebrasystemen war eine Beschreibung dieser Zusammenhänge sowie Darstellung funktionaler Abhängigkeiten möglich.
 
-Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs konnten polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang war es möglich daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Zur Folgeregelung ist eine statische Rückführung aufgrund eines nicht wohldefinierten vektoriellen relativen Grades nicht möglich. Stattdessen konnte durch eine dynamische Rückführung mit linearen Fehlerdynamiken eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen entlang der Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete in numerischen Problemen aufgrund von Singularitäten in der Nähe von Ruhelagen, welche im Rahmen dieser Arbeit nicht behoben werden konnten. Mittels der exact feedforward linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem ein kompaktes Stellgesetz folgt. Dafür wurde eine kleinere Ordnung der linearen Fehlerdynamiken angenommen sowie alle Komponenten oder auch nur eine heuristische Selektion der Zustandskomponenten mit diesen Fehlerdynamiken versehen. Dieser Ansatz eignete sich während praktischer Untersuchungen ebenso zur Stabilisierung des Systems bei Anfangsfehlern, verstößt aber gegen formale Stabilitätsbedingungen.
+Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs konnten polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang war es möglich daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Zur Folgeregelung ist eine statische Rückführung aufgrund eines nicht wohldefinierten vektoriellen relativen Grades nicht möglich. Stattdessen konnte durch eine dynamische Rückführung mit linearen Fehlerdynamiken eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen entlang der Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete aufgrund von Singularitäten in der Nähe von Ruhelagen in numerischen Problemen. Diese konnten im Rahmen dieser Arbeit nicht behoben werden. Mittels der exact feedforward linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem ein kompaktes Stellgesetz folgt. Dafür wurde eine kleinere Ordnung der linearen Fehlerdynamiken angenommen sowie alle Komponenten oder auch nur eine heuristische Selektion der Zustandskomponenten mit diesen Fehlerdynamiken versehen. Dieser Ansatz eignete sich während praktischer Untersuchungen ebenso zur Stabilisierung des Systems bei Anfangsfehlern, verstößt aber gegen formale Stabilitätsbedingungen.
 
 Die Durchführung umfangreicher symbolischer Berechnungen wie auch die numerisch simulative Verfikation der ermittelten Steurungs- und Regelungsgesetze erfolgte über Jupyter-Notebooks in Python. Über eine Robustheit der Regelungsansätze wurde keine Aussage getroffen. Gerade bei nichtlinearen Systemen wie dem in dieser Arbeit untersuchten können bereits geringe Modellabweichungen zur Instabilität bei Regelungsansätzen der exakten Linearisierung führen, woraus hohe Genauigkeitsanforderungen für die Modellbildung folgen.
 
