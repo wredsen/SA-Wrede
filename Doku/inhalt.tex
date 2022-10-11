@@ -12,7 +12,7 @@ Im Rahmen vorangegangener studentischer Arbeiten ist am Fraunhofer-Institut für
 
 Aufgabe dieser Studienarbeit war es, eine analytische Modellbildung des Versuchsstands durchzuführen sowie eine zentrale Referenzregelstrategie ohne Verteilung auf verschiedene Recheneinheiten für das Demonstratorsystem zu entwerfen. Zudem waren die dabei ermittelten Ansätze zur Steuerung und Folgeregelung simulativ zu verifizieren.
 
-Da es sich beim Demonstrator um einen Brückenkran handelt, bietet sich eine Beschreibung des mechanischen Starrkörpersystems mittels des Lagrange-Formalismus an. Die Systemgleichungen eines solchen nichtlinearen Mehrgrößensystems können auf die Eigenschaft der differentiellen Flachheit untersucht werden. Daraus kann bei erfolgreichem Nachweis eine flachheitsbasierte Trajektorienplanung der Ausgangsgrößen und Parametrisierung der Stellgrößen dadurch erfolgen. Die Korrektur von Abweichungen von den Referenzverläufen ist durch eine ebenfalls flachheitsbasierte Folgeregelung möglich.
+Da es sich beim Demonstrator um ein mechanisches Starrkörpersystem handelt, bietet sich eine kinetische Beschreibung des Systems mittels des Lagrange-Formalismus an. Die Systemgleichungen eines solchen nichtlinearen Mehrgrößensystems können auf die Eigenschaft der differentiellen Flachheit untersucht werden. Daraus kann bei erfolgreichem Nachweis eine flachheitsbasierte Trajektorienplanung der Ausgangsgrößen und Parametrisierung der Stellgrößen dadurch erfolgen. Die Korrektur von Abweichungen von den Referenzverläufen ist durch eine ebenfalls flachheitsbasierte Folgeregelung möglich.
 
 \chapter{System- und Problembeschreibung}
 
@@ -43,6 +43,8 @@ Messungen der Seillängen und Kranpositionen auf der Schiene erfolgen mittels In
 
 \section{Problembeschreibung und Zielsetzung}
 Bei der Bewegung von Containern in Häfen ist ein ruckarmer und gegenüber der Horizontalen stabiler Transport notwendig. Ziel dieser Studienarbeit ist es deshalb, für das vorhandene Demonstratorsystems eine zentrale Referenzregelstrategie zu entwerfen. Damit soll unter Vorgabe von Sollposen eine Planung von Trajektorien der Last in ihrer vertikalen Aufhängungsebene und eine Folgeregelung zur Überführung der Last zwischen verschiedenen Ruhelagen ermöglicht werden. Diese Überlegungen sollen auf Basis einer Modellierung des Krans als Mehrkörpersystem geschehen. 
+
+Perspektivisch soll diese zentrale Referenzregelstrategie einerseits zum Vergleich mit zukünftig zu entwickelnden verteilten Regelungsansätzen genutzt werden sowie andererseits als Grundlage für den Einsatz von Methoden des maschinellen Lernens dienen. Dabei ist es von Interesse zu untersuchen, ob etwa durch bestärkendes Lernen unter der Vorgabe von flachheitsbasierten Referenztrajektorien im Lernprozess ein künstliches neuronales Netz generiert werden kann, welches eine vergleichbar gute Regelung im Normalfall bietet, allerdings Vorteile in beispielsweise Robustheit und Adaptivität aufweist.
 
 \chapter{Analytische Modellbildung}
 
