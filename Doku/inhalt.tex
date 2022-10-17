@@ -528,7 +528,7 @@ Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher 
 
 Es sei ein nichtlineares Mehrgrößensystem der Form der Gleichungen \eqref{eq:general_flat_sys} gegeben. Dieses sei affin bezüglich des Eingangs $\mathbf{u}$. Der Eingang könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p := n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination von $p$ der übriger Zustandskomponenten genutzt, wobei jeweils eine Gleichung und eine Systemgröße gemeinsam eliminiert werden. Wenn sich dieses sukzessive Vorgehen bis einschließlich der letzten Gleichung durchführen lässt, verbleiben schlussendlich $n - p = m$ Systemgrößen, die keiner Gleichung mehr genügen müssen. Diese bilden dann den flachen Ausgang $\mathbf{y}$.
 
-Zur sukzessiven Elimination von Gleichungen und Systemgrößen bietet sich folgendes Vorgehen an: Um Systemgleichungen und Eingangskomponenten, welche mit geringem Aufwand eliminiert werden können zu identifizieren, wird die Jacobi-Matrix $\mathbf{J}_i$ der zu diesem Zeitpunkt noch $i$ verbleibenden Systemgleichungen bezüglich des Eingangs $\mathbf{u}_{m-(n-i)}$ gebildet. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
+Zur sukzessiven Elimination von Gleichungen und Systemgrößen bietet sich folgendes Vorgehen an: Um Systemgleichungen und Eingangskomponenten, welche mit geringem Aufwand eliminiert werden können zu identifizieren, wird die Jacobi-Matrix $\mathbf{J}_i$ der zu diesem Zeitpunkt noch $i$ verbliebenen Systemgleichungen bezüglich der noch verbliebenen Eingangkomponenten $\mathbf{u}_{m-(n-i)}$ gebildet. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
 \begin{equation}
 	\mathbf{J}_i = 
 	\begin{pmatrix}
@@ -570,11 +570,12 @@ Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kan
 Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen, was eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall darstellt. Der skizzierte Algorithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
+\label{sec:flatness_single_crane}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
 
 Die im vorherigen Abschnitt allgemein geschilderte Vorgehensweise wird nun auf das Einzelkransystem aus Abschnitt \ref{sec:single_crane} angewendet. Aus der analytischen Modellbildung mit den LG zweiter Art folgen die drei Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
 
-Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = (\tau_1, \tau_2)^T$ gebildet:
+Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = \mathbf{u}_2 = (\tau_1, \tau_2)^T$ gebildet:
 \begin{equation}
 	\mathbf{J}_3 =
 	\left(\begin{matrix}
@@ -583,11 +584,9 @@ Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau
 		-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
 	\end{matrix}\right).
 \end{equation}
-Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung~\eqref{single_flat_syseq3} bestimmt werden kann. Eine Transformation des Systems ist dafür nicht notwendig. Dementsprechend können die letzte Zeile von $\mathbf{J}_3$ und die Ausgangskomponente $\tau_1$ eliminiert werden.
+Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix ein isolierter Nicht-Null-Eintrag vorkommt, also die Eingangskomponente $\tau_{1}$ durch die korrespondierende dritte Systemgleichung~\eqref{single_flat_syseq3} bestimmt werden kann. Eine Transformation des Systems ist dafür nicht notwendig. Dementsprechend können die letzte Zeile von $\mathbf{J}_3$ und die Ausgangskomponente $\tau_1$ eliminiert werden.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Im nächsten Schritt wird die Jacobi-Matrix $\mathbf{J}_2$ der verbliebenen Gleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} bezüglich $\tau_2$ berechnet: 
+Im nächsten Schritt wird die Jacobi-Matrix $\mathbf{J}_2$ der verbliebenen Gleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} bezüglich $\mathbf{u}_1 = \tau_2$ berechnet: 
 \begin{equation}
 \mathbf{J}_2 =
 \left(\begin{matrix}
@@ -599,12 +598,10 @@ Diese weist keine Spalte mit nur einer Komponente ungleich Null auf, also ist ei
 \begin{equation}
 \mathbf{J}_2^{\mathrm{L}+} \mathbf{J}_2 = \mathbf{I}_{1} = 1	
 \end{equation}
-
 sowie das linke Orthokomplement $\mathbf{J}_2^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 2}$:
 \begin{equation}
 \mathbf{J}_2^{\mathrm{L}\perp} \mathbf{J}_2 = \mathbf{0}_{1 \times 1} = 0.
 \end{equation}
-
 Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende Ansatz gewählt werden: 
 \begin{equation}
 \mathbf{J}_2^{\mathrm{L}+} =
@@ -638,24 +635,52 @@ Die damit transformierten verbliebenen Systemgleichungen ergeben sich zu:
 	\end{align}
 \end{subequations}
 
-Per Konstruktion gilt für die dazu bezüglich $\tau_{2}$ gebildete Jacobi-Matrix $\mathbf{J}_2' = (\begin{matrix} 
+Per Konstruktion gilt für die dazu bezüglich $\mathbf{u}_1 = \tau_{2}$ gebildete Jacobi-Matrix $\mathbf{J}_2' = (\begin{matrix} 
 1 & 0
 \end{matrix})^T$.
 Die erste transformierte Systemgleichung \eqref{single_flat_transformed_syseq1} kann somit zusammen mit $\tau_{2}$ eliminiert werden. Es verbleibt die Systemgleichung \eqref{single_flat_transformed_syseq2}, welche folgende Menge an Systemgrößen und deren Ableitungen beinhaltet:
 \begin{equation}
 M = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}.
 \end{equation}
+Das rein algebraische Auftreten von $q_1$ legt nahe, dass eine Parametrisierung dieser und aller weiteren Systemgrößen durch einen flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ möglich ist. Es wird nun begonnen, in umgekehrter Reihenfolge zur Elimination die Systemgrößen durch $\mathbf{y}$ zu parametrisieren. Aus Gleichung \eqref{single_flat_transformed_syseq2} folgt:
+\begin{equation}
+	q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}.
+	\label{eq:single_crane_flat_q1}
+\end{equation}
+Durch die transformierte Systemgleichung \eqref{single_flat_transformed_syseq1} kann unter Einsetzen von \eqref{eq:single_crane_flat_q1} die Eingangskomponente $\tau_2$ bestimmt werden:
+\begin{equation}
+	\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}.
+	\label{eq:single_crane_flat_tau2}
+\end{equation}
+Die zuerst eliminierte originale Systemgleichung~\eqref{single_flat_syseq3} kann nach $\tau_1$ aufgelöst werden:
+\begin{equation}
+	\tau_1 = \frac{m_{1} \ddot{q}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + p_{1} \tau_{2} - q_{1} \tau_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}.
+	\label{eq:single_crane_preflat_tau1}
+\end{equation}
+Diese Darstellung enthält allerdings mit $q_1$ sowie $\ddot{q}_1$ und $\tau_2$ Größen, welche keine Komponenten des flachen Ausgangs sind. Die Ableitung $\ddot{q}_1$ kann zu
+\begin{flalign}
+	\begin{split}
+		\ddot{q}_1 &=
+		\frac{1}{\left(g + \ddot{p}_{2}\right)^{3}}
+		(- 2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(g \dot{p}_{1} + p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \ddot{p}_{2} \dot{p}_{1}\right) \\ 
+		&+ \left(g + \ddot{p}_{2}\right)^{2} \left(g \ddot{p}_{1} + p_{1} \ddddot{p}_{2} - p_{2} \ddddot{p}_{1} - 2 \dddot{p}_{1} \dot{p}_{2} + 2 \dddot{p}_{2} \dot{p}_{1}\right) \\ 
+		&- \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right) \left(g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}\right))
+	\end{split}
+\end{flalign}
+gebildet werden. Durch einsetzen davon, Gleichung \eqref{eq:single_crane_flat_q1} und \eqref{eq:single_crane_flat_tau2} in \eqref{eq:single_crane_preflat_tau1} wird eine Parametrisierung von $\tau_1$ durch den flachen Ausgang gewonnen:
+\begin{flalign}
+	\begin{split}
+		\tau_2 &=
+		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
+		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
+		&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
+		&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} \\
+		&+ m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} \\
+		&+ 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3}).
+	\end{split}
+\end{flalign}
 
-Das rein algebraische auftreten von $q_1$ legt nahe, dass eine Parametrisierung dieser und aller weiteren Systemgrößen durch einen flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ möglich ist.
-
-
-
-
-
-
-Eine Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_2, q_1, \ddot{q}_1, \tau_2)$ ist daher möglich. Die Symbolik $\mathrm{func}$ stellt in dieser Arbeit einen allgemeinen und nicht weiter spezifizierten funktionalen Zusammenhang dar, welcher sich bei jeder Erwähnung unterscheiden kann.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeigt, dass es sich dabei um einen flachen Ausgang handelt. Der Flachheitsnachweis wurde somit konstruktiv erbracht.
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
 \label{sec:flatness_analysis_double_crane}
@@ -664,7 +689,7 @@ Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist u
 
 Aus der analytischen Modellbildung des Doppelkransystems mit den LG zweiter Art im Unterabschnitt \ref{subsec:double_crane_lagrange2} folgen die fünf Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
 
-Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = (\tau_1, \tau_2, \tau_3, \tau_4)^T$ gebildet (Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
+Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = \mathbf{u}_4 = (\tau_1, \tau_2, \tau_3, \tau_4)^T$ gebildet (Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
 \begin{equation*}
 	\mathbf{J}_5 = 
 	\left(\begin{smallmatrix}
@@ -675,9 +700,9 @@ Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau
 	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation*}
-Dabei ist zu erkennen, dass in den ersten beiden Spalten der zu den Systemgleichungen korrespondierenden Jacobi-Matrix zwei Eingangsgrößen $\tau_{1}$ und $\tau_{2}$ jeweils isoliert vorkommen. Für deren Bestimmung ergeben sich keine redundanten Gleichungen. Dementsprechend können die letzten beiden Zeilen von $\mathbf{J}_5$ eliminiert werden. Eine vorläufige Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_3, q_1, \ddot{q}_1, \tau_3)$ und $\tau_2 = \mathrm{func}(p_1, p_3, q_2, \ddot{q}_2, \tau_4)$ ist möglich.
+Dabei ist zu erkennen, dass in den letzten beiden Systemgleichungen, die zu den  Spalten der Jacobi-Matrix korrespondieren, zwei Eingangsgrößen $\tau_{1}$ und $\tau_{2}$ jeweils isoliert vorkommen. Für deren Bestimmung ergeben sich keine redundanten Gleichungen. Dementsprechend können die letzten beiden Zeilen in $\mathbf{J}_5$ sowie diese Eingangskomponenten eliminiert werden. 
 
-Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es in der darauf bezogenen Jacobimatrix $\mathbf{J}_3$ zu den ersten drei Systemgleichungen  \eqref{double_flat_syseq1}, \eqref{double_flat_syseq2} und \eqref{double_flat_syseq3} keine Spalten mehr, in denen diese Eingangskomponenten nur einmal vorkommen:
+Für den reduzierten Eingang $ \mathbf{u}_2 = (\tau_3$, $\tau_4)^T$ gibt es in der darauf bezogenen Jacobimatrix $\mathbf{J}_3$ zu den ersten drei Systemgleichungen  \eqref{double_flat_syseq1}, \eqref{double_flat_syseq2} und \eqref{double_flat_syseq3} keine Spalten mehr, in denen diese Eingangskomponenten nur einmal vorkommen:
 \begin{equation*}
 	\mathbf{J}_3 =
 	\left(\begin{smallmatrix}
@@ -686,8 +711,7 @@ Bei den übrigen Eingangsgrößen $\tau_3$, $\tau_4$ gibt es in der darauf bezog
 	\frac{s_{2} \left(p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation*}
-
-Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es eine linke Pseudoinverse $\mathbf{J}_3^{\mathrm{L}+} \in \mathbb{R}^{2 \times 3}$ zu finden:
+Also ist eine Transformation $\mathbf{T}_3$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es eine linke Pseudoinverse $\mathbf{J}_3^{\mathrm{L}+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
 	\mathbf{J}_3^{\mathrm{L}+} \mathbf{J}_3 = \mathbf{I}_{2} = 
 	\left(\begin{matrix}
@@ -695,31 +719,16 @@ Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es eine linke Ps
 	0 & 1\\
 	\end{matrix}\right)	
 \end{equation}
-sowie das linke Orthokomplement (der Vektorraum aller Zeilen, die orthogonal zu allen Spalten von $\mathbf{J}_3$ sind) $\mathbf{J}_3^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 3}$:
+sowie das linke Orthokomplement $\mathbf{J}_3^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 3}$:
 \begin{equation}
 	\mathbf{J}_3^{\mathrm{L}\perp} \mathbf{J}_3 = \mathbf{0}_{1 \times 2} = 
 	\left(\begin{matrix}
 	0 & 0
 	\end{matrix}\right),
 \end{equation}
-Damit kann eine Transformationsmatrix $\mathbf{T}_3$ gebildet werden, die in Multiplikation mit den übrigen Systemgleichungen bzw. der damit korrespondierenden Jacobimatrix erneut Spalten mit jeweils nur einem konstanten nicht-Null-Eintrag zur Folge hat:
-\begin{equation}
-	\mathbf{T}_3 \mathbf{J}_3 =
-	\left(\begin{matrix}
-		\mathbf{J}_3^{\mathrm{L}+} \\
-		\mathbf{J}_3^{\mathrm{L} \perp}
-	\end{matrix}\right)
-	\mathbf{J}_3 =
-	\left(\begin{matrix}
-		\mathbf{I}_{2} \\
-		\mathbf{0}_{1 \times 2}
-	\end{matrix}\right)
-	=
-	\mathbf{I}_{3 \times 2}. 
-\end{equation}
-
 Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende Ansatz gewählt werden: 
 \begin{equation}
+	\label{eq:ortho_pseudo_double_crane}
 	\mathbf{J}_3^{\mathrm{L}+} =
 	\left(
 	\left(\begin{matrix}
@@ -736,7 +745,7 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die beiden transformierten Systemgleichungen eliminieren. So ergibt sich eine vorläufige Parametrisierung ${\tau_3 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$ und ${\tau_4 = \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, q_1, q_2)}$.
+Durch Einsetzen der Komponenten von $\mathbf{J}_2$ in \eqref{eq:ortho_pseudo_double_crane} kann die Transformationsmatrix $\mathbf{T}_3$ nach den Gleichungen \eqref{eq:flatness_trafo} berechnet werden. Auf die konkrete Angabe dieser sowie der später vorgenommenen Parametrisierungen aller Systemgrößen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen. Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die ersten beiden transformierten Systemgleichungen eliminieren.
 
 Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
@@ -744,9 +753,7 @@ Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrö
 \end{equation}
 In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten. Eine dieser beiden Größen kann also ebenso wie der Eingang $\boldsymbol{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ ${\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T}$.
 
-Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche konstruktiv entsprechend dieses Flachheitsnachweises bestimmt werden kann. Auf die konkrete Angabe der Parametrisierungen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen.
-
-Eine abschließende flache Parametrisierung aller Systemgrößen durch den flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ enthält folgende Zusammenhänge:
+Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisierung der Systemgrößen durch einen flachen Ausgang, welche durch sukzessives Umformen und ggf. ineinander Einsetzen der (transformierten) Systemgleichungen in umgekehrter Reihenfolge zur Elimination analog zu Abschnitt \ref{sec:flatness_single_crane} erfolgt. Eine abschließende flache Parametrisierung aller Systemgrößen durch den flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ enthält folgende funktionale Zusammenhänge:
 \begin{subequations}
 	\begin{align}
 		q_2 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1) \\
@@ -756,6 +763,7 @@ Eine abschließende flache Parametrisierung aller Systemgrößen durch den flach
 		\tau_4 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1).
 	\end{align}
 \end{subequations}
+Die Symbolik $\mathrm{func}$ stellt in dieser Arbeit einen allgemeinen und nicht weiter spezifizierten funktionalen Zusammenhang dar, welcher sich bei jeder Erwähnung unterscheiden kann.
 
 \chapter{Steuerungs- und Regelungsentwurf}
 Auf Grundlage der Flachheitsanalyse des Brückenkransystems ist es im Folgenden möglich, Referenztrajektorien für einen flachen Ausgang aufzustellen, die Eingangsgrößen danach zu parametrisieren und eine Folgerelung dafür zu ermitteln. 
