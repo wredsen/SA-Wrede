@@ -52,7 +52,7 @@ Perspektivisch soll diese zentrale Referenzregelstrategie einerseits zum Verglei
 
 In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen senkrecht zur vertikalen Ebene unterdrückt. Die Seile werden aufgrund ihrer geringen Dicke als masselos im Vergleich zu den Laufkatzen sowie der Last angenommen und somit auch nicht mit einem Trägheitsmoment versehen. Die Last wird trotz ihrer Aussparungen (siehe Abbildung~\ref{fig:demonstrator_real}) mit einer homogenen Masseverteilung modelliert. Für eine genauere Beschreibung wären Konstruktionsdaten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Zur Reduktion weiterer Komplexität werden dissipative Kräfte im Modell nicht berücksichtigt.
 
-Die Modellbildung erfolgt in mehreren Stufen. Zunächst wird mittels der Lagrange-Gleichungen erster Art ein Einzelkran modelliert. Das Modell liegt dann in Form eines gewöhnlichen Differenzialgleichungssystems (DGL-System, engl. ODE system) vor. Zusätzlich wird ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt. Diese Methode gibt die geschlossene kinematische Kette der durch die Last verbundenen Laufkatzen intuitiv wider, so dass ein Differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) entsteht. In der Arbeit hat sich allerdings gezeigt, dass die Lagrange-Gleichungen zweiter Art eine kompliziertere Formulierung der Hubaktuierung sowie aufwändigere Lösungsalgorithmen bedeuten. Um das Prinzipielle Vorgehen zur Herleitung eines DAE-Modells dennoch zu schildern, wird es auf den Einzelkran angewendet. Ausgehend vom Einzelkransystem kann die prinzipielle Methodik der Modellbildung verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.
+Die Modellbildung erfolgt in mehreren Stufen. Zunächst wird mittels der Lagrange-Gleichungen erster Art ein Einzelkran modelliert. Das Modell liegt dann in Form eines gewöhnlichen Differenzialgleichungssystems (DGL-System, engl. ODE system) vor. Zusätzlich wird ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt. Diese Methode gibt die geschlossene kinematische Kette der durch die Last verbundenen Laufkatzen intuitiv wider, so dass ein differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) entsteht. In der Arbeit hat sich allerdings gezeigt, dass die Lagrange-Gleichungen zweiter Art eine kompliziertere Formulierung der Hubaktuierung sowie aufwändigere Lösungsalgorithmen bedeuten. Um das Prinzipielle Vorgehen zur Herleitung eines DAE-Modells dennoch zu schildern, wird es auf den Einzelkran angewendet. Ausgehend vom Einzelkransystem kann die prinzipielle Methodik der Modellbildung verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.
 
 \section{Modellierung mittels Lagrange-Formalismus}
 Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den sogenannten Lagrange-Gleichungen (LG) beschreiben. Dabei wird eine Menge aus $n$ zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\boldsymbol{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Deren zeitliche Änderungsraten werden im Vektor der Konfigurationsgeschwindigkeiten $\dot{\boldsymbol{\theta}}$ zusammengefasst. In \cite[S.10]{DissKnoll} wird eine Unterteilung der der Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$ in ``aktive'' Koordinaten $\mathbf{q}$ und ``passive'' Koordinaten $\mathbf{p}$ vorgenommen. In Anlehnung daran wird in dieser Arbeit eine Aufteilung der Systemgrößen in die direkt aktuierten Koordinaten $\mathbf{q}$ und nicht direkt aktuierten Koordinaten $\mathbf{p}$ durchgeführt. \cite[S.7]{DissKnoll} 
@@ -76,13 +76,13 @@ Die sich auf die jeweilige Koordinate $\theta_i$ beziehende Stellkraft $Q_i = f_
 
 Weiterhin können $m$ holonome ZB $a_1(\boldsymbol{\theta}) = ... = a_m(\boldsymbol{\theta}) = 0$ eingeführt werden, aus denen die Zwangskraft $\tilde{Q}_i$ in Richtung der Koordinate $\theta_i$ folgt:
 \begin{equation}
-	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j \textcolor{red}{\partiell{a_j}{\theta_i}}.
+	\tilde{Q}_i = \sum_{j = 1}^m \lambda_j \partiell{a_j}{\theta_i}.
 \end{equation}
 In dieser Beziehung bezeichnet $\lambda_j$ den jeweiligen Lagrange-Multiplikator.
 
 \subsection{Lagrange-Gleichungen zweiter Art}
 \label{sec:Lagrange2_theory}
-Die LG zweiter Art beschreiben bezüglich der LG erster Art den Spezialfall ohne ZB, also $m = 0$. Zwangskräfte sind dabei nicht explizit zu bestimmen. Die Bewegungsgleichungen können folgendermaßen aus der Lagrange-Funktion abgeleitet werden:
+Die LG zweiter Art beschreiben bezüglich der LG erster Art den Spezialfall ohne ZB, also $m = 0$. Zwangskräfte sind dabei nicht explizit zu bestimmen. Als Voraussetzung müssen die Konfigurationskoordinaten unabhängig voneinander sein, es darf also keine ZB geben, die diese verkoppeln. In diesem Zusammenhang spricht man auch von den Minimalkoordinaten $\boldsymbol{\theta}$. Dann können die Bewegungsgleichungen folgendermaßen aus der Lagrange-Funktion abgeleitet werden:
 \begin{equation}
 	\label{eq:lagrange2}
 	\diff{}{t}\left(\partiell{\mathcal{L}}{\dot{\theta}_i} \right) - \partiell{\mathcal{L}}{\theta_i} = Q_i, \quad i = 1, ..., n.
@@ -108,7 +108,7 @@ Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \righ
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
-DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch Nebenbedingungen) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von ZB der LG erster Art genutzt werden. DAE-Systeme lassen sich typischerweise in einer semi-expliziten Form darstellen
+DAE-Systeme sind ODE-Systeme, welche um algebraische Gleichungen (AGL, auch als Nebenbedingungen bezeichnet) ergänzt werden. Diese Nebenbedingungen können zur Darstellung von ZB der LG erster Art genutzt werden. DAE-Systeme lassen sich typischerweise in einer semi-expliziten Form darstellen
 	\begin{subequations}
 	\label{eq:dae_std}
 	\begin{align}
@@ -120,7 +120,7 @@ wobei $\mathbf{x}$ dem Systemzustand, $\mathbf{z}$ den algebraischen Variablen (
 
 Eine Möglichkeit zur Klassifikation von DAE-Systemen ist der differenzielle Index $i_\mathrm{d}$. Dieser entspricht der minimalen Anzahl an Differenziationen $\frac{d}{dt}$ der AGL $\mathbf{a}$ (ZB), damit unter Einbeziehung der DGL ein explizites DGL-System aus dem DAE-System entsteht. Ein gewöhnliches DGL-System besitzt also den differenziellen Index $i_\mathrm{d} = 0$. Die Differenziation der AGL mit dem Resultat eines DAE-Systems mit kleinerem Index wird als Indexreduktion bezeichnet. \cite[S.139]{JanschekSystementwurf}
 
-Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind solche mit starrer Kopplung als ZB vom Index $i_\mathrm{d} = 3$ und können für den Zustandsvektor $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ über folgende Bewegungsgleichungen mittels der Matrizen $\mathbf{M}$, $\mathbf{C}$, $\mathbf{K}$, $\mathbf{G}$ und $\mathbf{B}$ beschrieben werden:
+Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleichungssysteme notwendig. Die in dieser Arbeit untersuchten mechanischen Systeme sind solche mit starrer Kopplung als ZB vom Index $i_\mathrm{d} = 3$ und können für den Zustandsvektor $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ über folgende Bewegungsgleichungen mittels der Matrizen $\mathbf{M}$, $\mathbf{C}$, $\mathbf{K}$, $\mathbf{G}$ und $\mathbf{B}$ beschrieben werden \cite[S.240]{JanschekSystementwurf}:
 \begin{subequations}
 \label{eq:implicit_mechanical_system}
 \begin{align}
@@ -128,7 +128,6 @@ Für die Simulation von DAE-Systemen ist die numerische Integration dieser Gleic
 	\mathbf{0} &= \mathbf{g}(\boldsymbol{\theta}).
 \end{align}
 \end{subequations}
-\cite[S.240]{JanschekSystementwurf}
 
 Zur Integration des Systems der Gleichungen \eqref{eq:dae_std} beziehungsweise \eqref{eq:implicit_mechanical_system} gibt es verschiedene Möglichkeiten \cite[Kap. 8]{ModSimSkript}: 
 \begin{itemize}
@@ -226,12 +225,12 @@ Durch Einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single
 
 
 \section{Analytisches Modell des Doppelkrans}
-\textcolor{red}{Aufbauend auf der Modellierung eines Einzelkrans wird in diesem Abschnitt eine Erweiterung des Systems auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Aufgrund der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der LG erster Art nahe. Bei dieser wird mittels algebraischer ZB ein DAE-System erzeugt. Allerdings ist dabei die Beschreibung der Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim realen Demonstrator sperrt ein Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist wieder eine Modellierung mit den LG zweiter Art möglich.}
+Aufbauend auf der Modellierung eines Einzelkrans wird in diesem Abschnitt eine Erweiterung des Systems auf ein Doppelkransystem in Analogie zum realen Demonstrator vorgenommen. Aufgrund der an beiden Laufkatzen befestigten Last liegt zunächst alternativ zum vorherigen Vorgehen die Nutzung der LG erster Art nahe. Bei dieser wird mittels algebraischer ZB zur Modellierung der kinematischen Schleife \footnote{Diese Bezeichnung zielt auf den Vergleich des Systems mit einem Viergelenk aus der Literatur ab, durch die gemeinsame Last wird die Schleife „geschlossen“.} ein DAE-System erzeugt. Allerdings ist dabei die Beschreibung der Aktuierung der Seilwinden anspruchsvoller, da bereits für eine konstante Seillänge die bei der Katzfahrt auftretenden dynamischen Seilkräfte kompensiert werden müssen, ohne dass es dafür eine explizite resultierende Gesamtkraft gibt, die zu Null gesetzt werden kann. Beim realen Demonstrator sperrt ein Schneckengetriebe der Seilwinde im stromfreien Fall die Hubaktuierung. Auch bei einem Doppelkransystem ist wieder eine Modellierung mit den LG zweiter Art möglich.
 
 \subsection{Ansatz über ein DAE-System}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[double\_crane\_notebooks/DAE\_double\_crane\_cartesian.ipynb]{SAGithub} zu finden.
 
-Mittels der LG erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung wird trotzdem als sinnvoll erachtet. Durch die Einprägung von ZB kann die kinematische Kette\footnote{Diese Bezeichnung zielt auf den Vergleich des Systems mit einem Viergelenk aus der Literatur ab, durch die gemeinsame Last wird die Kette „geschlossen“.} wegen der gemeinsamen Last intuitiv abgebildet werden. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. \textcolor{red}{(Quelle: Buch von Rudolf S.21 -> Nextcloud Flachheit/fotos ???)} Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+Mittels der LG erster Art wird im Folgenden ein DAE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange1_theory} vorgegangen. Schließlich ergibt sich hierbei ein komplexerer Satz an Systemgleichungen, die typischerweise weniger effizient zu simulieren sind als bei einem ODE-System. Daher wird dieser Ansatz in weiteren Kapiteln nicht weiter verfolgt. Eine Dokumentation dieser Modellierung wird trotzdem als sinnvoll erachtet. Durch die Einprägung von ZB kann die kinematische Schleife wegen der gemeinsamen Last intuitiv abgebildet werden. Es wird zunächst einzig eine horizontale Aktuierung der Laufkatzen durch den Eingang $\boldsymbol{\tau} = (\tau_{1}, \tau_{2})^T$ betrachtet. Für eine effiziente Simulation mit aktuierten Seilwinden, welche für diesen Ansatz nicht mehr im Rahmen dieser Studienarbeit durchgeführt wird, wäre eine Umformulierung des Problems mit den Seillängen als Stellgröße sinnvoll. \cite{RudolphSkriptFlach} Abbildung \ref{fig:DAE_double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -331,7 +330,7 @@ Unter Nutzung der Lagrange-Multiplikatoren $\lambda_j$ ist es mittels der LG zwe
 \label{subsec:double_crane_lagrange2}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
 
-Mittels der LG zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Abbildung \ref{fig:double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
+Mittels der LG zweiter Art wird im Folgenden ein ODE-Modell des Doppelkrans erzeugt. Dabei wird entsprechend Abschnitt \ref{sec:Lagrange2_theory} vorgegangen. Abbildung~\ref{fig:double_crane_diagram} zeigt die Konfiguration dieses Doppelkransystems.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -507,7 +506,7 @@ Dabei entspricht $h$ der Höhe der Last, $2 s_2$ der Lastlänge und $m_2$ der Ma
 \end{table}
 
 \chapter{Flachheitsanalyse}
-Zur Erweiterung des Begriffs der Steuerbarkeit auf nichtlineare Systeme wird die sogenannte (differenzielle) Flachheit als Systemeigenschaft definiert. Gerade für flache Mehrgrößensystemen gestaltet sich die Folgerung konsistenter Eingangsgrößenverläufen zur Steuerung und auch Folgeregelung aus der Vorgabe nur weniger Referenztrajektorien als sehr praktikabel.
+Zur Erweiterung des Begriffs der Steuerbarkeit auf nichtlineare Systeme wird die sogenannte (differenzielle) Flachheit als Systemeigenschaft definiert. Gerade für flache Mehrgrößensysteme gestaltet sich die Bestimmung geeigneter Eingangsgrößenverläufe zur Steuerung und auch Folgeregelung aus der Vorgabe nur weniger Referenztrajektorien als sehr praktikabel.
 
 \section{Definition differenzieller Flachheit}\label{sec:Def_flatness}
 
@@ -525,11 +524,11 @@ Dabei ist $\mathbf{y}$ ein flacher Ausgang. Aus der Existenz eines flachen Ausga
 
 \section{Flachheitsanalyse von Mehrgrößensystemen}
 
-Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert. Für eine mathematisch fundierte und systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} verwiesen.
+Im Folgenden wird ein prinzipielles praktisches Vorgehen zur Bestimmung flacher Ausgänge von Mehrgrößensystemen sowie zur Parametrisierung der Systemgrößen anhand solcher flachen Ausgänge skizziert. Für eine mathematisch fundierte und systematische Herangehensweise sei auf den Beitrag \cite{Fritzsche2016} und die dort zitierten Quellen verwiesen. Im Unterschied zu diesem Beitrag wird hier aber nicht auf den  Gleichungen des sogenannten Tangentialsystems operiert, sondern auf den originalen nichtlinearen Gleichungen\footnote{Direkt auf den nichtlinearen Systemgleichungen zu operieren erschwert ggf. die Eliminierung von Größen bzw. ist diese nicht immer möglich. Es muss im Gegensatz zu \cite{Fritzsche2016} jedoch keine Integrabilitätsbedingung geprüft werden.}. 
 
-Es sei ein nichtlineares Mehrgrößensystem der Form der Gleichungen \eqref{eq:general_flat_sys} gegeben. Dieses sei affin bezüglich des Eingangs $\mathbf{u}$ und könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p = n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination $p$ übriger Zustandskomponenten genutzt, so dass sich ein flacher Ausgang $\mathbf{y}$ der Dimension $n - p = m$ ergibt. 
+Es sei ein nichtlineares Mehrgrößensystem der Form der Gleichungen \eqref{eq:general_flat_sys} gegeben. Dieses sei affin bezüglich des Eingangs $\mathbf{u}$. Der Eingang könne mittels der Systemgleichungen eliminiert werden, so dass ein autonomes System aus $p := n - m$ Gleichungen folgt. Diese Gleichungen werden wiederum zur Elimination von $p$ der übriger Zustandskomponenten genutzt, wobei jeweils eine Gleichung und eine Systemgröße gemeinsam eliminiert werden. Wenn sich dieses sukzessive Vorgehen bis einschließlich der letzten Gleichung durchführen lässt, verbleiben schlussendlich $n - p = m$ Systemgrößen, die keiner Gleichung mehr genügen müssen. Diese bilden dann den flachen Ausgang $\mathbf{y}$.
 
-Systemgleichungen und Eingangskomponenten, welche mit geringem Aufwand eliminiert werden können, sind auszuwählen. Dafür bietet sich die Bildung der Jacobi-Matrix $\mathbf{J}_i$ der  \textcolor{red}{zu diesem Zeitpunkt noch $i$ verbleibenden Systemgleichungen} bezüglich des Eingangs $\mathbf{u}_{m-(n-i)}$ an. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
+Zur sukzessiven Elimination von Gleichungen und Systemgrößen bietet sich folgendes Vorgehen an: Um Systemgleichungen und Eingangskomponenten, welche mit geringem Aufwand eliminiert werden können zu identifizieren, wird die Jacobi-Matrix $\mathbf{J}_i$ der zu diesem Zeitpunkt noch $i$ verbleibenden Systemgleichungen bezüglich des Eingangs $\mathbf{u}_{m-(n-i)}$ gebildet. Dabei sind die zu den Matrixzeilen korrespondierenden Gleichungen geeignet, in denen nur ein isolierter Spalteneintrag $\varepsilon \neq 0$ steht, also weitere Einträge der Spalte Null sind:
 \begin{equation}
 	\mathbf{J}_i = 
 	\begin{pmatrix}
@@ -543,7 +542,7 @@ Systemgleichungen und Eingangskomponenten, welche mit geringem Aufwand eliminier
 	\end{pmatrix}.
 \end{equation}
 
-Falls keine solche Spalte zu finden ist, kann eine Transformation der Systemgleichungen durch die Multiplikation mit der Matrix $\mathbf{T}_i$ durchgeführt werden. Diese Transformation soll der folgenden Beziehung genügen:
+Falls keine solche Spalte zu finden ist, kann sie durch eine Transformation der Systemgleichungen durch die Multiplikation mit der Matrix $\mathbf{T}_i$ erzeugt werden:
 \begin{equation}
 	\mathbf{T}_i \mathbf{J}_i = 
 	\begin{pmatrix}
@@ -552,28 +551,28 @@ Falls keine solche Spalte zu finden ist, kann eine Transformation der Systemglei
 	\end{pmatrix}.
 \end{equation}
 
-Dabei kann $\mathbf{T}_i$ über das linke Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und die linke Pseudoinverse $\mathbf{J}_i^{\mathrm{L} +}$ der Jacobi-Matrix folgendermaßen gebildet werden \cite[Abschnitt 2.1.2]{Fritzsche2016}:
+Dabei kann $\mathbf{T}_i$ über das linke Orthokomplement (der Vektorraum aller Zeilen, die orthogonal zu allen Spalten von $\mathbf{J}_i$ sind) $\mathbf{J}_i^{\mathrm{L} \perp}$ und die linke Pseudoinverse $\mathbf{J}_i^{\mathrm{L} +}$ der Jacobi-Matrix folgendermaßen gebildet werden \cite[Abschnitt 2.1.2]{Fritzsche2016}:
 \begin{align}
-	\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_i \\
+	\label{eq:flatness_trafo}
+	\begin{split}
+	\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)} \\
 	\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \\
 	\Rightarrow \mathbf{T}_i = 
 	\begin{pmatrix}
 		\mathbf{J}_i^{\mathrm{L} +} \\
 		\mathbf{J}_i^{\mathrm{L} \perp}
 	\end{pmatrix} .
+	\end{split}
 \end{align}
 
-\textcolor{red}{Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser erfolgen. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend der Gleichungen \eqref{eq:general_flat_sys} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert sind.}
+Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kann die Behandlung der anderen noch vorhandenen Systemgrößen analog durch Bildung der Jacobi-Matrix bezüglich dieser erfolgen. Der  flache Ausgang $\mathbf{y}$ besteht aus der Menge an Systemgrößen, welche im Idealfall nach Elimination aller Gleichungen übrig ist. Der konstruktive Flachheitsnachweis für ein System ist erbracht, wenn mittels der Zusammenhänge aus den Systemgleichungen entsprechend der Gleichungen \eqref{eq:general_flat_sys} alle Systemgrößen (insbesondere auch der Systemeingang) allein durch $(\mathbf{y}, \dot{\mathbf{y}}, \ddot{\mathbf{y}}, ...)$ parametrisiert sind. Dafür werden die Systemgleichung in umgekehrter Reihenfolge ihrer Eliminierung zur Berechnung der Parametrisierung verwendet. Jede eliminierte Gleichung wird als Definitionsgleichung einer Hilfsgröße auf Basis des flachen Ausgangs (und ggf. seiner Zeitableitungen) aufgefasst, die in den weiteren Gleichungen dann ggf. auch abgeleitet vorkommt.
 
-\textcolor{red}{Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen, was eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall darstellt. Der skizzierte Algorithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.}
-
-\textcolor{red}{Anm. bez. ParametriSIerung vs Parametrierung: Ich hatte mal gelesen, dass ersteres für die symbolische Darstellung mit Parametern genutzt wird, zweiteres für die Belegung der Parameter durch konkrete numerische Werte. Ich finde allerdings gerade keine Quelle dafür ...}
+Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen, was eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall darstellt. Der skizzierte Algorithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.
 
 \section{Anwendung Flachheitsanalyse am Einzelkran}
-\textcolor{red}{BITTE ABSCHNITT NOCH EINMAL KOMPLETT LESEN.}\\
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
 
-Aus der analytischen Modellbildung des Einzelkransystems mit den LG zweiter Art in Abschnitt \ref{sec:single_crane} folgen die drei Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
+Die im vorherigen Abschnitt allgemein geschilderte Vorgehensweise wird nun auf das Einzelkransystem aus Abschnitt \ref{sec:single_crane} angewendet. Aus der analytischen Modellbildung mit den LG zweiter Art folgen die drei Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = (\tau_1, \tau_2)^T$ gebildet:
 \begin{equation}
@@ -584,48 +583,79 @@ Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau
 		-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
 	\end{matrix}\right).
 \end{equation}
-Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung \eqref{single_flat_syseq3} bestimmt werden kann. Dementsprechend kann die letzte Zeile von $\mathbf{J}_3$ eliminiert werden. Eine Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_2, q_1, \ddot{q}_1, \tau_2)$ ist daher möglich.
+Dabei ist zu erkennen, dass in der ersten Spalte der Jacobi-Matrix die Eingangskomponente $\tau_{1}$ isoliert vorkommt, also durch die korrespondierende dritte Systemgleichung~\eqref{single_flat_syseq3} bestimmt werden kann. Eine Transformation des Systems ist dafür nicht notwendig. Dementsprechend können die letzte Zeile von $\mathbf{J}_3$ und die Ausgangskomponente $\tau_1$ eliminiert werden.
 
-Die verbleibenden ersten beiden Systemgleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} enthalten jeweils die Eingangskomponente $\tau_2$. So kann ohne Einschränkung auf diese Wahl die zweite Gleichung \eqref{single_flat_syseq2} zur Elimination von $\tau_2$ genutzt werden. Eine Parametrisierung ${\tau_2 = \mathrm{func}(p_1, p_2, \ddot{p}_2, q_1)}$ ist möglich.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Die letzte verbleibende Systemgleichung \eqref{single_flat_syseq1} weist nach Substitution der zuvor eliminierten Eingangsgrößen $\tau_1$ und $\tau_2$ nur noch die Systemgrößen bzw. Ableitungen $p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1$ auf. Daher bietet sich die Elimination der allein algebraisch auftretenden Größe $q_1$ an. Als Kandidat für einen flachen Ausgang folgt
-$\mathbf{y} = (p_1, p_2)^T$. Mit diesem ist die konkrete Parametrisierung aller Systemgrößen durchzuführen.
-
-Eine erste Parametrisierung von $\tau_2$ ergibt sich zu:
+Im nächsten Schritt wird die Jacobi-Matrix $\mathbf{J}_2$ der verbliebenen Gleichungen \eqref{single_flat_syseq1} und \eqref{single_flat_syseq2} bezüglich $\tau_2$ berechnet: 
 \begin{equation}
-	\label{eq:pre_single_crane_tau2_w_q1}
-	\tau_2 = \frac{m_{2} \left(g + \ddot{p}_{2}\right) \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}{p_{2}}.
+\mathbf{J}_2 =
+\left(\begin{matrix}
+- \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+- \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+\end{matrix}\right).
 \end{equation}
-Es ist zu bemerken, dass dabei die Koordinate $q_1$ neben den Komponenten des flachen Ausgangs und seinen Ableitungen enthalten ist. Durch Einsetzen dieser vorläufigen Darstellung von $\tau_2$ in Gleichung \eqref{single_flat_syseq1} ergibt eine flache Parametrisierung von $q_1$:
+Diese weist keine Spalte mit nur einer Komponente ungleich Null auf, also ist eine Transformation $\mathbf{T}_2$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_2$ gilt es eine linke Pseudoinverse $\mathbf{J}_2^{\mathrm{L}+} \in \mathbb{R}^{1 \times 2}$ zu finden:
 \begin{equation}
-	q_1 = \frac{p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}.
-\end{equation}
-Dieses Ergebnis kann in Gleichung \eqref{eq:pre_single_crane_tau2_w_q1} für eine ebenso flache Parametrisierung von $\tau_2$ eingesetzt werden:
-\begin{equation}
-	\tau_2 =
-	\frac{m_{2} \sqrt{\frac{p_{2}^{2} \left(g + \ddot{p}_{2}\right)^{2} + \left(- g p_{1} - p_{1} \ddot{p}_{2} + p_{1} \left(g + \ddot{p}_{2}\right) + p_{2} \ddot{p}_{1}\right)^{2}}{\left(g + \ddot{p}_{2}\right)^{2}}} \left(g + \ddot{p}_{2}\right)}{p_{2}}.
+\mathbf{J}_2^{\mathrm{L}+} \mathbf{J}_2 = \mathbf{I}_{1} = 1	
 \end{equation}
 
-Um abschließend die zuerst eliminierte Eingangskomponente $\tau_1$ ebenso auszudrücken, wird nach Gleichung \eqref{single_flat_syseq3} die zweite zeitliche Ableitung $\ddot{q}_1$ benötigt:
-\begin{align}
-	\begin{split}
-	\ddot{q}_1 &=
-	\frac{-2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right) }{\left(g + \ddot{p}_{2}\right)^{3}} \\	
-	&+ \frac{\left(g + \ddot{p}_{2}\right)^{2} \left(p_{1} \ddddot{p}_{2} - p_{2} \ddddot{p}_{1} - 2 \dddot{p}_{1} \dot{p}_{2} + 2 \dddot{p}_{2} \dot{p}_{1} - \ddot{p}_{1} \ddot{p}_{2} + \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}}\\	
-	&- \frac{\left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}}.
-	\end{split}
-\end{align}
-Daraus folgt:
-\begin{align}
-	\begin{split}
-	\tau_1 &=
-	\frac{- m_{1} 2 \dddot{p}_{2} \left(g + \ddot{p}_{2}\right) \left(p_{1} \dddot{p}_{2} - p_{2} \dddot{p}_{1} - \ddot{p}_{1} \dot{p}_{2} + \dot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}} \\	
-	&+ \frac{- m_{1} \left(g + \ddot{p}_{2}\right)^{2} \left(- p_{1} \ddddot{p}_{2} + p_{2} \ddddot{p}_{1} + 2 \dddot{p}_{1} \dot{p}_{2} - 2 \dddot{p}_{2} \dot{p}_{1} + \ddot{p}_{1} \ddot{p}_{2} - \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)\right)}{\left(g + \ddot{p}_{2}\right)^{3}} \\
-	&+ \frac{-m_1 \left(p_{1} \left(g + \ddot{p}_{2}\right) - p_{2} \ddot{p}_{1}\right) \left(\ddddot{p}_{2} \left(g + \ddot{p}_{2}\right) - 2 \dddot{p}_{2}^{2}\right)}{\left(g + \ddot{p}_{2}\right)^{3}} + \frac{m_{2} \ddot{p}_{1} \left(g + \ddot{p}_{2}\right)^{3}}{\left(g + \ddot{p}_{2}\right)^{3}}
-	\end{split}
-\end{align}
+sowie das linke Orthokomplement $\mathbf{J}_2^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 2}$:
+\begin{equation}
+\mathbf{J}_2^{\mathrm{L}\perp} \mathbf{J}_2 = \mathbf{0}_{1 \times 1} = 0.
+\end{equation}
 
-Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeigt, dass es sich dabei um einen flachen Ausgang handelt.
+Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende Ansatz gewählt werden: 
+\begin{equation}
+\mathbf{J}_2^{\mathrm{L}+} =
+\left(
+\left(\begin{matrix}
+J_{2, (1,1)}
+\end{matrix}\right)^{-1}	
+\mathbf{0}_{1 \times 1}
+\right), 		
+\mathbf{J}_2^{\mathrm{L}\perp} =
+\left(\begin{matrix}
+-J_{2, (2,1)} & J_{2, (1,1)}
+\end{matrix}\right).
+\end{equation}
+
+Durch Einsetzen der Komponenten von $\mathbf{J}_2$ folgt für die Transformationsmatrix:
+\begin{equation}
+	\mathbf{T}_2 =
+	\left(\begin{matrix}
+	\frac{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{- p_{1} + q_{1}} & 0\\
+	\frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} & \frac{- p_{1} + q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+	\end{matrix}\right).
+\end{equation}
+
+Die damit transformierten verbliebenen Systemgleichungen ergeben sich zu:
+\begin{subequations}
+	\begin{align}
+	\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right) \sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{\left(p_{1} - q_{1}\right) \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} &= 0 \label{single_flat_transformed_syseq1}\\
+	g\frac{m_{2} \left(- g p_{1} + g q_{1} - p_{1} \ddot{p}_{2} + p_{2} \ddot{p}_{1} + \ddot{p}_{2} q_{1}\right)}{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}
+	 &= 0\label{single_flat_transformed_syseq2}.
+	\end{align}
+\end{subequations}
+
+Per Konstruktion gilt für die dazu bezüglich $\tau_{2}$ gebildete Jacobi-Matrix $\mathbf{J}_2' = (\begin{matrix} 
+1 & 0
+\end{matrix})^T$.
+Die erste transformierte Systemgleichung \eqref{single_flat_transformed_syseq1} kann somit zusammen mit $\tau_{2}$ eliminiert werden. Es verbleibt die Systemgleichung \eqref{single_flat_transformed_syseq2}, welche folgende Menge an Systemgrößen und deren Ableitungen beinhaltet:
+\begin{equation}
+M = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}.
+\end{equation}
+
+Das rein algebraische auftreten von $q_1$ legt nahe, dass eine Parametrisierung dieser und aller weiteren Systemgrößen durch einen flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ möglich ist.
+
+
+
+
+
+
+Eine Parametrisierung $\tau_1 = \mathrm{func}(p_1, p_2, q_1, \ddot{q}_1, \tau_2)$ ist daher möglich. Die Symbolik $\mathrm{func}$ stellt in dieser Arbeit einen allgemeinen und nicht weiter spezifizierten funktionalen Zusammenhang dar, welcher sich bei jeder Erwähnung unterscheiden kann.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Anwendung Flachheitsanalyse am Doppelkran}
 \label{sec:flatness_analysis_double_crane}
@@ -767,7 +797,7 @@ Es wird ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $
 	\label{eq:state_space_vector_degree}
 	\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x}).
 \end{equation}
-Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{h}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M$ eine offene Teilmenge $M \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{h}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M$ eine offene Teilmenge $M \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls \cite[S. 194]{NLRT_Roebenack}:
 \begin{enumerate}
 	\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 	\item die sogenannte Entkopplungsmatrix
@@ -783,7 +813,6 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 	
 	im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist.
 \end{enumerate}
-\cite[S. 194]{NLRT_Roebenack}
 
 \subsection{Statische Rückführung}
 \label{sec:static_state_feedback}
