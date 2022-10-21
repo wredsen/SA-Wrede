@@ -216,6 +216,7 @@ Durch die Anwendung des Prinzips der virtuellen Arbeit nach Gleichung \eqref{eq:
 
 Durch Einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:single_crane_sys_w_Q} lässt sich ein abschließender Satz an Systemgleichungen des Einzelkrans bilden:
 \begin{subequations}
+	\label{single_flat_syseqs}
 	\begin{align}
 		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0 \label{single_flat_syseq1}\\
 		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\label{single_flat_syseq2}\\
@@ -428,20 +429,21 @@ Die Systemgleichungen können durch die LG zweiter Art \eqref{eq:lagrange2} zun�
 \end{smallmatrix}.
 \end{equation}
 
-Durch die Anwendung des Prinzips der virtuellen Arbeit ist es möglich, die generalisierte Kraft durch die Stellkräfte bzw. den Systemeingang auszudrücken (Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
+Durch die Anwendung des Prinzips der virtuellen Arbeit ist es möglich, die generalisierte Kraft durch die Stellkräfte bzw. den Systemeingang auszudrücken (Abkürzungen $\nu_x := \sin{x}$ und $\mu_x := \cos{x}$):
 \begin{equation}
 \mathbf{Q}=
 \left(\begin{smallmatrix}
-\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3}}\right)}{l_{1}}\\
-\frac{\tau_{4} \left(p_{2} + s_{2} \mathrm{s}_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{2} - s_{2} \mathrm{s}_{p_{3}}\right)}{l_{1}}\\
-\frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \mathrm{s}_{p_{3}}\right) \mathrm{c}_{p_{3} }}{l_{2}} - \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3} }\right) \mathrm{s}_{p_{3}}}{l_{2}} - \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \mathrm{s}_{p_{3}}\right) \mathrm{c}_{p_{3}}}{l_{1}} + \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3}}\right) \mathrm{s}_{p_{3}}}{l_{1}}\\
-\tau_{1} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{p_{3} }\right)}{l_{1}}\\
-\tau_{2} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{p_{3} }\right)}{l_{2}}
+\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mu_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mu_{p_{3}}\right)}{l_{1}}\\
+\frac{\tau_{4} \left(p_{2} + s_{2} \nu_{p_{3}}\right)}{l_{2}} + \frac{\tau_{3} \left(p_{2} - s_{2} \nu_{p_{3}}\right)}{l_{1}}\\
+\frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \nu_{p_{3}}\right) \mu_{p_{3} }}{l_{2}} - \frac{s_{2} \tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mu_{p_{3} }\right) \nu_{p_{3}}}{l_{2}} - \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \nu_{p_{3}}\right) \mu_{p_{3}}}{l_{1}} + \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \mu_{p_{3}}\right) \nu_{p_{3}}}{l_{1}}\\
+\tau_{1} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \mu_{p_{3} }\right)}{l_{1}}\\
+\tau_{2} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mu_{p_{3} }\right)}{l_{2}}
 \end{smallmatrix}\right).
 \end{equation}
 
 Durch Einsetzen dieser generalisierten Kraft in die Gleichungen \eqref{eq:double_crane_ODE_w_Q} lässt sich ein abschließender Satz an Systemgleichungen des Doppelkrans bilden:
 \begin{subequations}
+	\label{double_flat_syseqs}
 	\begin{flalign}
 	&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq1}\\
 	&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}} = 0 \label{double_flat_syseq2}\\
@@ -569,11 +571,11 @@ Nachdem die Eingangskomponenten aus den Systemgleichungen eliminiert wurden, kan
 
 Bei nichtlinearen Systemen ist es allerdings oft nicht direkt möglich, alle Gleichungen direkt zu eliminieren, so dass Freiheitsgrade bestehen, was eine Schwierigkeit der Flachheitsanalyse im Mehrgrößenfall darstellt. Der skizzierte Algorithmus ist deshalb nur als hinreichend zur Bestimmung eines flachen Ausgangs, aber nicht als notwendig zu betrachten.
 
-\section{Anwendung Flachheitsanalyse am Einzelkran}
+\section{Flachheitsanalyse am Einzelkran}
 \label{sec:flatness_single_crane}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis\_single\_crane.ipynb]{SAGithub} zu finden.
 
-Die im vorherigen Abschnitt allgemein geschilderte Vorgehensweise wird nun auf das Einzelkransystem aus Abschnitt \ref{sec:single_crane} angewendet. Aus der analytischen Modellbildung mit den LG zweiter Art folgen die drei Systemgleichungen \eqref{single_flat_syseq1}, \eqref{single_flat_syseq2} und \eqref{single_flat_syseq3}, welche als Grundlage des Flachheitsnachweises dienen. 
+Die im vorherigen Abschnitt allgemein geschilderte Vorgehensweise wird nun auf das Einzelkransystem aus Abschnitt \ref{sec:single_crane} angewendet. Aus der analytischen Modellbildung mit den LG zweiter Art folgen die drei Systemgleichungen \eqref{single_flat_syseqs}, welche als Grundlage des Flachheitsnachweises dienen. 
 
 Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = \mathbf{u}_2 = (\tau_1, \tau_2)^T$ gebildet:
 \begin{equation}
@@ -594,9 +596,9 @@ Im nächsten Schritt wird die Jacobi-Matrix $\mathbf{J}_2$ der verbliebenen Glei
 - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
 \end{matrix}\right).
 \end{equation}
-Diese weist keine Spalte mit nur einer Komponente ungleich Null auf, also ist eine Transformation $\mathbf{T}_2$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_2$ gilt es eine linke Pseudoinverse $\mathbf{J}_2^{\mathrm{L}+} \in \mathbb{R}^{1 \times 2}$ zu finden:
+Diese weist keine Spalte mit nur einer Komponente ungleich Null auf, also ist eine Transformation $\mathbf{T}_2$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_2$ gilt es, eine linke Pseudoinverse $\mathbf{J}_2^{\mathrm{L}+} \in \mathbb{R}^{1 \times 2}$ zu finden:
 \begin{equation}
-\mathbf{J}_2^{\mathrm{L}+} \mathbf{J}_2 = \mathbf{I}_{1} = 1	
+\mathbf{J}_2^{\mathrm{L}+} \mathbf{J}_2 = \mathbf{I}_{1} = 1,
 \end{equation}
 sowie das linke Orthokomplement $\mathbf{J}_2^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 2}$:
 \begin{equation}
@@ -638,9 +640,9 @@ Die damit transformierten verbliebenen Systemgleichungen ergeben sich zu:
 Per Konstruktion gilt für die dazu bezüglich $\mathbf{u}_1 = \tau_{2}$ gebildete Jacobi-Matrix $\mathbf{J}_2' = (\begin{matrix} 
 1 & 0
 \end{matrix})^T$.
-Die erste transformierte Systemgleichung \eqref{single_flat_transformed_syseq1} kann somit zusammen mit $\tau_{2}$ eliminiert werden. Es verbleibt die Systemgleichung \eqref{single_flat_transformed_syseq2}, welche folgende Menge an Systemgrößen und deren Ableitungen beinhaltet:
+Die erste transformierte Systemgleichung \eqref{single_flat_transformed_syseq1} kann somit zusammen mit $\tau_{2}$ eliminiert werden. Es verbleibt die Systemgleichung \eqref{single_flat_transformed_syseq2}, welche folgende Menge $\mathcal{M}$ an Systemgrößen und deren Ableitungen beinhaltet:
 \begin{equation}
-M = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}.
+\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}.
 \end{equation}
 Das rein algebraische Auftreten von $q_1$ legt nahe, dass eine Parametrisierung dieser und aller weiteren Systemgrößen durch einen flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ möglich ist. Es wird nun begonnen, in umgekehrter Reihenfolge zur Elimination die Systemgrößen durch $\mathbf{y}$ zu parametrisieren. Aus Gleichung \eqref{single_flat_transformed_syseq2} folgt:
 \begin{equation}
@@ -682,22 +684,22 @@ gebildet werden. Durch einsetzen davon, Gleichung \eqref{eq:single_crane_flat_q1
 
 Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeigt, dass es sich dabei um einen flachen Ausgang handelt. Der Flachheitsnachweis wurde somit konstruktiv erbracht.
 
-\section{Anwendung Flachheitsanalyse am Doppelkran}
+\section{Flachheitsanalyse am Doppelkran}
 \label{sec:flatness_analysis_double_crane}
 
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_analysis.ipynb]{SAGithub} zu finden.
 
-Aus der analytischen Modellbildung des Doppelkransystems mit den LG zweiter Art im Unterabschnitt \ref{subsec:double_crane_lagrange2} folgen die fünf Systemgleichungen \eqref{double_flat_syseq1} bis \eqref{double_flat_syseq5}, welche als Grundlage des Flachheitsnachweises dienen. 
+Aus der analytischen Modellbildung des Doppelkransystems mit den LG zweiter Art im Unterabschnitt \ref{subsec:double_crane_lagrange2} folgen die fünf Systemgleichungen \eqref{double_flat_syseqs}, welche als Grundlage des Flachheitsnachweises dienen. 
 
-Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = \mathbf{u}_4 = (\tau_1, \tau_2, \tau_3, \tau_4)^T$ gebildet (Abkürzungen $\mathrm{s}_x := \sin{x}$ und $\mathrm{c}_x := \cos{x}$):
+Zunächst wird die Jacobi-Matrix dieser Gleichungen bezüglich $\boldsymbol{\tau} = \mathbf{u}_4 = (\tau_1, \tau_2, \tau_3, \tau_4)^T$ gebildet (Abkürzungen $\nu_x := \sin{x}$ und $\mu_x := \cos{x}$):
 \begin{equation*}
 	\mathbf{J}_5 = 
 	\left(\begin{smallmatrix}
-	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}\\
-	0 & 0 & - \frac{p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
-	0 & 0 & \frac{s_{2} \left(p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
-	-1 & 0 & \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & 0\\
-	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}
+	0 & 0 & - \frac{p_{1} - q_{1} - s_{2} \mu_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mu_{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & - \frac{p_{2} - s_{2} \nu_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \nu_{\left(p_{3} \right)}}{l_{2}}\\
+	0 & 0 & \frac{s_{2} \left(p_{2} - s_{2} \nu_{\left(p_{3} \right)}\right) \mu_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mu_{\left(p_{3} \right)}\right) \nu_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \nu_{\left(p_{3} \right)}\right) \mu_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mu_{\left(p_{3} \right)}\right) \nu_{\left(p_{3} \right)}}{l_{2}}\\
+	-1 & 0 & \frac{p_{1} - q_{1} - s_{2} \mu_{\left(p_{3} \right)}}{l_{1}} & 0\\
+	0 & -1 & 0 & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mu_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation*}
 Dabei ist zu erkennen, dass in den letzten beiden Systemgleichungen, die zu den  Spalten der Jacobi-Matrix korrespondieren, zwei Eingangsgrößen $\tau_{1}$ und $\tau_{2}$ jeweils isoliert vorkommen. Für deren Bestimmung ergeben sich keine redundanten Gleichungen. Dementsprechend können die letzten beiden Zeilen in $\mathbf{J}_5$ sowie diese Eingangskomponenten eliminiert werden. 
@@ -706,25 +708,25 @@ Für den reduzierten Eingang $ \mathbf{u}_2 = (\tau_3$, $\tau_4)^T$ gibt es in d
 \begin{equation*}
 	\mathbf{J}_3 =
 	\left(\begin{smallmatrix}
-	- \frac{p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}}{l_{2}}\\
-	- \frac{p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}\\
-	\frac{s_{2} \left(p_{2} - s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \mathrm{s}_{\left(p_{3} \right)}\right) \mathrm{c}_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mathrm{c}_{\left(p_{3} \right)}\right) \mathrm{s}_{\left(p_{3} \right)}}{l_{2}}
+	- \frac{p_{1} - q_{1} - s_{2} \mu_{\left(p_{3} \right)}}{l_{1}} & - \frac{- l_{0} + p_{1} - q_{2} + s_{2} \mu_{\left(p_{3} \right)}}{l_{2}}\\
+	- \frac{p_{2} - s_{2} \nu_{\left(p_{3} \right)}}{l_{1}} & - \frac{p_{2} + s_{2} \nu_{\left(p_{3} \right)}}{l_{2}}\\
+	\frac{s_{2} \left(p_{2} - s_{2} \nu_{\left(p_{3} \right)}\right) \mu_{\left(p_{3} \right)}}{l_{1}} - \frac{s_{2} \left(p_{1} - q_{1} - s_{2} \mu_{\left(p_{3} \right)}\right) \nu_{\left(p_{3} \right)}}{l_{1}} & - \frac{s_{2} \left(p_{2} + s_{2} \nu_{\left(p_{3} \right)}\right) \mu_{\left(p_{3} \right)}}{l_{2}} + \frac{s_{2} \left(- l_{0} + p_{1} - q_{2} + s_{2} \mu_{\left(p_{3} \right)}\right) \nu_{\left(p_{3} \right)}}{l_{2}}
 	\end{smallmatrix}\right).
 \end{equation*}
-Also ist eine Transformation $\mathbf{T}_3$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es eine linke Pseudoinverse $\mathbf{J}_3^{\mathrm{L}+} \in \mathbb{R}^{2 \times 3}$ zu finden:
+Also ist eine Transformation $\mathbf{T}_3$ des Systems entsprechend der Gleichungen \eqref{eq:flatness_trafo} durchzuführen. Wegen der nicht-quadratischen Dimension von $\mathbf{J}_3$ gilt es, eine linke Pseudoinverse $\mathbf{J}_3^{\mathrm{L}+} \in \mathbb{R}^{2 \times 3}$ zu finden:
 \begin{equation}
 	\mathbf{J}_3^{\mathrm{L}+} \mathbf{J}_3 = \mathbf{I}_{2} = 
 	\left(\begin{matrix}
 	1 & 0\\
 	0 & 1\\
-	\end{matrix}\right)	
+	\end{matrix}\right),
 \end{equation}
 sowie das linke Orthokomplement $\mathbf{J}_3^{\mathrm{L}\perp} \in \mathbb{R}^{1 \times 3}$:
 \begin{equation}
 	\mathbf{J}_3^{\mathrm{L}\perp} \mathbf{J}_3 = \mathbf{0}_{1 \times 2} = 
 	\left(\begin{matrix}
 	0 & 0
-	\end{matrix}\right),
+	\end{matrix}\right).
 \end{equation}
 Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende Ansatz gewählt werden: 
 \begin{equation}
@@ -745,11 +747,11 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Durch Einsetzen der Komponenten von $\mathbf{J}_2$ in \eqref{eq:ortho_pseudo_double_crane} kann die Transformationsmatrix $\mathbf{T}_3$ nach den Gleichungen \eqref{eq:flatness_trafo} berechnet werden. Auf die konkrete Angabe dieser sowie der später vorgenommenen Parametrisierungen aller Systemgrößen wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen. Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die ersten beiden transformierten Systemgleichungen eliminieren.
+Durch Einsetzen der Komponenten von $\mathbf{J}_2$ in \eqref{eq:ortho_pseudo_double_crane} kann die Transformationsmatrix $\mathbf{T}_3$ nach den Gleichungen \eqref{eq:flatness_trafo} berechnet werden. Auf die konkrete Angabe dieser sowie der später vorgenommenen Parametrisierungen aller Systemgrößen wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen. Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die ersten beiden transformierten Systemgleichungen eliminieren.
 
-Die letzte verbliebene Systemgleichung enthält folgende Menge $M$ an Systemgrößen und deren Ableitungen:
+Die letzte verbliebene Systemgleichung enthält folgende Menge $\mathcal{M}$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
-	M = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}.
+	\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}.
 \end{equation}
 In dieser Gleichung sind sowohl $q_1$ als auch $q_2$ rein algebraisch enthalten. Eine dieser beiden Größen kann also ebenso wie der Eingang $\boldsymbol{\tau}$ eliminiert werden. Die übrigen Systemgrößen bilden einen flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ oder alternativ ${\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T}$.
 
@@ -758,7 +760,7 @@ Die zur Eliminierung umgeformten Systemgleichungen ermöglichen die Parametrisie
 	\begin{align}
 		q_2 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1) \\
 		\tau_1 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1, \ddot{q}_1) \\
-		\tau_2 &= \mathrm{func}(p_1, \dot{p}_1, \ddot{p}_1, p_1^{(3)}, p_1^{(4)}, p_2, \dot{p}_2, \ddot{p}_2, p_2^{(3)}, p_2^{(4)}, p_3, \dot{p}_3, \ddot{p}_3, p_3^{(3)}, p_3^{(4)}, q_1, \dot{q}_1, \ddot{q}_1) \\
+		\tau_2 &= \mathrm{func}(p_1, \dot{p}_1, \ddot{p}_1, p_1^{(3)}, p_1^{(4)}, p_2, \dot{p}_2, \ddot{p}_2, p_2^{(3)}, p_2^{(4)}, p_3, \dot{p}_3, \ddot{p}_3, p_3^{(3)}, p_3^{(4)}, q_1, \dot{q}_1, \ddot{q}_1) \label{subeq:tau2_parametrization_double_crane} \\
 		\tau_3 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1) \\
 		\tau_4 &= \mathrm{func}(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1).
 	\end{align}
@@ -770,9 +772,9 @@ Auf Grundlage der Flachheitsanalyse des Brückenkransystems ist es im Folgenden 
 
 \section{Trajektorienplanung für den flachen Ausgang}
 \label{sec:trajectory_flat_output}
-Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. Für den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Grenzwerten für die Beschleunigungen oder die maximalen Geschwindigkeiten seiner Komponenten. \textcolor{red}{Aus physikalischer beziehungsweise technischer Sicht ist es sinnvoll, eine Planung der Referenztrajektorien so vorzunehmen, dass die Stell- bzw. Eingangsgrößen des Systems stetig verlaufen.}
+Aufgabe der Trajektorienplanung ist es, Zeitverläufe des flachen Ausgangs vorzugeben, anhand derer später die Eingänge parametriert werden können, um eine Überführung des Kransystems zwischen zwei Ruhelagen zu ermöglichen. Für den real vorhandenen Versuchsstand gibt es bisher keine formal spezifizierten Grenzwerten für die Beschleunigungen oder die maximalen Geschwindigkeiten seiner Komponenten. Aus physikalischer beziehungsweise technischer Sicht ist es sinnvoll, eine Planung der Referenztrajektorien so vorzunehmen, dass die Stell- bzw. Eingangsgrößen des Systems stetig verlaufen.
 
-Aufgrund der einfachen Vorgabe von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die Wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse in Abschnitt \ref{sec:flatness_analysis_double_crane} ist ersichtlich, dass für den flachen Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ der Eingang $\tau_2 = \mathrm{func}(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus den Ruhelagen $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe (ohne Sprünge an den Rändern) in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende Bedingungen erfüllt sein \cite[S. 230]{NLRT_Roebenack}:
+Aufgrund der einfachen Vorgabe von Randbedingungen und Erfüllung von Differenzierbarkeitsbedingungen ist die Wahl eines polynombasierten Trajektorienansatzes sinnvoll. Aus der Flachheitsanalyse in Abschnitt \ref{sec:flatness_analysis_double_crane} ist ersichtlich, dass für den flachen Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T = (p_1, p_2, p_3, q_1)^T}$ der Eingang $\tau_2 \stackrel{\eqref{subeq:tau2_parametrization_double_crane}}{=} \mathrm{func}(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ...)$ die höchsten Ausgangsableitungen aufweist. Damit für die polynomialen Trajektorien außerdem aus den Ruhelagen $(t_0, y_{i, 0})$  ein stetig differenzierbarer Übergang der Eingangsgrößenverläufe (ohne Sprünge an den Rändern) in die Ruhelage $(t_e, y_{i, e})$ gewährleistet werden kann, müssen demnach folgende 36 Bedingungen erfüllt sein \cite[S.~230]{NLRT_Roebenack}:
 \begin{align}
 	\begin{split}
 	y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
@@ -805,7 +807,7 @@ Es wird ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $
 	\label{eq:state_space_vector_degree}
 	\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x}).
 \end{equation}
-Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: M \rightarrow \Reals^n$, $\mathbf{h}: M \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): M \rightarrow \Reals^{n \times m}$, wobei $M$ eine offene Teilmenge $M \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in M$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls \cite[S. 194]{NLRT_Roebenack}:
+Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: \mathcal{M} \rightarrow \Reals^n$, $\mathbf{h}: \mathcal{M} \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \Reals^{n \times m}$, wobei $\mathcal{M}$ eine offene Teilmenge $\mathcal{M} \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls \cite[S. 194]{NLRT_Roebenack}:
 \begin{enumerate}
 	\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 	\item die sogenannte Entkopplungsmatrix
@@ -929,7 +931,7 @@ Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem ausz
 
 Ein Nachteil der dynamischen Rückführung ist die höhere Trägheit des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den Systemeingängen hervorgerufen werden. So ist es notwendig die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20 000 Operationen je Eingangsgröße folgen. 
 
-Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Teilabschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Teilabschnitts \ref{sec_dynamic_extension_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
 \begin{subequations}
 	\begin{align}
 		\beta_1 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
@@ -1042,7 +1044,7 @@ Die Komponente $v_2$ ergibt sich nach einem Ansatz vierter Ordnung unter Einbezi
 	v_2 = y_2^{(4)} = y_{2, \text{ref}}^{(4)} - c_{2, 3} (y_2^{(3)} - y_{2, \text{ref}}^{(3)}) - c_{2, 2} (\ddot{y}_2 - \ddot{y}_{2, \text{ref}}) - c_{2, 1} (\dot{y}_2 - \dot{y}_{2, \text{ref}}) - c_{2, 0} (y_2 - y_{2, \text{ref}})
 \end{equation} 
 
-Auf die konkrete symbolische Angabe der Stellgesetze wird aus Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:quasi_static_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+Auf die konkrete symbolische Angabe der Stellgesetze wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:quasi_static_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
 \begin{subequations}
 	\begin{align}
 		\tau_1 &= \mathrm{func}(\mathbf{x}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}) \\
@@ -1126,7 +1128,7 @@ Durch die Wahl der letzten vier Gleichungen kann eine direkte Inversion der somi
 
 Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung auf einem Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Abbildung \ref{fig_feedforward_selec_controller_initial_error} zeigt, dass sich für Beispieltrajektorien mit Anfangsfehlern ebenso wie bei den vorherigen Ansätzen ein sehr gutes Folgeverhalten sowie stationäre Genauigkeit ergibt.
 
-Auf die Darstellung konkreter symbolischer Ausdrücke für die Stellgesetze wird aus Praktikabilitätsgründen dennoch verzichtet, da jede Eingangskomponente trotzdem mehr als einhundert Rechenoperationen beinhaltet. Stattdessen wird auf das zu Beginn dieses Abschnitts \ref{sec:exact_feedforward_lin_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+Auf die Darstellung konkreter symbolischer Ausdrücke für die Stellgesetze wird aus Platz- und Praktikabilitätsgründen dennoch verzichtet, da jede Eingangskomponente trotzdem mehr als einhundert Rechenoperationen beinhaltet. Stattdessen wird auf das zu Beginn dieses Abschnitts \ref{sec:exact_feedforward_lin_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
 \begin{subequations}
 	\begin{align}
 		\tau_1 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}) \\
@@ -1169,7 +1171,7 @@ sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedfor
 \section{Fazit}
 Für das zu untersuchende Brückenkransystem wurden analytische nichtlineare Modelle unter Nutzung des Lagrange-Formalismus ermittelt. Diese ergaben sich für die LG erster Art zu DGL- und für die LG zweiter Art zu DAE-Systemen. Für eine bessere Nachvollziehbarkeit der zugrunde liegenden Methodik wurde dieses Vorgehen zunächst anhand eines Einzelkransystems durchgeführt. Es erfolgte eine Identifikation aller zumeist geometrischen Modellparameter.
 
-Die DGL-Modelle von Einzel- und Doppelkransystem wurden auf differenzielle Flachheit untersucht. Dabei wurde eine systematische Vorgehensweise für Mehrgrößensysteme skizziert. Dieses konnte auf Gleichungsebene anhand des Einzelkransystems veranschaulicht werden. Für das Doppelkransystem wurde aus Praktikabilitätsgründen auf eine explizite Darstellung der umfangreichen Ausdrücke in den Ergebnissen verzichtet. Unter Zuhilfenahme von Computeralgebrasystemen war eine Beschreibung dieser Zusammenhänge sowie Darstellung funktionaler Abhängigkeiten möglich.
+Die DGL-Modelle von Einzel- und Doppelkransystem wurden auf differenzielle Flachheit untersucht. Dabei wurde eine systematische Vorgehensweise für Mehrgrößensysteme skizziert. Dieses konnte auf Gleichungsebene anhand des Einzelkransystems veranschaulicht werden. Für das Doppelkransystem wurde aus Platz- und Praktikabilitätsgründen auf eine explizite Darstellung der umfangreichen Ausdrücke in den Ergebnissen verzichtet. Unter Zuhilfenahme von Computeralgebrasystemen war eine Beschreibung dieser Zusammenhänge sowie Darstellung funktionaler Abhängigkeiten möglich.
 
 Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs konnten polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang war es möglich daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Zur Folgeregelung ist eine statische Rückführung aufgrund eines nicht wohldefinierten vektoriellen relativen Grades nicht möglich. Stattdessen konnte durch eine dynamische Rückführung mit linearen Fehlerdynamiken eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen entlang der Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete aufgrund von Singularitäten in der Nähe von Ruhelagen in numerischen Problemen. Diese konnten im Rahmen dieser Arbeit nicht behoben werden. Mittels der exact feedforward linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem ein kompaktes Stellgesetz folgt. Dafür wurde eine kleinere Ordnung der linearen Fehlerdynamiken angenommen sowie alle Komponenten oder auch nur eine heuristische Selektion der Zustandskomponenten mit diesen Fehlerdynamiken versehen. Dieser Ansatz eignete sich während praktischer Untersuchungen ebenso zur Stabilisierung des Systems bei Anfangsfehlern, verstößt aber gegen formale Stabilitätsbedingungen.
 
