@@ -1,0 +1,20 @@
+
+
+\lstset{
+% emph={proc,retp,endp,local}, emphstyle={\color{blue}\textbf},
+literate={./}{{{\color{red}./}}}2 {=}{{{\color{red}=}}}1
+}
+
+\begin{lstlisting}
+proc(1) = tdist(n,v);
+a=b
+local x, z, z2, u, t;
+x=rndn(n,1);
+z=rndn(n,v);
+z2=z.^2;
+t=x./((U./v)^(1/2));
+retp(t);
+endp;
+\end{lstlisting}
+
+

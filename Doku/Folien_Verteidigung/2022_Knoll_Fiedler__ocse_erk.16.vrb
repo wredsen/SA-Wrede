@@ -1,0 +1,31 @@
+\frametitle{\large ERK-Inferenzsystem: Regelspezifikation}
+
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
+}
+\begin{lstlisting}
+I400 = p.create_item(
+    R1__has_label="transitivity of R17__is_subproperty_of",
+    R4__is_instance_of=p.I41["semantic rule"],
+)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400["subproperty rule 1"].scope("context") as cm:
+    cm.new_var(P1=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P2=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P3=p.instance_of(p.I11["mathematical property"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("premises") as cm:
+    cm.new_rel(cm.P2, p.R17["is subproperty of"], cm.P1)
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P2)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("assertions") as cm:
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P1)
+\end{lstlisting}
+% \pause
+

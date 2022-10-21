@@ -1,0 +1,20 @@
+
+
+
+\begin{pythoncode}
+I400 = p.create_item(
+    R1__has_label="transitivity of R17__is_subproperty_of",
+    R4__is_instance_of=p.I41["semantic rule"],
+)
+\end{pythoncode}
+\pause
+
+\begin{pythoncode}
+a = effi = p.create_item(
+    I1234__text="World",
+)
+f"Hello {a}"  # use variables
+\end{pythoncode}
+
+test
+

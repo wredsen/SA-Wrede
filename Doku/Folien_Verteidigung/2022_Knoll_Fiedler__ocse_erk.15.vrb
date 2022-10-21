@@ -1,0 +1,26 @@
+\frametitle{\large ERK-Inferenzsystem}
+
+\textbf{Nachteile Imperativer Repräsentation}
+\begin{itemize}
+ \item ...
+%  \item Unklare Interoperabilität („Insellösung“)
+ \item Kein Einsatz existierender \textit{Reasoner}
+\end{itemize}
+
+\pause
+
+\bigskip
+\textbf{$\rightarrow$ Regelbasierte Inferenz}
+\begin{itemize}
+ \item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
+ \item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
+\pause
+ \item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
+ \item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+\pause
+ \item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
+ \smallskip
+ \item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
+
+\end{itemize}
+

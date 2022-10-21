@@ -1,0 +1,47 @@
+{
+    "InternalPDFViewer": {
+        "Embedded": true,
+        "File": "ArbeitRST.pdf"
+    },
+    "Session": {
+        "Bookmarks": [
+        ],
+        "CurrentFile": "inhalt.tex",
+        "FileVersion": 1,
+        "Files": [
+            {
+                "Col": 4,
+                "EditorGroup": 0,
+                "FileName": "ArbeitRST.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 27
+            },
+            {
+                "Col": 0,
+                "EditorGroup": 0,
+                "FileName": "symbolverzeichnis.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 24
+            },
+            {
+                "Col": 24,
+                "EditorGroup": 0,
+                "FileName": "Literatur-Arbeit.bib",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 0
+            },
+            {
+                "Col": 41,
+                "EditorGroup": 0,
+                "FileName": "inhalt.tex",
+                "FirstLine": 763,
+                "FoldedLines": "",
+                "Line": 783
+            }
+        ],
+        "MasterFile": ""
+    }
+}
