@@ -62,12 +62,12 @@
 
 % allgemeine Angaben
 % ==================
-\title[Formale Wissensrepräsentation der Regelungstheorie]{ERK \& OCSE: Ein experimenteller Ansatz zur formalen Wissensrepräsentation der Regelungstheorie}
+\title[Modellbildung und Reglerentwurf Brückenkransystem]{Verteidigung der Studienarbeit: Modellbildung und Reglerentwurf für ein Brückenkransystem}
 \subtitle{}
 
-\author{Carsten Knoll, Julius Fiedler}
-\datecity{GMA-FA 1.40, Anif}
-\date{19. September 2022}
+\author{Konstantin Wrede}
+\datecity{Dresden}
+\date{XX. November 2022}
 
 
 % Angaben zum Institut usw.
@@ -358,7 +358,74 @@ showstringspaces=false,
 \maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGINN ERSTE FOLIE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}<1>[label=gl0]
+	\frametitle{Gliederung}
+	\begin{itemize}
+		%0
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{System- und Problembeschreibung}
+		%1
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{Analytische Modellbildung}
+		%2
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{Flachheitsanalyse}
+		%3
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Steuerungs- und Regelungsentwurf}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=gl1]
+	\frametitle{Gliederung}
+	\begin{itemize}
+		%0
+		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{System- und Problembeschreibung}
+		%1
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{Analytische Modellbildung}
+		%2
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{Flachheitsanalyse}
+		%3
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Steuerungs- und Regelungsentwurf}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}<1>[label=sysbeschr1]
+	\frametitle{System- {\color<1-3>{mygray} und Problembeschreibung}}
+	\begin{center}
+		\includegraphics[width=110mm]{images/Veritas_demo_CAD}
+	\end{center}
+
+\end{frame}
+
+\begin{frame}<1>[label=sysbeschr2]
+	\frametitle{System- {\color<1-3>{mygray} und Problembeschreibung}}
+	\begin{center}
+		\includegraphics[width=85mm]{images/real_gantry}
+	\end{center}
+	
+\end{frame}
+
+\begin{frame}[label=sysbeschr3]
+	\frametitle{System- und Problembeschreibung}
+	\textbf{Zielsetzung}
+	\begin{itemize}
+		\item Ruckarme Überführung der Last zwischen Ruhelagen in der vertikalen Aufhängungsebene
+		\pause
+		\item Zentrale Trajektorienplanung und Referenzregelstrategie unter Vorgabe von Sollposen der Last
+		\pause
+		\item Regelungsentwurf auf Basis von Modellierung des Versuchsstands als Mehrkörpersystem
+		\pause  
+		\item Perspektivisch Vergleich der zentralen Regelung mit verteilten Regelungsansätzen und Grundlage für maschinelles Lernen 
+	\end{itemize}
+\end{frame}
 
 \begin{frame}[label=ef1]
   \frametitle{\large Motivation und Rückblick (1)}

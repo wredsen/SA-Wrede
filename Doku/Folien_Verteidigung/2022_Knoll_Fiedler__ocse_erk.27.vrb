@@ -1,47 +1,58 @@
-\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
+\frametitle{\large OCSE -- Repräsentation von Mathematik}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
-
-  \pause
-  \medskip
-Grundlegendes Schema:
-
-
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
-}
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
-\visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
-}
-\end{textblock*}
+\begin{itemize}
+ \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
+%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
+%  \hfill $\rightarrow$ unpraktikabel
+%
+ \pause
+ \medskip
+ \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
+\end{itemize}
 
 
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
+ \pause
+ \medskip
 
-Repräsentanz der Regelungstheorie:\\[1mm]
+\textbf{Beispiel: \py{R8133["relative degree"]}} \\
+% Subklasse von I5356["general system property"]
+($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
 
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
-}
-\end{textblock*}
+\pause
+\smallskip
+benötigt:
+
+\smallskip
+\begin{itemize}
+ \item \py|I1371["iterated Lie derivative of scalar field"]|
+ \pause
+    \begin{itemize}
+    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
+    \pause
+        \begin{itemize}
+        \item[\textbullet] \py|I2075["substitution"]|
+        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
+        \item[\textbullet] \py|I2753["flow of a vector field"]|
+        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+$\ldots$
 
 
+\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
+\visible<5->{
 
 
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
+\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
+$\dot x = f(x) + g(x)u$\\
+$y = h(x)$
+
+\vspace{3mm}
+
+$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
+\end{tcolorbox}
 }
 \end{textblock*}
 
