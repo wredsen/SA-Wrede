@@ -379,12 +379,14 @@ showstringspaces=false,
 	\end{itemize}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}<1>[label=gl1]
 	\frametitle{Gliederung}
 	\begin{itemize}
 		%0
 		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
-		\textbf<2>{System- und Problembeschreibung}
+		\textbf<1>{System- und Problembeschreibung}
 		%1
 		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
 		\textbf<2>{Analytische Modellbildung}
@@ -397,6 +399,8 @@ showstringspaces=false,
 	\end{itemize}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}<1>[label=sysbeschr1]
 	\frametitle{System- {\color<1-3>{mygray} und Problembeschreibung}}
 	\begin{center}
@@ -405,6 +409,8 @@ showstringspaces=false,
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}<1>[label=sysbeschr2]
 	\frametitle{System- {\color<1-3>{mygray} und Problembeschreibung}}
 	\begin{center}
@@ -412,6 +418,8 @@ showstringspaces=false,
 	\end{center}
 	
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[label=sysbeschr3]
 	\frametitle{System- und Problembeschreibung}
@@ -426,6 +434,80 @@ showstringspaces=false,
 		\item Perspektivisch Vergleich der zentralen Regelung mit verteilten Regelungsansätzen und Grundlage für maschinelles Lernen 
 	\end{itemize}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}<1>[label=gl2]
+	\frametitle{Gliederung}
+	\begin{itemize}
+		%0
+		\item[\cdbox] System- und Problembeschreibung
+		%1
+		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<1>{Analytische Modellbildung}
+		%2
+		\item[\only<1>{$\square$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<2>{Flachheitsanalyse}
+		%3
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Steuerungs- und Regelungsentwurf}
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[label=analMB]
+	\frametitle{Analytische Modellbildung}
+	\textbf{Allgemeine Modellannahmen}
+	\begin{itemize}
+		\item Bewegung des Systems auf vertikale Ebene beschränkt
+		\pause
+		\item Seile mit vernachlässigbarer Masse gegenüber Laufkatzen, Last
+		\pause
+		\item Last trotz Aussparungen mit homogener Masseverteilung modelliert
+		\pause
+		\item Vernachlässigung dissipativer Kräfte 
+	\end{itemize}
+
+	\pause
+	\bigskip
+	\textbf{Vorgehen bei der Modellierung}
+	\begin{itemize}
+		\item Modellierung Einzelkran mit Lagrange-Gleichungen zweiter Art (LG2)
+		\pause
+		\item Modellierung Doppelkran mit LG2
+		\pause
+		\item (Modellierung Doppelkran mit Lagrange-Gleichungen erster Art)
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Lagrange2]{\large Lagrange-Formalismus}
+	
+	\textbf{Nachteile Imperativer Repräsentation}
+	\begin{itemize}
+		\item ...
+		%  \item Unklare Interoperabilität („Insellösung“)
+		\item Kein Einsatz existierender \textit{Reasoner}
+	\end{itemize}
+	
+	\bigskip
+	\textbf{$\rightarrow$ Regelbasierte Inferenz}
+	\begin{itemize}
+		\item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
+		\item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)  
+		\item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
+		\item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+		\item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
+		\smallskip
+		\item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
+		
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[label=ef1]
   \frametitle{\large Motivation und Rückblick (1)}

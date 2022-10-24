@@ -1,59 +1,30 @@
-\frametitle{\large OCSE -- Repräsentation von Mathematik}
+\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
 
+\textbf{2021: OCSE 0.1}
 \begin{itemize}
- \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
-%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
-%  \hfill $\rightarrow$ unpraktikabel
-%
- \pause
- \medskip
- \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
+ \item in OWL implementiert
+ \item Taxonomie einfach umsetzbar
+ \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
 \end{itemize}
-
-
- \pause
- \medskip
-
-\textbf{Beispiel: \py{R8133["relative degree"]}} \\
-% Subklasse von I5356["general system property"]
-($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
 
 \pause
-\smallskip
-benötigt:
-
-\smallskip
+\bigskip
+\textbf{2022: OCSE 0.2}
 \begin{itemize}
- \item \py|I1371["iterated Lie derivative of scalar field"]|
- \pause
-    \begin{itemize}
-    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
-    \pause
-        \begin{itemize}
-        \item[\textbullet] \py|I2075["substitution"]|
-        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
-        \item[\textbullet] \py|I2753["flow of a vector field"]|
-        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
-        \end{itemize}
-    \end{itemize}
+ \item Basierend auf ERK implementiert
+ \item Größere Modellierungstiefe möglich
 \end{itemize}
 
-$\ldots$
 
-
-\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
-\visible<5->{
-
-
-\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
-$\dot x = f(x) + g(x)u$\\
-$y = h(x)$
-
-\vspace{3mm}
-
-$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
-\end{tcolorbox}
+\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
+\only<1>{
+\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
 }
 \end{textblock*}
-
+% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
+% \only<2>{
+% %\includegraphics[trim=left bottom right top, clip]{file}
+% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
+% }
+% \end{textblock*}
 

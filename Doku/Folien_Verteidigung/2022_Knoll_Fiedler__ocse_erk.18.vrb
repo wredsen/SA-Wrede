@@ -1,38 +1,49 @@
-\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation (2)}
+\frametitle{\large Experimenteller Ansatz: ERK}
 
-\vspace{-2mm}
 
-\textbf{Vorteile}
+\textbf{Verklemmung:}
+
+\smallskip
+
+\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
+$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
+
+\pause
+\bigskip
+
+\textbf{Pragmatischer Ansatz:}
 \begin{itemize}
- \item Direkte Programm-interne Repräsentation (kein Parsen)
- \item Direkte Erweiterbarkeit (Plugins im Graphen)
+ \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
+ \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
 \end{itemize}
 
 \pause
 \bigskip
-\textbf{Anwendung:} Geltungsbereiche (\textit{scopes})
+
+\textbf{Anforderungen}
 \begin{itemize}
- \item Gliederung einer Aussage in \textit{Kontext-Etablierung}, \textit{Prämisse}, \textit{Behauptung}
- \item Gesamtaussage abhängig davon in welchem \textit{scope} eine Teilausage steht
- \item Deklarativ: nur sehr aufwendig umsetzbar
- \item Imperativ: einfach umsetzbar (automatisches Erzeugen von Hilfsknoten/kanten)
+\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
+\item Basiert auf menschenlesbarem Text
+\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
 \end{itemize}
 
-\pause
+\visible<4->{
 
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
+\begin{tikzpicture}[overlay,remember picture]
+      \path (n2) -| node[coordinate] (n3) {} (n1);
+      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+            (n1) -- (n3) node[midway, right=4pt] {};
+  \end{tikzpicture}
+
+\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
+\visible<4->{
+  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
 }
-\begin{lstlisting}
-I3749 = p.create_item(
-    R1__has_label="Cayley-Hamilton theorem",
-    R2__has_description="every square matrix is a root of its own char. poly.",
-    R4__is_instance_of=p.I15["implication proposition"],
-)
-\end{lstlisting}
+\end{textblock*}
 
 
+}
 
-% \textbf{Bemerkung:} Deklarativ funktioniert auch; Imperativ besser für Prototypenphase
+
 
 

@@ -52,7 +52,7 @@ Perspektivisch soll diese zentrale Referenzregelstrategie einerseits zum Verglei
 
 In der folgenden Modellierung wird das Demonstratorsystem nur planar betrachtet, also die Bewegung aller Komponenten nur in der vertikalen Ebene berücksichtigt. Diese Annahme ist gerechtfertigt, weil die Laufkatzen nur entlang einer Achse verfahren können und die Lagerung bzw. Aufhängung der Last ein Schwingen senkrecht zur vertikalen Ebene unterdrückt. Die Seile werden aufgrund ihrer geringen Dicke als masselos im Vergleich zu den Laufkatzen sowie der Last angenommen und somit auch nicht mit einem Trägheitsmoment versehen. Die Last wird trotz ihrer Aussparungen (siehe Abbildung~\ref{fig:demonstrator_real}) mit einer homogenen Masseverteilung modelliert. Für eine genauere Beschreibung wären Konstruktionsdaten oder eine Demontage mit Vermessung der Teilkomponenten notwendig. Zur Reduktion weiterer Komplexität werden dissipative Kräfte im Modell nicht berücksichtigt.
 
-Die Modellbildung erfolgt in mehreren Stufen. Zunächst wird mittels der Lagrange-Gleichungen erster Art ein Einzelkran modelliert. Das Modell liegt dann in Form eines gewöhnlichen Differenzialgleichungssystems (DGL-System, engl. ODE system) vor. Zusätzlich wird ein Ansatz mit Lagrange-Gleichungen zweiter Art gewählt. Diese Methode gibt die geschlossene kinematische Kette der durch die Last verbundenen Laufkatzen intuitiv wider, so dass ein differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) entsteht. In der Arbeit hat sich allerdings gezeigt, dass die Lagrange-Gleichungen zweiter Art eine kompliziertere Formulierung der Hubaktuierung sowie aufwändigere Lösungsalgorithmen bedeuten. Um das Prinzipielle Vorgehen zur Herleitung eines DAE-Modells dennoch zu schildern, wird es auf den Einzelkran angewendet. Ausgehend vom Einzelkransystem kann die prinzipielle Methodik der Modellbildung verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.
+Die Modellbildung erfolgt in mehreren Stufen. Zunächst wird mittels der Lagrange-Gleichungen zweiter Art ein Einzelkran modelliert. Das Modell liegt dann in Form eines gewöhnlichen Differenzialgleichungssystems (DGL-System, engl. ODE system) vor. Die Lagrange-Gleichungen erster Art geben die geschlossene kinematische Kette der durch die Last verbundenen Laufkatzen des Doppelkrans intuitiv wider, so dass ein differenzial-algebraisches Gleichungssystem (DAE-System, von engl. differential algebraic equations) entsteht. In der Arbeit hat sich allerdings gezeigt, dass die Lagrange-Gleichungen zweiter Art eine kompliziertere Formulierung der Hubaktuierung sowie aufwändigere Lösungsalgorithmen erfordern. Um das Prinzipielle Vorgehen zur Herleitung eines DAE-Modells dennoch zu schildern, wird es auf den Doppelkran angewendet. Ausgehend vom Einzelkransystem kann die prinzipielle Methodik der Modellbildung verifiziert werden und ein Transfer der Erkenntnisse auf die Modellierung des Doppelkransystems erfolgen.
 
 \section{Modellierung mittels Lagrange-Formalismus}
 Die Dynamik mechanischer Systeme lässt sich über Differenzialgleichungen, den sogenannten Lagrange-Gleichungen (LG) beschreiben. Dabei wird eine Menge aus $n$ zeitlich veränderlichen Koordinaten als Konfigurationskoordinaten oder Systemgrößen $\boldsymbol{\theta} = (\theta_1, ..., \theta_n)^T$ bezeichnet. Deren zeitliche Änderungsraten werden im Vektor der Konfigurationsgeschwindigkeiten $\dot{\boldsymbol{\theta}}$ zusammengefasst. In \cite[S.10]{DissKnoll} wird eine Unterteilung der der Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$ in ``aktive'' Koordinaten $\mathbf{q}$ und ``passive'' Koordinaten $\mathbf{p}$ vorgenommen. In Anlehnung daran wird in dieser Arbeit eine Aufteilung der Systemgrößen in die direkt aktuierten Koordinaten $\mathbf{q}$ und nicht direkt aktuierten Koordinaten $\mathbf{p}$ durchgeführt. \cite[S.7]{DissKnoll} 
@@ -802,12 +802,12 @@ Die Koeffizienten der Trajektorien $a_{i, j}$ können durch Einsetzen der Randbe
 
 \subsection{Vektorieller relativer Grad}
 \label{sec:definition_relative_degree}
-Es wird ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ... y_m$ betrachtet:
+Es wird zunächst ein allgemeines Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ... y_m$ betrachtet:
 \begin{equation}
 	\label{eq:state_space_vector_degree}
 	\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x}).
 \end{equation}
-Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: \mathcal{M} \rightarrow \Reals^n$, $\mathbf{h}: \mathcal{M} \rightarrow \Reals^m$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \Reals^{n \times m}$, wobei $\mathcal{M}$ eine offene Teilmenge $\mathcal{M} \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls \cite[S. 194]{NLRT_Roebenack}:
+Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfelder $\mathbf{f}: \mathcal{M} \rightarrow \Reals^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \Reals^m}$ und die Matrix $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \Reals^{n \times m}$, wobei $\mathcal{M}$ eine offene Teilmenge $\mathcal{M} \subseteq \Reals^{n}$ repräsentiert. Dieses System hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls \cite[S. 194]{NLRT_Roebenack}:
 \begin{enumerate}
 	\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 	\item die sogenannte Entkopplungsmatrix
@@ -824,20 +824,28 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 	im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist.
 \end{enumerate}
 
+Die Regularität der Entkopplungsmatrix ist keineswegs selbstverständlich. Im Fall einer Singularität ist der vektorielle relative Grad an dieser Stelle nicht wohldefiniert.
+
 \subsection{Statische Rückführung}
 \label{sec:static_state_feedback}
-Durch die Rückkopplung gemessener Zustandskomponenten soll eine Stabilisierung des Systems und Folgeregelung entlang der Referenztrajektorien erreicht werden. Bei der statischen Rückführung wird die nichtlinearen Eingangs-Ausgangs-Verkopplungen eines Systems mit dem Verhalten
+Ein vergleichsweise einfacher systematischer Ansatz zum Entwurf einer Folgeregelung entlang einer Referenztrajektorie ist die statische Rückführung gemessener der als bekannt vorausgesetzten Zustandskomponenten. Die Umsetzbarkeit dieses Ansatzes hängt allerdings von der Wohldefiniertheit des vektoriellen relativen Grades ab.
+
+Durch die Rückkopplung gemessener Zustandskomponenten soll eine Stabilisierung des Systems und Folgeregelung entlang der Referenztrajektorien erreicht werden. Bei der statischen Rückführung wird ein System mit Ausgang
 \begin{equation}
-	\mathbf{y} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{ mit } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\mathbf{y} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
 \end{equation}
-durch eine statische (Zustands-)Rückführung
+betrachtet. Die nichtlineare Eingangs-Ausgangs-Verkopplung wird durch eine statische (Zustands-)Rückführung
 \begin{equation}
 	\label{eq:static_state_feedback}
 	\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow \mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
 \end{equation}
-unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ zu kompensieren. Die Zusammensetzung dieses virtuellen Eingangs ist in Unterabschnitt \ref{sec:error_dynamics} erklärt. \cite[S. 195]{NLRT_Roebenack}
+unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ kompensiert. Eine lineare Eingangs-Ausgangs-Dynamik wird erreicht. Der neue virtuelle Eingang kann dann in einem zweiten Entwurfsschritt so gewählt werden, dass der Trajektorienfolgefehler einer asymptotisch stabilen DGL genügt, siehe Abschnitt \ref{sec:error_dynamics}. \cite[S. 195]{NLRT_Roebenack}
 
-Bei dem vorliegenden Doppelkransystem kann durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmt werden. Diese entspricht der Ableitungsordnung, bei der das erste mal eine Komponente des Eingangs $\mathbf{u}:=\boldsymbol{\tau}$ explizit auftritt. Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds des Zustandsraummodells des Systems $\boldsymbol{\delta} := \dot{\mathbf{x}} = \mathbf{f} + \mathbf{g} \boldsymbol{\tau}$, welches in Gleichung \eqref{eq:state_space_double_crane} bestimmt wurde, rekursiv erzeugt: 
+Bei dem vorliegenden Doppelkransystem kann durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmt werden. Diese entspricht der Ableitungsordnung, bei der das erste mal \textit{eine} Komponente des Eingangs $\mathbf{u}:=\boldsymbol{\tau}$ explizit auftritt. Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds des Zustandsraummodells des Systems 
+\begin{equation}
+	\boldsymbol{\delta} := \dot{\mathbf{x}} = \mathbf{f} + \mathbf{g} \boldsymbol{\tau},
+\end{equation}
+welches in Gleichung \eqref{eq:state_space_double_crane} bestimmt wurde, rekursiv erzeugt: 
 \begin{equation}
 	\label{eq:Lie_time_deriv}
 	y_i^{(k)} = L_{\boldsymbol{\delta}} y_i^{(k-1)} .
@@ -861,7 +869,7 @@ In Tabelle \ref{tab:relative_degrees} sind die daraus bestimmten relativen Grade
 	\end{tabular}
 \end{table}
 
-Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ gemäß Gleichung \eqref{eq:decoupling_matrix} eine Singularität, weil ihre Spalte nur Nulleinträge enthält:
+Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Entkopplungsmatrix $\boldsymbol{\Lambda}$ gemäß Gleichung \eqref{eq:decoupling_matrix} eine Singularität, weil die zugehörige Spalte nur Nulleinträge enthält:
 \begin{align}
 	\boldsymbol{\Lambda} = 
 	\left(\begin{smallmatrix}
@@ -871,11 +879,11 @@ Das Fehlen von $\tau_2$ bei all diesen Ausgangsableitungen bedeutet für die Ent
 		\frac{1}{m_{1}} & 0 & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
 	\end{smallmatrix}\right) .
 \end{align}
-Der einzige von Null verschiedene Eintrag in der zweiten Spalte $\mathbf{g}_2$ der Eingangsmatrix $\mathbf{g}$ erfolgt nämlich durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. \textcolor{red}{So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i \cdot g_{10, 2} = \partiell{}{\dot{q}_2} \dot{y}_i \cdot g_{10, 2} = 0$ für $i = 1,..., 4$, weil $\dot{q}_2 \not\in \dot{\mathbf{y}}$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^{r_i-1} y_i = 0$ mit $i = 1, ..., m$ gilt \cite[S. 201]{NLRT_Roebenack}}
+Der einzige von Null verschiedene Eintrag in der zweiten Spalte $\mathbf{g}_2$ der Eingangsmatrix $\mathbf{g}$ erfolgt nämlich durch $g_{10, 2} = \frac{1}{m_3}$ und die Lie-Ableitungen $L_{\mathbf{f}} y_i = \dot{y}_i$ geben nur die zeitliche Ableitung des flachen Ausgangs $\dot{\mathbf{y}} = (\dot{p}_1, \dot{p}_2, \dot{p}_3, \dot{q}_1)^T$ wieder. So folgt für das relevante Produkt $\partiell{}{\dot{q}_2} L_{\mathbf{f}} y_i \cdot g_{10, 2} = \partiell{}{\dot{q}_2} \dot{y}_i \cdot g_{10, 2} = 0$ für $i = 1,..., 4$, weil $\dot{q}_2 \not\in \dot{\mathbf{y}}$. Allgemeiner gilt, dass ein Eingang $\tau_j$ in den Komponenten der Ausgangsableitung $y_i^{(r_i)}$ genau dann nicht explizit auftritt, also die $j$-te Spalte von $\boldsymbol{\Lambda}$ eine Nullspalte ist, wenn für alle zugehörigen gemischten Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^{r_i-1} y_i = 0$ mit $i = 1, ..., m$ gilt \cite[S. 201]{NLRT_Roebenack}
 
 Analog gilt dies für den alternativen flachen Ausgang $\tilde{\mathbf{y}} = (p_1, p_2, p_3, q_2)^T$ aufgrund des Fehlens von $\tau_1$, welches eine erste Nullspalte von $\boldsymbol{\Lambda}$ impliziert.
 
-Daher ist die Entkopplungsmatrix $\boldsymbol{\Lambda}$ in dieser Form nie regulär und der vektorielle relative Grad $\mathbf{r}$ nie wohldefiniert. Dieses System ist nicht statisch eingangs-ausgangs-linearisierbar. Stattdessen wird zur Regelung des Doppelkransystems ein Ansatz mit einer dynamischen Erweiterung oder quasi-statischen Zustandsrückführung verfolgt. 
+Daher ist die Entkopplungsmatrix $\boldsymbol{\Lambda}$ in dieser Form nie regulär und der vektorielle relative Grad $\mathbf{r}$ nie wohldefiniert. Das Doppelkransystem ist in dieser Eingangs-Ausgangskonfiguration also nicht statisch eingangs-ausgangs-linearisierbar. Stattdessen wird zur Regelung des Doppelkransystems ein Ansatz mit einer dynamischen Erweiterung oder quasi-statischen Zustandsrückführung verfolgt. 
 
 \subsection{Zustandsrückführung aus Fehlerdynamik}
 \label{sec:error_dynamics}

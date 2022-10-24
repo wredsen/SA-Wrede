@@ -1,44 +1,46 @@
-\frametitle{\large OCSE -- Wie anfangen?}
+\frametitle{\large ERK -- Bemerkungen }
 
 
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-% \begin{itemize}
-%  \item[]
-% \end{itemize}
-\vspace{-3mm}
- Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
-\pause
-\begin{lstlisting}
-I5948 = p.create_item(
-    R1__has_label="dynamical system",
-    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
-)
-\end{lstlisting}
-% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
+\begin{itemize}
 
-\smallskip
-Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
-\pause
+\setbeamercolor{normal text}{fg=mygray}
+\usebeamercolor[fg]{normal text}
+
+ \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
+ \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
+
+ \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
+ \begin{itemize}
+  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
+  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
+ \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
+ \end{itemize}
+
+%  \pause
+ \medskip
+ \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
 
 
-\vspace{-1em}
-\begin{lstlisting}
-I7641 = p.create_item(
-    R1__has_label="general system model",
-    R4__is_instance_of=p.I2["Metaclass"],
-)
-\end{lstlisting}
+\begin{itemize}
+ \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
+ \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
+ \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
 
-\vspace{-2em}
-\pause
-\begin{lstlisting}
-R7641 = p.create_relation(
-    R1__has_label="has approximation",
-    R8__has_domain_of_argument_1=I5948["dynamical system"],
-    R11__has_range_of_result=I7641["general system model"],
-)
-\end{lstlisting}
+ \medskip
+ \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
+\end{itemize}
+
+\end{itemize}
+
+
+\setbeamercolor{normal text}{fg=tublue}
+\usebeamercolor[fg]{normal text}
+
+\begin{itemize}
+\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
+
+\end{itemize}
+
+
 
 

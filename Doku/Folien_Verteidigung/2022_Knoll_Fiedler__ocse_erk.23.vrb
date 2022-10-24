@@ -1,46 +1,26 @@
-\frametitle{\large ERK -- Bemerkungen }
+\frametitle{\large ERK-Inferenzsystem}
 
-
+\textbf{Nachteile Imperativer Repräsentation}
 \begin{itemize}
-
-\setbeamercolor{normal text}{fg=mygray}
-\usebeamercolor[fg]{normal text}
-
- \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
- \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
-
- \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
- \begin{itemize}
-  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
-  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
- \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
- \end{itemize}
-
-%  \pause
- \medskip
- \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
-
-
-\begin{itemize}
- \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
- \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
- \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
-
- \medskip
- \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
+ \item ...
+%  \item Unklare Interoperabilität („Insellösung“)
+ \item Kein Einsatz existierender \textit{Reasoner}
 \end{itemize}
 
-\end{itemize}
+\pause
 
-
-\setbeamercolor{normal text}{fg=tublue}
-\usebeamercolor[fg]{normal text}
-
+\bigskip
+\textbf{$\rightarrow$ Regelbasierte Inferenz}
 \begin{itemize}
-\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
+ \item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
+ \item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
+\pause
+ \item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
+ \item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+\pause
+ \item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
+ \smallskip
+ \item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
 
 \end{itemize}
-
-
-
 
