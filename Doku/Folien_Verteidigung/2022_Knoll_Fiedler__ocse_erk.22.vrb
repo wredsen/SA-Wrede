@@ -1,43 +1,49 @@
-\frametitle{\large ERK - Beispiel: \textit {Inhalt} des Satzes von Cayley-Hamilton}
+\frametitle{\large Experimenteller Ansatz: ERK}
 
-\vspace{-4mm}
 
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-\begin{lstlisting}
-with I3749["Cayley-Hamilton theorem"].scope("context") as cm:
-    cm.new_var(A=uq_instance_of(I9906["square matrix"]))
-    cm.new_var(n=uq_instance_of(p.I39["positive integer"]))
-\end{lstlisting}
+\textbf{Verklemmung:}
+
+\smallskip
+
+\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
+$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
+
 \pause
-\begin{lstlisting}
-    cm.new_var(P=p.instance_of(I4240["matrix polynomial"]))
-    cm.new_var(Z=p.instance_of(I9905["zero matrix"]))
-\end{lstlisting}
-\pause
-\begin{lstlisting}
-    cm.new_rel(cm.A, R5938["has row number"], cm.n)
-    cm.new_rel(cm.A, R5940["has characteristic polynomial"], cm.P)
-    cm.new_rel(cm.Z, R5938["has row number"], cm.n)
-    cm.new_rel(cm.Z, R5939["has column number"], cm.n)
-\end{lstlisting}
-%     cm.new_rel(cm.Z, p.R24["has LaTeX string"], r"\mathbf{0}")
-\pause
-\begin{lstlisting}
-with I3749["Cayley-Hamilton theorem"].scope("assertions") as cm:
-    cm.new_equation(lhs=cm.P(cm.A), rhs=cm.Z)
-\end{lstlisting}
+\bigskip
 
+\textbf{Pragmatischer Ansatz:}
+\begin{itemize}
+ \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
+ \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
+\end{itemize}
 
-\begin{textblock*}{50mm}[0.,0.](100mm,67mm)
+\pause
+\bigskip
+
+\textbf{Anforderungen}
+\begin{itemize}
+\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
+\item Basiert auf menschenlesbarem Text
+\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
+\end{itemize}
+
 \visible<4->{
 
+\begin{tikzpicture}[overlay,remember picture]
+      \path (n2) -| node[coordinate] (n3) {} (n1);
+      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+            (n1) -- (n3) node[midway, right=4pt] {};
+  \end{tikzpicture}
 
-\begin{tcolorbox}[colback=lightblue,colframe=softblue]
-
-$P(\mathbf{A}) = \mathbf{Z}$ \quad mit $\mathbf{Z}:= \mathbf{0}$
-\end{tcolorbox}
+\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
+\visible<4->{
+  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
 }
 \end{textblock*}
+
+
+}
+
+
+
 

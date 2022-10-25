@@ -91,9 +91,9 @@ Zur Bestimmung der Komponenten $Q_i$ der verallgemeinerten Kraft wird das Prinzi
 \begin{equation}
 	\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n.
 \end{equation}
-Dabei entspricht $\mathbf{r_k}$ bei einem System aus $l$ (massebehafteten) Teilchen dem Richtungsvektor zum $k$-ten Partikel und $\mathbf{F_k}$ der jeweils entlang dieses Richtungsvektors angewandten Stellkraft. Die virtuelle Verschiebung des Partikels im Raum $\delta \mathbf{r_{k}}$ und die virtuelle Verschiebung $\delta \boldsymbol{\theta}_{i}$ der Koordinate $\theta_i$ genügen der Beziehung:
+Dabei entspricht $\mathbf{r}_k$ bei einem System aus $l$ (massebehafteten) Teilchen dem Richtungsvektor zum $k$-ten Partikel und $\mathbf{F}_k$ der jeweils entlang dieses Richtungsvektors angewandten Stellkraft. Die virtuelle Verschiebung des Partikels im Raum $\delta \mathbf{r}_{k}$ und die virtuelle Verschiebung $\delta \theta_{i}$ der Koordinate $\theta_i$ genügen der Beziehung:
 \begin{equation}
-	\delta \mathbf{r_{k}} = \sum_{i = 1}^{n} \partiell{\mathbf{r_{k}}}{\theta_i} \delta \theta_i .
+	\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \partiell{\mathbf{r}_{k}}{\theta_i} \delta \theta_i .
 \end{equation}
 
 Die gesamte virtuelle Arbeit des Systems dieser Teilchen kann also ebenso durch
@@ -104,7 +104,7 @@ Die gesamte virtuelle Arbeit des Systems dieser Teilchen kann also ebenso durch
 dargestellt werden, wobei sich die Komponenten der verallgemeinerten Kraft zu
 \begin{equation}
 \label{eq:virtual_work_force}
-Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \partiell{\delta W}{\delta \theta_i} ,\quad i=1,\ldots, n 
+Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r}_k} {\partial \theta_i} \right)^T \mathbf{F}_{k} = \partiell{\delta W}{\delta \theta_i} ,\quad i=1,\ldots, n 
 \end{equation}
 ergeben.
 \section{Generierung und Simulation von DAE-Systemen}
@@ -906,9 +906,11 @@ Die Koeffizienten $c_{i, k}, \ k \in {0, 1, ..., r_i-1}$ sind für eine Stabilis
 \label{sec_dynamic_extension_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation\_dyn.ipynb]{SAGithub} zu finden.
 
-Die in \eqref{eq:Lambda_double_crane} berechnete Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt $\text{rang} \ \boldsymbol{\Lambda} =: k = 3 < m = 4$. Um durch eine andere Definition der Eingänge eine reguläre Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ zu erhalten, muss also verhindert werden, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen bereits bei der Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste Mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack}
+Die in \eqref{eq:Lambda_double_crane} berechnete Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt ${\text{rang} \ \boldsymbol{\Lambda} =: k = 3 < m = 4}$. Um durch eine andere Definition der Eingänge eine reguläre Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ zu erhalten, muss also verhindert werden, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen bereits bei der Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste Mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack} 
 
-So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erste mal bei der Ableitungsordnung 4 explizit auf. Die Systemgleichungen werden um die folgenden DGL dynamisch erweitert:
+Für die Integration werden drei weitere Zustandskomponenten $\alpha_1$, $\alpha_3$ und $\alpha_4$ sowie die neuen Eingangskomponenten $\beta_1$, $\beta_3$ und $\beta_4$ eingeführt. Die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ werden nun als Zustandskomponenten aufgefasst. Physikalisch bleibt das System allerdings unverändert. Einzig die Berechnung der Stellgrößen dieser Komponenten wird angepasst, indem nicht die jeweiligen Kräfte sondern ihre zweiten Zeitableitungen vorgegeben werden.
+
+So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erste mal bei der Ableitungsordnung 4 explizit auf. Die Systemgleichungen werden demnach um die folgenden DGL dynamisch erweitert:
 \begin{align}
 	\begin{split}
 		\dot{\tau}_1 &=: \alpha_1 \\
@@ -943,11 +945,21 @@ mit
 		\beta_3,
 		\beta_4 \right)^T, \quad
 	\mathbf{\tilde{f}} := \tilde{\boldsymbol{\delta}}|_{\tilde{\boldsymbol{\tau}} = 0}, \quad
-	\mathbf{\tilde{g}} := \partiell{\boldsymbol{\tilde{\delta}}}{\tilde{\boldsymbol{\tau}}}
+	\mathbf{\tilde{g}} := \partiell{\tilde{\boldsymbol{\delta}}}{\tilde{\boldsymbol{\tau}}}
 \end{align}
 gebildet.
 
-Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad ist für eine Auswahl prototypischer Referenztrajektorien wohldefiniert, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und die Inverse der Entkopplungsmatrix stets existiert, $\boldsymbol{\Lambda}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} möglich. Diese wird als dynamische Rückführung bezeichnet. 
+Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad ist für eine Auswahl prototypischer Referenztrajektorien wohldefiniert, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und die Inverse der dynamisch erweiterten Entkopplungsmatrix ($*$ repräsentieren Einträge verschieden von Null)
+\begin{equation}
+	\tilde{\boldsymbol{\Lambda}} =
+	\left(\begin{matrix}
+		0 & * & * & * \\
+		0 & * & * & * \\
+		0 & * & * & * \\
+		* & * & 0 & 0 \\
+	\end{matrix}\right)
+\end{equation}
+stets existiert, also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} möglich. Diese wird als dynamische Rückführung bezeichnet. 
 
 Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Die Zwiebelschalendiagramme in Abbildung \ref{onion_skinned_dyn_controller_initial_error} zeigen eine geometrische Veranschaulichung des selben Sachverhalts. Dabei ist die Bewegung der vier Gelenke sowie der beiden Seile und der Last dargestellt. Für spätere Simulationszeitpunkte sind diese Momentaufnahmen der Konfiguration des Doppelkransystems dunkler dargestellt.
 

@@ -483,27 +483,191 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=Lagrange2]{\large Lagrange-Formalismus}
+\begin{frame}[t,fragile,label=Lagrange2_1]{\large Lagrange-Formalismus}
 	
-	\textbf{Nachteile Imperativer Repräsentation}
+	\textbf{Symbole}
 	\begin{itemize}
-		\item ...
-		%  \item Unklare Interoperabilität („Insellösung“)
-		\item Kein Einsatz existierender \textit{Reasoner}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\pause
+		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
+		\pause
+		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
+		\pause
+		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
+		\pause
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
 	\end{itemize}
 	
+	\pause
 	\bigskip
-	\textbf{$\rightarrow$ Regelbasierte Inferenz}
+	\textbf{Lagrange-Gleichungen zweiter Art}
 	\begin{itemize}
-		\item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
-		\item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)  
-		\item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
-		\item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
-		\item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
-		\smallskip
-		\item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
-		
+		\pause
+		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\pause
+		\item Bewegungsgleichungen:  $\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n$
+		\pause
+		\item Woher $Q_i$?
 	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Lagrange2_2]{\large Lagrange-Formalismus}
+	
+	\textbf{Symbole}
+	\begin{itemize}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
+		\pause
+		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$}
+	\begin{itemize}
+		\pause
+		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
+		\pause
+		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
+		\pause
+		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
+		\pause
+		\item $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=ModellEinzelkran]{\large Analytisches Modell Einzelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+		\bigskip
+		\visible<2->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<3->{	
+			Energien:			
+			\begin{itemize}
+				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
+				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
+		
+		\visible<4->{
+			Virtuelle Arbeit und verallgemeinerte Kraft:
+			\begin{itemize}
+				\item $\mathbf{F}_1 =
+				\left(\tau_{1}, 0 \right)^T$,
+				$\mathbf{F}_2 =
+				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
+				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=ModellEinzelkran]{\large Analytisches Modell Einzelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+		
+		\visible<1->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
+		
+		\visible<1->{
+			\centering{Systemgleichungen aus LG2:}
+			\begin{subequations}
+				\label{single_flat_syseqs}
+				\begin{flalign*}
+					m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+					g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+					m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+				\end{flalign*}
+			\end{subequations}
+		}
+		
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=ModellDoppelkran]{\large Analytisches Modell Doppelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
+		}
+		\bigskip
+		\visible<2->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<3->{	
+			Energien:			
+			\begin{itemize}
+				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
+				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
+		
+		\visible<4->{
+			Virtuelle Arbeit und verallgemeinerte Kraft:
+			\begin{itemize}
+				\item $\mathbf{F}_1 =
+				\left(\tau_{1}, 0 \right)^T$,
+				$\mathbf{F}_2 =
+				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
+				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
 	
 \end{frame}
 

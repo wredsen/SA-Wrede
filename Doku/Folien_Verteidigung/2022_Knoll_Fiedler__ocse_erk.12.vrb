@@ -1,55 +1,31 @@
-\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
-
-  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
-  \begin{itemize}
-   \item OWL2: definierter Standard; basiert auf RDF
-   \item Theoretische Basis: Beschreibungslogik(en)
-   \begin{itemize}
-    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
-    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
-    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
-%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
-%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
-   \end{itemize}
-% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
-% \texttt{owl:allValuesFrom},
-% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
-  \end{itemize}
-
-% \pause
-%
-% \medskip
-%
-% % \textbf{Beispiel}:
-% \lstset{
-%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
-% }
-% \begin{lstlisting}
-% @prefix demo: <http://demo.xy/onto#> .
-% :pole rdf:type owl:Class.               # Klasse
-% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
-%
-% :typical_transfer_func rdf:type owl:Class ;
-%                 owl:equivalentClass [ rdf:type owl:Restriction ;
-%                                 owl:onProperty :has_pole ;
-%                                 owl:someValuesFrom :pole
-%                                 ].      # Klassenrestriktion
-% \end{lstlisting}
-
-
-\medskip
-\pause
-
-
-  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
-  \begin{itemize}
-   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
-%    \begin{itemize}
-%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
-%    \end{itemize}
-   \smallskip
-   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
-   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
-  \end{itemize}
-
-
+\frametitle{\large Analytisches Modell Einzelkran}
+\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+		
+		\visible<1->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
+		
+		\visible<1->{
+			\centering{Systemgleichungen aus LG2:}
+			\begin{subequations}
+				\label{single_flat_syseqs}
+				\begin{flalign*}
+					m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+					g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+					m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+				\end{flalign*}
+			\end{subequations}
+		}
+		
+	\end{textblock*}
+	

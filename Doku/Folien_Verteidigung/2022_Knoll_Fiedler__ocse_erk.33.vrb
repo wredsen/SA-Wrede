@@ -1,49 +1,44 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
-\begin{itemize}
-
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
-\end{itemize}
-
-\pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
-\begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
+\frametitle{\large OCSE -- Wie anfangen?}
 
 
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-\end{textblock*}
+% \begin{itemize}
+%  \item[]
+% \end{itemize}
+\vspace{-3mm}
+ Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
+\pause
+\begin{lstlisting}
+I5948 = p.create_item(
+    R1__has_label="dynamical system",
+    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
+)
+\end{lstlisting}
+% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
+
+\smallskip
+Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
+\pause
 
 
+\vspace{-1em}
+\begin{lstlisting}
+I7641 = p.create_item(
+    R1__has_label="general system model",
+    R4__is_instance_of=p.I2["Metaclass"],
+)
+\end{lstlisting}
+
+\vspace{-2em}
+\pause
+\begin{lstlisting}
+R7641 = p.create_relation(
+    R1__has_label="has approximation",
+    R8__has_domain_of_argument_1=I5948["dynamical system"],
+    R11__has_range_of_result=I7641["general system model"],
+)
+\end{lstlisting}
 
 

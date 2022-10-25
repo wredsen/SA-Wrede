@@ -1,46 +1,43 @@
-\frametitle{\large ERK -- Bemerkungen }
+\frametitle{\large ERK - Beispiel: \textit {Inhalt} des Satzes von Cayley-Hamilton}
+
+\vspace{-4mm}
+
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
+}
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("context") as cm:
+    cm.new_var(A=uq_instance_of(I9906["square matrix"]))
+    cm.new_var(n=uq_instance_of(p.I39["positive integer"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+    cm.new_var(P=p.instance_of(I4240["matrix polynomial"]))
+    cm.new_var(Z=p.instance_of(I9905["zero matrix"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+    cm.new_rel(cm.A, R5938["has row number"], cm.n)
+    cm.new_rel(cm.A, R5940["has characteristic polynomial"], cm.P)
+    cm.new_rel(cm.Z, R5938["has row number"], cm.n)
+    cm.new_rel(cm.Z, R5939["has column number"], cm.n)
+\end{lstlisting}
+%     cm.new_rel(cm.Z, p.R24["has LaTeX string"], r"\mathbf{0}")
+\pause
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("assertions") as cm:
+    cm.new_equation(lhs=cm.P(cm.A), rhs=cm.Z)
+\end{lstlisting}
 
 
-\begin{itemize}
-
-\setbeamercolor{normal text}{fg=mygray}
-\usebeamercolor[fg]{normal text}
-
- \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
- \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
-
- \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
- \begin{itemize}
-  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
-  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
- \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
- \end{itemize}
-
-%  \pause
- \medskip
- \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
+\begin{textblock*}{50mm}[0.,0.](100mm,67mm)
+\visible<4->{
 
 
-\begin{itemize}
- \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
- \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
- \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
+\begin{tcolorbox}[colback=lightblue,colframe=softblue]
 
- \medskip
- \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
-\end{itemize}
-
-\end{itemize}
-
-
-\setbeamercolor{normal text}{fg=tublue}
-\usebeamercolor[fg]{normal text}
-
-\begin{itemize}
-\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
-
-\end{itemize}
-
-
-
+$P(\mathbf{A}) = \mathbf{Z}$ \quad mit $\mathbf{Z}:= \mathbf{0}$
+\end{tcolorbox}
+}
+\end{textblock*}
 

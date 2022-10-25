@@ -1,49 +1,30 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
+\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
+
+\textbf{2021: OCSE 0.1}
 \begin{itemize}
-
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
+ \item in OWL implementiert
+ \item Taxonomie einfach umsetzbar
+ \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
 \end{itemize}
 
 \pause
 \bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
+\textbf{2022: OCSE 0.2}
 \begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
+ \item Basierend auf ERK implementiert
+ \item Größere Modellierungstiefe möglich
 \end{itemize}
 
 
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
+\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
+\only<1>{
+\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
 }
 \end{textblock*}
-
-
-
+% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
+% \only<2>{
+% %\includegraphics[trim=left bottom right top, clip]{file}
+% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
+% }
+% \end{textblock*}
 

@@ -1,76 +1,49 @@
-\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation}
-
-\textbf{Deklarativ}
-\begin{itemize}
- \item Formuliert in \textit{Beschreibungs}sprache (z.B. OWL (Turtle Syntax))
-\end{itemize}
+\frametitle{\large Experimenteller Ansatz: ERK}
 
 
+\textbf{Verklemmung:}
 
+\smallskip
 
-% \begin{textblock*}{40mm}[0.,0.](12mm,27mm)
-% \visible<2>{
-% \includegraphics{img/listing2}
-% }
-% \end{textblock*}
+\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
+$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
 
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-\begin{lrbox}{\mysaveboxa}
-\begin{lstlisting}
-I3749 rdfs:label "Cayley-Hamilton theorem".
-I3749 rdfs:comment "every square matrix is a root of its own char. poly.".
-I3749 rdf:type :I15_implication_proposition.
-\end{lstlisting}
-\end{lrbox}
-
-
-\only<2->{
-\medskip
-\usebox{\mysaveboxa}
-}
-
-% https://tex.stackexchange.com/questions/250052/custom-lstlisting-highlighting-for-symbols
-% %   basicstyle=\fontsize{8}{11}\selectfont\ttfamily,
-% \lstset{
-%   language=Python,
-% %     showstringspaces=false,
-%     backgroundcolor=\color{black!20},
-% %     basicstyle=\lstfont{white},
-% %     identifierstyle=\lstfont{white},
-%     keywordstyle=\lstfont{magenta!40},
-%     numberstyle=\lstfont{white},
-% %     stringstyle=\lstfont{cyan},
-% %     commentstyle=\lstfont{yellow!30},
-%     emph={
-%         cudaMalloc, label, I3749
-%         __global__, __shared__, __device__, __host__,
-%         __syncthreads,
-%     },
-%     emphstyle={\lstfont{green!60!white}},
-%     breaklines=true
-% }
-
-\begin{lrbox}{\mysaveboxb}
-\begin{lstlisting}
-I3749 = p.create_item(
-    R1__has_label="Cayley-Hamilton theorem",
-    R2__has_description="every square matrix is a root of its own char. poly.",
-    R4__is_instance_of=p.I15["implication proposition"],
-)
-\end{lstlisting}
-\end{lrbox}
-
-\pause
 \pause
 \bigskip
 
-\textbf{Imperativ}
+\textbf{Pragmatischer Ansatz:}
 \begin{itemize}
- \item Formuliert in \textit{Programmier}sprache (z.B. Python)
+ \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
+ \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
 \end{itemize}
-\visible<3>{
-\usebox{\mysaveboxb}
+
+\pause
+\bigskip
+
+\textbf{Anforderungen}
+\begin{itemize}
+\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
+\item Basiert auf menschenlesbarem Text
+\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
+\end{itemize}
+
+\visible<4->{
+
+\begin{tikzpicture}[overlay,remember picture]
+      \path (n2) -| node[coordinate] (n3) {} (n1);
+      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+            (n1) -- (n3) node[midway, right=4pt] {};
+  \end{tikzpicture}
+
+\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
+\visible<4->{
+  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
 }
+\end{textblock*}
+
+
+}
+
+
+
 

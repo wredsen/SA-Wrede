@@ -1,59 +1,46 @@
-\frametitle{\large OCSE -- Repräsentation von Mathematik}
+\frametitle{\large ERK -- Bemerkungen }
+
 
 \begin{itemize}
- \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
-%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
-%  \hfill $\rightarrow$ unpraktikabel
-%
- \pause
+
+\setbeamercolor{normal text}{fg=mygray}
+\usebeamercolor[fg]{normal text}
+
+ \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
+ \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
+
+ \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
+ \begin{itemize}
+  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
+  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
+ \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
+ \end{itemize}
+
+%  \pause
  \medskip
- \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
+ \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
+
+
+\begin{itemize}
+ \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
+ \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
+ \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
+
+ \medskip
+ \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
+\end{itemize}
+
 \end{itemize}
 
 
- \pause
- \medskip
+\setbeamercolor{normal text}{fg=tublue}
+\usebeamercolor[fg]{normal text}
 
-\textbf{Beispiel: \py{R8133["relative degree"]}} \\
-% Subklasse von I5356["general system property"]
-($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
-
-\pause
-\smallskip
-benötigt:
-
-\smallskip
 \begin{itemize}
- \item \py|I1371["iterated Lie derivative of scalar field"]|
- \pause
-    \begin{itemize}
-    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
-    \pause
-        \begin{itemize}
-        \item[\textbullet] \py|I2075["substitution"]|
-        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
-        \item[\textbullet] \py|I2753["flow of a vector field"]|
-        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
-        \end{itemize}
-    \end{itemize}
+\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
+
 \end{itemize}
 
-$\ldots$
 
-
-\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
-\visible<5->{
-
-
-\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
-$\dot x = f(x) + g(x)u$\\
-$y = h(x)$
-
-\vspace{3mm}
-
-$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
-\end{tcolorbox}
-}
-\end{textblock*}
 
 

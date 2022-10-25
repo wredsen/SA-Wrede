@@ -1,44 +1,27 @@
-\frametitle{\large OCSE -- Wie anfangen?}
+\frametitle{\large ERK-Inferenzsystem: Regelauswertung}
+
+\begin{itemize}
+ \item Für jede Regel: „Prototypgraphen“ konstruieren
+ \begin{itemize}
+  \item lokale Variablen aus \py{scope("context")} $\rightarrow$ Knoten
+  \item Relationen aus \py{scope("premises")} $\rightarrow$ Kanten
+ \end{itemize}
+
+ \pause
+ \bigskip
+ \item Passende Knoten aus dem Gesamtgraph suchen
+ \begin{itemize}
+  \item Mathematisches Problem: \textbf{\textit{Subgraphisomorphismen}} finden
+%   (Bijektive Abbildungen zwischen den Knoten, welche die (spezifizierte) Verzweigungsstruktur erhalten)
+  \item $\exists$ VF2-Algorithmus (fertig implementiert)
+ \end{itemize}
+
+ \pause
+ \bigskip
+ \item Beziehungen aus \py|scope("assertions")| abstrahieren und anwenden
 
 
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-% \begin{itemize}
-%  \item[]
-% \end{itemize}
-\vspace{-3mm}
- Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
-\pause
-\begin{lstlisting}
-I5948 = p.create_item(
-    R1__has_label="dynamical system",
-    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
-)
-\end{lstlisting}
-% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
+\end{itemize}
 
-\smallskip
-Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
-\pause
-
-
-\vspace{-1em}
-\begin{lstlisting}
-I7641 = p.create_item(
-    R1__has_label="general system model",
-    R4__is_instance_of=p.I2["Metaclass"],
-)
-\end{lstlisting}
-
-\vspace{-2em}
-\pause
-\begin{lstlisting}
-R7641 = p.create_relation(
-    R1__has_label="has approximation",
-    R8__has_domain_of_argument_1=I5948["dynamical system"],
-    R11__has_range_of_result=I7641["general system model"],
-)
-\end{lstlisting}
 
 

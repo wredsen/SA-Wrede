@@ -1,48 +1,69 @@
-\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
+\frametitle{\large OCSE -- Status {\color <1-3>{mygray} und Anwendungen}}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
+\textbf{Status}: \texttt{<erk:/builtins>} $\cup$ \texttt{<erk:/ocse/0.2>}: $\approx$ 230 Knoten, 400 Kanten
 
-  \pause
-  \medskip
-Grundlegendes Schema:
+\medskip
+\only<2-3>{\textbf{Visualisierung}:}
 
 
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
+
+
+
+\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
+\visible<2>{
+% \includegraphics[trim=0mm 0mm 235mm 218mm, clip,width=50mm]{img/erk-graph-builtins}
+\includegraphics[clip,width=45mm]{img/erk-graph-builtins}
 }
 \end{textblock*}
 
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
+\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
 \visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
+\includegraphics[width=135mm]{img/erk-graph-all.pdf}
+}
+\end{textblock*}
+
+\pause
+\pause
+\pause
+
+\medskip
+\only<4->{
+\textbf{Bisherige Anwendung:}
+
+Klassifikation von Enititäten im \textbf{A}utomatic \textbf{C}ontrol \textbf{K}nowledge \textbf{Rep}ository (ACKREP)
+
+\smallskip
+(Systemmodelle, Problembeschreibungen, Lösungsmethoden)
+
+\pause
+\smallskip
+$\rightarrow$ Ermöglicht SPARQL-Suche\\
+(z.\,B. exakt E-Z-linearisierbare Modelle mit $n > 3$)
+
+
+\begin{textblock*}{40mm}[0.,0.](97mm,39mm)
+\visible<4->{
+\includegraphics[width=50mm]{img/model_classification.pdf}
 }
 \end{textblock*}
 
 
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
 
-Repräsentanz der Regelungstheorie:\\[1mm]
+\pause
 
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
+\medskip
+\bigskip
+\textbf{Mögliche zukünftige Anwendungen}
+
+\begin{itemize}
+ \item (Autom.) Klassifikation von Veröffentlichungen\\
+ Denkbar: bis auf Satz- bzw. Gleichungsebene.
+
+ \item Assistenzsoftware für Reglerentwurf
+
+\end{itemize}
+
+$\rightarrow$ Wissenstransfer
+
 }
-\end{textblock*}
-
-
-
-
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
-}
-\end{textblock*}
-
 

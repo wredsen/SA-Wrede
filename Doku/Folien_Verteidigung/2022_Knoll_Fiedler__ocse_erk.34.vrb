@@ -1,5 +1,59 @@
-\frametitle{~}
-\begin{center}
-{\huge \textbf{Ergänzungsfolien}}
-\end{center}
+\frametitle{\large OCSE -- Repräsentation von Mathematik}
+
+\begin{itemize}
+ \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
+%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
+%  \hfill $\rightarrow$ unpraktikabel
+%
+ \pause
+ \medskip
+ \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
+\end{itemize}
+
+
+ \pause
+ \medskip
+
+\textbf{Beispiel: \py{R8133["relative degree"]}} \\
+% Subklasse von I5356["general system property"]
+($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
+
+\pause
+\smallskip
+benötigt:
+
+\smallskip
+\begin{itemize}
+ \item \py|I1371["iterated Lie derivative of scalar field"]|
+ \pause
+    \begin{itemize}
+    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
+    \pause
+        \begin{itemize}
+        \item[\textbullet] \py|I2075["substitution"]|
+        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
+        \item[\textbullet] \py|I2753["flow of a vector field"]|
+        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+$\ldots$
+
+
+\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
+\visible<5->{
+
+
+\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
+$\dot x = f(x) + g(x)u$\\
+$y = h(x)$
+
+\vspace{3mm}
+
+$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
+\end{tcolorbox}
+}
+\end{textblock*}
+
 

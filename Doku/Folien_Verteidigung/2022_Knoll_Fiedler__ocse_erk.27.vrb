@@ -1,30 +1,26 @@
-\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
+\frametitle{\large ERK-Inferenzsystem}
 
-\textbf{2021: OCSE 0.1}
+\textbf{Nachteile Imperativer Repräsentation}
 \begin{itemize}
- \item in OWL implementiert
- \item Taxonomie einfach umsetzbar
- \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
+ \item ...
+%  \item Unklare Interoperabilität („Insellösung“)
+ \item Kein Einsatz existierender \textit{Reasoner}
 \end{itemize}
 
 \pause
+
 \bigskip
-\textbf{2022: OCSE 0.2}
+\textbf{$\rightarrow$ Regelbasierte Inferenz}
 \begin{itemize}
- \item Basierend auf ERK implementiert
- \item Größere Modellierungstiefe möglich
+ \item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
+ \item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
+\pause
+ \item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
+ \item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+\pause
+ \item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
+ \smallskip
+ \item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
+
 \end{itemize}
-
-
-\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
-\only<1>{
-\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
-}
-\end{textblock*}
-% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
-% \only<2>{
-% %\includegraphics[trim=left bottom right top, clip]{file}
-% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
-% }
-% \end{textblock*}
 

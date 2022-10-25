@@ -1,22 +1,29 @@
 \frametitle{\large Lagrange-Formalismus}
 
-	\textbf{Nachteile Imperativer Repräsentation}
+	\textbf{Symbole}
 	\begin{itemize}
-		\item ...
-		%  \item Unklare Interoperabilität („Insellösung“)
-		\item Kein Einsatz existierender \textit{Reasoner}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\pause
+		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
+		\pause
+		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
+		\pause
+		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
+		\pause
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
 	\end{itemize}
 	
+	\pause
 	\bigskip
-	\textbf{$\rightarrow$ Regelbasierte Inferenz}
+	\textbf{Lagrange-Gleichungen zweiter Art}
 	\begin{itemize}
-		\item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
-		\item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
-		\item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
-		\item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
-		\item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
-		\smallskip
-		\item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
-		
+		\pause
+		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\pause
+		\item Bewegungsgleichungen:  $\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n$
+		\pause
+		\item Woher $Q_i$?
 	\end{itemize}
 	

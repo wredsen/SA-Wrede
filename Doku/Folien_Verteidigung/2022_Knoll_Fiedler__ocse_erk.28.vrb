@@ -1,30 +1,31 @@
-\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
+\frametitle{\large ERK-Inferenzsystem: Regelspezifikation}
 
-\textbf{2021: OCSE 0.1}
-\begin{itemize}
- \item in OWL implementiert
- \item Taxonomie einfach umsetzbar
- \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
-\end{itemize}
-
-\pause
-\bigskip
-\textbf{2022: OCSE 0.2}
-\begin{itemize}
- \item Basierend auf ERK implementiert
- \item Größere Modellierungstiefe möglich
-\end{itemize}
-
-
-\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
-\only<1>{
-\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-\end{textblock*}
-% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
-% \only<2>{
-% %\includegraphics[trim=left bottom right top, clip]{file}
-% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
-% }
-% \end{textblock*}
+\begin{lstlisting}
+I400 = p.create_item(
+    R1__has_label="transitivity of R17__is_subproperty_of",
+    R4__is_instance_of=p.I41["semantic rule"],
+)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400["subproperty rule 1"].scope("context") as cm:
+    cm.new_var(P1=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P2=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P3=p.instance_of(p.I11["mathematical property"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("premises") as cm:
+    cm.new_rel(cm.P2, p.R17["is subproperty of"], cm.P1)
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P2)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("assertions") as cm:
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P1)
+\end{lstlisting}
+% \pause
 
