@@ -22,7 +22,10 @@
 		\pause
 		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
 		\pause
-		\item Bewegungsgleichungen:  $\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n$
+		\item Bewegungsgleichungen:
+		\begin{equation*}
+			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+		\end{equation*}
 		\pause
 		\item Woher $Q_i$?
 	\end{itemize}

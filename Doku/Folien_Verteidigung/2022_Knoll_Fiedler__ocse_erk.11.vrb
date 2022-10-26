@@ -16,7 +16,7 @@
 	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
 		
 		\visible<3->{	
-			Energien:			
+			\textbf{Energien:}			
 			\begin{itemize}
 				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
 				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
@@ -28,7 +28,7 @@
 	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
 		
 		\visible<4->{
-			Virtuelle Arbeit und verallgemeinerte Kraft:
+			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}
 			\begin{itemize}
 				\item $\mathbf{F}_1 =
 				\left(\tau_{1}, 0 \right)^T$,

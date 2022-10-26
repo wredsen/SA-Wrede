@@ -16,7 +16,7 @@
 	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
 		
 		\visible<1->{
-			\centering{Systemgleichungen aus LG2:}
+			\centering{\textbf{Systemgleichungen aus LG2:}}
 			\begin{subequations}
 				\label{single_flat_syseqs}
 				\begin{flalign*}

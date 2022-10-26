@@ -507,7 +507,10 @@ showstringspaces=false,
 		\pause
 		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
 		\pause
-		\item Bewegungsgleichungen:  $\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n$
+		\item Bewegungsgleichungen:
+		\begin{equation*}
+			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+		\end{equation*}
 		\pause
 		\item Woher $Q_i$?
 	\end{itemize}
@@ -539,14 +542,14 @@ showstringspaces=false,
 		\pause
 		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
 		\pause
-		\item $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
 	\end{itemize}
 	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=ModellEinzelkran]{\large Analytisches Modell Einzelkran}
+\begin{frame}[t,fragile,label=ModellEinzelkran_1]{\large Analytisches Modell Einzelkran}
 	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
 		\visible<1->{
 			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
@@ -564,7 +567,7 @@ showstringspaces=false,
 	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
 		
 		\visible<3->{	
-			Energien:			
+			\textbf{Energien:}			
 			\begin{itemize}
 				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
 				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
@@ -576,7 +579,7 @@ showstringspaces=false,
 	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
 		
 		\visible<4->{
-			Virtuelle Arbeit und verallgemeinerte Kraft:
+			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}
 			\begin{itemize}
 				\item $\mathbf{F}_1 =
 				\left(\tau_{1}, 0 \right)^T$,
@@ -592,7 +595,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=ModellEinzelkran]{\large Analytisches Modell Einzelkran}
+\begin{frame}[t,fragile,label=ModellEinzelkran_2]{\large Analytisches Modell Einzelkran}
 	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
 		\visible<1->{
 			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
@@ -610,7 +613,7 @@ showstringspaces=false,
 	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
 		
 		\visible<1->{
-			\centering{Systemgleichungen aus LG2:}
+			\centering{\textbf{Systemgleichungen aus LG2:}}
 			\begin{subequations}
 				\label{single_flat_syseqs}
 				\begin{flalign*}
@@ -627,47 +630,221 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=ModellDoppelkran]{\large Analytisches Modell Doppelkran}
+\begin{frame}[t,fragile,label=ModellDoppelkran_1]{\large Analytisches Modell Doppelkran}
 	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
 		\visible<1->{
 			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
 		}
 		\bigskip
 		\visible<2->{
-			\begin{itemize}
-				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
-				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
-				~
-			\end{itemize}
+		\textbf{variable Seillängen:}
+		\tiny{
+		\begin{flalign*}
+			l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
+			l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
+		\end{flalign*}
+		}
+		~
 		}
 	\end{textblock*}
 	
 	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
 		
 		\visible<3->{	
-			Energien:			
+			\textbf{Energien:}			
 			\begin{itemize}
-				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
-				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
+				\item $T = \frac{J_{2} \dot{p}_{3}^{2}}{2} + \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \dot{q}_{2}^{2}}{2}$
+				\item $V =m_{2} g p_{2}$
 			\end{itemize}
 		}
-		
 	\end{textblock*}
 	
 	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
 		
 		\visible<4->{
-			Virtuelle Arbeit und verallgemeinerte Kraft:
-			\begin{itemize}
-				\item $\mathbf{F}_1 =
-				\left(\tau_{1}, 0 \right)^T$,
-				$\mathbf{F}_2 =
-				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
-				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
-			\end{itemize}
+			\textbf{Stellkräfte entlang Massepartikel:}
+			\begin{flalign*}
+				\mathbf{F}_1 &=
+				\left( \tau_{1}, 0 \right)^T, \\
+				\mathbf{F}_2 &=
+				\left( \tau_{2}, 0 \right)^T, \\
+				\mathbf{F}_3 &=
+				\left(\begin{matrix}
+					\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
+					\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
+				\end{matrix}\right), \\
+				\mathbf{F}_4 &=
+				\left(\begin{matrix}
+					\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
+					\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
+				\end{matrix}\right)
+				\end{flalign*}
+			}
+		
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=ModellDoppelkran_2]{\large Analytisches Modell Doppelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
+		}
+		\bigskip
+		\visible<1->{
+			\textbf{variable Seillängen:}
+			\tiny{
+				\begin{flalign*}
+					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
+					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
+				\end{flalign*}
+			}
+			~
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<1->{	
+			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}			
+			\begin{equation*}
+				\mathbf{Q}= ...
+			\end{equation*}
+		}
+	\end{textblock*}
+
+	\begin{textblock*}{80mm}[0.,0.](80mm,27mm)	
+		\visible<2->{
+			\textbf{Systemgleichungen aus LG2:}
+			\tiny{
+			\begin{flalign*}
+			&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
+			&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{p_{3}}\right)}{l_{1}} = 0\\
+			&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right) \cos{p_{3}} + s_{2} \tau_{4} \left(p_{1} - q_{2} + s_{2} \cos{p_{3}} - l_{0} \right)}{l_{2}}\\
+			&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{p_{3}}\right) \cos{p_{3}}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right) \sin{p_{3}}}{l_{1}} = 0\\
+			&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
+			&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} = 0
+			\end{flalign*}
+			}
 		}
 		
 	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t,fragile,label=ModellDoppelkran_3]{\large Analytisches Modell Doppelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
+		}
+		\bigskip
+		\visible<1->{
+			\textbf{variable Seillängen:}
+			\tiny{
+				\begin{flalign*}
+					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
+					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
+				\end{flalign*}
+			}
+			~
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<1->{	
+			\textbf{Eingangsaffines Zustandsraummodell:}			
+		\begin{align}
+			\label{eq:state_space_double_crane}
+			\begin{split}
+				\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\ 
+				\mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \\
+				\mathbf{f}(\mathbf{x}) &= 
+				(\dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2}, 0, -g, 0, 0, 0)^T, \\ 
+				\mathbf{g}(\mathbf{x}) &=
+				\left(\begin{matrix}
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & * & *\\
+					0 & 0 & * & *\\
+					0 & 0 & * & *\\
+					* & 0 & * & 0\\
+					0 & * & 0 & *
+				\end{matrix}\right) \ \text{wobei} \ * \neq 0 
+			\end{split}
+		\end{align}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}<1>[label=gl3]
+	\frametitle{Gliederung}
+	\begin{itemize}
+		%0
+		\item[\cdbox] System- und Problembeschreibung
+		%1
+		\item[\cdbox] Analytische Modellbildung
+		%2
+		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<3->{\cdbox}]
+		\textbf<1>{Flachheitsanalyse}
+		%3
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<2>{Steuerungs- und Regelungsentwurf}
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[label=Flachheit_1]
+	\frametitle{Flachheitsanalyse}
+   	\begin{block}{Definition differenzieller Flachheit}
+	Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ heißt (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\boldsymbol{\theta}$ existieren, so dass
+	\begin{align*}
+			\mathbf{x} &= \mathbf{\Psi}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
+			\mathbf{u} &= \boldsymbol{\theta}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_u)}) \text{ mit } n_u < \infty \text{ gilt.}
+	\end{align*}
+	\end{block}
+
+	\pause
+	\bigskip
+	\textbf{Erläuterungen:}
+	\begin{itemize}
+		\item Systemzustand $\mathbf{x}$, Systemeingang $\mathbf{u}$ 
+		\item \textbf{flacher Ausgang} $\mathbf{y}$
+		\item[$\rightarrow$] Parametrisierung aller Systemgrößen durch $\mathbf{y}$ und endlich viele Ableitungen ohne Lösung von DGL/Integration möglich
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_2]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Prinzipielles Vorgehen}
+	
+	\begin{itemize}
+		\pause
+		\item  Eingangsaffines nichtlineares MIMO-System\\
+		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
+		
+		\pause
+		\item Elimination von $\mathbf{u}$ durch jeweils eine Systemgleichungen
+		\pause
+		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
+		\pause
+		\item[$\rightarrow$] Elimination von $p$ Zustandskomponenten und aller übrigen Systemgleichungen
+		\pause
+		\item[$\rightarrow$] übrig bleiben $n - p = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
+		\item Wie Systemgrößen und -gleichungen für Elimination auswählen?
+	\end{itemize}
 	
 \end{frame}
 
