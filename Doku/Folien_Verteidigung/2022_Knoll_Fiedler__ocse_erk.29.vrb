@@ -1,76 +1,55 @@
-\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation}
+\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
 
-\textbf{Deklarativ}
-\begin{itemize}
- \item Formuliert in \textit{Beschreibungs}sprache (z.B. OWL (Turtle Syntax))
-\end{itemize}
+  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
+  \begin{itemize}
+   \item OWL2: definierter Standard; basiert auf RDF
+   \item Theoretische Basis: Beschreibungslogik(en)
+   \begin{itemize}
+    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
+    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
+    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
+%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
+%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
+   \end{itemize}
+% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
+% \texttt{owl:allValuesFrom},
+% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
+  \end{itemize}
 
-
-
-
-% \begin{textblock*}{40mm}[0.,0.](12mm,27mm)
-% \visible<2>{
-% \includegraphics{img/listing2}
-% }
-% \end{textblock*}
-
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-\begin{lrbox}{\mysaveboxa}
-\begin{lstlisting}
-I3749 rdfs:label "Cayley-Hamilton theorem".
-I3749 rdfs:comment "every square matrix is a root of its own char. poly.".
-I3749 rdf:type :I15_implication_proposition.
-\end{lstlisting}
-\end{lrbox}
-
-
-\only<2->{
-\medskip
-\usebox{\mysaveboxa}
-}
-
-% https://tex.stackexchange.com/questions/250052/custom-lstlisting-highlighting-for-symbols
-% %   basicstyle=\fontsize{8}{11}\selectfont\ttfamily,
+% \pause
+%
+% \medskip
+%
+% % \textbf{Beispiel}:
 % \lstset{
-%   language=Python,
-% %     showstringspaces=false,
-%     backgroundcolor=\color{black!20},
-% %     basicstyle=\lstfont{white},
-% %     identifierstyle=\lstfont{white},
-%     keywordstyle=\lstfont{magenta!40},
-%     numberstyle=\lstfont{white},
-% %     stringstyle=\lstfont{cyan},
-% %     commentstyle=\lstfont{yellow!30},
-%     emph={
-%         cudaMalloc, label, I3749
-%         __global__, __shared__, __device__, __host__,
-%         __syncthreads,
-%     },
-%     emphstyle={\lstfont{green!60!white}},
-%     breaklines=true
+%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
 % }
+% \begin{lstlisting}
+% @prefix demo: <http://demo.xy/onto#> .
+% :pole rdf:type owl:Class.               # Klasse
+% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
+%
+% :typical_transfer_func rdf:type owl:Class ;
+%                 owl:equivalentClass [ rdf:type owl:Restriction ;
+%                                 owl:onProperty :has_pole ;
+%                                 owl:someValuesFrom :pole
+%                                 ].      # Klassenrestriktion
+% \end{lstlisting}
 
-\begin{lrbox}{\mysaveboxb}
-\begin{lstlisting}
-I3749 = p.create_item(
-    R1__has_label="Cayley-Hamilton theorem",
-    R2__has_description="every square matrix is a root of its own char. poly.",
-    R4__is_instance_of=p.I15["implication proposition"],
-)
-\end{lstlisting}
-\end{lrbox}
 
+\medskip
 \pause
-\pause
-\bigskip
 
-\textbf{Imperativ}
-\begin{itemize}
- \item Formuliert in \textit{Programmier}sprache (z.B. Python)
-\end{itemize}
-\visible<3>{
-\usebox{\mysaveboxb}
-}
+
+  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
+  \begin{itemize}
+   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
+%    \begin{itemize}
+%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
+%    \end{itemize}
+   \smallskip
+   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
+   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
+  \end{itemize}
+
 

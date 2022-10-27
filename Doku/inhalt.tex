@@ -631,7 +631,7 @@ Durch Einsetzen der Komponenten von $\mathbf{J}_2$ folgt für die Transformation
 Die damit transformierten verbliebenen Systemgleichungen ergeben sich zu:
 \begin{subequations}
 	\begin{align}
-	\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right) \sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{\left(p_{1} - q_{1}\right) \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} &= 0 \label{single_flat_transformed_syseq1}\\
+	\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right)}{\left(p_{1} - q_{1}\right)} &= 0 \label{single_flat_transformed_syseq1}\\
 	g\frac{m_{2} \left(- g p_{1} + g q_{1} - p_{1} \ddot{p}_{2} + p_{2} \ddot{p}_{1} + \ddot{p}_{2} q_{1}\right)}{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}
 	 &= 0\label{single_flat_transformed_syseq2}.
 	\end{align}
@@ -672,7 +672,7 @@ Diese Darstellung enthält allerdings mit $q_1$ sowie $\ddot{q}_1$ und $\tau_2$ 
 gebildet werden. Durch einsetzen davon, Gleichung \eqref{eq:single_crane_flat_q1} und \eqref{eq:single_crane_flat_tau2} in \eqref{eq:single_crane_preflat_tau1} wird eine Parametrisierung von $\tau_1$ durch den flachen Ausgang gewonnen:
 \begin{flalign}
 	\begin{split}
-		\tau_2 &=
+		\tau_1 &=
 		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
 		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
 		&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
@@ -682,7 +682,7 @@ gebildet werden. Durch einsetzen davon, Gleichung \eqref{eq:single_crane_flat_q1
 	\end{split}
 \end{flalign}
 
-Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ zeigt, dass es sich dabei um einen flachen Ausgang handelt. Der Flachheitsnachweis wurde somit konstruktiv erbracht.
+Die Parametrisierung aller Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$ und endlich viele Ableitungen davon zeigt, dass es sich dabei um einen flachen Ausgang handelt. Der Flachheitsnachweis wurde somit konstruktiv erbracht.
 
 \section{Flachheitsanalyse am Doppelkran}
 \label{sec:flatness_analysis_double_crane}

@@ -1,49 +1,25 @@
-\frametitle{\large Experimenteller Ansatz: ERK}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-
-\textbf{Verklemmung:}
-
-\smallskip
-
-\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
-$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
-
-\pause
-\bigskip
-
-\textbf{Pragmatischer Ansatz:}
-\begin{itemize}
- \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
- \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
-\end{itemize}
-
-\pause
-\bigskip
-
-\textbf{Anforderungen}
-\begin{itemize}
-\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
-\item Basiert auf menschenlesbarem Text
-\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
-\end{itemize}
-
-\visible<4->{
-
-\begin{tikzpicture}[overlay,remember picture]
-      \path (n2) -| node[coordinate] (n3) {} (n1);
-      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
-            (n1) -- (n3) node[midway, right=4pt] {};
-  \end{tikzpicture}
-
-\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
-\visible<4->{
-  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
-}
-\end{textblock*}
-
-
-}
-
-
-
-
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\item aus zuerst eliminierter originaler Systemgleichung:
+		\begin{equation*}
+			\tau_1 = \frac{m_{1} \textcolor{red}{\ddot{q}_{1}} \sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}} + p_{1} \textcolor{red}{\tau_{2}} - \textcolor{red}{q_{1}} \textcolor{red}{\tau_{2}}}{\sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}}}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] auch Größen $\textcolor{red}{q_1, \ddot{q}_1, \tau_2} \not\in \mathbf{y}$ in dieser Parametrisierung von $\tau_1$ enthalten
+		\pause
+		\item[$\rightarrow$] Einsetzen der zweiten Ableitung von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$ und $\tau_2(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{flalign*}
+			\begin{split}
+				\tau_1 &=
+				\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
+				(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
+				&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
+				&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} + m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+				& + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+			\end{split}
+		\end{flalign*}
+	\end{itemize}
+	

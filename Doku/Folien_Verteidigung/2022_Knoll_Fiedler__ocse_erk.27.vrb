@@ -1,49 +1,18 @@
-\frametitle{\large Experimenteller Ansatz: ERK}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-
-\textbf{Verklemmung:}
-
-\smallskip
-
-\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
-$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
-
-\pause
-\bigskip
-
-\textbf{Pragmatischer Ansatz:}
-\begin{itemize}
- \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
- \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
-\end{itemize}
-
-\pause
-\bigskip
-
-\textbf{Anforderungen}
-\begin{itemize}
-\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
-\item Basiert auf menschenlesbarem Text
-\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
-\end{itemize}
-
-\visible<4->{
-
-\begin{tikzpicture}[overlay,remember picture]
-      \path (n2) -| node[coordinate] (n3) {} (n1);
-      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
-            (n1) -- (n3) node[midway, right=4pt] {};
-  \end{tikzpicture}
-
-\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
-\visible<4->{
-  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
-}
-\end{textblock*}
-
-
-}
-
-
-
-
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\item Zusammenfassung der Parametrisierungen:
+		\begin{align*}
+			\tau_1 &= \theta_1\left(p_2, \dot{p}_2, \ddot{p}_1, \ddot{p}_2, p_1^{(3)}, p_2^{(3)}, p_1^{(4)}, p_2^{(4)} \right) \\
+			\tau_2 &= \theta_2(p_1, p_2, \ddot{p}_1, \ddot{p}_2) \\
+			q_1 &= \Psi_1(p_1, p_2, \ddot{p}_1, \ddot{p}_2)
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\pause
+		\bigskip
+		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
+	\end{itemize}
+	

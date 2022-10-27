@@ -1,13 +1,13 @@
 \frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-	\textbf{Prinzipielles Vorgehen}
+	\textbf{Prinzipielles Vorgehen:}
 	
 	\begin{itemize}
 		\pause
 		\item  Eingangsaffines nichtlineares MIMO-System\\
 		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
-		
 		\pause
+		\bigskip
 		\item Elimination von $\mathbf{u}$ durch jeweils eine Systemgleichungen
 		\pause
 		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
@@ -15,6 +15,8 @@
 		\item[$\rightarrow$] Elimination von $p$ Zustandskomponenten und aller übrigen Systemgleichungen
 		\pause
 		\item[$\rightarrow$] übrig bleiben $n - p = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
-		\item Wie Systemgröße und -gleichung für Elimination auswählen?
+		\pause
+		\bigskip
+		\item Wonach Systemgrößen und -gleichungen für Elimination auswählen?
 	\end{itemize}
 	

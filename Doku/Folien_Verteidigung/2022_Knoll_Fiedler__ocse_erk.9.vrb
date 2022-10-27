@@ -1,6 +1,6 @@
 \frametitle{\large Lagrange-Formalismus}
 
-	\textbf{Symbole}
+	\textbf{Symbole:}
 	\begin{itemize}
 		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
 		\pause
@@ -17,7 +17,7 @@
 	
 	\pause
 	\bigskip
-	\textbf{Lagrange-Gleichungen zweiter Art}
+	\textbf{Lagrange-Gleichungen zweiter Art:}
 	\begin{itemize}
 		\pause
 		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)

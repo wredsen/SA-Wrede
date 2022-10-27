@@ -1,44 +1,76 @@
-\frametitle{\large OCSE -- Wie anfangen?}
+\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation}
 
+\textbf{Deklarativ}
+\begin{itemize}
+ \item Formuliert in \textit{Beschreibungs}sprache (z.B. OWL (Turtle Syntax))
+\end{itemize}
+
+
+
+
+% \begin{textblock*}{40mm}[0.,0.](12mm,27mm)
+% \visible<2>{
+% \includegraphics{img/listing2}
+% }
+% \end{textblock*}
 
 \lstset{
   basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-% \begin{itemize}
-%  \item[]
-% \end{itemize}
-\vspace{-3mm}
- Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
-\pause
+\begin{lrbox}{\mysaveboxa}
 \begin{lstlisting}
-I5948 = p.create_item(
-    R1__has_label="dynamical system",
-    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
+I3749 rdfs:label "Cayley-Hamilton theorem".
+I3749 rdfs:comment "every square matrix is a root of its own char. poly.".
+I3749 rdf:type :I15_implication_proposition.
+\end{lstlisting}
+\end{lrbox}
+
+
+\only<2->{
+\medskip
+\usebox{\mysaveboxa}
+}
+
+% https://tex.stackexchange.com/questions/250052/custom-lstlisting-highlighting-for-symbols
+% %   basicstyle=\fontsize{8}{11}\selectfont\ttfamily,
+% \lstset{
+%   language=Python,
+% %     showstringspaces=false,
+%     backgroundcolor=\color{black!20},
+% %     basicstyle=\lstfont{white},
+% %     identifierstyle=\lstfont{white},
+%     keywordstyle=\lstfont{magenta!40},
+%     numberstyle=\lstfont{white},
+% %     stringstyle=\lstfont{cyan},
+% %     commentstyle=\lstfont{yellow!30},
+%     emph={
+%         cudaMalloc, label, I3749
+%         __global__, __shared__, __device__, __host__,
+%         __syncthreads,
+%     },
+%     emphstyle={\lstfont{green!60!white}},
+%     breaklines=true
+% }
+
+\begin{lrbox}{\mysaveboxb}
+\begin{lstlisting}
+I3749 = p.create_item(
+    R1__has_label="Cayley-Hamilton theorem",
+    R2__has_description="every square matrix is a root of its own char. poly.",
+    R4__is_instance_of=p.I15["implication proposition"],
 )
 \end{lstlisting}
-% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
+\end{lrbox}
 
-\smallskip
-Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
 \pause
-
-
-\vspace{-1em}
-\begin{lstlisting}
-I7641 = p.create_item(
-    R1__has_label="general system model",
-    R4__is_instance_of=p.I2["Metaclass"],
-)
-\end{lstlisting}
-
-\vspace{-2em}
 \pause
-\begin{lstlisting}
-R7641 = p.create_relation(
-    R1__has_label="has approximation",
-    R8__has_domain_of_argument_1=I5948["dynamical system"],
-    R11__has_range_of_result=I7641["general system model"],
-)
-\end{lstlisting}
+\bigskip
 
+\textbf{Imperativ}
+\begin{itemize}
+ \item Formuliert in \textit{Programmier}sprache (z.B. Python)
+\end{itemize}
+\visible<3>{
+\usebox{\mysaveboxb}
+}
 

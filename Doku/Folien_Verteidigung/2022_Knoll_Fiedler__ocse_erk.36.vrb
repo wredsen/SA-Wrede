@@ -1,30 +1,49 @@
-\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
+\frametitle{\large Experimenteller Ansatz: ERK}
 
-\textbf{2021: OCSE 0.1}
+
+\textbf{Verklemmung:}
+
+\smallskip
+
+\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
+$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
+
+\pause
+\bigskip
+
+\textbf{Pragmatischer Ansatz:}
 \begin{itemize}
- \item in OWL implementiert
- \item Taxonomie einfach umsetzbar
- \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
+ \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
+ \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
 \end{itemize}
 
 \pause
 \bigskip
-\textbf{2022: OCSE 0.2}
+
+\textbf{Anforderungen}
 \begin{itemize}
- \item Basierend auf ERK implementiert
- \item Größere Modellierungstiefe möglich
+\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
+\item Basiert auf menschenlesbarem Text
+\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
 \end{itemize}
 
+\visible<4->{
 
-\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
-\only<1>{
-\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
+\begin{tikzpicture}[overlay,remember picture]
+      \path (n2) -| node[coordinate] (n3) {} (n1);
+      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+            (n1) -- (n3) node[midway, right=4pt] {};
+  \end{tikzpicture}
+
+\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
+\visible<4->{
+  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
 }
 \end{textblock*}
-% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
-% \only<2>{
-% %\includegraphics[trim=left bottom right top, clip]{file}
-% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
-% }
-% \end{textblock*}
+
+
+}
+
+
+
 

@@ -1,69 +1,43 @@
-\frametitle{\large OCSE -- Status {\color <1-3>{mygray} und Anwendungen}}
+\frametitle{\large ERK - Beispiel: \textit {Inhalt} des Satzes von Cayley-Hamilton}
 
-\textbf{Status}: \texttt{<erk:/builtins>} $\cup$ \texttt{<erk:/ocse/0.2>}: $\approx$ 230 Knoten, 400 Kanten
+\vspace{-4mm}
 
-\medskip
-\only<2-3>{\textbf{Visualisierung}:}
-
-
-
-
-
-\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
-\visible<2>{
-% \includegraphics[trim=0mm 0mm 235mm 218mm, clip,width=50mm]{img/erk-graph-builtins}
-\includegraphics[clip,width=45mm]{img/erk-graph-builtins}
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
-\visible<3>{
-\includegraphics[width=135mm]{img/erk-graph-all.pdf}
-}
-\end{textblock*}
-
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("context") as cm:
+    cm.new_var(A=uq_instance_of(I9906["square matrix"]))
+    cm.new_var(n=uq_instance_of(p.I39["positive integer"]))
+\end{lstlisting}
 \pause
+\begin{lstlisting}
+    cm.new_var(P=p.instance_of(I4240["matrix polynomial"]))
+    cm.new_var(Z=p.instance_of(I9905["zero matrix"]))
+\end{lstlisting}
 \pause
+\begin{lstlisting}
+    cm.new_rel(cm.A, R5938["has row number"], cm.n)
+    cm.new_rel(cm.A, R5940["has characteristic polynomial"], cm.P)
+    cm.new_rel(cm.Z, R5938["has row number"], cm.n)
+    cm.new_rel(cm.Z, R5939["has column number"], cm.n)
+\end{lstlisting}
+%     cm.new_rel(cm.Z, p.R24["has LaTeX string"], r"\mathbf{0}")
 \pause
-
-\medskip
-\only<4->{
-\textbf{Bisherige Anwendung:}
-
-Klassifikation von Enititäten im \textbf{A}utomatic \textbf{C}ontrol \textbf{K}nowledge \textbf{Rep}ository (ACKREP)
-
-\smallskip
-(Systemmodelle, Problembeschreibungen, Lösungsmethoden)
-
-\pause
-\smallskip
-$\rightarrow$ Ermöglicht SPARQL-Suche\\
-(z.\,B. exakt E-Z-linearisierbare Modelle mit $n > 3$)
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("assertions") as cm:
+    cm.new_equation(lhs=cm.P(cm.A), rhs=cm.Z)
+\end{lstlisting}
 
 
-\begin{textblock*}{40mm}[0.,0.](97mm,39mm)
+\begin{textblock*}{50mm}[0.,0.](100mm,67mm)
 \visible<4->{
-\includegraphics[width=50mm]{img/model_classification.pdf}
+
+
+\begin{tcolorbox}[colback=lightblue,colframe=softblue]
+
+$P(\mathbf{A}) = \mathbf{Z}$ \quad mit $\mathbf{Z}:= \mathbf{0}$
+\end{tcolorbox}
 }
 \end{textblock*}
-
-
-
-\pause
-
-\medskip
-\bigskip
-\textbf{Mögliche zukünftige Anwendungen}
-
-\begin{itemize}
- \item (Autom.) Klassifikation von Veröffentlichungen\\
- Denkbar: bis auf Satz- bzw. Gleichungsebene.
-
- \item Assistenzsoftware für Reglerentwurf
-
-\end{itemize}
-
-$\rightarrow$ Wissenstransfer
-
-}
 

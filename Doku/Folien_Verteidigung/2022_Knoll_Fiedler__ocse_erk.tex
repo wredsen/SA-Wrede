@@ -423,7 +423,7 @@ showstringspaces=false,
 
 \begin{frame}[label=sysbeschr3]
 	\frametitle{System- und Problembeschreibung}
-	\textbf{Zielsetzung}
+	\textbf{Zielsetzung:}
 	\begin{itemize}
 		\item Ruckarme Überführung der Last zwischen Ruhelagen in der vertikalen Aufhängungsebene
 		\pause
@@ -458,7 +458,7 @@ showstringspaces=false,
 
 \begin{frame}[label=analMB]
 	\frametitle{Analytische Modellbildung}
-	\textbf{Allgemeine Modellannahmen}
+	\textbf{Allgemeine Modellannahmen:}
 	\begin{itemize}
 		\item Bewegung des Systems auf vertikale Ebene beschränkt
 		\pause
@@ -471,7 +471,7 @@ showstringspaces=false,
 
 	\pause
 	\bigskip
-	\textbf{Vorgehen bei der Modellierung}
+	\textbf{Vorgehen bei der Modellierung:}
 	\begin{itemize}
 		\item Modellierung Einzelkran mit Lagrange-Gleichungen zweiter Art (LG2)
 		\pause
@@ -485,7 +485,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Lagrange2_1]{\large Lagrange-Formalismus}
 	
-	\textbf{Symbole}
+	\textbf{Symbole:}
 	\begin{itemize}
 		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
 		\pause
@@ -502,7 +502,7 @@ showstringspaces=false,
 	
 	\pause
 	\bigskip
-	\textbf{Lagrange-Gleichungen zweiter Art}
+	\textbf{Lagrange-Gleichungen zweiter Art:}
 	\begin{itemize}
 		\pause
 		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
@@ -521,7 +521,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Lagrange2_2]{\large Lagrange-Formalismus}
 	
-	\textbf{Symbole}
+	\textbf{Symbole:}
 	\begin{itemize}
 		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
 		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
@@ -533,7 +533,7 @@ showstringspaces=false,
 	
 	\pause
 	\bigskip
-	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$}
+	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
 	\begin{itemize}
 		\pause
 		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
@@ -806,7 +806,7 @@ showstringspaces=false,
 
 \begin{frame}[label=Flachheit_1]
 	\frametitle{Flachheitsanalyse}
-   	\begin{block}{Definition differenzieller Flachheit}
+   	\begin{block}{Differenzielle Flachheit}
 	Ein System der Form $\dot{\mathbf{x}} = \mathbf{F}(\mathbf{x}, \mathbf{u})$ mit $\mathbf{F}, \mathbf{x} \in \mathbb{R}^n$ und $\mathbf{u} \in \mathbb{R}^m$ heißt (differenziell) flach, falls ein $m$-Tupel $y := (y_1, ..., y_m)^T$ sowie glatte Funktionen $\mathbf{\Psi}$, $\boldsymbol{\theta}$ existieren, so dass
 	\begin{align*}
 			\mathbf{x} &= \mathbf{\Psi}(\mathbf{y}, \dot{\mathbf{y}}, ..., \mathbf{y}^{(n_x)}) \text{ mit } n_x < \infty \text{ und } \\
@@ -828,14 +828,14 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Flachheit_2]{\large Flachheitsanalyse von MIMO-Systemen}
 	
-	\textbf{Prinzipielles Vorgehen}
+	\textbf{Prinzipielles Vorgehen:}
 	
 	\begin{itemize}
 		\pause
 		\item  Eingangsaffines nichtlineares MIMO-System\\
 		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
-		
 		\pause
+		\bigskip
 		\item Elimination von $\mathbf{u}$ durch jeweils eine Systemgleichungen
 		\pause
 		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
@@ -843,7 +843,279 @@ showstringspaces=false,
 		\item[$\rightarrow$] Elimination von $p$ Zustandskomponenten und aller übrigen Systemgleichungen
 		\pause
 		\item[$\rightarrow$] übrig bleiben $n - p = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
-		\item Wie Systemgrößen und -gleichungen für Elimination auswählen?
+		\pause
+		\bigskip
+		\item Wonach Systemgrößen und -gleichungen für Elimination auswählen?
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_3]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\pause
+		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
+		\pause
+		\begin{equation*}
+			\mathbf{J}_i = 
+			\begin{pmatrix}
+				* & \cdots & * & 0 & * & \cdots & *\\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				* & \cdots & * & \varepsilon & * & \cdots & * \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *\\
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
+		\pause
+		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_4]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item  Wie vorgehen, wenn keine solche Zeile auffindbar?
+		\pause
+		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\begin{equation*}
+			\mathbf{T}_i \mathbf{J}_i = 
+			\begin{pmatrix}
+				\mathbf{I}_{m-(n-i)} \\
+				\hline
+				\mathbf{0}_{(n-m) \times (m-(n-i))}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				1 & 0 & \cdots & 0 & 0 \\
+				0 & 1 & \cdots & 0 & 0 \\
+				\vdots & & \ddots &  & \vdots \\
+				0 & 0 & \cdots & 1 & 0 \\
+				0 & 0 & \cdots & 0 & 1 \\
+				\hline
+				0 & 0 & \cdots & 0 & 0
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\begin{equation*}
+			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
+			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
+			\Rightarrow \mathbf{T}_i = 
+			\begin{pmatrix}
+				\mathbf{J}_i^{\mathrm{L} +} \\
+				\mathbf{J}_i^{\mathrm{L} \perp}
+			\end{pmatrix}
+		\end{equation*}
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_5]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Parametisierung der Systemgrößen durch den flachen Ausgang:}
+	
+	\begin{itemize}
+		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
+		\pause
+		\item Parametrisierungen vorheriger Größen ggf. in folgende Parametrisierungen einsetzen
+		\pause
+		\item ggf. Zeitableitungen vorangegangener Parametrisierungen nötig
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_1]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+	\item {($i = 3$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_2 = (\tau_1, \tau_2)^T$:}
+	\begin{align*}
+		\begin{split}
+			m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+			g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+			m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+		\end{split}
+		\quad \Rightarrow \quad 
+		\mathbf{J}_3 = 
+		\left(\begin{matrix}
+			0 & - \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+			0 & - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+			-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+	\end{align*}
+	\pause
+	\item[$\rightarrow$] Elimination von $\tau_1$ und letzter Gleichung	
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_2]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item {($i = 2$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\begin{align*}
+		\begin{split}
+			m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+			g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0
+		\end{split}
+		\quad \Rightarrow \quad 
+		\mathbf{J}_2 = 
+		\left(\begin{matrix}
+			- \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+			- \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+		\end{align*}		
+		\pause
+		\item[$\rightarrow$] keine Spalte mit nur einem nicht-Null-Eintrag, also Transformation $\mathbf{T}_2$ nötig:
+		\begin{align*}
+			\mathbf{J}_2^{\mathrm{L}+} &=
+			\left(
+			\left(\begin{matrix}
+				J_{2, (1,1)}
+			\end{matrix}\right)^{-1}	
+			\mathbf{0}_{1 \times 1}
+			\right), 		
+			\mathbf{J}_2^{\mathrm{L}\perp} =
+			\left(\begin{matrix}
+				-J_{2, (2,1)} & J_{2, (1,1)}
+			\end{matrix}\right) \\
+			\Rightarrow
+			\mathbf{T}_2 &=
+			\left(\begin{matrix}
+				\frac{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{- p_{1} + q_{1}} & 0\\
+				\frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} & \frac{- p_{1} + q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+			\end{matrix}\right)
+		\end{align*}
+		
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_3]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item {($i = 2$) transformierte Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\begin{align*}
+			\begin{split}
+				\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right)}{\left(p_{1} - q_{1}\right)} &= 0 \label{single_flat_transformed_syseq1}\\
+				g\frac{m_{2} \left(- g p_{1} + g q_{1} - p_{1} \ddot{p}_{2} + p_{2} \ddot{p}_{1} + \ddot{p}_{2} q_{1}\right)}{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}
+				&= 0
+			\end{split}
+			\quad \Rightarrow \quad 
+			\mathbf{J}_2' = 
+			\left(\begin{matrix}
+				1\\
+				0
+			\end{matrix}\right)
+		\end{align*}		
+		\pause
+		\item[$\rightarrow$] Elimination von $\tau_2$ und erster transformierter Gleichung
+		\pause
+		\item[$\rightarrow$] letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
+		\begin{equation*}
+			\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}
+		\end{equation*}
+		\pause
+		\item rein algebraisches Auftreten von $q_1$ führt zu Wahl von $\mathbf{y} = (p_1, p_2)^T$
+		
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_4]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\pause
+		\item aus letzter transformierter Systemgleichung:
+		\begin{equation*}
+			q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
+		\end{equation*}
+		\pause 
+		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{equation*}
+			\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+		\end{equation*}
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_5]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\item aus zuerst eliminierter originaler Systemgleichung:
+		\begin{equation*}
+			\tau_1 = \frac{m_{1} \textcolor{red}{\ddot{q}_{1}} \sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}} + p_{1} \textcolor{red}{\tau_{2}} - \textcolor{red}{q_{1}} \textcolor{red}{\tau_{2}}}{\sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}}}
+		\end{equation*}
+		\pause 
+		\item[$\rightarrow$] auch Größen $\textcolor{red}{q_1, \ddot{q}_1, \tau_2} \not\in \mathbf{y}$ in dieser Parametrisierung von $\tau_1$ enthalten
+		\pause 
+		\item[$\rightarrow$] Einsetzen der zweiten Ableitung von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$ und $\tau_2(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{flalign*}
+			\begin{split}
+				\tau_1 &=
+				\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
+				(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
+				&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
+				&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} + m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+				& + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+			\end{split}
+		\end{flalign*}
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Einzelkran_6]{\large Flachheitsanalyse am Einzelkran}
+	
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\item Zusammenfassung der Parametrisierungen:
+		\begin{align*}
+			\tau_1 &= \theta_1\left(p_2, \dot{p}_2, \ddot{p}_1, \ddot{p}_2, p_1^{(3)}, p_2^{(3)}, p_1^{(4)}, p_2^{(4)} \right) \\
+			\tau_2 &= \theta_2(p_1, p_2, \ddot{p}_1, \ddot{p}_2) \\
+			q_1 &= \Psi_1(p_1, p_2, \ddot{p}_1, \ddot{p}_2)
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\pause
+		\bigskip
+		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
 	\end{itemize}
 	
 \end{frame}

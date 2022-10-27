@@ -1,49 +1,31 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
-\begin{itemize}
+\frametitle{\large ERK-Inferenzsystem: Regelspezifikation}
 
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
-\end{itemize}
-
-\pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
-\begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
-
-
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-\end{textblock*}
-
-
-
+\begin{lstlisting}
+I400 = p.create_item(
+    R1__has_label="transitivity of R17__is_subproperty_of",
+    R4__is_instance_of=p.I41["semantic rule"],
+)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400["subproperty rule 1"].scope("context") as cm:
+    cm.new_var(P1=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P2=p.instance_of(p.I11["mathematical property"]))
+    cm.new_var(P3=p.instance_of(p.I11["mathematical property"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("premises") as cm:
+    cm.new_rel(cm.P2, p.R17["is subproperty of"], cm.P1)
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P2)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+with I400.scope("assertions") as cm:
+    cm.new_rel(cm.P3, p.R17["is subproperty of"], cm.P1)
+\end{lstlisting}
+% \pause
 

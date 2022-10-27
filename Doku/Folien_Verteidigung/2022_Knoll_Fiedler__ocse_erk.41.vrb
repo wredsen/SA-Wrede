@@ -1,49 +1,26 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
+\frametitle{\large ERK-Inferenzsystem}
+
+\textbf{Nachteile Imperativer Repräsentation}
 \begin{itemize}
-
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
+ \item ...
+%  \item Unklare Interoperabilität („Insellösung“)
+ \item Kein Einsatz existierender \textit{Reasoner}
 \end{itemize}
 
 \pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
 
+\bigskip
+\textbf{$\rightarrow$ Regelbasierte Inferenz}
 \begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
-
-
-\bigskip
+ \item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
+ \item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
 \pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
+ \item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
+ \item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+\pause
+ \item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
+ \smallskip
+ \item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
 
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
-}
-\end{textblock*}
-
-
-
+\end{itemize}
 
