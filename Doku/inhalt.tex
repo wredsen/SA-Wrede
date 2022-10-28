@@ -803,7 +803,7 @@ Die Koeffizienten der Trajektorien $a_{i, j}$ können durch Einsetzen der Randbe
 \subsection{Vektorieller relativer Grad}
 \label{sec:definition_relative_degree}
 
-Ein Ansatz zur Steuerung und Folgeregelung nichtlinearer Systeme fußt auf dem Prinzip der exakten Eingangs-Ausgangs-Linearisierung. Dabei bietet der sogenannte vektorielle relative Grad die Möglichkeit, Aussagen über die Entkopplung der Nichtlinearitäten zwischen den Ein- und Ausgängen von Mehrgrößensysteme zu treffen.
+Ein Ansatz zur Steuerung und Folgeregelung nichtlinearer Systeme fußt auf dem Prinzip der exakten Eingangs-Ausgangs-Linearisierung. Dabei erfolgt im Folgenden eine Definition des sogenannten vektoriellen relativen Grades, der die Möglichkeit bietet, Aussagen über die Entkopplung der Nichtlinearitäten zwischen den Ein- und Ausgängen von Mehrgrößensystemen zu treffen.
 
 Es wird zunächst ein allgemeines Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ betrachtet:
 \begin{equation}
@@ -827,7 +827,7 @@ Dabei gelte für den Zustand $\mathbf{x} \in \Reals^n$ sowie für die Vektorfeld
 	im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist.
 \end{enumerate}
 
-Die Regularität der Entkopplungsmatrix ist keineswegs selbstverständlich. Im Fall einer Singularität ist der vektorielle relative Grad an dieser Stelle nicht wohldefiniert.
+Wenn diese Matrix regulär ist, dann gibt es einen Vektor von Ausgangsableitungen wie bei der statischen Rückführung in Gleichung \eqref{eq:static_state_feedback} aufgezeigt, der sich nach allen Eingangskomponenten auflösen lässt. Die Regularität der Entkopplungsmatrix ist allerdings keineswegs selbstverständlich. Im Fall einer Singularität ist der vektorielle relative Grad an dieser Stelle nicht wohldefiniert.
 
 \subsection{Statische Rückführung}
 \label{sec:static_state_feedback}
@@ -837,12 +837,12 @@ Durch die Rückkopplung gemessener Zustandskomponenten soll eine Stabilisierung 
 \begin{equation}
 	\mathbf{y} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
 \end{equation}
-betrachtet. Die nichtlineare Eingangs-Ausgangs-Verkopplung wird durch eine statische (Zustands-)Rückführung
+betrachtet. Wenn die Entkopplungsmatrix entsprechend der Definition des vektoriellen relativen Grades regulär und damit invertierbar ist, kann die nichtlineare Eingangs-Ausgangs-Verkopplung durch eine statische (Zustands-)Rückführung
 \begin{equation}
 	\label{eq:static_state_feedback}
 	\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow \mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
 \end{equation}
-unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ kompensiert. Eine lineare Eingangs-Ausgangs-Dynamik wird erreicht. Der neue virtuelle Eingang kann dann in einem zweiten Entwurfsschritt so gewählt werden, dass der Trajektorienfolgefehler einer asymptotisch stabilen DGL genügt, siehe Abschnitt \ref{sec:error_dynamics}. \cite[S. 195]{NLRT_Roebenack}
+unter Nutzung eines virtuellen Eingangs $\mathbf{v} = (v_1, ..., v_m)^T$ kompensiert werden. Eine lineare Eingangs-Ausgangs-Dynamik wird erreicht. Der neue virtuelle Eingang kann dann in einem zweiten Entwurfsschritt so gewählt werden, dass der Trajektorienfolgefehler einer asymptotisch stabilen DGL genügt, siehe Abschnitt \ref{sec:error_dynamics}. \cite[S. 195]{NLRT_Roebenack}
 
 Bei dem vorliegenden Doppelkransystem kann durch Zeitableitungen der jeweiligen Komponente des flachen Ausgangs $y_i$ die damit korrespondierende Komponente des relativen Grades $r_i$ bestimmt werden. Diese entspricht der Ableitungsordnung, bei der das erste mal \textit{eine} Komponente des Eingangs $\mathbf{u}:=\boldsymbol{\tau}$ explizit auftritt. Hierbei werden die Zeitableitungen des Ausgangs durch Lie-Ableitungen entlang des Vektorfelds des Zustandsraummodells des Systems 
 \begin{equation}
@@ -908,31 +908,34 @@ Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist u
 
 Die in \eqref{eq:Lambda_double_crane} berechnete Entkopplungsmatrix $\boldsymbol{\Lambda}$ hat eine Nullspalte, weil $\tau_2$ in keiner Ableitung der Ausgangskomponenten $y_i^{(r_i)}$ explizit auftritt. Somit gilt ${\text{rang} \ \boldsymbol{\Lambda} =: k = 3 < m = 4}$. Um durch eine andere Definition der Eingänge eine reguläre Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ zu erhalten, muss also verhindert werden, dass die drei sonstigen Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ in allen Ausgangsableitungen bereits bei der Ableitungsordnung 2 auftreten. Tabelle \ref{tab:relative_degrees} kann entnommen werden, dass $\tau_{2}$ das erste Mal in einer der Ausgangsableitungen der Ordnung 4 von $y_1$, $y_2$ oder $y_3$ auftritt. Daher ist eine Ergänzung aller $k = 3$ Eingangskomponenten außer $\tau_2$ um jeweils zwei Integratoren vorzunehmen. \cite[S. 200]{NLRT_Roebenack} 
 
-Für die Integration werden drei weitere Zustandskomponenten $\alpha_1$, $\alpha_3$ und $\alpha_4$ sowie die neuen Eingangskomponenten $\beta_1$, $\beta_3$ und $\beta_4$ eingeführt. Die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ werden nun als Zustandskomponenten aufgefasst. Physikalisch bleibt das System allerdings unverändert. Einzig die Berechnung der Stellgrößen dieser Komponenten wird angepasst, indem nicht die jeweiligen Kräfte sondern ihre zweiten Zeitableitungen vorgegeben werden.
-
-So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erste mal bei der Ableitungsordnung 4 explizit auf. Die Systemgleichungen werden demnach um die folgenden DGL dynamisch erweitert:
+Das Zustandsraummodell wird um folgende definitorische Gleichungen erweitert:
 \begin{align}
 	\begin{split}
-		\dot{\tau}_1 &=: \alpha_1 \\
-		\dot{\tau}_3 &=: \alpha_3 \\
-		\dot{\tau}_4 &=: \alpha_4 \\
+		\alpha_1 &:= \dot{\tau}_1 \\
+		\alpha_3 &:= \dot{\tau}_3 \\
+		\alpha_4 &:= \dot{\tau}_4 .
+	\end{split}
+\end{align}
+Als neuer Systemeingang wird unter Umsortierung der Komponente $\tau_2$ an die letzte Stelle analog zu \cite[S. 201]{NLRT_Roebenack}:
+\begin{equation}
+	\tilde{\boldsymbol{\tau}} := (\beta_1, \beta_3, \beta_4, \tau_2)^T
+\end{equation}
+gewählt. Der Zustandsvektor wird auf
+\begin{equation}
+	\tilde{\mathbf{x}} := (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T
+\end{equation}
+erweitert. Physikalisch bleibt das System allerdings unverändert. Einzig die Berechnung der Stellgrößen dieser Komponenten wird angepasst, indem nicht die jeweiligen Kräfte sondern ihre zweiten Zeitableitungen vorgegeben werden. So treten die neuen Eingangskomponenten ebenso wie $\tau_2$ das erste mal bei der Ableitungsordnung 4 explizit auf. Es ergeben sich weiterhin folgende dynamische Gleichungen:
+\begin{align}
+	\begin{split}
 		\dot{\alpha}_1 &=: \beta_1 \\
 		\dot{\alpha}_3 &=: \beta_3 \\
 		\dot{\alpha}_4 &=: \beta_4 .
 	\end{split}
 \end{align}
 
-Daraus folgt die Definition eines neuen Eingangsvektors unter Umsortierung der Komponente $\tau_2$ an die letzte Stelle \cite[S. 201]{NLRT_Roebenack}:
+Die Ausgangsableitungen werden analog zu den Gleichungen \eqref{eq:state_space_vf} und \eqref{eq:Lie_time_deriv} rekursiv über Lie-Ableitungen entlang der erweiterten Zustandsgleichungen 
 \begin{equation}
-	\tilde{\boldsymbol{\tau}} := (\beta_1, \beta_3, \beta_4, \tau_2)^T.
-\end{equation}
-Der Zustandsvektor wird auf
-\begin{equation}
-	\tilde{\mathbf{x}} := (\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4)^T
-\end{equation}
-erweitert. Die Ausgangsableitungen werden analog zu den Gleichungen \eqref{eq:state_space_vf} und \eqref{eq:Lie_time_deriv} rekursiv über Lie-Ableitungen entlang der erweiterten Zustandsgleichungen 
-\begin{equation}
-	\tilde{\boldsymbol{\delta}} := \mathbf{\tilde{f}} + \mathbf{\tilde{g}} \tilde{\boldsymbol{\tau}}
+	\dot{\tilde{\mathbf{x}}} = \tilde{\boldsymbol{\delta}}(\tilde{\mathbf{x}}) := \mathbf{\tilde{f}}(\tilde{\mathbf{x}}) + \mathbf{\tilde{g}}(\tilde{\mathbf{x}}) \tilde{\boldsymbol{\tau}}
 \end{equation}
 mit
 \begin{align}
@@ -959,7 +962,17 @@ Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dies
 		* & * & 0 & 0 \\
 	\end{matrix}\right)
 \end{equation}
-stets existiert, also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} möglich. Diese wird als dynamische Rückführung bezeichnet. 
+stets existiert, also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} möglich. Diese wird als dynamische Rückführung bezeichnet. Eine Veranschaulichung der dynamischen Erweiterung dieses Systems erfolgt in Abbildung \ref{fig:dynamic_extension_diagram}.
+
+\begin{figure}[ht]
+	\begin{center}
+		% hier keine Skalierung notwendig, wenn Datei schon mit passender figsize angelegt wurde:
+		\includegraphics[scale=1]{Pictures/dynamic_extension}
+	\end{center}
+	\caption[Schematische Darstellung dynamischer Erweiterung des Doppellkransystems]
+	{Schematische Darstellung der dynamischen Erweiterung des Doppellkransystems.}
+	\label{fig:dynamic_extension_diagram}
+\end{figure}
 
 Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Die Zwiebelschalendiagramme in Abbildung \ref{onion_skinned_dyn_controller_initial_error} zeigen eine geometrische Veranschaulichung des selben Sachverhalts. Dabei ist die Bewegung der vier Gelenke sowie der beiden Seile und der Last dargestellt. Für spätere Simulationszeitpunkte sind diese Momentaufnahmen der Konfiguration des Doppelkransystems dunkler dargestellt.
 
