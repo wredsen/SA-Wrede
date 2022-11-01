@@ -963,7 +963,7 @@ mit
 \end{align}
 gebildet.
 
-Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad ist für eine Auswahl prototypischer Referenztrajektorien wohldefiniert, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und die Inverse der dynamisch erweiterten Entkopplungsmatrix ($*$ repräsentieren Einträge verschieden von Null)
+Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dieser relative Grad ist bei der simulativen Untersuchung mit einer Auswahl prototypischer Referenztrajektorien stets wohldefiniert\footnote{In dieser Arbeit erfolgt keine fundierte mathematische Untersuchung der Regularität von $\tilde{\boldsymbol{\Lambda}}$ beispielsweise auf Basis ihrer Determinante. Ob es physikalisch „sinnvolle“ Zustände des Systems gibt, bei dem $\tilde{\boldsymbol{\Lambda}}$ singulär wird, stellt einen relevanten Gegenstand weiterer Untersuchungen dar.}, da Bedingung 1 aus Abschnitt \ref{sec:definition_relative_degree} erfüllt ist und die Inverse der dynamisch erweiterten Entkopplungsmatrix ($*$ repräsentieren Einträge verschieden von Null)
 \begin{equation}
 	\tilde{\boldsymbol{\Lambda}} =
 	\left(\begin{matrix}
@@ -973,7 +973,7 @@ Für dieses modifizierte System folgt somit $r_i = 4$ für $i = 1, ..., 4$. Dies
 		* & * & 0 & 0 \\
 	\end{matrix}\right)
 \end{equation}
-stets existiert, also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} bezüglich des dynamisch erweiterten Systems mit $\tilde{\bullet}$~-Größen möglich. Diese wird aufgrund der drei neu eingeführten Doppelintegratoren vor den ursprünglichen Systemeingängen als dynamische Rückführung bezeichnet. Eine Veranschaulichung der dynamischen Erweiterung dieses Systems erfolgt in Abbildung \ref{fig:dynamic_extension_diagram}.
+existiert, $\tilde{\boldsymbol{\Lambda}}$ also regulär ist. Dementsprechend ist eine Zustandsrückführung nach Gleichung \eqref{eq:static_state_feedback} bezüglich des dynamisch erweiterten Systems mit $\tilde{\bullet}$~-Größen möglich. Diese wird aufgrund der drei neu eingeführten Doppelintegratoren vor den ursprünglichen Systemeingängen als dynamische Rückführung bezeichnet. Eine Veranschaulichung der dynamischen Erweiterung dieses Systems erfolgt in Abbildung \ref{fig:dynamic_extension_diagram}.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -984,8 +984,6 @@ stets existiert, also regulär ist. Dementsprechend ist eine Zustandsrückführu
 	{Schematische Darstellung der dynamischen Erweiterung des Doppellkransystems.}
 	\label{fig:dynamic_extension_diagram}
 \end{figure}
-
-Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt.
 
 Ein Nachteil der dynamischen Rückführung ist die höhere „Trägheit“ des Systems beim Ausregeln von Abweichungen von der Solltrajektorie, welche durch die zusätzlichen Integratoren vor den physikalischen Systemeingängen hervorgerufen werden. So ist es notwendig, die Pole der Fehlerdynamik für ein schnelles Ausgleichen von Anfangsfehlern relativ weit links in der komplexen Ebene zu platzieren. Zudem ergeben sich sehr lange Simulationsdauern, welche auch aus den relativ komplexen Stellgesetzen mit mehr als 20 000 Operationen je Eingangsgröße folgen. 
 
@@ -998,8 +996,9 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 		\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}).
 	\end{align}
 \end{subequations}
-
 \textcolor{red}{Der neue Eingang $\boldsymbol{\beta}$ hängt statisch vom alten Eingang $\boldsymbol{\tau}$ ab. Dies kann wie aus der Doppelintegratorstruktur in Abbildung \ref{fig:dynamic_extension_diagram} ersichtlich als Rückführung von $\boldsymbol{\tau}$ interpretiert werden und stellt somit die dynamische Regelung dar.}
+
+Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. \textcolor{red}{Diese Simulation bestätigt, dass mittels der dynamischen Rückführung eine akkurate Trajektorienfolge und stationäre Genauigkeit auch bei fehlerbehafteter Kenntnis der initialen Systemzustände erreicht werden kann. Ermöglicht wird dies durch die Vorschaltung jeweils eines Doppelintegrators vor die Eingangskomponenten $\tau_{1}$, $\tau_{3}$ und $\tau_{4}$, so dass sich im Gegensatz zur statischen Rückführung eine invertierbare Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ ergibt.}
 
 \subsubsection{Anpassung der Trajektorienplanung}
 Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen $\beta_1$, $\beta_3$ und $\beta_4$ ist an beide Rändern jeder Referenztrajektorie der flachen Ausgangskomponenten $y_i$ auch eine um  jeweils zwei Ordnungen höhere Forderung an die stetige Differenzierbarkeit zu stellen. Das Vorgehen nach Abschnitt \ref{sec:trajectory_flat_output} kann erneut analog durchgeführt werden mit jeweils um vier Ordnungen höheren Polynomen der Ausgangstrajektorien in den Gleichungen \eqref{eq:polynomes_ref_trajectories}.
@@ -1024,9 +1023,9 @@ Ebenso wie die dynamische Erweiterung kann eine quasi-statische Zustandsrückfü
 	\centering
 	\caption{Auftreten der Eingänge $\tau_j$ bei Ableitungsordnung $k$ der Ausgänge $y_i$.}
 	\label{tab:input_occurence}
-	\begin{tabular}{ c| c c c c } 
+	\begin{tabular}{ r| c c c c } 
 		\toprule
-		$k$ & $\tau_1$ & $\tau_2$ & $\tau_3$ & $\tau_4$ \\ 
+		$k \searrow$ & $\tau_1$ & $\tau_2$ & $\tau_3$ & $\tau_4$ \\ 
 		\hline
 		$y_1^{(k)}$ & 4 & 4 & 2 & 2\\ 
 		$y_2^{(k)}$ & 4 & 4 & 2 & 2\\
