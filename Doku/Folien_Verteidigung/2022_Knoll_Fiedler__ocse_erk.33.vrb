@@ -1,55 +1,29 @@
-\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
+\frametitle{\large Trajektorienplanung}
 
-  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
-  \begin{itemize}
-   \item OWL2: definierter Standard; basiert auf RDF
-   \item Theoretische Basis: Beschreibungslogik(en)
-   \begin{itemize}
-    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
-    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
-    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
-%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
-%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
-   \end{itemize}
-% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
-% \texttt{owl:allValuesFrom},
-% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
-  \end{itemize}
-
-% \pause
-%
-% \medskip
-%
-% % \textbf{Beispiel}:
-% \lstset{
-%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
-% }
-% \begin{lstlisting}
-% @prefix demo: <http://demo.xy/onto#> .
-% :pole rdf:type owl:Class.               # Klasse
-% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
-%
-% :typical_transfer_func rdf:type owl:Class ;
-%                 owl:equivalentClass [ rdf:type owl:Restriction ;
-%                                 owl:onProperty :has_pole ;
-%                                 owl:someValuesFrom :pole
-%                                 ].      # Klassenrestriktion
-% \end{lstlisting}
-
-
-\medskip
-\pause
-
-
-  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
-  \begin{itemize}
-   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
-%    \begin{itemize}
-%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
-%    \end{itemize}
-   \smallskip
-   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
-   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
-  \end{itemize}
-
-
+	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
+	\begin{align*}
+		\begin{split}
+			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
+			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
+			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen:
+	\end{itemize}
+	\pause
+	\begin{align*}
+		\label{eq:polynomes_ref_trajectories}
+		\begin{split}
+			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
+			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
+	\end{itemize}
+	

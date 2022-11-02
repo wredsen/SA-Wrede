@@ -1,45 +1,48 @@
-\frametitle{\large ERK -- Bemerkungen }
+\frametitle{\large Experimenteller Ansatz: ERK}
 
 
+\textbf{Verklemmung:}
+
+\smallskip
+
+\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
+$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
+
+\pause
+\bigskip
+
+\textbf{Pragmatischer Ansatz:}
 \begin{itemize}
-
-\setbeamercolor{normal text}{fg=mygray}
-\usebeamercolor[fg]{normal text}
-
- \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
- \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
-
- \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
- \begin{itemize}
-  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
-  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
- \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
- \end{itemize}
-
-%  \pause
- \medskip
- \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
-
-
-\begin{itemize}
- \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
- \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
- \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
-
- \medskip
- \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
+ \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
+ \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
 \end{itemize}
 
-\end{itemize}
+\pause
+\bigskip
 
-
-\setbeamercolor{normal text}{fg=tublue}
-\usebeamercolor[fg]{normal text}
-
+\textbf{Anforderungen}
 \begin{itemize}
-\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
-
+\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
+\item Basiert auf menschenlesbarem Text
+\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
 \end{itemize}
+
+\visible<4->{
+
+\begin{tikzpicture}[overlay,remember picture]
+      \path (n2) -| node[coordinate] (n3) {} (n1);
+      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
+            (n1) -- (n3) node[midway, right=4pt] {};
+  \end{tikzpicture}
+
+\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
+\visible<4->{
+  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
+}
+\end{textblock*}
+
+
+}
 
 
 

@@ -5,6 +5,7 @@
 	aspectratio=169 	% für 16:9 Format
 ]{beamer}
 
+\input{embed_video.tex}
 
 % \includeonlyframes{erk8,zf1}
 \newsavebox{\mysaveboxa}
@@ -836,7 +837,7 @@ showstringspaces=false,
 		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
 		\pause
 		\bigskip
-		\item Elimination von $\mathbf{u}$ durch jeweils eine Systemgleichungen
+		\item Elimination einer Komponente von $\mathbf{u}$ durch jeweils eine Systemgleichung
 		\pause
 		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
 		\pause
@@ -1117,6 +1118,192 @@ showstringspaces=false,
 		\bigskip
 		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
 	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Doppelkran_1]{\large Flachheitsanalyse am Doppelkran}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item Vorgehen analog zum Einzelkran
+		\pause
+		\item[$\rightarrow$] unpraktikable Darstellung umfangreicher Terme, über CAS \textit{SymPy} durchgeführt
+		\pause
+		\bigskip
+		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
+		\pause
+		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
+		\pause
+		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
+		\pause
+		\bigskip
+		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
+		\begin{equation*}
+			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_Doppelkran_2]{\large Flachheitsanalyse am Doppelkran}
+	
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
+		
+	\begin{itemize}
+		\item funktionale Zusammenhänge der Parametrisierungen:
+		\begin{align*}
+			\tau_1 &= \theta_1 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1, \ddot{q}_1 \right) \\
+			\tau_2 &= \theta_2 \left(p_1, \dot{p}_1, \ddot{p}_1, p_1^{(3)}, p_1^{(4)}, p_2, \dot{p}_2, \ddot{p}_2, p_2^{(3)}, p_2^{(4)}, p_3, \dot{p}_3, \ddot{p}_3, p_3^{(3)}, p_3^{(4)}, q_1, \dot{q}_1, \ddot{q}_1 \right) \\
+			\tau_3 &= \theta_3 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right) \\
+			\tau_4 &= \theta_4 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right) \\
+			q_2 &= \Psi_1 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right)
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ parametrisiert
+	\end{itemize}
+		
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}<1>[label=gl4]
+	\frametitle{Gliederung}
+	\begin{itemize}
+		%0
+		\item[\cdbox] System- und Problembeschreibung
+		%1
+		\item[\cdbox] Analytische Modellbildung
+		%2
+		\item[\cdbox] Flachheitsanalyse
+		%3
+		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<1>{Steuerungs- und Regelungsentwurf}
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[label=control]
+	\frametitle{Steuerungs- und Regelungsentwurf}
+	\textbf{Allgemeines Vorgehen:}
+	\begin{itemize}
+		\item Planung polynombasierter Referenztrajektorien für den flachen Ausgang $\mathbf{y}$
+		\pause
+		\item Trajektorien der Systemeingänge $\boldsymbol{\tau}(t)$ folgen aus $\mathbf{y}(t)$
+		\pause
+		\item[$\rightarrow$] Vor\textbf{steuerung} durch Parametrisierung aus Flachheitsnachweis möglich
+		\pause
+		\item Entwurf einer Folge\textbf{regelung} um diese Trajektorien
+	\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorien_1]{\large Trajektorienplanung}
+	
+	\textbf{Anforderungen:}
+	\begin{itemize}
+		\pause
+		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
+		\pause
+		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
+		\pause
+		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Vorgabe von Randbedingungen:}
+	\begin{itemize}
+		\pause
+		\item Differenzierbarkeitsbedingungen an $\mathbf{y}(t)$ folgen aus $\boldsymbol{\tau}(\mathbf{y}(t), \dot{\mathbf{y}}(t), ...)$
+		\pause
+		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
+		\pause
+		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
+		
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorien_2]{\large Trajektorienplanung}
+	
+	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
+	\begin{align*}
+		\begin{split}
+			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
+			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
+			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen: 
+	\end{itemize}
+	\pause
+	\begin{align*}
+		\label{eq:polynomes_ref_trajectories}
+		\begin{split}
+			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
+			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorien_3]{\large Trajektorienplanung}
+	
+\begin{center}
+	\embedvideo{\includegraphics[width=\textwidth]{images/real_gantry}}{images/gantrycrane.mp4}
+\end{center}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_1]{\large Trajektorienfolgeregelung}
+   	
+   	\begin{block}{Vektorieller relativer Grad}
+	Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
+	\begin{centering}
+		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
+	\end{centering}
+	\pause
+	mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+	\begin{enumerate}
+		\pause
+		\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
+		\pause
+		\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
+		\begin{equation*}
+			\label{eq:decoupling_matrix}
+			\boldsymbol{\Lambda} = 
+			\left(\begin{smallmatrix}
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+				\vdots & \ddots & \vdots \\
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+			\end{smallmatrix}\right) .
+		\end{equation*}
+	\end{enumerate}
+	\end{block}
 	
 \end{frame}
 
@@ -2408,6 +2595,8 @@ $\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
 % 
 % \end{frame}
 %  
+
+% TODO: MP4-Video in Latex: https://www.youtube.com/watch?v=BspamyoyjUk
 
 \end{document}
 

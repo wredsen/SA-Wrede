@@ -1,0 +1,49 @@
+\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
+\begin{itemize}
+
+ \item
+Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
+
+\pause
+\medskip
+ \item
+Für Regelungstheorie existiert noch keine etablierte Technologie
+
+\pause
+\medskip
+ \item
+Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
+\end{itemize}
+
+\pause
+\bigskip
+{\large \textbf{Diskussion} (offene Fragen)}
+
+\begin{itemize}
+ \item Grundsätzliche Tauglichkeit?
+
+ \medskip
+ \item (Automatisierte) Qualitätssicherung?
+
+ \medskip
+ \item Wissensintegration als sozialer Prozess?
+\end{itemize}
+
+
+\bigskip
+\pause
+$\rightarrow$ Herzliche Einladung zur Kollaboration
+
+
+
+\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
+\visible<5->{
+\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
+
+{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
+}
+\end{textblock*}
+
+
+
+

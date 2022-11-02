@@ -8,7 +8,7 @@
 		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
 		\pause
 		\bigskip
-		\item Elimination von $\mathbf{u}$ durch jeweils eine Systemgleichungen
+		\item Elimination einer Komponente von $\mathbf{u}$ durch jeweils eine Systemgleichung
 		\pause
 		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
 		\pause

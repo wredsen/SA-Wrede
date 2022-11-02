@@ -747,7 +747,7 @@ Da beide Matrizen nicht eindeutig sind, kann für ihre Bestimmung der folgende A
 	\end{matrix}\right)^T.
 \end{equation}
 
-Durch Einsetzen der Komponenten von $\mathbf{J}_2$ in \eqref{eq:ortho_pseudo_double_crane} kann die Transformationsmatrix $\mathbf{T}_3$ nach den Gleichungen \eqref{eq:flatness_trafo} berechnet werden. Auf die konkrete Angabe dieser sowie der später vorgenommenen Parametrisierungen aller Systemgrößen wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen. Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die ersten beiden transformierten Systemgleichungen eliminieren.
+Durch Einsetzen der Komponenten von $\mathbf{J}_3$ in \eqref{eq:ortho_pseudo_double_crane} kann die Transformationsmatrix $\mathbf{T}_3$ nach den Gleichungen \eqref{eq:flatness_trafo} berechnet werden. Auf die konkrete Angabe dieser sowie der später vorgenommenen Parametrisierungen aller Systemgrößen wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:flatness_analysis_double_crane} erwähnte Jupyter-Notebook verwiesen. Aus der Multiplikation der somit gefundenen Transformationsmatrix $\mathbf{T}_3$ mit den übrigen drei Systemgleichungen lassen sich entsprechend der Anforderungen an ihre Konstruktion anschließend die noch übrigen Eingangskomponenten $\tau_{3}$ und $\tau_{4}$ sowie die ersten beiden transformierten Systemgleichungen eliminieren.
 
 Die letzte verbliebene Systemgleichung enthält folgende Menge $\mathcal{M}$ an Systemgrößen und deren Ableitungen:
 \begin{equation}
@@ -786,7 +786,7 @@ Aufgrund der einfachen Vorgabe von Randbedingungen und Erfüllung von Differenzi
 	\end{split}
 \end{align}
 
-Es ergeben sich Ansatzfunktionen für die Trajektorien des flachen Ausgangs mit jeweiliger Ordnung $2 N_i - 1$, wobei $N_i$ der Anzahl der Randbedingungen des jeweiligen Ausgangs entspricht:
+Es ergeben sich Ansatzfunktionen für die Trajektorien des flachen Ausgangs mit jeweiliger Ordnung $N_i - 1$, wobei $N_i$ der Anzahl der Randbedingungen des jeweiligen Ausgangs entspricht:
 \begin{align}
 	\label{eq:polynomes_ref_trajectories}
 	\begin{split}

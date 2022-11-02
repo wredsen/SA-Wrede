@@ -1,59 +1,43 @@
-\frametitle{\large OCSE -- Repräsentation von Mathematik}
+\frametitle{\large ERK - Beispiel: \textit {Inhalt} des Satzes von Cayley-Hamilton}
 
-\begin{itemize}
- \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
-%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
-%  \hfill $\rightarrow$ unpraktikabel
-%
- \pause
- \medskip
- \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
-\end{itemize}
+\vspace{-4mm}
 
-
- \pause
- \medskip
-
-\textbf{Beispiel: \py{R8133["relative degree"]}} \\
-% Subklasse von I5356["general system property"]
-($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
-
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
+}
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("context") as cm:
+    cm.new_var(A=uq_instance_of(I9906["square matrix"]))
+    cm.new_var(n=uq_instance_of(p.I39["positive integer"]))
+\end{lstlisting}
 \pause
-\smallskip
-benötigt:
-
-\smallskip
-\begin{itemize}
- \item \py|I1371["iterated Lie derivative of scalar field"]|
- \pause
-    \begin{itemize}
-    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
-    \pause
-        \begin{itemize}
-        \item[\textbullet] \py|I2075["substitution"]|
-        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
-        \item[\textbullet] \py|I2753["flow of a vector field"]|
-        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
-        \end{itemize}
-    \end{itemize}
-\end{itemize}
-
-$\ldots$
+\begin{lstlisting}
+    cm.new_var(P=p.instance_of(I4240["matrix polynomial"]))
+    cm.new_var(Z=p.instance_of(I9905["zero matrix"]))
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+    cm.new_rel(cm.A, R5938["has row number"], cm.n)
+    cm.new_rel(cm.A, R5940["has characteristic polynomial"], cm.P)
+    cm.new_rel(cm.Z, R5938["has row number"], cm.n)
+    cm.new_rel(cm.Z, R5939["has column number"], cm.n)
+\end{lstlisting}
+%     cm.new_rel(cm.Z, p.R24["has LaTeX string"], r"\mathbf{0}")
+\pause
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("assertions") as cm:
+    cm.new_equation(lhs=cm.P(cm.A), rhs=cm.Z)
+\end{lstlisting}
 
 
-\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
-\visible<5->{
+\begin{textblock*}{50mm}[0.,0.](100mm,67mm)
+\visible<4->{
 
 
-\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
-$\dot x = f(x) + g(x)u$\\
-$y = h(x)$
+\begin{tcolorbox}[colback=lightblue,colframe=softblue]
 
-\vspace{3mm}
-
-$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
+$P(\mathbf{A}) = \mathbf{Z}$ \quad mit $\mathbf{Z}:= \mathbf{0}$
 \end{tcolorbox}
 }
 \end{textblock*}
-
 
