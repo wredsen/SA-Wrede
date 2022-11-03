@@ -1,26 +1,43 @@
-\frametitle{\large ERK-Inferenzsystem}
+\frametitle{\large ERK - Beispiel: \textit {Inhalt} des Satzes von Cayley-Hamilton}
 
-\textbf{Nachteile Imperativer Repräsentation}
-\begin{itemize}
- \item ...
-%  \item Unklare Interoperabilität („Insellösung“)
- \item Kein Einsatz existierender \textit{Reasoner}
-\end{itemize}
+\vspace{-4mm}
 
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
+}
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("context") as cm:
+    cm.new_var(A=uq_instance_of(I9906["square matrix"]))
+    cm.new_var(n=uq_instance_of(p.I39["positive integer"]))
+\end{lstlisting}
 \pause
-
-\bigskip
-\textbf{$\rightarrow$ Regelbasierte Inferenz}
-\begin{itemize}
- \item Beispiel: Klassifikation von $\dot x = a\sin(x) + bx^2 + c x + u$
- \item \textit{Eingangsaffinität} $\supset$ \textit{Polynomialität} (a=0) $\supset$ \textit{Linearität} (a,b=0)
+\begin{lstlisting}
+    cm.new_var(P=p.instance_of(I4240["matrix polynomial"]))
+    cm.new_var(Z=p.instance_of(I9905["zero matrix"]))
+\end{lstlisting}
 \pause
- \item Im Graph: ~ \py|I4761["linear"]| ~ \py|R17["is subproperty of"]| ~ \py|I5247["polynomial"]|
- \item Wunsch: Schlussfolgerung von ~ \py|I4761["linear"]| ~ \py|R17| ~ \py|I6091["control affine"]|
+\begin{lstlisting}
+    cm.new_rel(cm.A, R5938["has row number"], cm.n)
+    cm.new_rel(cm.A, R5940["has characteristic polynomial"], cm.P)
+    cm.new_rel(cm.Z, R5938["has row number"], cm.n)
+    cm.new_rel(cm.Z, R5939["has column number"], cm.n)
+\end{lstlisting}
+%     cm.new_rel(cm.Z, p.R24["has LaTeX string"], r"\mathbf{0}")
 \pause
- \item Abstrakt: Transitivität der Relation \py|R17["is subproperty of"]|
- \smallskip
- \item Wunsch: Regel soll selbst Teil des Wissensgraphen sein
+\begin{lstlisting}
+with I3749["Cayley-Hamilton theorem"].scope("assertions") as cm:
+    cm.new_equation(lhs=cm.P(cm.A), rhs=cm.Z)
+\end{lstlisting}
 
-\end{itemize}
+
+\begin{textblock*}{50mm}[0.,0.](100mm,67mm)
+\visible<4->{
+
+
+\begin{tcolorbox}[colback=lightblue,colframe=softblue]
+
+$P(\mathbf{A}) = \mathbf{Z}$ \quad mit $\mathbf{Z}:= \mathbf{0}$
+\end{tcolorbox}
+}
+\end{textblock*}
 

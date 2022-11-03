@@ -1,30 +1,46 @@
-\frametitle{\large \underline {O}ntology of \underline {C}ontrol \underline {S}ystems \underline {E}ngineering}
+\frametitle{\large ERK -- Bemerkungen }
 
-\textbf{2021: OCSE 0.1}
+
 \begin{itemize}
- \item in OWL implementiert
- \item Taxonomie einfach umsetzbar
- \item Weitere Beziehungen schwierig  (mangelnde OWL-Ausdrucksstärke)
+
+\setbeamercolor{normal text}{fg=mygray}
+\usebeamercolor[fg]{normal text}
+
+ \item[\tca{\textbullet}] Alle \textit{Item}s und \texttt{Relation}s haben eindeutige URI (z.\,B. \texttt{erk:/builtins\#I41})
+ \item[\tca{\textbullet}] Unterstützung für Mehrsprachigkeit (Label, Beschreibung, ...)
+
+ \item[\tca{\textbullet}] Unterstützung für Qualifier (Kanten, die auf Kanten zeigen)
+ \begin{itemize}
+  \item[\tca{\textbullet}] Semantische Information steckt in Knoten und Kanten
+  \item[\tca{\textbullet}] menschenlesbare Texte sind Hilfsattribute
+ \item[\tca{\textbullet}] Lesbarkeit für Mensch und Maschine:\quad \texttt{I41["{}semantische Regel"@de]} $\hat{=}$ \texttt{I41}
+ \end{itemize}
+
+%  \pause
+ \medskip
+ \item[\tca{\textbullet}] Zur Begriffswahl „Emergent“ (\underline{E}RK)
+
+
+\begin{itemize}
+ \item[\tca{\textbullet}] \textit{Emergenz} wörtlich: „das Auftauchen“
+ \item[\tca{\textbullet}] Bedeutung: Phänomen, dass in komplexen Systemen Eigenschaften auftreten, die nicht aus den Eigenschaften der Elemte vorhergesagt werden können.
+ \item[\tca{$\rightarrow$}]: \textit{Das Ganze ist mehr als die Summe seiner Teile.}
+
+ \medskip
+ \item[\tca{\textbullet}] Ursprünglich: ERK -- „\textit{Easy} Knowledge Representation“
 \end{itemize}
 
-\pause
-\bigskip
-\textbf{2022: OCSE 0.2}
-\begin{itemize}
- \item Basierend auf ERK implementiert
- \item Größere Modellierungstiefe möglich
 \end{itemize}
 
 
-\begin{textblock*}{40mm}[0.,0.](10mm,46mm)
-\only<1>{
-\includegraphics[width=140mm]{img/ocse-prototype01.pdf}
-}
-\end{textblock*}
-% \begin{textblock*}{40mm}[0.,0.](75mm,13mm)
-% \only<2>{
-% %\includegraphics[trim=left bottom right top, clip]{file}
-% \includegraphics[trim=300mm 0 1200mm 90mm, clip,width=80mm]{img/ocse-prototype01.pdf}
-% }
-% \end{textblock*}
+\setbeamercolor{normal text}{fg=tublue}
+\usebeamercolor[fg]{normal text}
+
+\begin{itemize}
+\item \textbf{$\exists$ RDF-Export $\rightarrow$ SPARQL Suche möglich}
+
+\end{itemize}
+
+
+
 

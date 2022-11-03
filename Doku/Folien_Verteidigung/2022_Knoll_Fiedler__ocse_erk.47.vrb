@@ -1,28 +1,58 @@
-\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation (2)}
+\frametitle{\large ERK: Imperative statt deklarative Wissensrepräsentation}
 
-\vspace{-2mm}
-
-\textbf{Vorteile}
+\textbf{Deklarativ}
 \begin{itemize}
- \item Direkte Programm-interne Repräsentation (kein Parsen)
- \item Direkte Erweiterbarkeit (Plugins im Graphen)
+ \item Formuliert in \textit{Beschreibungs}sprache (z.B. OWL (Turtle Syntax))
 \end{itemize}
 
-\pause
-\bigskip
-\textbf{Anwendung:} Geltungsbereiche (\textit{scopes})
-\begin{itemize}
- \item Gliederung einer Aussage in \textit{Kontext-Etablierung}, \textit{Prämisse}, \textit{Behauptung}
- \item Gesamtaussage abhängig davon in welchem \textit{scope} eine Teilausage steht
- \item Deklarativ: nur sehr aufwendig umsetzbar
- \item Imperativ: einfach umsetzbar (automatisches Erzeugen von Hilfsknoten/kanten)
-\end{itemize}
 
-\pause
+
+
+% \begin{textblock*}{40mm}[0.,0.](12mm,27mm)
+% \visible<2>{
+% \includegraphics{img/listing2}
+% }
+% \end{textblock*}
 
 \lstset{
   basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
+\begin{lrbox}{\mysaveboxa}
+\begin{lstlisting}
+I3749 rdfs:label "Cayley-Hamilton theorem".
+I3749 rdfs:comment "every square matrix is a root of its own char. poly.".
+I3749 rdf:type :I15_implication_proposition.
+\end{lstlisting}
+\end{lrbox}
+
+
+\only<2->{
+\medskip
+\usebox{\mysaveboxa}
+}
+
+% https://tex.stackexchange.com/questions/250052/custom-lstlisting-highlighting-for-symbols
+% %   basicstyle=\fontsize{8}{11}\selectfont\ttfamily,
+% \lstset{
+%   language=Python,
+% %     showstringspaces=false,
+%     backgroundcolor=\color{black!20},
+% %     basicstyle=\lstfont{white},
+% %     identifierstyle=\lstfont{white},
+%     keywordstyle=\lstfont{magenta!40},
+%     numberstyle=\lstfont{white},
+% %     stringstyle=\lstfont{cyan},
+% %     commentstyle=\lstfont{yellow!30},
+%     emph={
+%         cudaMalloc, label, I3749
+%         __global__, __shared__, __device__, __host__,
+%         __syncthreads,
+%     },
+%     emphstyle={\lstfont{green!60!white}},
+%     breaklines=true
+% }
+
+\begin{lrbox}{\mysaveboxb}
 \begin{lstlisting}
 I3749 = p.create_item(
     R1__has_label="Cayley-Hamilton theorem",
@@ -30,9 +60,17 @@ I3749 = p.create_item(
     R4__is_instance_of=p.I15["implication proposition"],
 )
 \end{lstlisting}
+\end{lrbox}
 
+\pause
+\pause
+\bigskip
 
-
-% \textbf{Bemerkung:} Deklarativ funktioniert auch; Imperativ besser für Prototypenphase
-
+\textbf{Imperativ}
+\begin{itemize}
+ \item Formuliert in \textit{Programmier}sprache (z.B. Python)
+\end{itemize}
+\visible<3>{
+\usebox{\mysaveboxb}
+}
 

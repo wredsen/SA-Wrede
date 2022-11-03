@@ -1,59 +1,44 @@
-\frametitle{\large OCSE -- Repräsentation von Mathematik}
-
-\begin{itemize}
- \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
-%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
-%  \hfill $\rightarrow$ unpraktikabel
-%
- \pause
- \medskip
- \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
-\end{itemize}
+\frametitle{\large OCSE -- Wie anfangen?}
 
 
- \pause
- \medskip
-
-\textbf{Beispiel: \py{R8133["relative degree"]}} \\
-% Subklasse von I5356["general system property"]
-($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
-
-\pause
-\smallskip
-benötigt:
-
-\smallskip
-\begin{itemize}
- \item \py|I1371["iterated Lie derivative of scalar field"]|
- \pause
-    \begin{itemize}
-    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
-    \pause
-        \begin{itemize}
-        \item[\textbullet] \py|I2075["substitution"]|
-        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
-        \item[\textbullet] \py|I2753["flow of a vector field"]|
-        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
-        \end{itemize}
-    \end{itemize}
-\end{itemize}
-
-$\ldots$
-
-
-\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
-\visible<5->{
-
-
-\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
-$\dot x = f(x) + g(x)u$\\
-$y = h(x)$
-
-\vspace{3mm}
-
-$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
-\end{tcolorbox}
+\lstset{
+  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
 }
-\end{textblock*}
+% \begin{itemize}
+%  \item[]
+% \end{itemize}
+\vspace{-3mm}
+ Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
+\pause
+\begin{lstlisting}
+I5948 = p.create_item(
+    R1__has_label="dynamical system",
+    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
+)
+\end{lstlisting}
+% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
+
+\smallskip
+Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
+\pause
+
+
+\vspace{-1em}
+\begin{lstlisting}
+I7641 = p.create_item(
+    R1__has_label="general system model",
+    R4__is_instance_of=p.I2["Metaclass"],
+)
+\end{lstlisting}
+
+\vspace{-2em}
+\pause
+\begin{lstlisting}
+R7641 = p.create_relation(
+    R1__has_label="has approximation",
+    R8__has_domain_of_argument_1=I5948["dynamical system"],
+    R11__has_range_of_result=I7641["general system model"],
+)
+\end{lstlisting}
 
 

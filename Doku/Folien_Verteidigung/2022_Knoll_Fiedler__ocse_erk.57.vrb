@@ -1,69 +1,59 @@
-\frametitle{\large OCSE -- Status {\color <1-3>{mygray} und Anwendungen}}
-
-\textbf{Status}: \texttt{<erk:/builtins>} $\cup$ \texttt{<erk:/ocse/0.2>}: $\approx$ 230 Knoten, 400 Kanten
-
-\medskip
-\only<2-3>{\textbf{Visualisierung}:}
-
-
-
-
-
-\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
-\visible<2>{
-% \includegraphics[trim=0mm 0mm 235mm 218mm, clip,width=50mm]{img/erk-graph-builtins}
-\includegraphics[clip,width=45mm]{img/erk-graph-builtins}
-}
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](10mm,26mm)
-\visible<3>{
-\includegraphics[width=135mm]{img/erk-graph-all.pdf}
-}
-\end{textblock*}
-
-\pause
-\pause
-\pause
-
-\medskip
-\only<4->{
-\textbf{Bisherige Anwendung:}
-
-Klassifikation von Enititäten im \textbf{A}utomatic \textbf{C}ontrol \textbf{K}nowledge \textbf{Rep}ository (ACKREP)
-
-\smallskip
-(Systemmodelle, Problembeschreibungen, Lösungsmethoden)
-
-\pause
-\smallskip
-$\rightarrow$ Ermöglicht SPARQL-Suche\\
-(z.\,B. exakt E-Z-linearisierbare Modelle mit $n > 3$)
-
-
-\begin{textblock*}{40mm}[0.,0.](97mm,39mm)
-\visible<4->{
-\includegraphics[width=50mm]{img/model_classification.pdf}
-}
-\end{textblock*}
-
-
-
-\pause
-
-\medskip
-\bigskip
-\textbf{Mögliche zukünftige Anwendungen}
+\frametitle{\large OCSE -- Repräsentation von Mathematik}
 
 \begin{itemize}
- \item (Autom.) Klassifikation von Veröffentlichungen\\
- Denkbar: bis auf Satz- bzw. Gleichungsebene.
-
- \item Assistenzsoftware für Reglerentwurf
-
+ \item Regelungstheoretische Aussagen benötigen unverzichtbar Mathematik
+%  \item Relevante mathematische Konzepte „von Grund auf“ einführen?
+%  \hfill $\rightarrow$ unpraktikabel
+%
+ \pause
+ \medskip
+ \item Pragmatischer Ansatz: Irgendwo anfangen und schrittweise ergänzen
 \end{itemize}
 
-$\rightarrow$ Wissenstransfer
 
+ \pause
+ \medskip
+
+\textbf{Beispiel: \py{R8133["relative degree"]}} \\
+% Subklasse von I5356["general system property"]
+($\hat{=}$ $\frac{d}{dt}$-Ordnung des Systemausgangs, die erstmals explizit vom Eingang abhängt)
+
+\pause
+\smallskip
+benötigt:
+
+\smallskip
+\begin{itemize}
+ \item \py|I1371["iterated Lie derivative of scalar field"]|
+ \pause
+    \begin{itemize}
+    \item[\textbullet] \py|I1347["Lie derivative of scalar field"]|
+    \pause
+        \begin{itemize}
+        \item[\textbullet] \py|I2075["substitution"]|
+        \item[\textbullet] \py|I3513["derivative w.r.t. scalar parameter"]|
+        \item[\textbullet] \py|I2753["flow of a vector field"]|
+        \item[\textbullet] \py|I9273["explicit first order ODE system"]|
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+$\ldots$
+
+
+\begin{textblock*}{46mm}[0.,0.](110mm,47mm)
+\visible<5->{
+
+
+\begin{tcolorbox}[colback=lightblue,colframe=softblue,title=Lie Ableitung]
+$\dot x = f(x) + g(x)u$\\
+$y = h(x)$
+
+\vspace{3mm}
+
+$L_f h := \Big(\frac{d}{dt} \varphi_t^f (x)\Big)\Big|_{t=0}$
+\end{tcolorbox}
 }
+\end{textblock*}
+
 

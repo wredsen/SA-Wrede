@@ -1,6 +1,6 @@
-\frametitle{\large Trajektorienplanung}
+\frametitle{\large Prototypische Referenztrajektorie}
 
 \begin{center}
-	\embedvideo{\includegraphics[width=\textwidth]{images/real_gantry}}{images/gantrycrane.mp4}
+	\embedvideo{\includegraphics[width=65mm]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
 \end{center}
 	
