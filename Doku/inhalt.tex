@@ -907,9 +907,9 @@ Nicht nur bei der statischen Rückführung sondern nach jeglicher Kompensation d
 
 Nach \cite[S. 195]{NLRT_Roebenack} kann eine lineare Fehlerdynamik bezüglich des Trajektorienfolgefehlers $e_i := y_i - y_{i, \text{ref}}$ mit dem Messwert bzw. simuliertem Wert $y_i$ und dem Wert der Referenztrajektorie $y_{i, \text{ref}} = \mathrm{func}(t)$. In der Literatur wird an dieser Stelle lediglich die Abweichung bezüglich eines Festwerts $y_{i, \text{ref}} = \mathrm{const.}$ angesetzt. Damit können auch die Komponenten des virtuellen Eingangs gewählt werden:
 \begin{align}
-	e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 
+	e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \label{eq:error_ode_relative_degree}
 	\\
-	\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i.
+	\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i. 
 \end{align}
 Die Koeffizienten $c_{i, k}, \ k \in {0, 1, ..., r_i-1}$ sind für eine Stabilisierung des Systems so zu wählen, dass das charakteristische Polynom dieser Gleichung ausschließlich Nullstellen mit negativem Realteil aufweist. Die konkrete Wahl der Koeffizienten bzw. der Nullstellen stellt einen Entwurfsfreiheitsgrad dar.
 
@@ -1010,7 +1010,7 @@ Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen
 		\includegraphics[scale=1]{Pictures/dyn_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über dynamische Erweiterung]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die dynamische Erweiterung. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}. Teilweise nichtlineare Achseneinteilung aufgrund verschiedener Größenordnungen in Referenz- und Isttrajektorien wegen Anfangsfehlern.}
 	\label{fig_dyn_controller_initial_error}
 \end{figure}
 
@@ -1061,38 +1061,47 @@ Auf Basis der Ausgangsableitungen $y_i^{(r_i)}$ wird eine Linearisierung des Sys
 	\end{align}
 \end{subequations}
 
-Daraus ist ersichtlich, dass durch ein Gleichungssystem aus \eqref{eq:qstat_new_input_v1}, \eqref{eq:qstat_new_input_v3} und \eqref{eq:qstat_new_input_v4}, in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser Komponenten möglich ist. Auch hier besteht ein Unterschied zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind. Dabei muss kein Gleichungssystem gelöst werden, sondern es genügt das sukzessives Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge. Dieser Unterschied bedeutet also einen Mehraufwand durch die Lösung eines Gleichungssystems in dieser Arbeit.
+Daraus ist ersichtlich, dass durch ein Gleichungssystem aus \eqref{eq:qstat_new_input_v1}, \eqref{eq:qstat_new_input_v3} und \eqref{eq:qstat_new_input_v4}, in denen die Eingangskomponenten $\tau_1$, $\tau_3$ und $\tau_4$ affin auftreten, eine explizite Darstellung dieser Komponenten möglich ist. Auch hier besteht ein Unterschied zur Situation in \cite[S. 207]{NLRT_Roebenack}, bei der die relativen Grade der Ausgangskomponenten aufsteigend sind. Dabei muss kein Gleichungssystem gelöst werden, sondern es genügt das sukzessive Einsetzen der vorher berechneten Eingänge und die algebraische Umformung der abgeleiteten Ausgänge. Dieser Unterschied bedeutet also einen Mehraufwand durch die Lösung eines Gleichungssystems in dieser Arbeit.
  
-Die Berechnung von $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Dabei ist die Substitution bisheriger Eingangskomponenten und deren Ableitungen notwendig, welche analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang $\bar{\boldsymbol{\delta}}$ generiert werden können. Es folgt ein relativ umfangreicher Ausdruck für $\tau_2$, der mehr als einhunderttausend Rechenoperationen enthält.
+Das Auflösen von Gleichung \eqref{eq:qstat_new_input_v2} nach $\tau_2$ erfordert einen größeren Aufwand als bei den anderen Eingangskomponenten. Zusammen mit den Gleichungen \eqref{eq:qstat_new_input_v1} und \eqref{eq:qstat_new_input_v3} ist ersichtlich, dass dafür auch Ableitungen der Eingangskomponenten $\tau_3$ und $\tau_4$ und somit auch des neuen Eingags $\mathbf{v}$ gebildet werden müssen. Diese können analog zu Gleichung \eqref{eq:Lie_time_deriv} aus den Lie-Ableitungen entlang $\bar{\boldsymbol{\delta}}$ generiert werden. Es folgt ein relativ umfangreicher Ausdruck für
+\begin{equation}
+	\tau_2 = \mathrm{func}(\mathbf{x}, v_1, v_2, v_3, v_4, \dot{v}_1, \dot{v}_3, \ddot{v}_1, \ddot{v}_3) \label{eq:qstat_tau2_func},
+\end{equation}
+der mehr als einhunderttausend Rechenoperationen enthält.
 
 Nach \cite[S. 208]{NLRT_Roebenack} können lineare Fehlerdynamiken und daraus $\mathbf{v}$ entsprechend der jeweiligen relativen Grade der Ausgangskomponenten zur Stabilisierung des Systems angesetzt werden. Die Komponenten des virtuellen Eingangs $v_1$, $v_3$ und $v_4$ sind jeweils nur von den Zustandskomponenten $\bar{\mathbf{x}}$ abhängig. Die Komponente $v_2$ hängt allerdings auch von den Ableitungen $\ddot{y}_2 = \ddot{p}_2$ und $y_2^{(3)} = p_2^{(3)}$ ab, welche durch Lie-Ableitungen berechnet werden können:
 \begin{align}
 	\label{eq:p2_derivs_Lie}
 	\begin{split}
-		\ddot{p}_2 &= \ddot{y}_2 = L_{\bar{\boldsymbol{\delta}}} \dot{y}_2 = L_{\bar{\boldsymbol{\delta}}} \dot{p}_2 \\
-		p_2^{(3)} &= y_2^{(3)} = L_{\bar{\boldsymbol{\delta}}} \ddot{p}_2.
+		\ddot{p}_2 &= \ddot{y}_2 = L_{\bar{\boldsymbol{\delta}}} \dot{y}_2 = L_{\bar{\boldsymbol{\delta}}} \dot{p}_2 = \mathrm{func}(\mathbf{x}, v_1, v_3) \\
+		p_2^{(3)} &= y_2^{(3)} = L_{\bar{\boldsymbol{\delta}}} \ddot{p}_2 = \mathrm{func}(\mathbf{x}, v_1, v_3, \dot{v}_1, \dot{v}_3).
 	\end{split}
 \end{align}
 
-Außerdem werden in der Darstellung von $\tau_2$ Ableitungen der Eingangskomponenten $v_1$, $v_3$ und $v_4$ benötigt, die aus deren Fehlerdynamiken zweiter Ordnung folgen:
-\begin{align}
-	\begin{split}
-	    \ddot{e}_i + c_{i,1} \dot{e}_i + c_{i, 0} e_i &= 0 \\
-		e_i^{(3)} + c_{i, 1} \ddot{e}_i + c_{i, 0} \dot{e}_i &= 0 \\
-		e_i^{(3)} + c_{i, 1} (-c_{i, 1} \dot{e}_i - c_{i, 0} e_i) + c_{i, 0} \dot{e}_i &= 0 \\
-		e_i^{(3)} - c_{i, 1}^2 \dot{e}_i + c_{i, 0} \dot{e}_i - c_{i, 0} c_{i, 1} e_i &= 0 \\
-		e_i^{(3)} + (c_{i, 0} - c_{i, 1}^2) \dot{e}_i - c_{i, 0} c_{i, 1} e_i &= 0 \\
-		e_i^{(4)} + (c_{i, 0} - c_{i, 1}^2) \ddot{e}_i - c_{i, 0} c_{i, 1} \dot{e}_i &= 0 \\
-		e_i^{(4)} + (c_{i, 0} - c_{i, 1}^2) (-c_{i, 1} \dot{e}_i - c_{i, 0} e_i) - c_{i, 0} c_{i, 1} \dot{e}_i &= 0 \\
-		e_i^{(4)} + (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i + (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i &= 0 \\
-		\Rightarrow \text{ für } i = 1,3,4: \dot{v}_i = y_i^{(3)} &= y_{i, \text{ref}}^{(3)} - (c_{i, 0} - c_{i, 1}^2) \dot{e}_i + c_{i, 0} c_{i, 1} e_i \\
-		\ddot{v}_i = y_i^{(4)} &= y_{i, \text{ref}}^{(4)} - (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i - (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i.
-	\end{split}
-\end{align}
+Außerdem werden nach Gleichung \eqref{eq:qstat_tau2_func} in der Darstellung von $\tau_2$ Ableitungen der Eingangskomponenten $v_1$ und $v_3$ benötigt. Für diese können Fehlerdynamiken zweiter Ordnung wie in Gleichung \eqref{eq:error_ode_relative_degree} angesetzt werden:
+\begin{subequations}
+	\begin{align}
+ 		\ddot{e}_i + c_{i,1} \dot{e}_i + c_{i, 0} e_i &= 0 \label{eq:error_ode_v13_ddot_e} \\
+		\stackrel{\diff{}{t}}{\Rightarrow} e_i^{(3)} + c_{i, 1} \ddot{e}_i + c_{i, 0} \dot{e}_i &= 0 \\
+		\stackrel{\eqref{eq:error_ode_v13_ddot_e}}{\Rightarrow} e_i^{(3)} + c_{i, 1} (-c_{i, 1} \dot{e}_i - c_{i, 0} e_i) + c_{i, 0} \dot{e}_i &= 0 \\
+		\Leftrightarrow e_i^{(3)} - c_{i, 1}^2 \dot{e}_i + c_{i, 0} \dot{e}_i - c_{i, 0} c_{i, 1} e_i &= 0 \\
+		\Leftrightarrow e_i^{(3)} + (c_{i, 0} - c_{i, 1}^2) \dot{e}_i - c_{i, 0} c_{i, 1} e_i &= 0 \label{eq:error_ode_v13_dddot_e}\\
+		\stackrel{\diff{}{t}}{\Rightarrow} e_i^{(4)} + (c_{i, 0} - c_{i, 1}^2) \ddot{e}_i - c_{i, 0} c_{i, 1} \dot{e}_i &= 0 \\
+		\stackrel{\eqref{eq:error_ode_v13_ddot_e}}{\Rightarrow} e_i^{(4)} + (c_{i, 0} - c_{i, 1}^2) (-c_{i, 1} \dot{e}_i - c_{i, 0} e_i) - c_{i, 0} c_{i, 1} \dot{e}_i &= 0 \\
+		\Leftrightarrow e_i^{(4)} + (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i + (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i &= 0. \label{eq:error_ode_v13_ddddot_e}
+	\end{align}
+\end{subequations}
+Somit können die Ableitungen $\dot{v}_i$ und $\ddot{v}_i$ für $i = 1, 3$ aus der Definition des Trajektorienfolgefehlers $e_i = y_i - y_{i, \text{ref}}$ gebildet werden:
+\begin{subequations}
+	\begin{align}
+		\stackrel{\eqref{eq:error_ode_v13_dddot_e}}{\Rightarrow} \dot{v}_i = y_i^{(3)} &= y_{i, \text{ref}}^{(3)} - (c_{i, 0} - c_{i, 1}^2) \dot{e}_i + c_{i, 0} c_{i, 1} e_i \\
+		\stackrel{\eqref{eq:error_ode_v13_ddddot_e}}{\Rightarrow} \ddot{v}_i = y_i^{(4)} &= y_{i, \text{ref}}^{(4)} - (c_{i, 1}^3 - 2 c_{i, 0} c_{i, 1}) \dot{e}_i - (c_{i, 0} c_{i, 1}^2 - c_{i, 0}^2) e_i.
+	\end{align} 
+\end{subequations}
 
-Die Komponente $v_2$ ergibt sich nach einem Ansatz vierter Ordnung unter Einbeziehung des Zusammenhangs \eqref{eq:p2_derivs_Lie}:
+Zur weiteren Stabilisierung wird für die Komponente $v_2$ ein Ansatz vierter Ordnung unter Einbeziehung des Zusammenhangs \eqref{eq:p2_derivs_Lie} gewählt:
 \begin{equation}
-	v_2 = y_2^{(4)} = y_{2, \text{ref}}^{(4)} - c_{2, 3} (y_2^{(3)} - y_{2, \text{ref}}^{(3)}) - c_{2, 2} (\ddot{y}_2 - \ddot{y}_{2, \text{ref}}) - c_{2, 1} (\dot{y}_2 - \dot{y}_{2, \text{ref}}) - c_{2, 0} (y_2 - y_{2, \text{ref}})
+	v_2 = y_2^{(4)} = y_{2, \text{ref}}^{(4)} - c_{2, 3} (y_2^{(3)} - y_{2, \text{ref}}^{(3)}) - c_{2, 2} (\ddot{y}_2 - \ddot{y}_{2, \text{ref}}) - c_{2, 1} (\dot{y}_2 - \dot{y}_{2, \text{ref}}) - c_{2, 0} (y_2 - y_{2, \text{ref}}).
 \end{equation} 
 
 Auf die konkrete symbolische Angabe der Stellgesetze wird aus Platz- und Praktikabilitätsgründen verzichtet und stattdessen auf das zu Beginn dieses Abschnitts \ref{sec:quasi_static_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
@@ -1123,9 +1132,9 @@ Des Weiteren ist die Fragestellung von Interesse, weshalb sich solche Lücken be
 \label{sec:exact_feedforward_lin_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation.ipynb]{SAGithub} zu finden.
 
-Bei der exact feedforward linearization wird statt einer Kompensation der Nichtlinearität mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ wie bei der exakten Eingangs-Ausgangs-Linearisierung die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt \cite{Hagenmeyer2003}.
+Bei der exact feedforward linearization wird, im Unterschied zur exakten Eingangs-Ausgangs-Linearisierung, die Nichtlinearität nicht mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ kompensiert, sondern an deren Stelle die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt \cite{Hagenmeyer2003}.
 
-Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind!) angesetzt:
+Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind) angesetzt:
 \begin{equation}
 	\ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}.
 \end{equation}
