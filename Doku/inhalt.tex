@@ -997,9 +997,9 @@ Auf die konkrete symbolische Angabe der Stellgesetze des Systemeingangs wird aus
 		\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}).
 	\end{align}
 \end{subequations}
-\textcolor{red}{Der neue Eingang $\boldsymbol{\beta}$ hängt statisch vom alten Eingang $\boldsymbol{\tau}$ ab. Dies kann wie aus der Doppelintegratorstruktur in Abbildung \ref{fig:dynamic_extension_diagram} ersichtlich als Rückführung von $\boldsymbol{\tau}$ interpretiert werden und stellt somit die dynamische Regelung dar.}
+Der neue Eingang $\boldsymbol{\beta}$ hängt statisch vom alten Eingang $\boldsymbol{\tau}$ ab. Dies kann wie aus der Doppelintegratorstruktur in Abbildung \ref{fig:dynamic_extension_diagram} ersichtlich als Rückführung von $\boldsymbol{\tau}$ interpretiert werden und ist somit Teil die dynamischen Regelung.
 
-Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. \textcolor{red}{Diese Simulation bestätigt, dass mittels der dynamischen Rückführung eine akkurate Trajektorienfolge und stationäre Genauigkeit auch bei fehlerbehafteter Kenntnis der initialen Systemzustände erreicht werden kann. Ermöglicht wird dies durch die Vorschaltung jeweils eines Doppelintegrators vor die Eingangskomponenten $\tau_{1}$, $\tau_{3}$ und $\tau_{4}$, so dass sich im Gegensatz zur statischen Rückführung eine invertierbare Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ ergibt.}
+Prototypische Trajektorien beim Übergang zwischen zwei Ruhelagen mit einem auszuregelnden Anfangsfehler sind in Abbildung \ref{fig_dyn_controller_initial_error} dargestellt. Diese Simulation bestätigt, dass mittels der dynamischen Rückführung eine akkurate Trajektorienfolge und stationäre Genauigkeit auch bei fehlerbehafteter Kenntnis der initialen Systemzustände erreicht werden kann. Ermöglicht wird dies durch die Vorschaltung jeweils eines Doppelintegrators vor die Eingangskomponenten $\tau_{1}$, $\tau_{3}$ und $\tau_{4}$, so dass sich im Gegensatz zur statischen Rückführung eine invertierbare Entkopplungsmatrix $\tilde{\boldsymbol{\Lambda}}$ ergibt.
 
 \subsubsection{Anpassung der Trajektorienplanung}
 Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen $\beta_1$, $\beta_3$ und $\beta_4$ ist an beide Rändern jeder Referenztrajektorie der flachen Ausgangskomponenten $y_i$ auch eine um  jeweils zwei Ordnungen höhere Forderung an die stetige Differenzierbarkeit zu stellen. Das Vorgehen nach Abschnitt \ref{sec:trajectory_flat_output} kann erneut analog durchgeführt werden mit jeweils um vier Ordnungen höheren Polynomen der Ausgangstrajektorien in den Gleichungen \eqref{eq:polynomes_ref_trajectories}.
@@ -1018,15 +1018,17 @@ Durch die Einführung von jeweils zwei Integratoren nach den neuen Stellgrößen
 \label{sec:quasi_static_control}
 Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist unter \cite[flatness\_notebooks/ODE\_flatness\_trajectory\_control\_simulation\_qstat.ipynb]{SAGithub} zu finden.
 
-Ebenso wie die dynamische Erweiterung in Abschnitt \ref{sec_dynamic_extension_control} kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefinierten relativen vektoriellen Grad im statischen Ansatz entsprechend Abschnitt \ref{sec:static_state_feedback} zur Stabilisierung des Systems angesetzt werden. Dafür wird das Vorgehen nach \cite[S. 206]{NLRT_Roebenack} im Folgenden nachvollzogen und am Doppelkransystem angewendet. Tabelle \ref{tab:input_occurence} gibt die Ableitungsordnung $k_{i,j}$ der Ausgangskomponente $y_i$ an, bei der die  Eingangskomponente $\tau_j$ mit $i,j = 1, ..., 4$ (erstmals) auftritt\footnote{Bei dieser Untersuchung wurden im CAS nur Ausgangsableitungen bis zur vierten Ordnung gebildet. Bis dahin trat die Eingangskomponente $\tau_{2}$ in $y_4^{(k_{4,j})}$ nicht auf.}.
+Ebenso wie die dynamische Erweiterung in Abschnitt \ref{sec_dynamic_extension_control} kann eine quasi-statische Zustandsrückführung bei einem nicht wohldefinierten relativen vektoriellen Grad im statischen Ansatz entsprechend Abschnitt \ref{sec:static_state_feedback} zur Stabilisierung des Systems angesetzt werden. Dafür wird das Vorgehen nach \cite[S. 206]{NLRT_Roebenack} im Folgenden nachvollzogen und am Doppelkransystem angewendet. Dabei ergeben sich Unterschiede bzw. in der Literatur nicht betrachtete Situationen, so dass die Vorgehensweise an einigen Stellen angepasst werden muss oder nur sinngemäß angewendet werden kann.
+
+Tabelle \ref{tab:input_occurence} gibt die Ableitungsordnung $k_{i,j}$ der Ausgangskomponente $y_i$ an, bei der die  Eingangskomponente $\tau_j$ mit $i,j = 1, ..., 4$ (erstmals) auftritt\footnote{Bei dieser Untersuchung wurden im CAS nur Ausgangsableitungen bis zur vierten Ordnung gebildet. Bis dahin trat die Eingangskomponente $\tau_{2}$ in $y_4^{(k_{4,j})}$ nicht auf. Aus Aufwandsgründen wurde auf die Bildung höherer Ableitungen verzichtet.}.
 
 \begin{table}[htbp]%
 	\centering
-	\caption{Auftreten der Eingänge $\tau_j$ bei Ableitungsordnung $k_{i,j}$ der Ausgänge $y_i$.}
+	\caption{Ableitungsordnung $k_{i,j}$ für das Auftreten des Eingangs $\tau_j$ beim Ausgang $y_i$.}
 	\label{tab:input_occurence}
 	\begin{tabular}{ r| c c c c } 
 		\toprule
-		$k_{i,j} \searrow$ & $\tau_1$ & $\tau_2$ & $\tau_3$ & $\tau_4$ \\ 
+		& $\tau_1$ & $\tau_2$ & $\tau_3$ & $\tau_4$ \\ 
 		\hline
 		$y_1^{(k_{1,j})}$ & 4 & 4 & 2 & 2\\ 
 		$y_2^{(k_{2,j})}$ & 4 & 4 & 2 & 2\\
@@ -1047,9 +1049,9 @@ Erneut wird o. B. d. A. der flache Ausgang ${\mathbf{y} = (y_1, y_2, y_3, y_4)^T
 \end{equation}
 (sowie $\bar{\mathbf{f}}$, $\bar{\mathbf{g}}$ analog zu \eqref{eq:dynamic_extension_lambda_state_space}) generiert werden.
 
-Die Eingangskomponente $\tau_3$ tritt zuerst bei $r_1 = 2$ in $\ddot{y}_1$ sowie auch in allen sonstigen zweiten Ableitungen des flachen Ausgangs auf. Dies gilt nicht für alle Eingangskomponenten, da der relative vektorielle Grad für $r_i = 2$ für $i = 1, ..., 4$ nicht wohldefiniert ist. Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. Dies entspricht nicht der in \cite[S. 206]{NLRT_Roebenack} dargestellten Form, bei der für das Auftreten von $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss. Die Eingangsgröße $\tau_2$ erscheint das erste Mal explizit bei $r_i = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$, $\tau_1$ zuerst bei $r_4 = 2$ in $\ddot{y}_4$.
+Die Eingangskomponente $\tau_3$ tritt in der zweiten Ableitung jeder Komponente des flachen Ausgangs auf. Dadurch müssten die Komponenten des relativen Grades alle den Wert $r_i = 2$ haben. Aus Abschnitt \ref{sec:static_state_feedback} ist allerdings bekannt, dass der relative vektorielle Grad für $r_i = 2$ für $i = 1, ..., 4$ nicht wohldefiniert ist. Außerdem tritt $\tau_4$ auch bei $r_3 = 2$ in $\ddot{y}_1$, $\ddot{y}_2$ und $\ddot{y}_3$, nicht aber in $\ddot{y}_4$ auf. Dies entspricht nicht der in \cite[S. 206]{NLRT_Roebenack} dargestellten Form, bei der für das Auftreten von $u_2$ der Ausgang $y_2$ noch weiter differenziert werden muss. Trotzdem wird das in der Literatur beschriebene Vorgehen anschließend weiter verfolgt. Die Eingangsgröße $\tau_2$ erscheint das erste Mal explizit bei $r_i = 4$ in $y_1^{(4)}$, $y_2^{(4)}$ oder $y_3^{(4)}$, $\tau_1$ zuerst bei $r_4 = 2$ in $\ddot{y}_4$. Demnach treten die Eingangskomponenten nicht gestaffelt entsprechend einer Dreiecksstruktur auf wie in \cite[S. 207]{NLRT_Roebenack} angedeutet.
 
-Eine Definition der neuen virtuellen Eingänge $v_i$ ist folgendermaßen möglich:
+Auf Basis der Ausgangsableitungen $y_i^{(r_i)}$ wird eine Linearisierung des Systems durch Rückführung entsprechend Abschnitt \ref{sec:static_state_feedback} angesetzt, allerdings können in diesem quasi-statischen Fall auch Eingangsableitungen in den neuen virtuellen Eingängen $v_i$ auftreten:
 \begin{subequations}
 	\begin{align}
 		\ddot{y}_1 = \ddot{p}_1 &=: v_1 = \mathrm{func}(\mathbf{x}, \tau_3, \tau_4) \label{eq:qstat_new_input_v1} \\
