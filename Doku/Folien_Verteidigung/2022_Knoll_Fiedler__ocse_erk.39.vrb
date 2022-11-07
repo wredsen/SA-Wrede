@@ -1,55 +1,48 @@
-\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
+\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
 
-  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
   \begin{itemize}
-   \item OWL2: definierter Standard; basiert auf RDF
-   \item Theoretische Basis: Beschreibungslogik(en)
-   \begin{itemize}
-    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
-    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
-    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
-%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
-%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
-   \end{itemize}
-% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
-% \texttt{owl:allValuesFrom},
-% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
+  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
+%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
+   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
+%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
   \end{itemize}
 
-% \pause
-%
-% \medskip
-%
-% % \textbf{Beispiel}:
-% \lstset{
-%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
-% }
-% \begin{lstlisting}
-% @prefix demo: <http://demo.xy/onto#> .
-% :pole rdf:type owl:Class.               # Klasse
-% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
-%
-% :typical_transfer_func rdf:type owl:Class ;
-%                 owl:equivalentClass [ rdf:type owl:Restriction ;
-%                                 owl:onProperty :has_pole ;
-%                                 owl:someValuesFrom :pole
-%                                 ].      # Klassenrestriktion
-% \end{lstlisting}
+  \pause
+  \medskip
+Grundlegendes Schema:
 
 
-\medskip
-\pause
+  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
+\visible<2->{
+  \includegraphics[width=40mm]{img/listing1.pdf}
+}
+\end{textblock*}
+
+\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
+\visible<3>{
+  \includegraphics[width=100mm]{img/paper-graph-view.png}
+}
+\end{textblock*}
 
 
-  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
-  \begin{itemize}
-   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
-%    \begin{itemize}
-%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
-%    \end{itemize}
-   \smallskip
-   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
-   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
-  \end{itemize}
+\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
+\visible<4>{
+\begin{center}
+
+Repräsentanz der Regelungstheorie:\\[1mm]
+
+\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
+\end{center}
+}
+\end{textblock*}
+
+
+
+
+\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
+\visible<5>{
+$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
+}
+\end{textblock*}
 
 
