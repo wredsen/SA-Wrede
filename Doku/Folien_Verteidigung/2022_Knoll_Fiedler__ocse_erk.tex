@@ -5,7 +5,8 @@
 	aspectratio=169 	% für 16:9 Format
 ]{beamer}
 
-%\input{embed_video.tex}
+% MP4 videos in Latex PDFs: https://www.youtube.com/watch?v=BspamyoyjUk
+\input{embed_video.tex}
 
 % \includeonlyframes{erk8,zf1}
 \newsavebox{\mysaveboxa}
@@ -63,7 +64,8 @@
 
 % allgemeine Angaben
 % ==================
-\title[Modellbildung und Reglerentwurf Brückenkransystem]{Verteidigung der Studienarbeit: Modellbildung und Reglerentwurf für ein Brückenkransystem}
+\title[Modellbildung und Reglerentwurf Brückenkransystem]{Verteidigung der Studienarbeit:\\
+	Modellbildung und Reglerentwurf für ein Brückenkransystem}
 \subtitle{}
 
 \author{Konstantin Wrede}
@@ -78,7 +80,7 @@
 % oder
 	\einrichtung{TU Dresden}
 	%\fachrichtung{Fachrichtung}
-	\institut{Institut für Regelungs- und Steuerungstheorie}
+	\institut{Institut für Regelungs- und Steuerungstheorie; Fraunhofer IIS/EAS}
 %	\professur{Professur}
 
 
@@ -758,7 +760,7 @@ showstringspaces=false,
 		
 		\visible<1->{	
 			\textbf{Eingangsaffines Zustandsraummodell:}			
-		\begin{align}
+		\begin{align*}
 			\label{eq:state_space_double_crane}
 			\begin{split}
 				\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\ 
@@ -779,7 +781,7 @@ showstringspaces=false,
 					0 & * & 0 & *
 				\end{matrix}\right) \ \text{wobei} \ * \neq 0 
 			\end{split}
-		\end{align}
+		\end{align*}
 		}
 	\end{textblock*}
 	
@@ -1270,10 +1272,10 @@ showstringspaces=false,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[t,fragile,label=trajektorien_3]{\large Prototypische Referenztrajektorie}
-	
-%\begin{center}
-	%\embedvideo{\includegraphics[width=65mm]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
-%\end{center}
+
+\begin{center}
+	\embedvideo{\includegraphics[width=95mm]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
+\end{center}
 	
 \end{frame}
 
@@ -1305,7 +1307,7 @@ showstringspaces=false,
 	\end{enumerate}
 	\end{block}
 	
-	\begin{textblock*}{42mm}[0.,0.](117mm,50mm)
+	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
 		\visible<3->{
 			
 			
@@ -1325,21 +1327,99 @@ showstringspaces=false,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[t,fragile,label=trajektorienregelung_2]{\large Trajektorienfolgeregelung}
-	
-	\textbf{statische Rückführung:}
+
 	\begin{itemize}
-		\item blabla
+		\item Bestimmung der Komponenten $r_i$
 	\end{itemize}
+	\begin{align*}
+	y_i &= h_i(\mathbf{x}) \\
+	\dot{y}_i &= L_{\mathbf{f}} h_i(\mathbf{x}) \\
+	&\vdots \\
+	y_i^{(r_i - 1)} &= L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) \\
+	y_i^{(r_i)} &= L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m
+	\end{align*}
 	\pause
+
+	\begin{table}[htbp]%
+		\centering
+		%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+		\label{tab:relative_degrees}
+		\begin{tabular}{c| c c c c}
+			\hline
+			Index $i$ & 1 & 2 & 3 & 4 \\ 
+			\hline
+			Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
+			\hline
+			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+			\hline
+			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & $y_{1,2,3}^{(4)}$ & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_3]{\large Trajektorienfolgeregelung}
+	
+	\begin{itemize}
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
 	\begin{equation*}
 		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
 	\end{equation*}
+	\pause
 	\begin{itemize}
-		\item blabla
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
 	\end{itemize}
+	\pause
 	\begin{equation*}
-		\boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \stackrel{!}{=} \mathbf{v} \Rightarrow \mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
 	\end{equation*}
+	\begin{itemize}
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\end{itemize}
+	\begin{align*}
+			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
+
+	\begin{textblock*}{72mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} = 
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_4]{\large Trajektorienfolgeregelung}
+	
+	\begin{itemize}
+		\item Entkopplungsmatrix für das Doppelkransystem
+	\end{itemize}
+	\begin{align*}
+		\boldsymbol{\Lambda} = 
+		\left(\begin{smallmatrix}
+			0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+		\end{smallmatrix}\right)
+	\end{align*}
+	\pause
+	\begin{itemize}
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, statische Rückführung also nicht anwendbar
+	\end{itemize}
 	
 \end{frame}
 
@@ -1515,8 +1595,6 @@ $\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
 % 
 % \end{frame}
 %  
-
-% TODO: MP4-Video in Latex: https://www.youtube.com/watch?v=BspamyoyjUk
 
 \end{document}
 

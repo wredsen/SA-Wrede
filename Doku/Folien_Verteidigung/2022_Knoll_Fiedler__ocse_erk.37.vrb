@@ -1,49 +1,37 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
-\begin{itemize}
+\frametitle{\large Trajektorienfolgeregelung}
 
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
+	\begin{itemize}
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
+	\begin{equation*}
+		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\end{equation*}
+	\pause
+	\begin{itemize}
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
+	\end{itemize}
+	\pause
+	\begin{equation*}
+		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+	\end{equation*}
+	\begin{itemize}
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\end{itemize}
+	\begin{align*}
+			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
 
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
-\end{itemize}
-
-\pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
-\begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
-
-
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
-}
-\end{textblock*}
-
-
-
-
+	\begin{textblock*}{72mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	

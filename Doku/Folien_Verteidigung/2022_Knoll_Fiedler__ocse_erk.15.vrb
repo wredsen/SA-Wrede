@@ -20,7 +20,7 @@
 		
 		\visible<1->{	
 			\textbf{Eingangsaffines Zustandsraummodell:}			
-		\begin{align}
+		\begin{align*}
 			\label{eq:state_space_double_crane}
 			\begin{split}
 				\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\
@@ -41,7 +41,7 @@
 					0 & * & 0 & *
 				\end{matrix}\right) \ \text{wobei} \ * \neq 0
 			\end{split}
-		\end{align}
+		\end{align*}
 		}
 	\end{textblock*}
 	
