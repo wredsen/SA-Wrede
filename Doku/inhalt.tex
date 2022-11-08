@@ -1134,7 +1134,7 @@ Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist u
 
 Bei der exact feedforward linearization wird, im Unterschied zur exakten Eingangs-Ausgangs-Linearisierung, die Nichtlinearität nicht mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ kompensiert, sondern an deren Stelle die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt \cite{Hagenmeyer2003}.
 
-Heuristisch wird eine Fehlerdynamik der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind) angesetzt:
+Heuristisch wird eine Dynamik des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind) angesetzt:
 \begin{equation}
 	\ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}.
 \end{equation}
@@ -1144,14 +1144,18 @@ Aus der Zusammensetzung des Zustandsvektors $\mathbf{x} = (\boldsymbol{\theta}, 
 	\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}
 \end{equation}
 
-hergestellt werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da für den Systemeingang $\boldsymbol{\tau} \in \mathbb{R}^4$ und für die Eingangsmatrix $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung einer Pseudo-Inversen $\mathbf{g}_{[6, 10]}^+$ nach dem Eingangsvektor aufgelöst werden:
+hergestellt werden. Dabei bedeutet die Indizierung $\bullet_{[i, j]}$, die Auswahl der Zeilen $i$ bis $j$ von $\bullet$. Da für den Systemeingang $\boldsymbol{\tau} \in \mathbb{R}^4$ und für die Eingangsmatrix $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$ gilt, kann dieser Zusammenhang über die Bildung der Moore-Penrose-Pseudoinversen mit vollem Rang von vier
+\begin{equation}
+	\mathbf{g}_{[6, 10]}^+ =  (\mathbf{g}_{[6, 10]}^T \	\mathbf{g}_{[6, 10]})^{-1} 	\mathbf{g}_{[6, 10]}^T
+\end{equation}
+nach dem Eingangsvektor aufgelöst werden:
 \begin{equation}
 	\boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta})).
 \end{equation}
 
 Durch Einsetzen der Referenztrajektorien der Koordinaten $\boldsymbol{\theta}_{\text{ref}}$ in $\mathbf{g}_{[6, 10]}^+(\boldsymbol{\theta})$ und $\mathbf{f}_{[6, 10]}(\boldsymbol{\theta})$ wird die exact feedforward linearization realisiert:
 \begin{equation}
-\label{eq:control_law__ff_lin_pseudo}
+\label{eq:control_law__ff_lin_moore_penrose_pseudo}
 \boldsymbol{\tau}= \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})).
 \end{equation} 
 
@@ -1163,20 +1167,21 @@ Abbildung \ref{fig_feedforward_pseudo_controller_initial_error} zeigt prototypis
 		\includegraphics[scale=1]{Pictures/feedforward_lin_pseudo_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Pseudoinverse)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Pseudoinverser. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Moore-Penrose-Pseudoinverse und Stellgesetz \eqref{eq:control_law__ff_lin_moore_penrose_pseudo}. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
 	\label{fig_feedforward_pseudo_controller_initial_error}
 \end{figure}
 
 \subsubsection{Vereinfachung mittels Ausgangsselektion}
-Statt der Nutzung einer Pseudo-Inversen wie in Gleichung \eqref{eq:control_law__ff_lin_pseudo} wird im Folgenden eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\ddot{\boldsymbol{\theta}}$ vorgenommen. Symbolisch wird dies über eine Selektionsmatrix $\mathbf{S}$ dargestellt:
+Statt der Nutzung der Moore-Penrose-Pseudoinversen wie im Stellgesetz in Gleichung \eqref{eq:control_law__ff_lin_moore_penrose_pseudo} wird im Folgenden eine Selektion von vier der fünf Gleichungen der Beschleunigungen $\ddot{\boldsymbol{\theta}}$ vorgenommen. Symbolisch wird dies über eine Selektionsmatrix $\mathbf{S}$ dargestellt:
 \begin{equation}
 	\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} = \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \boldsymbol{\tau}.
 \end{equation} 
 
 Durch die Wahl der letzten vier Gleichungen kann eine direkte Inversion der somit quadratischen Eingangsmatrix $\mathbf{g}_{[7, 10]} = \mathbf{S} \cdot \mathbf{g}_{[6, 10]}$ erfolgen:
 \begin{equation}
+	\label{eq:control_law__ff_lin_selection}
 	\boldsymbol{\tau}= \mathbf{g}^{-1}_{[7, 10]}(\boldsymbol{\theta}_{\text{ref}}) \cdot \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) \text{ mit } 
-	\mathbf{S} = 
+	\mathbf{S} := 
 	\begin{pmatrix}
 	0 & 1 & 0 & 0 & 0 \\
 	0 & 0 & 1 & 0 & 0 \\
@@ -1187,7 +1192,7 @@ Durch die Wahl der letzten vier Gleichungen kann eine direkte Inversion der somi
 
 Diese Berechnungsvorschrift der Stellgrößen enthält deutlich weniger Operationen als alle zuvor dargestellten Ansätze. Damit eignet sie sich insbesondere für eine spätere Implementierung auf einem Echtzeitsystemen sowie sehr viel kürzeren Simulationszeiten. Abbildung \ref{fig_feedforward_selec_controller_initial_error} zeigt, dass sich für Beispieltrajektorien mit Anfangsfehlern ebenso wie bei den vorherigen Ansätzen ein sehr gutes Folgeverhalten sowie stationäre Genauigkeit ergibt.
 
-Auf die Darstellung konkreter symbolischer Ausdrücke für die Stellgesetze wird aus Platz- und Praktikabilitätsgründen dennoch verzichtet, da jede Eingangskomponente trotzdem mehr als einhundert Rechenoperationen beinhaltet. Stattdessen wird auf das zu Beginn dieses Abschnitts \ref{sec:exact_feedforward_lin_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle eine Angabe von funktionalen Abhängigkeiten:
+Auf die Darstellung konkreter symbolischer Ausdrücke für die Stellgesetze wird aus Platz- und Praktikabilitätsgründen dennoch verzichtet, da jede Eingangskomponente trotzdem mehr als einhundert Rechenoperationen beinhaltet. Stattdessen wird auf das zu Beginn dieses Abschnitts \ref{sec:exact_feedforward_lin_control} erwähnte Jupyter-Notebook verwiesen. Übersichtlicher ist an dieser Stelle wieder eine Angabe funktionaler Abhängigkeiten:
 \begin{subequations}
 	\begin{align}
 		\tau_1 &= \mathrm{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}}) \\
@@ -1199,12 +1204,14 @@ Auf die Darstellung konkreter symbolischer Ausdrücke für die Stellgesetze wird
 
 \subsubsection{Stabilitätsbetrachtung}
 Im Folgenden wird die Simulation einer prototypischen Referenztrajektorie mit dem zuletzt vorgestellten Regelungsansatz betrachtet. Die Eigenwerte der Jacobimatrix $\mathbf{J}_{\dot{\mathbf{e}}}$ einer Fehlerdynamik
-\begin{align}
-	\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
-	\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
-	\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
-\end{align}
-sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} zeigt, dass diese Eigenwerte in diesem Fall im Zeitraum von 5 $\si{s}$ bis 9 $\si{s}$ einen positiven Realteil aufweisen. Es ist möglich, dass aufgrund des bis dahin bereits stark abgeklungenen Folgefehlers keine ausreichende Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulation weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl der Rückführung, etwa ohne lineare Dynamik, könnte dieses Problem lösen.
+\begin{subequations}
+	\begin{align}
+		\mathbf{e} &:= \mathbf{x} - \mathbf{x}_{\mathrm{ref}} \Leftrightarrow \mathbf{x} = \mathbf{e} + \mathbf{x}_{\mathrm{ref}} \\
+		\dot{\mathbf{e}} &= \dot{\mathbf{x}} - \dot{\mathbf{x}}_{\mathrm{ref}} = \mathbf{f}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) + \mathbf{g}(\mathbf{e} + \mathbf{x}_{\mathrm{ref}}) \boldsymbol{\tau} - \dot{\mathbf{x}}_{\mathrm{ref}} \\
+		\mathbf{J}_{\dot{\mathbf{e}}} &= \partiell{\dot{\mathbf{e}}}{\mathbf{e}}
+	\end{align}
+\end{subequations}
+sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedforward_selec_controller_ljapunov1} zeigt, dass diese Eigenwerte in diesem Fall im Zeitraum von 5 $\si{s}$ bis 9 $\si{s}$ einen positiven Realteil aufweisen. Es ist möglich, dass aufgrund des bis dahin bereits stark abgeklungenen Folgefehlers keine ausreichende Destabilisierung des Systems stattfindet, sondern eine stationäre Genauigkeit dennoch erreicht wird. Bis zum Ende der Simulation weisen alle Eigenwerte erneut einen negativen Realteil auf. Formal kann allerdings bereits am Beispiel einer möglichen Referenztrajektorie mit Ljapunows erster (indirekter) Methode gezeigt werden, dass dieser Regelungsansatz zu einem instabilen System zu gewissen Simulationszeitpunkten führt \cite[Vorlesung 4]{NLRT_Winkler2020}. Eine andere Wahl der Rückführung, etwa ohne lineare Dynamik, könnte dieses Problem möglicherweise lösen.
 
 \begin{figure}[ht]
 	\begin{center}
@@ -1222,17 +1229,17 @@ sind für eine Stabilitätsbetrachtung von Interesse. Abbildung \ref{fig_feedfor
 		\includegraphics[scale=1]{Pictures/feedforward_lin_selec_controller_initial_error}
 	\end{center}
 	\caption[Trajektorien Ruhelagenüberführung mit Regelung über exact feedforward linearization (Selektionsmatrix)]
-	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Selektionsmatrix. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
+	{Prototypische Trajektorien des Doppelkransystems bei der Überführung zwischen zwei Ruhelagen unter der Ausregelung von Anfangsfehlern über die exact feedforward linearization mit Selektionsmatrix und Stellgesetz \eqref{eq:control_law__ff_lin_selection}. Koordinatenbezeichnung entsprechend Abbildung \ref{fig:double_crane_diagram}.}
 	\label{fig_feedforward_selec_controller_initial_error}
 \end{figure}
 
-\chapter{Fazit und Ausblick}
-\section{Fazit}
-Für das zu untersuchende Brückenkransystem wurden analytische nichtlineare Modelle unter Nutzung des Lagrange-Formalismus ermittelt. Diese ergaben sich für die LG erster Art zu DGL- und für die LG zweiter Art zu DAE-Systemen. Für eine bessere Nachvollziehbarkeit der zugrunde liegenden Methodik wurde dieses Vorgehen zunächst anhand eines Einzelkransystems durchgeführt. Es erfolgte eine Identifikation aller zumeist geometrischen Modellparameter.
+\chapter{Zusammenfassung und Ausblick}
+\section{Zusammenfassung}
+Für das zu untersuchende Brückenkransystem wurden analytische nichtlineare Modelle unter Nutzung des Lagrange-Formalismus ermittelt. Diese ergaben sich für die LG erster Art zu DAE- und für die LG zweiter Art zu DGL-Systemen. Für eine bessere Nachvollziehbarkeit der zugrunde liegenden Methodik wurde dieses Vorgehen zunächst anhand eines Einzelkransystems durchgeführt. Es erfolgte eine Identifikation der zumeist geometrischen Modellparameter.
 
 Die DGL-Modelle von Einzel- und Doppelkransystem wurden auf differenzielle Flachheit untersucht. Dabei wurde eine systematische Vorgehensweise für Mehrgrößensysteme skizziert. Dieses konnte auf Gleichungsebene anhand des Einzelkransystems veranschaulicht werden. Für das Doppelkransystem wurde aus Platz- und Praktikabilitätsgründen auf eine explizite Darstellung der umfangreichen Ausdrücke in den Ergebnissen verzichtet. Unter Zuhilfenahme von Computeralgebrasystemen war eine Beschreibung dieser Zusammenhänge sowie Darstellung funktionaler Abhängigkeiten möglich.
 
-Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs konnten polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang war es möglich daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Zur Folgeregelung ist eine statische Rückführung aufgrund eines nicht wohldefinierten vektoriellen relativen Grades nicht möglich. Stattdessen konnte durch eine dynamische Rückführung mit linearen Fehlerdynamiken eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen entlang der Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete aufgrund von Singularitäten in der Nähe von Ruhelagen in numerischen Problemen. Diese konnten im Rahmen dieser Arbeit nicht behoben werden. Mittels der exact feedforward linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem ein kompaktes Stellgesetz folgt. Dafür wurde eine kleinere Ordnung der linearen Fehlerdynamiken angenommen sowie alle Komponenten oder auch nur eine heuristische Selektion der Zustandskomponenten mit diesen Fehlerdynamiken versehen. Dieser Ansatz eignete sich während praktischer Untersuchungen ebenso zur Stabilisierung des Systems bei Anfangsfehlern, verstößt aber gegen formale Stabilitätsbedingungen.
+Auf Grundlage des für das Doppelkransystem bestimmten flachen Ausgangs konnten polynombasierte Trajektorien der Ausgangskomponenten aufgestellt werden. Diese dienen der Überführung des Systems von einer gegebenen Ruhelage in eine andere. Auf Basis der Parametrisierung der Eingangskomponenten durch den flachen Ausgang war es möglich, daraus Stellgrößenverläufe für eine Vorsteuerung abzuleiten. Es wurde gezeigt, dass die Entkopplungsmatrix des Systems nicht regulär ist. Somit ist der vektorielle relative Grad nicht wohldefiniert und damit eine Folgeregelung durch statische Rückführung nicht möglich. Stattdessen konnte durch eine dynamische Rückführung mit linearen Fehlerdynamiken eine Stabilisierung des Systems bei Anfangsfehlern sowie Einschwingen entlang der Solltrajektorie erzielt werden, allerdings in Verbindung mit einem hohen Komplexitätsgrad des Stellgesetzes. Der Ansatz einer quasi-statischen Rückführung mündete aufgrund von Singularitäten in der Nähe von Ruhelagen in numerischen Problemen. Diese konnten im Rahmen dieser Arbeit nicht behoben werden. Mittels der exact feedforward linearization wurde alternativ ein Regelungsansatz verfolgt, aus welchem ein kompaktes Stellgesetz folgt. Dafür wurde eine kleinere Ordnung der linearen Fehlerdynamiken angenommen sowie alle Komponenten oder auch nur eine heuristische Selektion der Zustandskomponenten mit diesen Fehlerdynamiken versehen. Dieser Ansatz eignete sich während praktischer Untersuchungen ebenso zur Stabilisierung des Systems bei Anfangsfehlern, verstößt aber zwischenzeitlich, d.h. zu gewissen Zeitpunkten des Trajektorienverlaufs, gegen formale Stabilitätsbedingungen.
 
 Die Durchführung umfangreicher symbolischer Berechnungen wie auch die numerisch simulative Verfikation der ermittelten Steurungs- und Regelungsgesetze erfolgte über Jupyter-Notebooks in Python. Über eine Robustheit der Regelungsansätze wurde keine Aussage getroffen. Gerade bei nichtlinearen Systemen wie dem in dieser Arbeit untersuchten können bereits geringe Modellabweichungen zur Instabilität bei Regelungsansätzen der exakten Linearisierung führen, woraus hohe Genauigkeitsanforderungen für die Modellbildung folgen.
 
@@ -1240,9 +1247,9 @@ Die Durchführung umfangreicher symbolischer Berechnungen wie auch die numerisch
 
 Für die Untersuchung der Eignung der ermittelten Regelungsansätze am realen Demonstratorsystem ist eine Implementierung auf der vorhandenen Hardware der Raspberry Pis notwendig. Gerade die Einhaltung von Anforderungen an die Echtzeitfähigkeit bei numerisch umfangreichen Stellgesetzen stellt dabei eine Herausforderung dar.
 
-Die flachheitsbasierte Vorsteuerung kann zuerst allein erprobt werden, so dass auch aus Betrachtung der Abweichung von Ist- und Referenztrajektorien auf die Größenordnung der Modellabweichungen geschlossen werden kann. Die Regelungsansätze sollten daraufhin unter Begrenzung von Stellgrößen und Überwachung des gegebenenfalls instabil werdenden Systems getestet werden.
+Die flachheitsbasierte Vorsteuerung kann zuerst allein erprobt werden, so dass auch aus Betrachtung der Abweichung von Ist- und Referenztrajektorien auf die Größenordnung der Modellabweichungen geschlossen werden kann. Die Regelungsansätze sollten daraufhin unter Begrenzung von Stellgrößen und Überwachung des gegebenenfalls kurzzeitig instabil werdenden Systems getestet werden.
 
-Neben einer vertieften Auseinandersetzung mit der quasi-statischen Rückführung, bei der Singularitäten in den Stellgesetzen gegebenenfalls durch die Hebung von Definitionslücken vermieden werden könnten, verspricht auch die Nutzung moderner Regelungsansätze aus dem Gebiet des maschinellen Lernens kompaktere sowie robuste Lösungen. Über das sogenannte bestärkende Lernen (englisch reinforcement learning) können sich Agenten für den Übergang zwischen Ruhelagen selbstständig eine Strategie aneignen. Ein Transferlernen aus Stelltrajektorien klassischer Regelungsansätze auf die Agenten wäre zudem denkbar.
+Eine vertiefte Auseinandersetzung mit der quasi-statischen Rückführung könnte gegebenenfalls das Problem von Singularitäten in den Stellgesetzen durch die Hebung von Definitionslücken lösen. Darüber hinaus wäre die Untersuchung moderner Regelungsansätze aus dem Gebiet des maschinellen Lernens an diesem System in Hinblick auf kompaktere sowie robuste Lösungen von Interesse. Über das sogenannte bestärkende Lernen (englisch reinforcement learning) können sich Agenten für den Übergang zwischen Ruhelagen selbstständig eine Strategie aneignen. Ein Transferlernen aus Stelltrajektorien klassischer Regelungsansätze auf die Agenten wäre zudem denkbar.
 
 Eine Präzisierung des physikalischen Modells durch Einbeziehung von Reibungseffekten könnte vor allem die Effektivität der daraus abgeleiteten Vorsteuerung weiter verbessern. Allerdings ergibt bereits das einfachere aktuelle Modell bei einem flachheitsbasiertem Vorgehen äußerst umfangreiche Terme für die Stellgrößen, so dass die Anpassung zuvor darauf trainierter Agenten über beispielsweise bestärkendes Lernen eine kompaktere Lösung ergeben könnte.
 
