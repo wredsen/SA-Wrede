@@ -1134,7 +1134,7 @@ Eine Implementierung der in diesem Abschnitt durchgeführten Überlegungen ist u
 
 Bei der exact feedforward linearization wird, im Unterschied zur exakten Eingangs-Ausgangs-Linearisierung, die Nichtlinearität nicht mittels Rückführung der gemessenen beziehungsweise simulierten Zustandskomponenten $\mathbf{x}$ kompensiert, sondern an deren Stelle die Referenztrajektorie $\mathbf{x_{\text{ref}}}$ eingesetzt \cite{Hagenmeyer2003}.
 
-Heuristisch wird eine Dynamik des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind) angesetzt:
+Heuristisch wird eine Dynamik des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ der Ordnung zwei für alle Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$ (nicht nur solchen, die auch Teil des flachen Ausgangs sind)\footnote{Simulationen mit Anfangsfehlern, bei denen ausschließlich die Komponenten des flachen Ausgangs mit Fehlerdynamiken versehen wurden, konnten keine Stabilisierung des Systems zeigen.} angesetzt:
 \begin{equation}
 	\ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}.
 \end{equation}
