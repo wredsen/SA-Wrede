@@ -24,7 +24,7 @@
 			\hline
 			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
 			\hline
-			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & $y_{1,2,3}^{(4)}$ & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
 			\hline
 		\end{tabular}
 	\end{table}

@@ -1,5 +1,18 @@
-\frametitle{~}
-\begin{center}
-{\huge \textbf{Ergänzungsfolien}}
-\end{center}
+\frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
+	\begin{itemize}
+		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog der statischen Rückführung möglich:
+		\begin{align*}
+			\mathbf{u} = \tilde{\boldsymbol{\tau}} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
+		\end{align*}
+		\pause
+		\item funktionale Zusammenhänge der Folgeregelung:
+		\begin{align*}
+			\beta_1 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\beta_3 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\beta_4 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
+		\end{align*}
+		\item Anpassung der Trajektorienplanung ...
+	\end{itemize}
+	

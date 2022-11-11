@@ -1,4 +1,4 @@
-\frametitle{\large Trajektorienfolgeregelung}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
 	\begin{itemize}
 		\item System mit Eingangs-Ausgangs-Verhalten der Form
@@ -22,8 +22,11 @@
 			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
 	\end{align*}
 
-	\begin{textblock*}{72mm}[0.,0.](12mm,30mm)
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
 		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
 				$ \boldsymbol{\Lambda} =
 				\left(\begin{smallmatrix}

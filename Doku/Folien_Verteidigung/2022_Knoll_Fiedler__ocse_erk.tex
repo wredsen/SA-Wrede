@@ -70,7 +70,7 @@
 
 \author{Konstantin Wrede}
 \datecity{Dresden}
-\date{XX. November 2022}
+\date{22. November 2022}
 
 
 % Angaben zum Institut usw.
@@ -379,6 +379,9 @@ showstringspaces=false,
 		%3
 		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
 		\textbf<3>{Steuerungs- und Regelungsentwurf}
+		%4
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Zusammenfassung und Ausblick}
 	\end{itemize}
 \end{frame}
 
@@ -399,6 +402,9 @@ showstringspaces=false,
 		%3
 		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
 		\textbf<3>{Steuerungs- und Regelungsentwurf}
+		%4
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Zusammenfassung und Ausblick}
 	\end{itemize}
 \end{frame}
 
@@ -454,6 +460,9 @@ showstringspaces=false,
 		%3
 		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
 		\textbf<3>{Steuerungs- und Regelungsentwurf}
+		%4
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Zusammenfassung und Ausblick}
 	\end{itemize}
 \end{frame}
 
@@ -802,6 +811,9 @@ showstringspaces=false,
 		%3
 		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
 		\textbf<2>{Steuerungs- und Regelungsentwurf}
+		%4
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Zusammenfassung und Ausblick}
 	\end{itemize}
 \end{frame}
 
@@ -1187,6 +1199,9 @@ showstringspaces=false,
 		%3
 		\item[\only<1>{$\rightarrow$}\only<2>{$\rightarrow$}\only<4->{\cdbox}]
 		\textbf<1>{Steuerungs- und Regelungsentwurf}
+		%4
+		\item[\only<1-2>{$\square$}\only<3>{$\rightarrow$}\only<4->{\cdbox}]
+		\textbf<3>{Zusammenfassung und Ausblick}
 	\end{itemize}
 \end{frame}
 
@@ -1352,7 +1367,7 @@ showstringspaces=false,
 			\hline
 			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
 			\hline
-			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & $y_{1,2,3}^{(4)}$ & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -1361,7 +1376,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_3]{\large Trajektorienfolgeregelung}
+\begin{frame}[t,fragile,label=trajektorienregelung_3]{\large Trajektorienfolgeregelung - Statische Rückführung}
 	
 	\begin{itemize}
 		\item System mit Eingangs-Ausgangs-Verhalten der Form
@@ -1385,8 +1400,11 @@ showstringspaces=false,
 			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
 	\end{align*}
 
-	\begin{textblock*}{72mm}[0.,0.](12mm,30mm)
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
 		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
 				$ \boldsymbol{\Lambda} = 
 				\left(\begin{smallmatrix}
@@ -1402,7 +1420,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_4]{\large Trajektorienfolgeregelung}
+\begin{frame}[t,fragile,label=trajektorienregelung_4]{\large Trajektorienfolgeregelung - Statische Rückführung}
 	
 	\begin{itemize}
 		\item Entkopplungsmatrix für das Doppelkransystem
@@ -1418,7 +1436,103 @@ showstringspaces=false,
 	\end{align*}
 	\pause
 	\begin{itemize}
-		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, statische Rückführung also nicht anwendbar
+		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
+		\pause
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\pause
+		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
+	\end{itemize}
+
+		\begin{textblock*}{82mm}[0.,0.](12mm,50mm)
+		\visible<1-1>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} = 
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_5]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
+
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\includegraphics[width=72mm]{images/dynamic_extension}
+	\end{textblock*}
+	
+	\begin{textblock*}{72mm}[0.,0.](90mm,13mm)
+		\begin{itemize}
+			\item Vorschalten von Integratoren vor $\boldsymbol{\tau}$:
+			\begin{align*}
+				\beta_1 &:= \dot{\alpha}_1 \hspace{1cm} \alpha_1 := \dot{\tau}_1 \\
+				\beta_3 &:= \dot{\alpha}_3 \hspace{1cm} \alpha_3 := \dot{\tau}_3 \\
+				\beta_4 &:= \dot{\alpha}_4 \hspace{1cm} \alpha_4 := \dot{\tau}_4 
+			\end{align*}
+			\item[$\rightarrow$] Erweiterung des ZRM $\mathbf{\tilde{f}}$, $\mathbf{\tilde{g}}$ mit $\tilde{\boldsymbol{\tau}}$, $\tilde{\mathbf{x}}$
+			\item[$\rightarrow$] $r_i = 4$ für $i = 1, \hdots, 4$
+			\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
+			\begin{align*}
+				\tilde{\boldsymbol{\Lambda}} =
+				\left(\begin{matrix}
+					0 & * & * & * \\
+					0 & * & * & * \\
+					0 & * & * & * \\
+					* & * & 0 & 0 \\
+				\end{matrix}\right)
+				\Rightarrow \text{regulär!}
+			\end{align*}
+		\end{itemize}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_6]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+	
+	\begin{itemize}
+		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog der statischen Rückführung möglich:
+		\begin{align*}
+			\mathbf{u} = \tilde{\boldsymbol{\tau}} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
+		\end{align*}
+		\pause
+		\item funktionale Zusammenhänge der Folgeregelung:
+		\begin{align*}
+			\beta_1 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\beta_3 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\beta_4 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+			\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
+		\end{align*}
+		\item Anpassung der Trajektorienplanung ...
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_7]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+	
+	\textbf{Plots:}
+	\begin{itemize}
+		\item ...
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_8]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+	
+	\textbf{Fazit:}
+	\begin{itemize}
+		\item ...
 	\end{itemize}
 	
 \end{frame}

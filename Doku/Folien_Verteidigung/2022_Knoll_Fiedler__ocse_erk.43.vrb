@@ -1,48 +1,48 @@
-\frametitle{\large Experimenteller Ansatz: ERK}
+\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
+\begin{itemize}
 
-
-\textbf{Verklemmung:}
-
-\smallskip
-
-\circled{1} Kein {\color<3->{myblue} geeigneter} Repräsentationsformalismus  $\rightarrow$ \circled{2} Keine Inhalte $\rightarrow$ \circled{3} Keine Anwendungen
-$\rightarrow$ \circled{4} Keine Aufmerksamkeit $\rightarrow$ \circled{5} Keine Entwicklung $\rightarrow$ \circled{1}
+ \item
+Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
 
 \pause
-\bigskip
+\medskip
+ \item
+Für Regelungstheorie existiert noch keine etablierte Technologie
 
-\textbf{Pragmatischer Ansatz:}
-\begin{itemize}
- \item[\circled{1}]  {Repräsentationsformalismus}: \textbf{E}mergent \textbf{R}epresentation of \textbf{K}nowledge
- \item[{\color<3->{mygray}  \circled{2}}] {\color<3->{mygray}  initiale Inhalte: OCSE}
+\pause
+\medskip
+ \item
+Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
 \end{itemize}
 
 \pause
 \bigskip
+{\large \textbf{Diskussion} (offene Fragen)}
 
-\textbf{Anforderungen}
 \begin{itemize}
-\item Fokus auf Ausdrucksstärke \tikz[remember picture] \node[coordinate,xshift=16mm,yshift=1.0em] (n1) {};
-\item Basiert auf menschenlesbarem Text
-\item Unterstützung für Automatisierung  \tikz[remember picture] \node[coordinate,yshift=-0.2em] (n2) {};
+ \item Grundsätzliche Tauglichkeit?
+
+ \medskip
+ \item (Automatisierte) Qualitätssicherung?
+
+ \medskip
+ \item Wissensintegration als sozialer Prozess?
 \end{itemize}
 
-\visible<4->{
 
-\begin{tikzpicture}[overlay,remember picture]
-      \path (n2) -| node[coordinate] (n3) {} (n1);
-      \draw[thick,decorate,decoration={brace,amplitude=3pt}]
-            (n1) -- (n3) node[midway, right=4pt] {};
-  \end{tikzpicture}
+\bigskip
+\pause
+$\rightarrow$ Herzliche Einladung zur Kollaboration
 
-\begin{textblock*}{80mm}[0.,0.](80mm,63mm)
-\visible<4->{
-  Erfüllt von Allzweckprogrammiersprache\\ z.\,B. Python\\
+
+
+\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
+\visible<5->{
+\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
+
+{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
 }
 \end{textblock*}
-
-
-}
 
 
 
