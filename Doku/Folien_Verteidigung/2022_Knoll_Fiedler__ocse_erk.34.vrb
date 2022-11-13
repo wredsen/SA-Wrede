@@ -1,6 +1,14 @@
 \frametitle{\large Prototypische Referenztrajektorie}
 
-\begin{center}
-	\embedvideo{\includegraphics[width=95mm]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
-\end{center}
+	\begin{center}
+    	\includemovie[attach=false,autoplay,text={%
+    		\includegraphics[width=0.7\textwidth]{images/onion_skinned_picture}%
+    	}]{1.1\linewidth}{0.45\linewidth}{images/gantry_crane_trajectory.mp4}
+    \end{center}
+
+    %\centering
+	%\movie[width=0.8\textwidth]{\includegraphics[width=0.75\textwidth]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
+%\begin{center}
+	%\embedvideo{\includegraphics[width=95mm]{images/onion_skinned_picture}}{images/gantry_crane_trajectory.mp4}
+%\end{center}
 	

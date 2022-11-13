@@ -1,49 +1,22 @@
-\frametitle{\large Zusammenfassung {\color <1-3>{mygray}und Diskussion}}
-\begin{itemize}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
- \item
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
-\end{itemize}
-
-\pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
-\begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
-
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
-
-
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
-}
-\end{textblock*}
-
-
-
-
+	\begin{itemize}
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}_{\textcolor{red}{\text{ref}}}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}_{\textcolor{red}{\text{ref}}}(\mathbf{x}))
+		\end{align*}
+		\bigskip
+		\pause
+		\item Annahme Fehlerdynamik $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
+		\bigskip
+		\pause
+		\item Annahme Fehlerdynamik der Ordnung 2 für \textbf{alle} Komponenten von $\boldsymbol{\theta}$:
+		\begin{align*}
+			\mathbf{v} := \ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}
+		\end{align*}
+	\end{itemize}
+	
