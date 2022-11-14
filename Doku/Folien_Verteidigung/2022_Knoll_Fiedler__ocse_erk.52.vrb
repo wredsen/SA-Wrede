@@ -1,27 +1,5 @@
-\frametitle{\large ERK-Inferenzsystem: Regelauswertung}
-
-\begin{itemize}
- \item Für jede Regel: „Prototypgraphen“ konstruieren
- \begin{itemize}
-  \item lokale Variablen aus \py{scope("context")} $\rightarrow$ Knoten
-  \item Relationen aus \py{scope("premises")} $\rightarrow$ Kanten
- \end{itemize}
-
- \pause
- \bigskip
- \item Passende Knoten aus dem Gesamtgraph suchen
- \begin{itemize}
-  \item Mathematisches Problem: \textbf{\textit{Subgraphisomorphismen}} finden
-%   (Bijektive Abbildungen zwischen den Knoten, welche die (spezifizierte) Verzweigungsstruktur erhalten)
-  \item $\exists$ VF2-Algorithmus (fertig implementiert)
- \end{itemize}
-
- \pause
- \bigskip
- \item Beziehungen aus \py|scope("assertions")| abstrahieren und anwenden
-
-
-\end{itemize}
-
-
+\frametitle{~}
+\begin{center}
+{\huge \textbf{Ergänzungsfolien}}
+\end{center}
 

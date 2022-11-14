@@ -3,7 +3,7 @@
 	\begin{itemize}
 		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog statischer Rückführung:
 		\begin{align*}
-			\mathbf{u} = \tilde{\boldsymbol{\tau}} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
+			\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
 		\end{align*}
 		\pause
 		\item funktionale Zusammenhänge der Folgeregelung:

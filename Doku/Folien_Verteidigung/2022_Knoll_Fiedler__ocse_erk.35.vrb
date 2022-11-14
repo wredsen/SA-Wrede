@@ -34,7 +34,7 @@
 				
 				\vspace{3mm}
 				
-				$L_{\mathbf{f}} \mathbf{h}(\mathbf{x}) = \mathbf{h}'(\mathbf{x}) \mathbf{f}(\mathbf{x})$
+				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
 			\end{tcolorbox}
 		}
 	\end{textblock*}

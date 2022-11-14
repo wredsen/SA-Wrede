@@ -1,5 +1,31 @@
-\frametitle{~}
-\begin{center}
-{\huge \textbf{Ergänzungsfolien}}
-\end{center}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
+	\begin{itemize}
+		\item Annahme Dynamik der Ordnung 2 des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$:
+		\begin{align*}
+			\mathbf{v} := \ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] Eingang $\mathbf{u} \in \mathbb{R}^{4}$ und neuer virtueller Eingang $\mathbf{v} \in \mathbb{R}^{5}$ mit verschiedener Dimension
+		\item[$\rightarrow$] Inversenbildung von $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) \in \mathbb{R}^{5 \times 4}$ nicht direkt möglich \\
+	\end{itemize}
+	\bigskip
+	\pause
+	\textbf{$\Rightarrow$ Bildung einer Pseudoinversen (PI):}
+	\begin{enumerate}
+		\item Moore-Penrose-PI \quad $\mathbf{g}_{[6, 10]}^+ =  (\mathbf{g}_{[6, 10]}^T \	\mathbf{g}_{[6, 10]})^{-1} 	\mathbf{g}_{[6, 10]}^T$
+		\pause
+		\item Selektion der letzten 4 Gleichungen des ZRM:
+		\begin{align*}
+			\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} &= \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \mathbf{u}, \	
+			\mathbf{S} :=
+			\left(\begin{smallmatrix}
+				0 & 1 & 0 & 0 & 0 \\
+				0 & 0 & 1 & 0 & 0 \\
+				0 & 0 & 0 & 1 & 0 \\
+				0 & 0 & 0 & 0 & 1
+			\end{smallmatrix}\right) \\
+			\Rightarrow \mathbf{g}_{[7, 10]} &= \mathbf{S} \cdot \mathbf{g}_{[6, 10]}
+		\end{align*}
+	\end{enumerate}
+	

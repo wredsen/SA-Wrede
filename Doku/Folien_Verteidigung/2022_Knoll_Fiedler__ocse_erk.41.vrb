@@ -1,7 +1,7 @@
 \frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
-	\textbf{Plots:}
-	\begin{itemize}
-		\item ...
-	\end{itemize}
+	\textbf{Simulation:}
+	\begin{center}
+		\includegraphics[width=95mm]{images/dyn_controller_initial_error_flat_output}
+	\end{center}
 	
