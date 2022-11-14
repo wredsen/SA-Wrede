@@ -904,7 +904,7 @@ showstringspaces=false,
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Zeile auffindbar?
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
 		\pause
 		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
 		\begin{equation*}
@@ -1677,7 +1677,7 @@ showstringspaces=false,
 	\begin{itemize}
 		\item[$\rightarrow$] keine Stabilität per Konstruktion und durch $\boldsymbol{\theta}_{\text{ref}} = \boldsymbol{\theta}_{\text{ref}}(t)$ \textbf{zeitvariantes} System
 		\pause
-		\item[$\rightarrow$] Betrachtung von Ensemble-Simulationen (alternativ: LTV-Stabilitätsnachweis)
+		\item[$\rightarrow$] Betrachtung von Ensemble-Simulationen (alternativ: TV-Stabilitätsnachweis)
 	\end{itemize}
 	
 \end{frame}
@@ -1742,70 +1742,77 @@ showstringspaces=false,
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-\begin{frame}[t,fragile,label=zf1]{\large Zusammenfassung {\color<1-3>{mygray}und Ausblick}}
-\begin{itemize}
 
- \item 
-Formale Wissensrepräsentation potenziell nützlich für Wissenstransfer
-
-\pause
-\medskip
- \item 
-Für Regelungstheorie existiert noch keine etablierte Technologie
-
-\pause
-\medskip
- \item 
-Experimenteller Vorschlag: ERK + OCSE (Code und Daten sind Open Source)\\[3mm] \hfill {\Large $\rightarrow$ \url{https://ackrep.org}}
-\end{itemize}
-
-\pause
-\bigskip
-{\large \textbf{Diskussion} (offene Fragen)}
-
-\begin{itemize}
- \item Grundsätzliche Tauglichkeit?
-
- \medskip
- \item (Automatisierte) Qualitätssicherung?
- 
- \medskip
- \item Wissensintegration als sozialer Prozess?
-\end{itemize}
-
-
-\bigskip
-\pause
-$\rightarrow$ Herzliche Einladung zur Kollaboration
-
-
-
-\begin{textblock*}{40mm}[0.,0.](110mm,45mm)
-\visible<5->{
-\includegraphics[width=23mm]{img/portrait-foto-knoll.jpg}\\[1mm]
-
-{\tiny \texttt{Carsten.Knoll@tu-dresden.de}}
-}
-\end{textblock*}
-
-
-
-
+\begin{frame}[label=Zusammenfassung1]
+	\frametitle{Zusammenfassung {\color<1->{mygray}und Ausblick}}
+	\begin{itemize}
+		\item Modellierung des Brückenkrans als nichtlineares Mehrgrößensystem in ODE-Form durch LG2
+		\item[$\rightarrow$] Vorteile gegenüber DAE-System in Simulation und Flachheitsanalyse
+		\bigskip
+		\pause
+		\item Skizze Systematischer Vorgehensweise zur Flachheitsanalyse von Mehrgrößensystemen
+		\item[$\rightarrow$] Ermittlung eines flachen Ausgangs für das Doppelkransystem mit CAS SymPy
+		\bigskip
+		\pause
+		\item Planung polynombasierter Trajektorien des flachen Ausgangs zur Ruhelagenüberführung
+		\item[$\rightarrow$] Parametrisierung des Eingangs dadurch als Steuerung
+		\bigskip
+		\pause
+		
+	\end{itemize}
+	
 \end{frame}
 
-\begin{frame}[fragile,label=zf2]{~}
-\begin{center}
-{\huge \textbf{Ergänzungsfolien}} 
-\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[label=Zusammenfassung2]
+	\frametitle{Zusammenfassung {\color<1->{mygray}und Ausblick}}
+	\begin{itemize}
+		\item Regelung durch statische Rückführung nicht möglich, da Entkopplungsmatrix nicht invertierbar
+		\pause
+		\item dynamische Erweiterung mit linearer Fehlerdynamik
+		\item[$\rightarrow$] per Konstruktion stabil, allerdings relativ komplexes Stellgesetz
+		\pause
+		\item[$\rightarrow$] weiterer heuristischer Ansatz zur Vereinfachung
+		\pause
+		\item exact feedforward linearization mit Fehlerdynamik 2ter Ordnung in allen Koordinaten
+		\item[$\rightarrow$] relativ kompaktes Stellgesetz, Stabilität nur durch Ensemble-Simulationen untersucht
+		
+	\end{itemize}
+	
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[label=Ausblick]
+	\frametitle{Zusammenfassung und Ausblick}
+	\begin{itemize}
+		\item Implementierung auf Demonstratorsystem unter realen Echtzeitanforderungen
+		\pause
+		\item Test reiner Vorsteuerung und Abschätzung der Größe der Modellabweichung
+		\pause
+		\item[$\rightarrow$] danach Regelungsansätze unter Stellgrößenbeschränkung und Überwachung der Stabilität
+		\pause 
+		\item Stabilitätsuntersuchung der exacte feedforward linearization als TV-System
+		\pause
+		\item bestärkendes Lernen als weiterer Ansatz ggf. mit Referenzlernen auf Basis bisheriger Regelungen
+		\pause
+		\item Untersuchung der Robustheit gegenüber Modellabweichungen, Störeingriffen
+		
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile,label=Ergaenzungsfolien]{~}
+	\begin{center}
+		{\huge \textbf{Ergänzungsfolien}} 
+	\end{center}
+	
+\end{frame}
 
 \backupbegin
-
-
 
 
 \begin{frame}[t,fragile,label=wr8]{\large Wissensrepräsentation (5): \underline{O}pen \underline{R}esearch \underline{K}nowledge \underline{G}raph}

@@ -3,7 +3,7 @@
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Zeile auffindbar?
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
 		\pause
 		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
 		\begin{equation*}

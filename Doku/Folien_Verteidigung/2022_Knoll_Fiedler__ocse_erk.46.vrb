@@ -16,6 +16,6 @@
 	\begin{itemize}
 		\item[$\rightarrow$] keine Stabilität per Konstruktion und durch $\boldsymbol{\theta}_{\text{ref}} = \boldsymbol{\theta}_{\text{ref}}(t)$ \textbf{zeitvariantes} System
 		\pause
-		\item[$\rightarrow$] Betrachtung von Ensemble-Simulationen (alternativ: LTV-Stabilitätsnachweis)
+		\item[$\rightarrow$] Betrachtung von Ensemble-Simulationen (alternativ: TV-Stabilitätsnachweis)
 	\end{itemize}
 	
