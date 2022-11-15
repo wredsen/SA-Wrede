@@ -1,45 +1,25 @@
-\frametitle{\large Analytisches Modell Doppelkran}
-\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
-		}
-		\bigskip
-		\visible<1->{
-			\textbf{variable Seillängen:}
-			\tiny{
-				\begin{flalign*}
-					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
-					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
-				\end{flalign*}
-			}
-			~
-		}
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<1->{	
-			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}			
-			\begin{equation*}
-				\mathbf{Q}= ...
-			\end{equation*}
-		}
-	\end{textblock*}
+\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-	\begin{textblock*}{80mm}[0.,0.](80mm,27mm)	
-		\visible<2->{
-			\textbf{Systemgleichungen aus LG2:}
-			\tiny{
-			\begin{flalign*}
-			&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
-			&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{p_{3}}\right)}{l_{1}} = 0\\
-			&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right) \cos{p_{3}} + s_{2} \tau_{4} \left(p_{1} - q_{2} + s_{2} \cos{p_{3}} - l_{0} \right)}{l_{2}}\\
-			&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{p_{3}}\right) \cos{p_{3}}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right) \sin{p_{3}}}{l_{1}} = 0\\
-			&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
-			&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} = 0
-			\end{flalign*}
-			}
-		}
-		
-	\end{textblock*}
+	\textbf{Prinzipielles Vorgehen:}
+	\begin{itemize}
+		\pause
+		\item  Eingangsaffines nichtlineares MIMO-System\\
+		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
+		\pause
+		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine Systemgleichung
+		\pause
+		\item[$\rightarrow$] analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
+		\pause
+		\item[$\rightarrow$] übrig bleiben $n - (n - m) = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
+		\pause
+	\end{itemize}
 	
+	\bigskip
+	\pause
+	
+	\textbf{Parametrisierung der Systemgrößen durch den flachen Ausgang:}
+	\begin{itemize}
+		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
+		\pause
+		\item Parametrisierungen vorheriger Größen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
+	\end{itemize}

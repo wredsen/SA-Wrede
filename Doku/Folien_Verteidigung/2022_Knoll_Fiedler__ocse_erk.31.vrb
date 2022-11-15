@@ -1,55 +1,37 @@
-\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
-  \begin{itemize}
-   \item OWL2: definierter Standard; basiert auf RDF
-   \item Theoretische Basis: Beschreibungslogik(en)
-   \begin{itemize}
-    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
-    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
-    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
-%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
-%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
-   \end{itemize}
-% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
-% \texttt{owl:allValuesFrom},
-% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
-  \end{itemize}
+	\begin{itemize}
+		\item Entkopplungsmatrix für das Doppelkransystem
+	\end{itemize}
+	\begin{align*}
+		\boldsymbol{\Lambda} =
+		\left(\begin{smallmatrix}
+			0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+		\end{smallmatrix}\right)
+	\end{align*}
+	\pause
+	\begin{itemize}
+		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
+		\pause
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\pause
+		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
+	\end{itemize}
 
-% \pause
-%
-% \medskip
-%
-% % \textbf{Beispiel}:
-% \lstset{
-%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
-% }
-% \begin{lstlisting}
-% @prefix demo: <http://demo.xy/onto#> .
-% :pole rdf:type owl:Class.               # Klasse
-% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
-%
-% :typical_transfer_func rdf:type owl:Class ;
-%                 owl:equivalentClass [ rdf:type owl:Restriction ;
-%                                 owl:onProperty :has_pole ;
-%                                 owl:someValuesFrom :pole
-%                                 ].      # Klassenrestriktion
-% \end{lstlisting}
-
-
-\medskip
-\pause
-
-
-  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
-  \begin{itemize}
-   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
-%    \begin{itemize}
-%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
-%    \end{itemize}
-   \smallskip
-   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
-   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
-  \end{itemize}
-
-
+		\begin{textblock*}{82mm}[0.,0.](12mm,50mm)
+		\visible<1-1>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	

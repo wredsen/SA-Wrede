@@ -1,26 +1,35 @@
-\frametitle{\large Lagrange-Formalismus}
+\frametitle{\large Analytisches Modell Doppelkran}
+\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
+		}
+		\bigskip
+		\visible<1->{
+			\textbf{variable Seillängen:}
+			\tiny{
+				\begin{flalign*}
+					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
+					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
+				\end{flalign*}
+			}
+			~
+		}
+	\end{textblock*}
 
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
-		\pause
-		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
-	\end{itemize}
-	
-	\pause
-	\bigskip
-	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
-	\begin{itemize}
-		\pause
-		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
-		\pause
-		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
-		\pause
-		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
-		\pause
-		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
-	\end{itemize}
+	\begin{textblock*}{80mm}[0.,0.](80mm,20mm)	
+		\visible<2->{
+			\textbf{Systemgleichungen aus LG2:}
+			\tiny{
+			\begin{flalign*}
+			&m_{2} \ddot{p}_{1} - \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
+			&g m_{2} + m_{2} \ddot{p}_{2} - \frac{\tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right)}{l_{2}} - \frac{\tau_{3} \left(p_{2} s_{2} \sin{p_{3}}\right)}{l_{1}} = 0\\
+			&J_{2} \ddot{p}_{3} - \frac{s_{2} \tau_{4} \left(p_{2} + s_{2} \sin{p_{3}}\right) \cos{p_{3}} + s_{2} \tau_{4} \left(p_{1} - q_{2} + s_{2} \cos{p_{3}} - l_{0} \right)}{l_{2}}\\
+			&+ \frac{s_{2} \tau_{3} \left(p_{2} - s_{2} \sin{p_{3}}\right) \cos{p_{3}}}{l_{1}} - \frac{s_{2} \tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right) \sin{p_{3}}}{l_{1}} = 0\\
+			&m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{p_{3}}\right)}{l_{1}} = 0\\
+			&m_{3} \ddot{q}_{2} - \tau_{2} + \frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{p_{3}}\right)}{l_{2}} = 0
+			\end{flalign*}
+			}
+		}
+		
+	\end{textblock*}
 	

@@ -1,22 +1,7 @@
-\frametitle{\large Trajektorienfolgeregelung - \textcolor {blue}{Dynamische} \textcolor {red}{Rückführung}}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\begin{itemize}
-		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog statischer Rückführung:
-		\begin{align*}
-			\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
-		\end{align*}
-		\pause
-		\item funktionale Zusammenhänge der Folgeregelung:
-		\begin{align*}
-			\textcolor{blue}{\beta_1} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_3} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_4} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
-		\end{align*}
-		\pause
-		\item Anpassung der Trajektorienplanung, da Vorgabe von $\beta_i$ (Doppelintegratoren)
-		\pause
-		\item[$\rightarrow$] für alle $y_i$ nun 5 Bedingungen je Rand
-		\item[$\rightarrow$] Ansatz von Polynomen der Ordnung 9
-	\end{itemize}
-	
+	\textbf{Simulation:}
+	\begin{center}
+		\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
+	\end{center}
+

@@ -1,7 +1,32 @@
-\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+\frametitle{\large Lagrange-Formalismus}
 
-	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
-	\end{center}
+	\textbf{Symbole:}
+	\begin{itemize}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\pause
+		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
+		\pause
+		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
+		\pause
+		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
+		\pause
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Lagrange-Gleichungen zweiter Art:}
+	\begin{itemize}
+		\pause
+		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\pause
+		\item Bewegungsgleichungen:
+		\begin{equation*}
+			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+		\end{equation*}
+		\pause
+		\item Woher $Q_i$?
+	\end{itemize}
 	

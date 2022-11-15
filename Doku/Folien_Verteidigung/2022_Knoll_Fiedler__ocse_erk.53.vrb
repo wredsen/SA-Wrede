@@ -1,48 +1,39 @@
-\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
+\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
-
-  \pause
-  \medskip
-Grundlegendes Schema:
-
-
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
-}
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
-\visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
-}
-\end{textblock*}
-
-
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
-
-Repräsentanz der Regelungstheorie:\\[1mm]
-
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
-}
-\end{textblock*}
-
-
-
-
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
-}
-\end{textblock*}
-
-
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
+		\pause
+		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\begin{equation*}
+			\mathbf{T}_i \mathbf{J}_i =
+			\begin{pmatrix}
+				\mathbf{I}_{m-(n-i)} \\
+				\hline
+				\mathbf{0}_{(n-m) \times (m-(n-i))}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				1 & 0 & \cdots & 0 & 0 \\
+				0 & 1 & \cdots & 0 & 0 \\
+				\vdots & & \ddots &  & \vdots \\
+				0 & 0 & \cdots & 1 & 0 \\
+				0 & 0 & \cdots & 0 & 1 \\
+				\hline
+				0 & 0 & \cdots & 0 & 0
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\begin{equation*}
+			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
+			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
+			\Rightarrow \mathbf{T}_i =
+			\begin{pmatrix}
+				\mathbf{J}_i^{\mathrm{L} +} \\
+				\mathbf{J}_i^{\mathrm{L} \perp}
+			\end{pmatrix}
+		\end{equation*}
+	\end{itemize}
+	

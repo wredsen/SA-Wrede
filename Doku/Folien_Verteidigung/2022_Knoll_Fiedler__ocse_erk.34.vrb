@@ -1,8 +1,7 @@
-\frametitle{\large Prototypische Referenztrajektorie}
+\frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
+	\textbf{Simulation:}
 	\begin{center}
-    	\includemovie[attach=false,autoplay,text={%
-    		\includegraphics[width=0.6\textwidth]{images/onion_skinned_picture}%
-    	}]{1.0\linewidth}{0.45\linewidth}{images/gantry_crane_trajectory.mp4}
-    \end{center}
+		\includegraphics[width=95mm]{images/dyn_controller_initial_error_flat_output}
+	\end{center}
 	

@@ -1,17 +1,25 @@
-\frametitle{\large Flachheitsanalyse am Einzelkran}
+\frametitle{\large Trajektorienplanung}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
-	
+	\textbf{Anforderungen:}
 	\begin{itemize}
 		\pause
-		\item aus letzter transformierter Systemgleichung:
-		\begin{equation*}
-			q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
-		\end{equation*}
+		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
 		\pause
-		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
-		\begin{equation*}
-			\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
-		\end{equation*}
+		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
+		\pause
+		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Vorgabe von Randbedingungen:}
+	\begin{itemize}
+		\pause
+		\item Differenzierbarkeitsbedingungen an $\mathbf{y}(t)$ folgen aus $\boldsymbol{\tau}(\mathbf{y}(t), \dot{\mathbf{y}}(t), ...)$
+		\pause
+		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
+		\pause
+		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
+		
 	\end{itemize}
 	

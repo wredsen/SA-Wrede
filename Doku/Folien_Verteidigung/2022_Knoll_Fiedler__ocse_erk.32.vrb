@@ -1,25 +1,62 @@
-\frametitle{\large Trajektorienplanung}
+\frametitle{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
 
-	\textbf{Anforderungen:}
-	\begin{itemize}
-		\pause
-		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
-		\pause
-		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
-		\pause
-		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
-	\end{itemize}
+	\begin{textblock*}{80mm}[0.,0.](12mm,40mm)
+		\visible<1-1>{
+			\begin{table}[htbp]%
+				\centering
+				%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+				\begin{tabular}{c| c c c c}
+					\hline
+					Index $i$ & 1 & 2 & 3 & 4 \\
+					\hline
+					Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\
+					\hline
+					explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+					\hline
+					$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+					\hline
+				\end{tabular}
+			\end{table}
+		}
+	\end{textblock*}
 	
-	\pause
-	\bigskip
-	\textbf{Vorgabe von Randbedingungen:}
-	\begin{itemize}
-		\pause
-		\item Differenzierbarkeitsbedingungen an $\mathbf{y}(t)$ folgen aus $\boldsymbol{\tau}(\mathbf{y}(t), \dot{\mathbf{y}}(t), ...)$
-		\pause
-		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
-		\pause
-		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
-		
-	\end{itemize}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
+	\visible<2->{
+		\includegraphics[width=72mm]{images/dynamic_extension}
+	}
+	\end{textblock*}
+	
+	\begin{textblock*}{72mm}[0.,0.](90mm,13mm)
+	\visible<1->{
+		\begin{itemize}
+			\item Vorschalten von Integratoren vor $\boldsymbol{\tau}$:
+			\begin{align*}
+				\beta_1 &:= \dot{\alpha}_1 \hspace{1cm} \alpha_1 := \dot{\tau}_1 \\
+				\beta_3 &:= \dot{\alpha}_3 \hspace{1cm} \alpha_3 := \dot{\tau}_3 \\
+				\beta_4 &:= \dot{\alpha}_4 \hspace{1cm} \alpha_4 := \dot{\tau}_4
+			\end{align*}
+		\end{itemize}
+	}
+	\visible<2->{
+		\begin{itemize}	
+			\item[$\rightarrow$] Erweiterung des ZRM $\mathbf{\tilde{f}}$, $\mathbf{\tilde{g}}$ mit $\tilde{\boldsymbol{\tau}}$, $\tilde{\mathbf{x}}$
+			\item[$\rightarrow$] $r_i = 4$ für $i = 1, \hdots, 4$
+		\end{itemize}
+	}
+	\visible<3->{
+		\begin{itemize}
+			\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
+			\begin{align*}
+				\tilde{\boldsymbol{\Lambda}} =
+				\left(\begin{matrix}
+					0 & * & * & * \\
+					0 & * & * & * \\
+					0 & * & * & * \\
+					* & * & 0 & 0 \\
+				\end{matrix}\right)
+				\Rightarrow \text{regulär!}
+			\end{align*}
+		\end{itemize}
+	}
+	\end{textblock*}
 	

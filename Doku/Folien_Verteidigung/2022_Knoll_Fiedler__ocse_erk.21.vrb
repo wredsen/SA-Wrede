@@ -1,12 +1,25 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Doppelkran}
 
-	\textbf{Parametisierung der Systemgrößen durch den flachen Ausgang:}
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
+		\item Vorgehen analog zum Einzelkran
 		\pause
-		\item Parametrisierungen vorheriger Größen ggf. in folgende Parametrisierungen einsetzen
+		\item[$\rightarrow$] unpraktikable Darstellung umfangreicher Terme, über CAS \textit{SymPy} durchgeführt
 		\pause
-		\item ggf. Zeitableitungen vorangegangener Parametrisierungen nötig
+		\bigskip
+		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
+		\pause
+		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
+		\pause
+		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
+		\pause
+		\bigskip
+		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
+		\begin{equation*}
+			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
 	\end{itemize}
 	

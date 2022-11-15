@@ -1,22 +1,17 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Prinzipielles Vorgehen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
 		\pause
-		\item  Eingangsaffines nichtlineares MIMO-System\\
-		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
+		\item aus letzter transformierter Systemgleichung:
+		\begin{equation*}
+			q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
+		\end{equation*}
 		\pause
-		\bigskip
-		\item Elimination einer Komponente von $\mathbf{u}$ durch jeweils eine Systemgleichung
-		\pause
-		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
-		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zustandskomponenten und aller übrigen Systemgleichungen
-		\pause
-		\item[$\rightarrow$] übrig bleiben $n - p = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
-		\pause
-		\bigskip
-		\item Wonach Systemgrößen und -gleichungen für Elimination auswählen?
+		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{equation*}
+			\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+		\end{equation*}
 	\end{itemize}
 	

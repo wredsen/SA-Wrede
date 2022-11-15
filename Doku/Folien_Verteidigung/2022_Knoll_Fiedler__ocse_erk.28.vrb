@@ -1,25 +1,41 @@
-\frametitle{\large Flachheitsanalyse am Doppelkran}
+\frametitle{\large Trajektorienfolgeregelung}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
-	
-	\begin{itemize}
-		\item Vorgehen analog zum Einzelkran
+   	\begin{block}{Vektorieller relativer Grad}
+	Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
+	\begin{centering}
+		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
+	\end{centering}
+	\pause
+	mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+	\begin{enumerate}
 		\pause
-		\item[$\rightarrow$] unpraktikable Darstellung umfangreicher Terme, über CAS \textit{SymPy} durchgeführt
+		\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
 		\pause
-		\bigskip
-		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
-		\pause
-		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
-		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
-		\pause
-		\bigskip
-		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
+		\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
 		\begin{equation*}
-			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
+			\label{eq:decoupling_matrix}
+			\boldsymbol{\Lambda} =
+			\left(\begin{smallmatrix}
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+				\vdots & \ddots & \vdots \\
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+			\end{smallmatrix}\right) .
 		\end{equation*}
-		\pause
-		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
-	\end{itemize}
+	\end{enumerate}
+	\end{block}
+	
+	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
+		\visible<3->{
+			
+			
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
+				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
+				$\mathbf{y} = \mathbf{h}(\mathbf{x})$
+				
+				\vspace{3mm}
+				
+				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

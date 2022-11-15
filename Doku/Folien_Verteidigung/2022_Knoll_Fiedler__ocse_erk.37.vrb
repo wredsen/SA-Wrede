@@ -1,40 +1,20 @@
-\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
 	\begin{itemize}
-		\item System mit Eingangs-Ausgangs-Verhalten der Form
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
+		\end{align*}
+		\pause
+		\item aus Zustandsraummodell $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ folgt:
+		\begin{align*}
+			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \mathbf{u}
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] Entkopplungsmatrix ist unterer Teil der Eingangsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
 	\end{itemize}
-	\begin{equation*}
-		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
-	\end{equation*}
-	\pause
-	\begin{itemize}
-		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
-	\end{itemize}
-	\pause
-	\begin{equation*}
-		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
-	\end{equation*}
-	\begin{itemize}
-		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
-	\end{itemize}
-	\begin{align*}
-			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
-			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
-	\end{align*}
-
-	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
-		\visible<1-1>{	
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
-			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
-			\end{tcolorbox}
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
-				$ \boldsymbol{\Lambda} =
-				\left(\begin{smallmatrix}
-					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
-					\vdots & \ddots & \vdots \\
-					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
-				\end{smallmatrix}\right)$
-			\end{tcolorbox}
-		}
-	\end{textblock*}
 	

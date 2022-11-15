@@ -1,32 +1,31 @@
-\frametitle{\large Lagrange-Formalismus}
-
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\pause
-		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
-		\pause
-		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
-		\pause
-		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
-		\pause
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
-	\end{itemize}
+\frametitle{\large Analytisches Modell Einzelkran}
+\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+		
+		\visible<1->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
 	
-	\pause
-	\bigskip
-	\textbf{Lagrange-Gleichungen zweiter Art:}
-	\begin{itemize}
-		\pause
-		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
-		\pause
-		\item Bewegungsgleichungen:
-		\begin{equation*}
-			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
-		\end{equation*}
-		\pause
-		\item Woher $Q_i$?
-	\end{itemize}
+	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
+		
+		\visible<2->{
+			\centering{\textbf{Systemgleichungen aus LG2:}}
+			\begin{subequations}
+				\label{single_flat_syseqs}
+				\begin{flalign*}
+					m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+					g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+					m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+				\end{flalign*}
+			\end{subequations}
+		}
+		
+	\end{textblock*}
 	

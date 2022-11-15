@@ -1,26 +1,25 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
-		\pause
-		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
-		\pause
+		\item aus zuerst eliminierter originaler Systemgleichung:
 		\begin{equation*}
-			\mathbf{J}_i =
-			\begin{pmatrix}
-				* & \cdots & * & 0 & * & \cdots & *\\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				* & \cdots & * & \varepsilon & * & \cdots & * \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *\\
-			\end{pmatrix}
+			\tau_1 = \frac{m_{1} \textcolor{red}{\ddot{q}_{1}} \sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}} + p_{1} \textcolor{red}{\tau_{2}} - \textcolor{red}{q_{1}} \textcolor{red}{\tau_{2}}}{\sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}}}
 		\end{equation*}
 		\pause
-		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
+		\item[$\rightarrow$] auch Größen $\textcolor{red}{q_1, \ddot{q}_1, \tau_2} \not\in \mathbf{y}$ in dieser Parametrisierung von $\tau_1$ enthalten
 		\pause
-		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
+		\item[$\rightarrow$] Einsetzen der zweiten Ableitung von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$ und $\tau_2(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{flalign*}
+			\begin{split}
+				\tau_1 &=
+				\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
+				(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
+				&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
+				&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} + m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+				& + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+			\end{split}
+		\end{flalign*}
 	\end{itemize}
 	

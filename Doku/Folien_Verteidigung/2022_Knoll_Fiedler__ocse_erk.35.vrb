@@ -1,41 +1,7 @@
-\frametitle{\large Trajektorienfolgeregelung}
+\frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
-   	\begin{block}{Vektorieller relativer Grad}
-	Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
-	\begin{centering}
-		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
-	\end{centering}
-	\pause
-	mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
-	\begin{enumerate}
-		\pause
-		\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
-		\pause
-		\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
-		\begin{equation*}
-			\label{eq:decoupling_matrix}
-			\boldsymbol{\Lambda} =
-			\left(\begin{smallmatrix}
-				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
-				\vdots & \ddots & \vdots \\
-				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
-			\end{smallmatrix}\right) .
-		\end{equation*}
-	\end{enumerate}
-	\end{block}
-	
-	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
-		\visible<3->{
-			
-			
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
-				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
-				$\mathbf{y} = \mathbf{h}(\mathbf{x})$
-				
-				\vspace{3mm}
-				
-				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
-			\end{tcolorbox}
-		}
-	\end{textblock*}
+	\textbf{Simulation:}
+	\begin{center}
+		\includegraphics[width=95mm]{images/dyn_controller_initial_error_inputs}
+	\end{center}
 	

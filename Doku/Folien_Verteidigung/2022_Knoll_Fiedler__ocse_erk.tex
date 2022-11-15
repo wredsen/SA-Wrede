@@ -491,120 +491,11 @@ showstringspaces=false,
 		\pause
 		\item Modellierung Doppelkran mit LG2
 		\pause
+		\item[$\rightarrow$] ODE-System: gut geeignet für Flachheitsnachweis, Simulation 
+		\pause
 		\item (Modellierung Doppelkran mit Lagrange-Gleichungen erster Art)
+		\item[$\rightarrow$] (DAE-System: intuitive Zwangsbedingungen)
 	\end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=Lagrange2_1]{\large Lagrange-Formalismus}
-	
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\pause
-		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
-		\pause
-		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
-		\pause
-		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
-		\pause
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
-	\end{itemize}
-	
-	\pause
-	\bigskip
-	\textbf{Lagrange-Gleichungen zweiter Art:}
-	\begin{itemize}
-		\pause
-		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
-		\pause
-		\item Bewegungsgleichungen:
-		\begin{equation*}
-			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
-		\end{equation*}
-		\pause
-		\item Woher $Q_i$?
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=Lagrange2_2]{\large Lagrange-Formalismus}
-	
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
-		\pause
-		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
-	\end{itemize}
-	
-	\pause
-	\bigskip
-	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
-	\begin{itemize}
-		\pause
-		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
-		\pause
-		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
-		\pause
-		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
-		\pause
-		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=ModellEinzelkran_1]{\large Analytisches Modell Einzelkran}
-	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
-		}
-		\bigskip
-		\visible<2->{
-			\begin{itemize}
-				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
-				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
-				~
-			\end{itemize}
-		}
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<3->{	
-			\textbf{Energien:}			
-			\begin{itemize}
-				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
-				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
-			\end{itemize}
-		}
-		
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
-		
-		\visible<4->{
-			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}
-			\begin{itemize}
-				\item $\mathbf{F}_1 =
-				\left(\tau_{1}, 0 \right)^T$,
-				$\mathbf{F}_2 =
-				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
-				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
-			\end{itemize}
-		}
-		
-	\end{textblock*}
-	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -626,7 +517,7 @@ showstringspaces=false,
 	
 	\begin{textblock*}{80mm}[0.,0.](80mm,25mm)
 		
-		\visible<1->{
+		\visible<2->{
 			\centering{\textbf{Systemgleichungen aus LG2:}}
 			\begin{subequations}
 				\label{single_flat_syseqs}
@@ -637,63 +528,6 @@ showstringspaces=false,
 				\end{flalign*}
 			\end{subequations}
 		}
-		
-	\end{textblock*}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=ModellDoppelkran_1]{\large Analytisches Modell Doppelkran}
-	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
-		}
-		\bigskip
-		\visible<2->{
-		\textbf{variable Seillängen:}
-		\tiny{
-		\begin{flalign*}
-			l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
-			l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
-		\end{flalign*}
-		}
-		~
-		}
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<3->{	
-			\textbf{Energien:}			
-			\begin{itemize}
-				\item $T = \frac{J_{2} \dot{p}_{3}^{2}}{2} + \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \dot{q}_{2}^{2}}{2}$
-				\item $V =m_{2} g p_{2}$
-			\end{itemize}
-		}
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
-		
-		\visible<4->{
-			\textbf{Stellkräfte entlang Massepartikel:}
-			\begin{flalign*}
-				\mathbf{F}_1 &=
-				\left( \tau_{1}, 0 \right)^T, \\
-				\mathbf{F}_2 &=
-				\left( \tau_{2}, 0 \right)^T, \\
-				\mathbf{F}_3 &=
-				\left(\begin{matrix}
-					\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
-					\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
-				\end{matrix}\right), \\
-				\mathbf{F}_4 &=
-				\left(\begin{matrix}
-					\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
-					\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
-				\end{matrix}\right)
-				\end{flalign*}
-			}
 		
 	\end{textblock*}
 	
@@ -718,18 +552,8 @@ showstringspaces=false,
 			~
 		}
 	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<1->{	
-			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}			
-			\begin{equation*}
-				\mathbf{Q}= ...
-			\end{equation*}
-		}
-	\end{textblock*}
 
-	\begin{textblock*}{80mm}[0.,0.](80mm,27mm)	
+	\begin{textblock*}{80mm}[0.,0.](80mm,20mm)	
 		\visible<2->{
 			\textbf{Systemgleichungen aus LG2:}
 			\tiny{
@@ -772,7 +596,6 @@ showstringspaces=false,
 		\visible<1->{	
 			\textbf{Eingangsaffines Zustandsraummodell:}			
 		\begin{align*}
-			\label{eq:state_space_double_crane}
 			\begin{split}
 				\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\ 
 				\mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \\
@@ -846,114 +669,28 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=Flachheit_2]{\large Flachheitsanalyse von MIMO-Systemen}
 	
 	\textbf{Prinzipielles Vorgehen:}
-	
 	\begin{itemize}
 		\pause
 		\item  Eingangsaffines nichtlineares MIMO-System\\
 		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
 		\pause
-		\bigskip
-		\item Elimination einer Komponente von $\mathbf{u}$ durch jeweils eine Systemgleichung
+		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine Systemgleichung
 		\pause
-		\item[$\rightarrow$] autonomes System aus $p := n - m$ Gleichungen
+		\item[$\rightarrow$] analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
 		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zustandskomponenten und aller übrigen Systemgleichungen
+		\item[$\rightarrow$] übrig bleiben $n - (n - m) = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
 		\pause
-		\item[$\rightarrow$] übrig bleiben $n - p = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
-		\pause
-		\bigskip
-		\item Wonach Systemgrößen und -gleichungen für Elimination auswählen?
 	\end{itemize}
 	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=Flachheit_3]{\large Flachheitsanalyse von MIMO-Systemen}
+	\bigskip
+	\pause
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
-	
-	\begin{itemize}
-		\pause
-		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
-		\pause
-		\begin{equation*}
-			\mathbf{J}_i = 
-			\begin{pmatrix}
-				* & \cdots & * & 0 & * & \cdots & *\\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				* & \cdots & * & \varepsilon & * & \cdots & * \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *\\
-			\end{pmatrix}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
-		\pause
-		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=Flachheit_4]{\large Flachheitsanalyse von MIMO-Systemen}
-	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
-	
-	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
-		\pause
-		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
-		\begin{equation*}
-			\mathbf{T}_i \mathbf{J}_i = 
-			\begin{pmatrix}
-				\mathbf{I}_{m-(n-i)} \\
-				\hline
-				\mathbf{0}_{(n-m) \times (m-(n-i))}
-			\end{pmatrix}
-			=
-			\begin{pmatrix}
-				1 & 0 & \cdots & 0 & 0 \\
-				0 & 1 & \cdots & 0 & 0 \\
-				\vdots & & \ddots &  & \vdots \\
-				0 & 0 & \cdots & 1 & 0 \\
-				0 & 0 & \cdots & 0 & 1 \\
-				\hline
-				0 & 0 & \cdots & 0 & 0
-			\end{pmatrix}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
-		\begin{equation*}
-			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
-			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
-			\Rightarrow \mathbf{T}_i = 
-			\begin{pmatrix}
-				\mathbf{J}_i^{\mathrm{L} +} \\
-				\mathbf{J}_i^{\mathrm{L} \perp}
-			\end{pmatrix}
-		\end{equation*}
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=Flachheit_5]{\large Flachheitsanalyse von MIMO-Systemen}
-	
-	\textbf{Parametisierung der Systemgrößen durch den flachen Ausgang:}
-	
+	\textbf{Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
 		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
 		\pause
-		\item Parametrisierungen vorheriger Größen ggf. in folgende Parametrisierungen einsetzen
-		\pause
-		\item ggf. Zeitableitungen vorangegangener Parametrisierungen nötig
+		\item Parametrisierungen vorheriger Größen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
 	\end{itemize}
-	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1814,60 +1551,249 @@ showstringspaces=false,
 
 \backupbegin
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=wr8]{\large Wissensrepräsentation (5): \underline{O}pen \underline{R}esearch \underline{K}nowledge \underline{G}raph}
+\begin{frame}[t,fragile,label=Lagrange2_1]{\large Lagrange-Formalismus}
+	
+	\textbf{Symbole:}
+	\begin{itemize}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\pause
+		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
+		\pause
+		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
+		\pause
+		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
+		\pause
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Lagrange-Gleichungen zweiter Art:}
+	\begin{itemize}
+		\pause
+		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\pause
+		\item Bewegungsgleichungen:
+		\begin{equation*}
+			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+		\end{equation*}
+		\pause
+		\item Woher $Q_i$?
+	\end{itemize}
+	
+\end{frame}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover. 
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.} 
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \pause
-  \medskip
-Grundlegendes Schema:
-  
-  
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
-}
-\end{textblock*}
+\begin{frame}[t,fragile,label=Lagrange2_2]{\large Lagrange-Formalismus}
+	
+	\textbf{Symbole:}
+	\begin{itemize}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
+		\pause
+		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
+	\begin{itemize}
+		\pause
+		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
+		\pause
+		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
+		\pause
+		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
+		\pause
+		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+	\end{itemize}
+	
+\end{frame}
 
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
-\visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
-}
-\end{textblock*}
-  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
- 
-Repräsentanz der Regelungstheorie:\\[1mm]
+\begin{frame}[t,fragile,label=ModellEinzelkran_1]{\large Analytisches Modell Einzelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+		\bigskip
+		\visible<2->{
+			\begin{itemize}
+				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
+				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
+				~
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<3->{	
+			\textbf{Energien:}			
+			\begin{itemize}
+				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
+				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
+		
+		\visible<4->{
+			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}
+			\begin{itemize}
+				\item $\mathbf{F}_1 =
+				\left(\tau_{1}, 0 \right)^T$,
+				$\mathbf{F}_2 =
+				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
+				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
+			\end{itemize}
+		}
+		
+	\end{textblock*}
+	
+\end{frame}
 
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
-}
-\end{textblock*}
-  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[t,fragile,label=ModellDoppelkran_1]{\large Analytisches Modell Doppelkran}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
+		\visible<1->{
+			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
+		}
+		\bigskip
+		\visible<2->{
+			\textbf{variable Seillängen:}
+			\tiny{
+				\begin{flalign*}
+					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
+					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
+				\end{flalign*}
+			}
+			~
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
+		
+		\visible<3->{	
+			\textbf{Energien:}			
+			\begin{itemize}
+				\item $T = \frac{J_{2} \dot{p}_{3}^{2}}{2} + \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \dot{q}_{2}^{2}}{2}$
+				\item $V =m_{2} g p_{2}$
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
+		
+		\visible<4->{
+			\textbf{Stellkräfte entlang Massepartikel:}
+			\begin{flalign*}
+				\mathbf{F}_1 &=
+				\left( \tau_{1}, 0 \right)^T, \\
+				\mathbf{F}_2 &=
+				\left( \tau_{2}, 0 \right)^T, \\
+				\mathbf{F}_3 &=
+				\left(\begin{matrix}
+					\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
+					\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
+				\end{matrix}\right), \\
+				\mathbf{F}_4 &=
+				\left(\begin{matrix}
+					\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
+					\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
+				\end{matrix}\right)
+			\end{flalign*}
+		}
+		
+	\end{textblock*}
+	
+\end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
-}
-\end{textblock*}
-  
-  
+\begin{frame}[t,fragile,label=Flachheit_3]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\pause
+		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
+		\pause
+		\begin{equation*}
+			\mathbf{J}_i = 
+			\begin{pmatrix}
+				* & \cdots & * & 0 & * & \cdots & *\\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				* & \cdots & * & \varepsilon & * & \cdots & * \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *\\
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
+		\pause
+		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=Flachheit_4]{\large Flachheitsanalyse von MIMO-Systemen}
+	
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	
+	\begin{itemize}
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
+		\pause
+		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\begin{equation*}
+			\mathbf{T}_i \mathbf{J}_i = 
+			\begin{pmatrix}
+				\mathbf{I}_{m-(n-i)} \\
+				\hline
+				\mathbf{0}_{(n-m) \times (m-(n-i))}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				1 & 0 & \cdots & 0 & 0 \\
+				0 & 1 & \cdots & 0 & 0 \\
+				\vdots & & \ddots &  & \vdots \\
+				0 & 0 & \cdots & 1 & 0 \\
+				0 & 0 & \cdots & 0 & 1 \\
+				\hline
+				0 & 0 & \cdots & 0 & 0
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\begin{equation*}
+			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
+			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
+			\Rightarrow \mathbf{T}_i = 
+			\begin{pmatrix}
+				\mathbf{J}_i^{\mathrm{L} +} \\
+				\mathbf{J}_i^{\mathrm{L} \perp}
+			\end{pmatrix}
+		\end{equation*}
+	\end{itemize}
+	
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 \backupend
 

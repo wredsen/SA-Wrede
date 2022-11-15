@@ -1,55 +1,40 @@
-\frametitle{\large Formale Wissensrepräsentation (3): OWL {\color<1>{mygray}und Inferenz}}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-  \textbf{W}eb \textbf{O}ntology \textbf{L}anguage
-  \begin{itemize}
-   \item OWL2: definierter Standard; basiert auf RDF
-   \item Theoretische Basis: Beschreibungslogik(en)
-   \begin{itemize}
-    \item „Profile“ mit Unterschiedlicher Ausdrucksstärke %(z.\,B. transitive Eigenschaften, Kardinalitäten)
-    \item Entscheidbare Fragmente der Prädikatenlogik 1. Stufe
-    \item[$\Rightarrow$] Einfluss auf Komplexität von Inferenz-Algorithmen
-%     \item Klassen („Konzepte“), Eigenschaften („Rollen“), Instanzen („Individuen“)
-%     \item \href{https://en.wikipedia.org/wiki/Description_logic}{Beispiele}: $\mathcal{ALC}$, $\mathcal {SROIQ}^{\mathcal {(D)}}$
-   \end{itemize}
-% \item OWL-Klassenrestriktionen \texttt{owl:UnionOf}, \texttt{owl:minCardinality}, ...
-% \texttt{owl:allValuesFrom},
-% https://www.w3.org/TR/owl-test/byFunction#function-oneOf
-  \end{itemize}
+	\begin{itemize}
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
+	\begin{equation*}
+		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\end{equation*}
+	\pause
+	\begin{itemize}
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
+	\end{itemize}
+	\pause
+	\begin{equation*}
+		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+	\end{equation*}
+	\begin{itemize}
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\end{itemize}
+	\begin{align*}
+			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
 
-% \pause
-%
-% \medskip
-%
-% % \textbf{Beispiel}:
-% \lstset{
-%   basicstyle=\fontsize{10}{11}\selectfont\ttfamily
-% }
-% \begin{lstlisting}
-% @prefix demo: <http://demo.xy/onto#> .
-% :pole rdf:type owl:Class.               # Klasse
-% :has_pole rdf:type owl:ObjectProperty.  # Eigenschaft
-%
-% :typical_transfer_func rdf:type owl:Class ;
-%                 owl:equivalentClass [ rdf:type owl:Restriction ;
-%                                 owl:onProperty :has_pole ;
-%                                 owl:someValuesFrom :pole
-%                                 ].      # Klassenrestriktion
-% \end{lstlisting}
-
-
-\medskip
-\pause
-
-
-  \textbf{Inferenzsystem} („Schließer“ bzw. Reasoner)
-  \begin{itemize}
-   \item Kann Schlussfolgerungen aus Behauptungen (Axiomen) ableiten
-%    \begin{itemize}
-%    \item[$\Rightarrow$] (Re)Klassifikation von Instanzen
-%    \end{itemize}
-   \smallskip
-   \item Kann Inkonsistenzen aufdecken (widersprüchliche Axiome identifizieren)
-   \item Kann implizit enthaltene Informationen explizit machen („Logikrätsel lösen“)
-  \end{itemize}
-
-
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	

@@ -1,47 +1,24 @@
-\frametitle{\large Analytisches Modell Doppelkran}
-\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
-		}
-		\bigskip
-		\visible<1->{
-			\textbf{variable Seillängen:}
-			\tiny{
-				\begin{flalign*}
-					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
-					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
-				\end{flalign*}
-			}
-			~
-		}
-	\end{textblock*}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
+
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<1->{	
-			\textbf{Eingangsaffines Zustandsraummodell:}			
-		\begin{align*}
-			\label{eq:state_space_double_crane}
-			\begin{split}
-				\dot{\mathbf{x}} &= \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \boldsymbol{\tau} \text{ mit } \\
-				\mathbf{x} &= (p_{1},	p_{2}, p_{3}, q_{1}, q_{2}, \dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2})^T, \\
-				\mathbf{f}(\mathbf{x}) &=
-				(\dot{p}_{1}, \dot{p}_{2}, \dot{p}_{3}, \dot{q}_{1}, \dot{q}_{2}, 0, -g, 0, 0, 0)^T, \\
-				\mathbf{g}(\mathbf{x}) &=
-				\left(\begin{matrix}
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & * & *\\
-					0 & 0 & * & *\\
-					0 & 0 & * & *\\
-					* & 0 & * & 0\\
-					0 & * & 0 & *
-				\end{matrix}\right) \ \text{wobei} \ * \neq 0
-			\end{split}
-		\end{align*}
-		}
-	\end{textblock*}
+	\begin{itemize}
+	\item {($i = 3$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_2 = (\tau_1, \tau_2)^T$:}
+	\begin{align*}
+		\begin{split}
+			m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+			g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+			m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+		\end{split}
+		\quad \Rightarrow \quad
+		\mathbf{J}_3 =
+		\left(\begin{matrix}
+			0 & - \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+			0 & - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+			-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+	\end{align*}
+	\pause
+	\item[$\rightarrow$] Elimination von $\tau_1$ und letzter Gleichung	
+	\end{itemize}
 	

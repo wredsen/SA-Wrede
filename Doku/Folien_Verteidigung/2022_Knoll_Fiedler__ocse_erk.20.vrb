@@ -1,39 +1,18 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
+		\item Zusammenfassung der Parametrisierungen:
+		\begin{align*}
+			\tau_1 &= \theta_1\left(p_2, \dot{p}_2, \ddot{p}_1, \ddot{p}_2, p_1^{(3)}, p_2^{(3)}, p_1^{(4)}, p_2^{(4)} \right) \\
+			\tau_2 &= \theta_2(p_1, p_2, \ddot{p}_1, \ddot{p}_2) \\
+			q_1 &= \Psi_1(p_1, p_2, \ddot{p}_1, \ddot{p}_2)
+		\end{align*}
 		\pause
-		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
-		\begin{equation*}
-			\mathbf{T}_i \mathbf{J}_i =
-			\begin{pmatrix}
-				\mathbf{I}_{m-(n-i)} \\
-				\hline
-				\mathbf{0}_{(n-m) \times (m-(n-i))}
-			\end{pmatrix}
-			=
-			\begin{pmatrix}
-				1 & 0 & \cdots & 0 & 0 \\
-				0 & 1 & \cdots & 0 & 0 \\
-				\vdots & & \ddots &  & \vdots \\
-				0 & 0 & \cdots & 1 & 0 \\
-				0 & 0 & \cdots & 0 & 1 \\
-				\hline
-				0 & 0 & \cdots & 0 & 0
-			\end{pmatrix}
-		\end{equation*}
+		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
 		\pause
-		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
-		\begin{equation*}
-			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
-			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
-			\Rightarrow \mathbf{T}_i =
-			\begin{pmatrix}
-				\mathbf{J}_i^{\mathrm{L} +} \\
-				\mathbf{J}_i^{\mathrm{L} \perp}
-			\end{pmatrix}
-		\end{equation*}
+		\bigskip
+		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
 	\end{itemize}
 	
