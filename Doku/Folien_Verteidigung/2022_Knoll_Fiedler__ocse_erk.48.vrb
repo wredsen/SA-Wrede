@@ -1,26 +1,42 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
+		\item {($i = 2$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\begin{align*}
+		\begin{split}
+		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0
+		\end{split}
+		\quad \Rightarrow \quad
+		\mathbf{J}_2 =
+		\left(\begin{matrix}
+		- \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+		- \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+		\end{align*}		
 		\pause
-		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
-		\pause
-		\begin{equation*}
-			\mathbf{J}_i =
-			\begin{pmatrix}
-				* & \cdots & * & 0 & * & \cdots & *\\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				* & \cdots & * & \varepsilon & * & \cdots & * \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *\\
-			\end{pmatrix}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
-		\pause
-		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
+		\item[$\rightarrow$] keine Spalte mit nur einem nicht-Null-Eintrag, also Transformation $\mathbf{T}_2$ nötig:
+		\begin{align*}
+		\mathbf{J}_2^{\mathrm{L}+} &=
+		\left(
+		\left(\begin{matrix}
+		J_{2, (1,1)}
+		\end{matrix}\right)^{-1}	
+		\mathbf{0}_{1 \times 1}
+		\right), 		
+		\mathbf{J}_2^{\mathrm{L}\perp} =
+		\left(\begin{matrix}
+		-J_{2, (2,1)} & J_{2, (1,1)}
+		\end{matrix}\right) \\
+		\Rightarrow
+		\mathbf{T}_2 &=
+		\left(\begin{matrix}
+		\frac{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{- p_{1} + q_{1}} & 0\\
+		\frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} & \frac{- p_{1} + q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+		\end{align*}
+		
 	\end{itemize}
 	

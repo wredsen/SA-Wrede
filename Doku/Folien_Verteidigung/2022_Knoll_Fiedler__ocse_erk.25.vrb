@@ -1,42 +1,40 @@
-\frametitle{\large Trajektorienfolgeregelung}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-	\begin{textblock*}{42mm}[0.,0.](115mm, 16mm)
-		\visible<2->{
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
-				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
-				$\mathbf{y} = \mathbf{h}(\mathbf{x})$\\
-				$ \Rightarrow L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+	\begin{itemize}
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
+	\begin{equation*}
+		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\end{equation*}
+	\pause
+	\begin{itemize}
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
+	\end{itemize}
+	\pause
+	\begin{equation*}
+		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+	\end{equation*}
+	\begin{itemize}
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\end{itemize}
+	\begin{align*}
+			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
+
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
 			\end{tcolorbox}
 		}
 	\end{textblock*}
-
-	\begin{itemize}
-		\item Bestimmung der Komponenten $r_i$ des \textbf{vektoriellen relativen Grades} $\mathbf{r}$:
-	\end{itemize}
-	\pause
-	\begin{align*}
-	y_i &= h_i(\mathbf{x}) \\
-	\dot{y}_i &= L_{\mathbf{f}} h_i(\mathbf{x}) \\
-	&\vdots \\
-	y_i^{(r_i - 1)} &= L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) \\
-	y_i^{(r_i)} &= L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m
-	\end{align*}
-	\pause
-
-	\begin{table}[htbp]%
-		\centering
-		%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
-		\label{tab:relative_degrees}
-		\begin{tabular}{c| c c c c}
-			\hline
-			Index $i$ & 1 & 2 & 3 & 4 \\
-			\hline
-			Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\
-			\hline
-			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
-			\hline
-			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
-			\hline
-		\end{tabular}
-	\end{table}
 	

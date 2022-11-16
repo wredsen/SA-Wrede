@@ -1,18 +1,42 @@
-\frametitle{\large Flachheitsanalyse am Einzelkran}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
-	
 	\begin{itemize}
-		\item Zusammenfassung der Parametrisierungen:
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
 		\begin{align*}
-		\tau_1 &= \theta_1\left(p_2, \dot{p}_2, \ddot{p}_1, \ddot{p}_2, p_1^{(3)}, p_2^{(3)}, p_1^{(4)}, p_2^{(4)} \right) \\
-		\tau_2 &= \theta_2(p_1, p_2, \ddot{p}_1, \ddot{p}_2) \\
-		q_1 &= \Psi_1(p_1, p_2, \ddot{p}_1, \ddot{p}_2)
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
 		\end{align*}
 		\pause
-		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\item aus ZRM $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$:
+		\begin{align*}
+			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) + \mathbf{g}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) \ \mathbf{u}
+		\end{align*}
 		\pause
-		\bigskip
-		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
+		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
 	\end{itemize}
+	
+	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
+		\visible<2->{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
+				$\mathbf{f}(\mathbf{x}) =
+				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\
+				$\mathbf{g}(\mathbf{x}) =
+				\left(\begin{matrix}
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0}\\
+					\textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*}
+				\end{matrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

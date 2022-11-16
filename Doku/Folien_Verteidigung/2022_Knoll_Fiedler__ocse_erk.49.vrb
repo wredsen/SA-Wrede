@@ -1,39 +1,31 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
+		\item {($i = 2$) transformierte Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\begin{align*}
+		\begin{split}
+		\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right)}{\left(p_{1} - q_{1}\right)} &= 0 \label{single_flat_transformed_syseq1}\\
+		g\frac{m_{2} \left(- g p_{1} + g q_{1} - p_{1} \ddot{p}_{2} + p_{2} \ddot{p}_{1} + \ddot{p}_{2} q_{1}\right)}{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}
+		&= 0
+		\end{split}
+		\quad \Rightarrow \quad
+		\mathbf{J}_2' =
+		\left(\begin{matrix}
+		1\\
+		0
+		\end{matrix}\right)
+		\end{align*}		
 		\pause
-		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\item[$\rightarrow$] Elimination von $\tau_2$ und erster transformierter Gleichung
+		\pause
+		\item[$\rightarrow$] letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
 		\begin{equation*}
-			\mathbf{T}_i \mathbf{J}_i =
-			\begin{pmatrix}
-				\mathbf{I}_{m-(n-i)} \\
-				\hline
-				\mathbf{0}_{(n-m) \times (m-(n-i))}
-			\end{pmatrix}
-			=
-			\begin{pmatrix}
-				1 & 0 & \cdots & 0 & 0 \\
-				0 & 1 & \cdots & 0 & 0 \\
-				\vdots & & \ddots &  & \vdots \\
-				0 & 0 & \cdots & 1 & 0 \\
-				0 & 0 & \cdots & 0 & 1 \\
-				\hline
-				0 & 0 & \cdots & 0 & 0
-			\end{pmatrix}
+		\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}
 		\end{equation*}
 		\pause
-		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
-		\begin{equation*}
-			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
-			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
-			\Rightarrow \mathbf{T}_i =
-			\begin{pmatrix}
-				\mathbf{J}_i^{\mathrm{L} +} \\
-				\mathbf{J}_i^{\mathrm{L} \perp}
-			\end{pmatrix}
-		\end{equation*}
+		\item rein algebraisches Auftreten von $q_1$ führt zu Wahl von $\mathbf{y} = (p_1, p_2)^T$
+		
 	\end{itemize}
 	

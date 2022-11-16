@@ -910,40 +910,15 @@ showstringspaces=false,
 		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
 		\pause
 		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
+		\pause
+		\item[$\rightarrow$] 2 x 3 bzw. 2 x 5 Randbedingungen für $y_i$ $\rightarrow$ Polynome der Ordnung 5 bzw. 9:
+		\begin{align*}
+			\begin{split}
+				y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
+				y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+			\end{split}
+		\end{align*}
 		
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=trajektorien_2]{\large Trajektorienplanung}
-	
-	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
-	\begin{align*}
-		\begin{split}
-			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
-			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
-			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
-			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
-			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
-		\end{split}
-	\end{align*}
-	\begin{itemize}
-		\pause
-		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen: 
-	\end{itemize}
-	\pause
-	\begin{align*}
-		\label{eq:polynomes_ref_trajectories}
-		\begin{split}
-			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
-			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
-		\end{split}
-	\end{align*}
-	\begin{itemize}
-		\pause
-		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
 	\end{itemize}
 	
 \end{frame}
@@ -1225,7 +1200,7 @@ showstringspaces=false,
 	\end{itemize}
 	
 \end{frame}
-
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[t,fragile,label=trajektorienregelung_9]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
@@ -1246,10 +1221,15 @@ showstringspaces=false,
 		\end{align*}
 		\pause
 		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
+		\pause
+		\item[$\rightarrow$] \textbf{Heuristik}: Annahme der Dynamik der \textbf{Ordnung 2} des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
+		\pause
+		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}^{-1}$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
+		
 	\end{itemize}
-
+	
 	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
-		\visible<2->{
+		\visible<2-2>{
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
 				$\mathbf{f}(\mathbf{x}) = 
 				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\ 
@@ -1272,66 +1252,6 @@ showstringspaces=false,
 	
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=trajektorienregelung_10]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
-	
-	\begin{itemize}
-		\item \textbf{Heuristik}: Annahme der Dynamik der Ordnung 2 des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$:
-		\begin{align*}
-			\mathbf{v} := \ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}
-		\end{align*}
-		\pause
-		\item[$\rightarrow$] Eingang $\mathbf{u} \in \mathbb{R}^{4}$ und neuer virtueller Eingang $\mathbf{v} \in \mathbb{R}^{5}$ mit verschiedener Dimension
-		\item[$\rightarrow$] Inversenbildung von $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) \in \mathbb{R}^{5 \times 4}$ nicht direkt möglich \\
-	\end{itemize}
-	\bigskip
-	\pause
-	\textbf{$\Rightarrow$ Bildung einer Pseudoinversen (PI):}
-	\begin{enumerate}
-		\item Methode: Moore-Penrose-PI \quad $\mathbf{g}_{[6, 10]}^+ =  (\mathbf{g}_{[6, 10]}^T \	\mathbf{g}_{[6, 10]})^{-1} 	\mathbf{g}_{[6, 10]}^T$
-		\pause
-		\item Methode: Selektion der letzten 4 Gleichungen des ZRM:
-		\begin{align*}
-			\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} &= \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \mathbf{u}, \	
-			\mathbf{S} := 
-			\left(\begin{smallmatrix}
-				0 & 1 & 0 & 0 & 0 \\
-				0 & 0 & 1 & 0 & 0 \\
-				0 & 0 & 0 & 1 & 0 \\
-				0 & 0 & 0 & 0 & 1
-			\end{smallmatrix}\right) \\
-			\Rightarrow \mathbf{g}_{[7, 10]} &= \mathbf{S} \cdot \mathbf{g}_{[6, 10]}
-		\end{align*}
-	\end{enumerate}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-\begin{frame}[t,fragile,label=trajektorienregelung_11]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
-	
-	\textbf{Stellgesetze:}
-	\begin{enumerate}
-		\item Methode Moore-Penrose-PI:
-		\begin{equation*}
-			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
-		\end{equation*}
-		\pause
-		\item Methode Selektions-PI:
-		\begin{equation*}
-			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{-1}_{[7, 10]}(\boldsymbol{\theta}_{\text{ref}}) \cdot \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
-		\end{equation*}
-	\end{enumerate}
-	\pause
-	\begin{itemize}
-		\item[$\rightarrow$] keine Stabilität per Konstruktion und durch $\boldsymbol{\theta}_{\text{ref}} = \boldsymbol{\theta}_{\text{ref}}(t)$ \textbf{zeitvariantes} System
-		\pause
-		\item[$\rightarrow$] Ensemble-Simulationen (alternativ: zeitvarianter Stabilitätsnachweis)
-	\end{itemize}
-	
-\end{frame}
-  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[t,fragile,label=trajektorienregelung_121]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
@@ -1363,10 +1283,10 @@ showstringspaces=false,
 		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
 		\bigskip
 		\pause
-		\item kein formaler Stabilitätsnachweis, auch kein Gegenbeispiel aus Simulationen
+		\item kein Stabilitätsnachweis für zeitvariantes System, aber auch kein Gegenbeispiel aus Ensemble-Simulation
 		\pause
 		\bigskip
-		\item Stellgesetz mit Moore-Penrose-PI mit etwa 2\,000 Operationen je Eingangskomponente, für Selektions-PI weniger als 140
+		\item Stellgesetz mit weniger als 140 Operationen je Eingangskomponente
 		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Ressourcenanforderungen für Implementierung
 	\end{itemize}
 
@@ -1887,6 +1807,39 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}[t,fragile,label=trajektorien_2]{\large Trajektorienplanung}
+	
+	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
+	\begin{align*}
+		\begin{split}
+			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
+			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
+			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen: 
+	\end{itemize}
+	\pause
+	\begin{align*}
+		\label{eq:polynomes_ref_trajectories}
+		\begin{split}
+			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
+			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+		\end{split}
+	\end{align*}
+	\begin{itemize}
+		\pause
+		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}[t,fragile,label=trajektorienregelung_1]{\large Trajektorienfolgeregelung}
 	
 	\begin{block}{Vektorieller relativer Grad}
@@ -1927,6 +1880,112 @@ showstringspaces=false,
 			\end{tcolorbox}
 		}
 	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_9]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+	
+	\begin{itemize}
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
+		\end{align*}
+		\pause
+		\item aus ZRM $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$:
+		\begin{align*}
+			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) + \mathbf{g}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) \ \mathbf{u}
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
+	\end{itemize}
+	
+	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
+		\visible<2->{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
+				$\mathbf{f}(\mathbf{x}) = 
+				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\ 
+				$\mathbf{g}(\mathbf{x}) =
+				\left(\begin{matrix}
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0}\\
+					\textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*}
+				\end{matrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_10]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+	
+	\begin{itemize}
+		\item \textbf{Heuristik}: Annahme der Dynamik der Ordnung 2 des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$:
+		\begin{align*}
+			\mathbf{v} := \ddot{\boldsymbol{\theta}} = \ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] Eingang $\mathbf{u} \in \mathbb{R}^{4}$ und neuer virtueller Eingang $\mathbf{v} \in \mathbb{R}^{5}$ mit verschiedener Dimension
+		\item[$\rightarrow$] Inversenbildung von $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) \in \mathbb{R}^{5 \times 4}$ nicht direkt möglich \\
+	\end{itemize}
+	\bigskip
+	\pause
+	\textbf{$\Rightarrow$ Bildung einer Pseudoinversen (PI):}
+	\begin{enumerate}
+		\item Methode: Moore-Penrose-PI \quad $\mathbf{g}_{[6, 10]}^+ =  (\mathbf{g}_{[6, 10]}^T \	\mathbf{g}_{[6, 10]})^{-1} 	\mathbf{g}_{[6, 10]}^T$
+		\pause
+		\item Methode: Selektion der letzten 4 Gleichungen des ZRM:
+		\begin{align*}
+			\mathbf{S} \cdot \ddot{\boldsymbol{\theta}} &= \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_1^T \dot{\mathbf{e}} - \mathbf{c}_0^T \mathbf{e}) = \mathbf{S} \cdot \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{S} \cdot \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \mathbf{u}, \	
+			\mathbf{S} := 
+			\left(\begin{smallmatrix}
+				0 & 1 & 0 & 0 & 0 \\
+				0 & 0 & 1 & 0 & 0 \\
+				0 & 0 & 0 & 1 & 0 \\
+				0 & 0 & 0 & 0 & 1
+			\end{smallmatrix}\right) \\
+			\Rightarrow \mathbf{g}_{[7, 10]} &= \mathbf{S} \cdot \mathbf{g}_{[6, 10]}
+		\end{align*}
+	\end{enumerate}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_11]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+	
+	\textbf{Stellgesetze:}
+	\begin{enumerate}
+		\item Methode Moore-Penrose-PI:
+		\begin{equation*}
+			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
+		\end{equation*}
+		\pause
+		\item Methode Selektions-PI:
+		\begin{equation*}
+			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{-1}_{[7, 10]}(\boldsymbol{\theta}_{\text{ref}}) \cdot \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
+		\end{equation*}
+	\end{enumerate}
+	\pause
+	\begin{itemize}
+		\item[$\rightarrow$] keine Stabilität per Konstruktion und durch $\boldsymbol{\theta}_{\text{ref}} = \boldsymbol{\theta}_{\text{ref}}(t)$ \textbf{zeitvariantes} System
+		\pause
+		\item[$\rightarrow$] Ensemble-Simulationen (alternativ: zeitvarianter Stabilitätsnachweis)
+	\end{itemize}
 	
 \end{frame}
 

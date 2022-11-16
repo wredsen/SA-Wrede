@@ -1,8 +1,42 @@
-\frametitle{\large Prototypische Referenztrajektorie}
+\frametitle{\large Trajektorienfolgeregelung}
 
-	\begin{center}
-    	\includemovie[attach=false,autoplay,text={%
-    		\includegraphics[width=0.6\textwidth]{images/onion_skinned_picture}%
-    	}]{1.0\linewidth}{0.45\linewidth}{images/gantry_crane_trajectory.mp4}
-    \end{center}
+	\begin{textblock*}{42mm}[0.,0.](115mm, 16mm)
+		\visible<2->{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
+				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
+				$\mathbf{y} = \mathbf{h}(\mathbf{x})$\\
+				$ \Rightarrow L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+
+	\begin{itemize}
+		\item Bestimmung der Komponenten $r_i$ des \textbf{vektoriellen relativen Grades} $\mathbf{r}$:
+	\end{itemize}
+	\pause
+	\begin{align*}
+	y_i &= h_i(\mathbf{x}) \\
+	\dot{y}_i &= L_{\mathbf{f}} h_i(\mathbf{x}) \\
+	&\vdots \\
+	y_i^{(r_i - 1)} &= L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) \\
+	y_i^{(r_i)} &= L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m
+	\end{align*}
+	\pause
+
+	\begin{table}[htbp]%
+		\centering
+		%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+		\label{tab:relative_degrees}
+		\begin{tabular}{c| c c c c}
+			\hline
+			Index $i$ & 1 & 2 & 3 & 4 \\
+			\hline
+			Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\
+			\hline
+			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+			\hline
+			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+			\hline
+		\end{tabular}
+	\end{table}
 	

@@ -1,53 +1,24 @@
-\frametitle{\large Analytisches Modell Doppelkran}
-\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_double_crane_diagram}
-		}
-		\bigskip
-		\visible<2->{
-			\textbf{variable Seillängen:}
-			\tiny{
-				\begin{flalign*}
-					l_1 &= \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&& \\
-					l_2 &= \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}&&
-				\end{flalign*}
-			}
-			~
-		}
-	\end{textblock*}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
+
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<3->{	
-			\textbf{Energien:}			
-			\begin{itemize}
-				\item $T = \frac{J_{2} \dot{p}_{3}^{2}}{2} + \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2} + \frac{m_{3} \dot{q}_{2}^{2}}{2}$
-				\item $V =m_{2} g p_{2}$
-			\end{itemize}
-		}
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
-		
-		\visible<4->{
-			\textbf{Stellkräfte entlang Massepartikel:}
-			\begin{flalign*}
-				\mathbf{F}_1 &=
-				\left( \tau_{1}, 0 \right)^T, \\
-				\mathbf{F}_2 &=
-				\left( \tau_{2}, 0 \right)^T, \\
-				\mathbf{F}_3 &=
-				\left(\begin{matrix}
-					\frac{\tau_{3} \left(p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}\right)}{l_{1}}\\
-					\frac{\tau_{3} \left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)}{l_{1}}
-				\end{matrix}\right), \\
-				\mathbf{F}_4 &=
-				\left(\begin{matrix}
-					\frac{\tau_{4} \left(- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}\right)}{l_{2}}\\
-					\frac{\tau_{4} \left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)}{l_{2}}
-				\end{matrix}\right)
-			\end{flalign*}
-		}
-		
-	\end{textblock*}
+	\begin{itemize}
+		\item {($i = 3$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_2 = (\tau_1, \tau_2)^T$:}
+		\begin{align*}
+		\begin{split}
+		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
+		m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+		\end{split}
+		\quad \Rightarrow \quad
+		\mathbf{J}_3 =
+		\left(\begin{matrix}
+		0 & - \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+		0 & - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
+		-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
+		\end{matrix}\right)
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] Elimination von $\tau_1$ und letzter Gleichung	
+	\end{itemize}
 	

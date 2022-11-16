@@ -1,7 +1,17 @@
 \frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
-	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/dyn_controller_initial_error_inputs}
-	\end{center}
+	\textbf{Fazit:}
+	\begin{itemize}
+		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
+		\bigskip
+		\pause
+		\item hohe „Trägheit“ des Systems beim Ausregeln von Folgefehlern wegen Integratoren
+		\item[$\rightarrow$] Pole der Fehlerdynamik weiter in LHE platzieren
+		\bigskip
+		\pause
+		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
+		\item[$\rightarrow$] lange Simulationszeiten, hohe Ressourcenanforderungen bei Implementierungen
+		\pause
+		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
+	\end{itemize}
 	

@@ -1,7 +1,14 @@
 \frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
-	\end{center}
-	
+	\textbf{Fazit:}
+	\begin{itemize}
+		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
+		\bigskip
+		\pause
+		\item kein formaler Stabilitätsnachweis, auch kein Gegenbeispiel aus Simulationen
+		\pause
+		\bigskip
+		\item Stellgesetz mit Moore-Penrose-PI mit etwa 2\,000 Operationen je Eingangskomponente, für Selektions-PI weniger als 140
+		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Ressourcenanforderungen für Implementierung
+	\end{itemize}
+

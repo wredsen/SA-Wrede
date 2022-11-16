@@ -1,14 +1,5 @@
-\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
-
-	\textbf{Fazit:}
-	\begin{itemize}
-		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
-		\bigskip
-		\pause
-		\item kein formaler Stabilitätsnachweis, auch kein Gegenbeispiel aus Simulationen
-		\pause
-		\bigskip
-		\item Stellgesetz mit Moore-Penrose-PI mit etwa 2\,000 Operationen je Eingangskomponente, für Selektions-PI weniger als 140
-		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Ressourcenanforderungen für Implementierung
-	\end{itemize}
-
+\frametitle{~}
+\begin{center}
+		{\huge \textbf{Ergänzungsfolien}}
+	\end{center}
+	
