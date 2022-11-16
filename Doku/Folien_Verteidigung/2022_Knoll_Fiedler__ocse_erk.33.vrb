@@ -1,22 +1,42 @@
-\frametitle{\large Trajektorienfolgeregelung - \textcolor {blue}{Dynamische} \textcolor {red}{Rückführung}}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
 	\begin{itemize}
-		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog statischer Rückführung:
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
 		\begin{align*}
-			\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
 		\end{align*}
 		\pause
-		\item funktionale Zusammenhänge der Folgeregelung:
+		\item aus ZRM $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$:
 		\begin{align*}
-			\textcolor{blue}{\beta_1} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_3} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_4} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
+			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) + \mathbf{g}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) \ \mathbf{u}
 		\end{align*}
 		\pause
-		\item Anpassung der Trajektorienplanung, da Vorgabe von $\beta_i$ (Doppelintegratoren)
-		\pause
-		\item[$\rightarrow$] für alle $y_i$ nun 5 Bedingungen je Rand
-		\item[$\rightarrow$] Ansatz von Polynomen der Ordnung 9
+		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
 	\end{itemize}
+
+	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
+		\visible<2->{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
+				$\mathbf{f}(\mathbf{x}) =
+				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\
+				$\mathbf{g}(\mathbf{x}) =
+				\left(\begin{matrix}
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0}\\
+					\textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*}
+				\end{matrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

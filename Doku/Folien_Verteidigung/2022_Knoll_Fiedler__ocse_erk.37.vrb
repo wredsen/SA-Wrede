@@ -1,20 +1,7 @@
 \frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\begin{itemize}
-		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
-		\begin{align*}
-			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
-		\end{align*}
-		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
-		\begin{align*}
-			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
-		\end{align*}
-		\pause
-		\item aus Zustandsraummodell $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$ folgt:
-		\begin{align*}
-			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}) + \mathbf{g}_{[6, 10]}(\boldsymbol{\theta}) \ \mathbf{u}
-		\end{align*}
-		\pause
-		\item[$\rightarrow$] Entkopplungsmatrix ist unterer Teil der Eingangsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
-	\end{itemize}
+	\textbf{Simulation:}
+	\begin{center}
+		\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
+	\end{center}
 	

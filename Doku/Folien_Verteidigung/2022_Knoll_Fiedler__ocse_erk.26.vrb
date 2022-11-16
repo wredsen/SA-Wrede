@@ -1,29 +1,40 @@
-\frametitle{\large Trajektorienplanung}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
-	\begin{align*}
-		\begin{split}
-			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
-			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
-			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
-			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
-			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
-		\end{split}
-	\end{align*}
 	\begin{itemize}
-		\pause
-		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen:
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
+	\begin{equation*}
+		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\end{equation*}
+	\pause
+	\begin{itemize}
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
 	\end{itemize}
 	\pause
-	\begin{align*}
-		\label{eq:polynomes_ref_trajectories}
-		\begin{split}
-			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
-			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
-		\end{split}
-	\end{align*}
+	\begin{equation*}
+		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+	\end{equation*}
 	\begin{itemize}
-		\pause
-		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
 	\end{itemize}
+	\begin{align*}
+			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
+
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

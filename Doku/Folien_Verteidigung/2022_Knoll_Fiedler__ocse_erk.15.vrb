@@ -1,24 +1,30 @@
 \frametitle{\large Flachheitsanalyse am Einzelkran}
 
+	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
+	\visible<1->{
+		\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+	}
+	\end{textblock*}
+	
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-	\item {($i = 3$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_2 = (\tau_1, \tau_2)^T$:}
-	\begin{align*}
+		\item Elimination der Eingangskomponenten von $\mathbf{u} = (\tau_1, \tau_2)^T$:
+		\begin{align*}
 		\begin{split}
-			m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
+			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
 			g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0\\
-			m_{1} \ddot{q}_{1} - \tau_{1} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
+			m_{1} \ddot{q}_{1} - \textcolor{red}{\tau_{1}} + \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0
 		\end{split}
-		\quad \Rightarrow \quad
-		\mathbf{J}_3 =
-		\left(\begin{matrix}
-			0 & - \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
-			0 & - \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
-			-1 & \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
-		\end{matrix}\right)
-	\end{align*}
-	\pause
-	\item[$\rightarrow$] Elimination von $\tau_1$ und letzter Gleichung	
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] Elimination von $\textcolor{red}{\tau_{1}}$ und 3. Gleichung
+		\pause
+		\item[$\rightarrow$] Elimination von $\textcolor{blue}{\tau_{2}}$ und 1. Gleichung
+		\pause
+		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
+		\begin{align*}
+			g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - q_1} = 0
+		\end{align*}
 	\end{itemize}
 	

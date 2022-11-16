@@ -1,44 +1,41 @@
-\frametitle{\large OCSE -- Wie anfangen?}
+\frametitle{\large Trajektorienfolgeregelung}
 
-
-\lstset{
-  basicstyle=\fontsize{8}{11}\selectfont\ttfamily
-}
-% \begin{itemize}
-%  \item[]
-% \end{itemize}
-\vspace{-3mm}
- Worum geht es in der Regelungstheorie? $\rightarrow$ \pause Dynamische Systeme.
-\pause
-\begin{lstlisting}
-I5948 = p.create_item(
-    R1__has_label="dynamical system",
-    R4__is_instance_of=p.I2["Metaclass"] # <- Metaklassen-Instanzen sind Klassen
-)
-\end{lstlisting}
-% Was \textit{ist} ein System? \pause $\rightarrow$ Erstmal egal.
-
-\smallskip
-Geht es wirklich um Systeme? \pause $\rightarrow$ Es geht um \textit{Modelle}.
-\pause
-
-
-\vspace{-1em}
-\begin{lstlisting}
-I7641 = p.create_item(
-    R1__has_label="general system model",
-    R4__is_instance_of=p.I2["Metaclass"],
-)
-\end{lstlisting}
-
-\vspace{-2em}
-\pause
-\begin{lstlisting}
-R7641 = p.create_relation(
-    R1__has_label="has approximation",
-    R8__has_domain_of_argument_1=I5948["dynamical system"],
-    R11__has_range_of_result=I7641["general system model"],
-)
-\end{lstlisting}
-
-
+	\begin{block}{Vektorieller relativer Grad}
+		Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
+		\begin{centering}
+			$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
+		\end{centering}
+		\pause
+		mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+		\begin{enumerate}
+			\pause
+			\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
+			\pause
+			\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
+			\begin{equation*}
+			\label{eq:decoupling_matrix}
+			\boldsymbol{\Lambda} =
+			\left(\begin{smallmatrix}
+			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+			\vdots & \ddots & \vdots \\
+			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+			\end{smallmatrix}\right) .
+			\end{equation*}
+		\end{enumerate}
+	\end{block}
+	
+	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
+		\visible<3->{
+			
+			
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
+				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
+				$\mathbf{y} = \mathbf{h}(\mathbf{x})$
+				
+				\vspace{3mm}
+				
+				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	

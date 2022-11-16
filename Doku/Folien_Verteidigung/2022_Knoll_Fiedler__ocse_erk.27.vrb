@@ -1,8 +1,37 @@
-\frametitle{\large Prototypische Referenztrajektorie}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-	\begin{center}
-    	\includemovie[attach=false,autoplay,text={%
-    		\includegraphics[width=0.6\textwidth]{images/onion_skinned_picture}%
-    	}]{1.0\linewidth}{0.45\linewidth}{images/gantry_crane_trajectory.mp4}
-    \end{center}
+	\begin{itemize}
+		\item Entkopplungsmatrix für das Doppelkransystem
+	\end{itemize}
+	\begin{align*}
+		\boldsymbol{\Lambda} =
+		\left(\begin{smallmatrix}
+			0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+			\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+		\end{smallmatrix}\right)
+	\end{align*}
+	\pause
+	\begin{itemize}
+		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
+		\pause
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\pause
+		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
+	\end{itemize}
+
+		\begin{textblock*}{82mm}[0.,0.](12mm,50mm)
+		\visible<1-1>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+					\vdots & \ddots & \vdots \\
+					L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

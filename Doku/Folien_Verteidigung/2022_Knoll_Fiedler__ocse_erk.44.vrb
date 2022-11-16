@@ -1,14 +1,32 @@
-\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+\frametitle{\large Lagrange-Formalismus}
 
-	\textbf{Fazit:}
+	\textbf{Symbole:}
 	\begin{itemize}
-		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
-		\bigskip
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
 		\pause
-		\item kein formaler Stabilitätsnachweis, auch kein Gegenbeispiel aus Simulationen
+		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
 		\pause
-		\bigskip
-		\item Stellgesetz mit Moore-Penrose-PI mit etwa 2\,000 Operationen je Eingangskomponente, für Selektions-PI weniger als 140
-		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Ressourcenanforderungen für Implementierung
+		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
+		\pause
+		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
+		\pause
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
 	\end{itemize}
-
+	
+	\pause
+	\bigskip
+	\textbf{Lagrange-Gleichungen zweiter Art:}
+	\begin{itemize}
+		\pause
+		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\pause
+		\item Bewegungsgleichungen:
+		\begin{equation*}
+			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+		\end{equation*}
+		\pause
+		\item Woher $Q_i$?
+	\end{itemize}
+	

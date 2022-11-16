@@ -1,26 +1,31 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
+		\item {($i = 2$) transformierte Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\begin{align*}
+		\begin{split}
+		\frac{\left(- m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}} + \tau_{2} \left(p_{1} - q_{1}\right)\right)}{\left(p_{1} - q_{1}\right)} &= 0 \label{single_flat_transformed_syseq1}\\
+		g\frac{m_{2} \left(- g p_{1} + g q_{1} - p_{1} \ddot{p}_{2} + p_{2} \ddot{p}_{1} + \ddot{p}_{2} q_{1}\right)}{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}
+		&= 0
+		\end{split}
+		\quad \Rightarrow \quad
+		\mathbf{J}_2' =
+		\left(\begin{matrix}
+		1\\
+		0
+		\end{matrix}\right)
+		\end{align*}		
 		\pause
-		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
+		\item[$\rightarrow$] Elimination von $\tau_2$ und erster transformierter Gleichung
 		\pause
+		\item[$\rightarrow$] letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
 		\begin{equation*}
-			\mathbf{J}_i =
-			\begin{pmatrix}
-				* & \cdots & * & 0 & * & \cdots & *\\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				* & \cdots & * & \varepsilon & * & \cdots & * \\
-				* & \cdots & * & 0 & * & \cdots & *  \\
-				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
-				* & \cdots & * & 0 & * & \cdots & *\\
-			\end{pmatrix}
+		\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}
 		\end{equation*}
 		\pause
-		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
-		\pause
-		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
+		\item rein algebraisches Auftreten von $q_1$ führt zu Wahl von $\mathbf{y} = (p_1, p_2)^T$
+		
 	\end{itemize}
 	

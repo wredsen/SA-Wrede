@@ -1,25 +1,17 @@
-\frametitle{\large Flachheitsanalyse am Doppelkran}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
-		\item Vorgehen analog zum Einzelkran
 		\pause
-		\item[$\rightarrow$] unpraktikable Darstellung umfangreicher Terme, über CAS \textit{SymPy} durchgeführt
-		\pause
-		\bigskip
-		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
-		\pause
-		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
-		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
-		\pause
-		\bigskip
-		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
+		\item aus letzter transformierter Systemgleichung:
 		\begin{equation*}
-			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
+			q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
 		\end{equation*}
 		\pause
-		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
+		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{equation*}
+			\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+		\end{equation*}
 	\end{itemize}
 	

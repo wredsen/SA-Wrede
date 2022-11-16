@@ -1,42 +1,36 @@
 \frametitle{\large Flachheitsanalyse am Einzelkran}
 
+	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
+		\visible<1->{
+			\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		}
+	\end{textblock*}
+	
 	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item {($i = 2$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
+		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
 		\begin{align*}
-		\begin{split}
-			m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
-			g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0
-		\end{split}
-		\quad \Rightarrow \quad
-		\mathbf{J}_2 =
-		\left(\begin{matrix}
-			- \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
-			- \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
-		\end{matrix}\right)
-		\end{align*}		
-		\pause
-		\item[$\rightarrow$] keine Spalte mit nur einem nicht-Null-Eintrag, also Transformation $\mathbf{T}_2$ nötig:
-		\begin{align*}
-			\mathbf{J}_2^{\mathrm{L}+} &=
-			\left(
-			\left(\begin{matrix}
-				J_{2, (1,1)}
-			\end{matrix}\right)^{-1}	
-			\mathbf{0}_{1 \times 1}
-			\right), 		
-			\mathbf{J}_2^{\mathrm{L}\perp} =
-			\left(\begin{matrix}
-				-J_{2, (2,1)} & J_{2, (1,1)}
-			\end{matrix}\right) \\
-			\Rightarrow
-			\mathbf{T}_2 &=
-			\left(\begin{matrix}
-				\frac{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{- p_{1} + q_{1}} & 0\\
-				\frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} & \frac{- p_{1} + q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
-			\end{matrix}\right)
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{green}{q_1}} = 0
 		\end{align*}
-		
+		\item[$\rightarrow$] folgende Menge an Systemgrößen $\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}$
+		\pause
+		\item[$\rightarrow$] Elimination von $q_1$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
 	\end{itemize}
+	
+	\bigskip
+	\pause
+	
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\begin{itemize}
+		\item aus 2. substituierter Gleichung: $\textcolor{green}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}$
+		\pause
+		\item aus 1. Gleichung und Einsetzen von $\textcolor{green}{q_1}(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{equation*}
+			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - \textcolor{green}{q_1}\right)}{l_{1}} = 0
+			\quad \Rightarrow \quad
+			\textcolor{blue}{\tau_{2}} = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+		\end{equation*}
+	\end{itemize}
+	
 	

@@ -1,17 +1,25 @@
-\frametitle{\large Flachheitsanalyse am Doppelkran}
+\frametitle{\large Trajektorienplanung}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
-		
+	\textbf{Anforderungen:}
 	\begin{itemize}
-		\item funktionale Zusammenhänge der Parametrisierungen:
-		\begin{align*}
-			\tau_1 &= \theta_1 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1, \ddot{q}_1 \right) \\
-			\tau_2 &= \theta_2 \left(p_1, \dot{p}_1, \ddot{p}_1, p_1^{(3)}, p_1^{(4)}, p_2, \dot{p}_2, \ddot{p}_2, p_2^{(3)}, p_2^{(4)}, p_3, \dot{p}_3, \ddot{p}_3, p_3^{(3)}, p_3^{(4)}, q_1, \dot{q}_1, \ddot{q}_1 \right) \\
-			\tau_3 &= \theta_3 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right) \\
-			\tau_4 &= \theta_4 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right) \\
-			q_2 &= \Psi_1 \left(p_1, \ddot{p}_1, p_2, \ddot{p}_2, p_3, \ddot{p}_3, q_1 \right)
-		\end{align*}
 		\pause
-		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ parametrisiert
+		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
+		\pause
+		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
+		\pause
+		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
 	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Vorgabe von Randbedingungen:}
+	\begin{itemize}
+		\pause
+		\item Differenzierbarkeitsbedingungen an $\mathbf{y}(t)$ folgen aus $\boldsymbol{\tau}(\mathbf{y}(t), \dot{\mathbf{y}}(t), ...)$
+		\pause
+		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
+		\pause
+		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
 		
+	\end{itemize}
+	

@@ -1,32 +1,26 @@
-\frametitle{\large Lagrange-Formalismus}
+\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\pause
-		\item direkt aktuierte Koordinaten $\mathbf{q}$, nicht direkt aktuierte Koordinaten $\mathbf{p}$
-		\pause
-		\item kinetische Energie $T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})$, potentielle Energie $V(\boldsymbol{\theta})$
-		\pause
-		\item Lagrange-Funktion $\mathcal{L}(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) = T(\boldsymbol{\theta}, \dot{\boldsymbol{\theta}}) - V(\boldsymbol{\theta})$
-		\pause
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item äußere Stellkraft $\mathbf{f}$, interne Reibungskraft $\mathbf{D}$
-	\end{itemize}
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
-	\pause
-	\bigskip
-	\textbf{Lagrange-Gleichungen zweiter Art:}
 	\begin{itemize}
 		\pause
-		\item  $\boldsymbol{\theta}$ sind unabhängig (ohne Zwangsbedingung verkoppelt)
+		\item Jacobi-Matrix $\mathbf{J}_i$ der $i$ bisher nicht eliminierter Systemgleichungen bezüglich nicht eliminierter Eingangskomponenten $\mathbf{u}_{m-(n-i)}$ (später analog für $\mathbf{x}_{i+m}$): \\
 		\pause
-		\item Bewegungsgleichungen:
 		\begin{equation*}
-			\frac{\mathrm{d}}{\mathrm{d} t} \left(\frac{\partial \mathcal{L}}{\partial \dot{\theta}_i} \right) - \frac{\partial \mathcal{L}}{\partial \theta_i} = Q_i, \quad i = 1, \ldots, n
+			\mathbf{J}_i =
+			\begin{pmatrix}
+				* & \cdots & * & 0 & * & \cdots & *\\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				* & \cdots & * & \varepsilon & * & \cdots & * \\
+				* & \cdots & * & 0 & * & \cdots & *  \\
+				\vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+				* & \cdots & * & 0 & * & \cdots & *\\
+			\end{pmatrix}
 		\end{equation*}
 		\pause
-		\item Woher $Q_i$?
+		\item[$\rightarrow$] Identifikation einer Spalte mit nur einem nicht-Null-Eintrag
+		\pause
+		\item[$\rightarrow$] Elimination der mit Spalte korrespondierenden Eingangskomponente und Zeile korrespondierender Gleichung
 	\end{itemize}
 	

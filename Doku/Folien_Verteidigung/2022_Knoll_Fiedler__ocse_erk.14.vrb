@@ -3,15 +3,13 @@
 	\textbf{Prinzipielles Vorgehen:}
 	\begin{itemize}
 		\pause
-		\item  Eingangsaffines nichtlineares MIMO-System\\
-		$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$ \quad mit \quad $\mathbf{x}, \mathbf{f} \in \mathbb{R}^n$, $\mathbf{u} \in \mathbb{R}^m$, $\mathbf{g} \in \mathbb{R}^{n \times m}$
+		\item  nichtlineares MIMO-System mit Zustand $\mathbf{x} \in \mathbb{R}^n$ und Eingang $\mathbf{u} \in \mathbb{R}^m$
 		\pause
-		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine Systemgleichung
+		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine der $n$ Systemgleichungen
 		\pause
-		\item[$\rightarrow$] analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
+		\item[$\rightarrow$] anschließend analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
 		\pause
 		\item[$\rightarrow$] übrig bleiben $n - (n - m) = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
-		\pause
 	\end{itemize}
 	
 	\bigskip
@@ -19,6 +17,7 @@
 	
 	\textbf{Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
+		\pause
 		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
 		\pause
 		\item Parametrisierungen vorheriger Größen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen

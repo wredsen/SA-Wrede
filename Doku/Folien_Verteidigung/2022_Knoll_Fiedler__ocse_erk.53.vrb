@@ -1,39 +1,17 @@
-\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
-		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
 		\pause
-		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\item aus letzter transformierter Systemgleichung:
 		\begin{equation*}
-			\mathbf{T}_i \mathbf{J}_i =
-			\begin{pmatrix}
-				\mathbf{I}_{m-(n-i)} \\
-				\hline
-				\mathbf{0}_{(n-m) \times (m-(n-i))}
-			\end{pmatrix}
-			=
-			\begin{pmatrix}
-				1 & 0 & \cdots & 0 & 0 \\
-				0 & 1 & \cdots & 0 & 0 \\
-				\vdots & & \ddots &  & \vdots \\
-				0 & 0 & \cdots & 1 & 0 \\
-				0 & 0 & \cdots & 0 & 1 \\
-				\hline
-				0 & 0 & \cdots & 0 & 0
-			\end{pmatrix}
+		q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
 		\end{equation*}
 		\pause
-		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
 		\begin{equation*}
-			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
-			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
-			\Rightarrow \mathbf{T}_i =
-			\begin{pmatrix}
-				\mathbf{J}_i^{\mathrm{L} +} \\
-				\mathbf{J}_i^{\mathrm{L} \perp}
-			\end{pmatrix}
+		\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
 		\end{equation*}
 	\end{itemize}
 	

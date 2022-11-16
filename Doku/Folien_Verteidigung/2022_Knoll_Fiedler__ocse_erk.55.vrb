@@ -1,48 +1,18 @@
-\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
+\frametitle{\large Flachheitsanalyse am Einzelkran}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
-
-  \pause
-  \medskip
-Grundlegendes Schema:
-
-
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
-}
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
-\visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
-}
-\end{textblock*}
-
-
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
-
-Repräsentanz der Regelungstheorie:\\[1mm]
-
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
-}
-\end{textblock*}
-
-
-
-
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
-}
-\end{textblock*}
-
-
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	
+	\begin{itemize}
+		\item Zusammenfassung der Parametrisierungen:
+		\begin{align*}
+		\tau_1 &= \theta_1\left(p_2, \dot{p}_2, \ddot{p}_1, \ddot{p}_2, p_1^{(3)}, p_2^{(3)}, p_1^{(4)}, p_2^{(4)} \right) \\
+		\tau_2 &= \theta_2(p_1, p_2, \ddot{p}_1, \ddot{p}_2) \\
+		q_1 &= \Psi_1(p_1, p_2, \ddot{p}_1, \ddot{p}_2)
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\pause
+		\bigskip
+		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
+	\end{itemize}
+	

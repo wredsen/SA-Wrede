@@ -1,26 +1,39 @@
-\frametitle{\large Lagrange-Formalismus}
+\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-	\textbf{Symbole:}
-	\begin{itemize}
-		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
-		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
-		\pause
-		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
-		\pause
-		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
-	\end{itemize}
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
-	\pause
-	\bigskip
-	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
 	\begin{itemize}
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
 		\pause
-		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
+		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\begin{equation*}
+			\mathbf{T}_i \mathbf{J}_i =
+			\begin{pmatrix}
+				\mathbf{I}_{m-(n-i)} \\
+				\hline
+				\mathbf{0}_{(n-m) \times (m-(n-i))}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				1 & 0 & \cdots & 0 & 0 \\
+				0 & 1 & \cdots & 0 & 0 \\
+				\vdots & & \ddots &  & \vdots \\
+				0 & 0 & \cdots & 1 & 0 \\
+				0 & 0 & \cdots & 0 & 1 \\
+				\hline
+				0 & 0 & \cdots & 0 & 0
+			\end{pmatrix}
+		\end{equation*}
 		\pause
-		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
-		\pause
-		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
-		\pause
-		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\begin{equation*}
+			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
+			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
+			\Rightarrow \mathbf{T}_i =
+			\begin{pmatrix}
+				\mathbf{J}_i^{\mathrm{L} +} \\
+				\mathbf{J}_i^{\mathrm{L} \perp}
+			\end{pmatrix}
+		\end{equation*}
 	\end{itemize}
 	
