@@ -6,7 +6,7 @@
 	}
 	\end{textblock*}
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
 		\item Elimination der Eingangskomponenten von $\mathbf{u} = (\tau_1, \tau_2)^T$:
@@ -22,7 +22,7 @@
 		\pause
 		\item[$\rightarrow$] Elimination von $\textcolor{blue}{\tau_{2}}$ und 1. Gleichung
 		\pause
-		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
+		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
 			g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - q_1} = 0
 		\end{align*}

@@ -10,7 +10,7 @@
 		\bigskip
 		\pause
 		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
-		\item[$\rightarrow$] lange Simulationszeiten, hohe Ressourcenanforderungen bei Implementierungen
+		\item[$\rightarrow$] lange Simulationszeiten, hohe Hardwareanforderungen bei realer Umsetzung
 		\pause
 		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
 	\end{itemize}

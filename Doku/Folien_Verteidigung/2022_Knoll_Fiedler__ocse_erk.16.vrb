@@ -6,22 +6,22 @@
 		}
 	\end{textblock*}
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
+		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
 		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{green}{q_1}} = 0
 		\end{align*}
 		\item[$\rightarrow$] folgende Menge an Systemgrößen $\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}$
 		\pause
-		\item[$\rightarrow$] Elimination von $q_1$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
+		\item[$\rightarrow$] Elimination von $\textcolor{green}{q_1}$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
 	\end{itemize}
 	
 	\bigskip
 	\pause
 	
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	\begin{itemize}
 		\item aus 2. substituierter Gleichung: $\textcolor{green}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}$
 		\pause

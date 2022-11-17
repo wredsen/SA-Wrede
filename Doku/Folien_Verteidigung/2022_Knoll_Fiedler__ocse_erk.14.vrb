@@ -1,6 +1,6 @@
 \frametitle{\large Flachheitsanalyse von MIMO-Systemen}
 
-	\textbf{Prinzipielles Vorgehen:}
+	\textbf{1. Schritt - Elimination von Systemgrößen- und Gleichungen:}
 	\begin{itemize}
 		\pause
 		\item  nichtlineares MIMO-System mit Zustand $\mathbf{x} \in \mathbb{R}^n$ und Eingang $\mathbf{u} \in \mathbb{R}^m$
@@ -15,10 +15,10 @@
 	\bigskip
 	\pause
 	
-	\textbf{Parametrisierung der Systemgrößen durch den flachen Ausgang:}
+	\textbf{2. Schritt - Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
 		\pause
-		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
+		\item Systemgleichungen in umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
 		\pause
-		\item Parametrisierungen vorheriger Größen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
+		\item bereits gewonnene Parametrisierungen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
 	\end{itemize}

@@ -1,6 +1,6 @@
 \frametitle{\large Flachheitsanalyse am Doppelkran}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
 		
 	\begin{itemize}
 		\item funktionale Zusammenhänge der Parametrisierungen:

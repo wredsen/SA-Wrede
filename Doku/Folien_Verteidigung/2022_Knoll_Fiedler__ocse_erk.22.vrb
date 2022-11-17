@@ -19,7 +19,7 @@
 		\pause
 		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
 		\pause
-		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
+		\item[$\rightarrow$] stetiger Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
 		\pause
 		\item[$\rightarrow$] 2 x 3 bzw. 2 x 5 Randbedingungen für $y_i$ $\rightarrow$ Polynome der Ordnung 5 bzw. 9:
 		\begin{align*}

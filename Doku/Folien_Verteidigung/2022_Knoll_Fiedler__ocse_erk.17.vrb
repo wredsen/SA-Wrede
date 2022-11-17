@@ -6,7 +6,7 @@
 		}
 	\end{textblock*}
 	
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	\begin{itemize}
 		\item aus 3. Gleichung und Einsetzen von $\textcolor{green}{q_1}$, $\textcolor{green}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:
 		\begin{align*}

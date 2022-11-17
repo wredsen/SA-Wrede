@@ -440,9 +440,7 @@ showstringspaces=false,
 		\pause
 		\item Zentrale Trajektorienplanung und Referenzregelstrategie unter Vorgabe von Sollposen der Last
 		\pause
-		\item Regelungsentwurf auf Basis von Modellierung des Versuchsstands als Mehrkörpersystem
-		\pause  
-		\item Perspektivisch Vergleich der zentralen Regelung mit verteilten Regelungsansätzen und Grundlage für maschinelles Lernen 
+		\item Modellierung des Versuchsstands als Mehrkörpersystem für den Regelungsentwurf
 	\end{itemize}
 \end{frame}
 
@@ -668,7 +666,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Flachheit_2]{\large Flachheitsanalyse von MIMO-Systemen}
 	
-	\textbf{Prinzipielles Vorgehen:}
+	\textbf{1. Schritt - Elimination von Systemgrößen- und Gleichungen:}
 	\begin{itemize}
 		\pause
 		\item  nichtlineares MIMO-System mit Zustand $\mathbf{x} \in \mathbb{R}^n$ und Eingang $\mathbf{u} \in \mathbb{R}^m$
@@ -683,12 +681,12 @@ showstringspaces=false,
 	\bigskip
 	\pause
 	
-	\textbf{Parametrisierung der Systemgrößen durch den flachen Ausgang:}
+	\textbf{2. Schritt - Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
 		\pause
-		\item Systemgleichungen in Umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
+		\item Systemgleichungen in umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
 		\pause
-		\item Parametrisierungen vorheriger Größen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
+		\item bereits gewonnene Parametrisierungen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
 	\end{itemize}
 \end{frame}
 
@@ -702,7 +700,7 @@ showstringspaces=false,
 	}
 	\end{textblock*}
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
 		\item Elimination der Eingangskomponenten von $\mathbf{u} = (\tau_1, \tau_2)^T$:
@@ -718,7 +716,7 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] Elimination von $\textcolor{blue}{\tau_{2}}$ und 1. Gleichung
 		\pause
-		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
+		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
 			g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - q_1} = 0
 		\end{align*}
@@ -736,22 +734,22 @@ showstringspaces=false,
 		}
 	\end{textblock*}
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
-		\item[$\rightarrow$] Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gleichung in 2. Gleichung:
+		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
 		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{green}{q_1}} = 0
 		\end{align*}
 		\item[$\rightarrow$] folgende Menge an Systemgrößen $\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}$
 		\pause
-		\item[$\rightarrow$] Elimination von $q_1$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
+		\item[$\rightarrow$] Elimination von $\textcolor{green}{q_1}$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
 	\end{itemize}
 	
 	\bigskip
 	\pause
 	
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	\begin{itemize}
 		\item aus 2. substituierter Gleichung: $\textcolor{green}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}$
 		\pause 
@@ -776,7 +774,7 @@ showstringspaces=false,
 		}
 	\end{textblock*}
 	
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	\begin{itemize}
 		\item aus 3. Gleichung und Einsetzen von $\textcolor{green}{q_1}$, $\textcolor{green}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:  
 		\begin{align*}
@@ -803,7 +801,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Flachheit_Doppelkran_1]{\large Flachheitsanalyse am Doppelkran}
 	
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
 	
 	\begin{itemize}
 		\item Vorgehen analog zum Einzelkran
@@ -832,7 +830,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=Flachheit_Doppelkran_2]{\large Flachheitsanalyse am Doppelkran}
 	
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
+	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2, p_3, q_1)^T:$}
 		
 	\begin{itemize}
 		\item funktionale Zusammenhänge der Parametrisierungen:
@@ -909,7 +907,7 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
 		\pause
-		\item[$\rightarrow$] stetig differenzierbarer Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
+		\item[$\rightarrow$] stetiger Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
 		\pause
 		\item[$\rightarrow$] 2 x 3 bzw. 2 x 5 Randbedingungen für $y_i$ $\rightarrow$ Polynome der Ordnung 5 bzw. 9:
 		\begin{align*}
@@ -1194,7 +1192,7 @@ showstringspaces=false,
 		\bigskip
 		\pause
 		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
-		\item[$\rightarrow$] lange Simulationszeiten, hohe Ressourcenanforderungen bei Implementierungen
+		\item[$\rightarrow$] lange Simulationszeiten, hohe Hardwareanforderungen bei realer Umsetzung
 		\pause
 		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
 	\end{itemize}
@@ -1283,11 +1281,11 @@ showstringspaces=false,
 		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
 		\bigskip
 		\pause
-		\item kein Stabilitätsnachweis für zeitvariantes System, aber auch kein Gegenbeispiel aus Ensemble-Simulation
+		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{-1}(\mathbf{x}_{\mathrm{ref}}) = \boldsymbol{\Lambda }^{-1}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulation
 		\pause
 		\bigskip
 		\item Stellgesetz mit weniger als 140 Operationen je Eingangskomponente
-		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Ressourcenanforderungen für Implementierung
+		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Hardwareanforderungen bei realer Umsetzung
 	\end{itemize}
 
 \end{frame}
