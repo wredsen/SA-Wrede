@@ -1,7 +1,14 @@
 \frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/dyn_controller_initial_error_flat_output}
-	\end{center}
-	
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=100mm]{images/dyn_controller_initial_error_flat_output}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](111mm,28mm)	
+		\visible<1->{
+			\includegraphics[width=50mm]{images/double_crane_dynamic_coordinates}	
+		}
+	\end{textblock*}
+				

@@ -811,9 +811,9 @@ showstringspaces=false,
 		\bigskip
 		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
 		\pause
-		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
+		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $p = n - m = 6$ Gleichungen
 		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
+		\item Elimination von $p$ Zuständen $\rightarrow$ flacher Ausgang aus $m = 4$ Komponenten
 		\pause
 		\bigskip
 		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
@@ -1161,10 +1161,17 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=trajektorienregelung_71]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 	
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/dyn_controller_initial_error_flat_output}
-	\end{center}
-	
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=100mm]{images/dyn_controller_initial_error_flat_output}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](111mm,28mm)	
+		\visible<1->{
+			\includegraphics[width=50mm]{images/double_crane_dynamic_coordinates}	
+		}
+	\end{textblock*}
+				
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1172,9 +1179,16 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=trajektorienregelung_72]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 	
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/dyn_controller_initial_error_inputs}
-	\end{center}
+	\begin{textblock*}{80mm}[0.,0.](12mm,18mm)	
+		\visible<1->{
+			\includegraphics[width=100mm]{images/dyn_controller_initial_error_inputs}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](111mm,28mm)	
+		\visible<1->{
+			\includegraphics[width=50mm]{images/double_crane_dynamic_coordinates}	
+		}
+	\end{textblock*}
 	
 \end{frame}
 
@@ -1255,10 +1269,17 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=trajektorienregelung_121]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 	
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
-	\end{center}
-
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](98mm,22mm)	
+		\visible<1->{
+			\includegraphics[width=60mm]{images/double_crane_feedforwardlin_coordinates}	
+		}
+	\end{textblock*}
+ 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1266,9 +1287,16 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=trajektorienregelung_122]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 	
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
-	\end{center}
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](106mm,25mm)	
+		\visible<1->{
+			\includegraphics[width=52mm]{images/double_crane_feedforwardlin_coordinates}	
+		}
+	\end{textblock*}
 	
 \end{frame}
 

@@ -1,7 +1,14 @@
 \frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
 	\textbf{Simulation:}
-	\begin{center}
-		\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
-	\end{center}
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](106mm,25mm)	
+		\visible<1->{
+			\includegraphics[width=52mm]{images/double_crane_feedforwardlin_coordinates}	
+		}
+	\end{textblock*}
 	

@@ -10,9 +10,9 @@
 		\bigskip
 		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
 		\pause
-		\item[$\rightarrow$] Elimination des Eingangs, autonomes System aus $p = n - m = 6$ Gleichungen
+		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $p = n - m = 6$ Gleichungen
 		\pause
-		\item[$\rightarrow$] Elimination von $p$ Zuständen zu flachem Ausgang aus $m = 4$ Komponenten
+		\item Elimination von $p$ Zuständen $\rightarrow$ flacher Ausgang aus $m = 4$ Komponenten
 		\pause
 		\bigskip
 		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
