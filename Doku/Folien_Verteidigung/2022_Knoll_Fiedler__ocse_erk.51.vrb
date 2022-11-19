@@ -1,25 +1,41 @@
-\frametitle{\large Flachheitsanalyse am Einzelkran}
+\frametitle{\large Trajektorienfolgeregelung}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\begin{block}{Vektorieller relativer Grad}
+		Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
+		\begin{centering}
+			$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
+		\end{centering}
+		\pause
+		mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
+		\begin{enumerate}
+			\pause
+			\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
+			\pause
+			\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
+			\begin{equation*}
+			\label{eq:decoupling_matrix}
+			\boldsymbol{\Lambda} =
+			\left(\begin{smallmatrix}
+			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+			\vdots & \ddots & \vdots \\
+			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+			\end{smallmatrix}\right) .
+			\end{equation*}
+		\end{enumerate}
+	\end{block}
 	
-	\begin{itemize}
-		\item aus zuerst eliminierter originaler Systemgleichung:
-		\begin{equation*}
-		\tau_1 = \frac{m_{1} \textcolor{red}{\ddot{q}_{1}} \sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}} + p_{1} \textcolor{red}{\tau_{2}} - \textcolor{red}{q_{1}} \textcolor{red}{\tau_{2}}}{\sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}}}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] auch Größen $\textcolor{red}{q_1, \ddot{q}_1, \tau_2} \not\in \mathbf{y}$ in dieser Parametrisierung von $\tau_1$ enthalten
-		\pause
-		\item[$\rightarrow$] Einsetzen der zweiten Ableitung von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$ und $\tau_2(\mathbf{y}, \ddot{\mathbf{y}})$:
-		\begin{flalign*}
-		\begin{split}
-		\tau_1 &=
-		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
-		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
-		&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
-		&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} + m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \\
-		& + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
-		\end{split}
-		\end{flalign*}
-	\end{itemize}
+	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
+		\visible<3->{
+			
+			
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
+				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
+				$\mathbf{y} = \mathbf{h}(\mathbf{x})$
+				
+				\vspace{3mm}
+				
+				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
 	

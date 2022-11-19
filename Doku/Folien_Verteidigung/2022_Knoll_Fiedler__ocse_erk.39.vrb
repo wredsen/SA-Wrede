@@ -1,5 +1,26 @@
-\frametitle{~}
-\begin{center}
-		{\huge \textbf{Ergänzungsfolien}}
-	\end{center}
+\frametitle{\large Lagrange-Formalismus}
+
+	\textbf{Symbole:}
+	\begin{itemize}
+		\item Konfigurationskoordinaten $\boldsymbol{\theta} = (\mathbf{q}, \mathbf{p})^T$
+		\item verallgemeinerte Kraft $\mathbf{Q} = \mathbf{f} - \mathbf{D}$
+		\pause
+		\item Richtungsvektor zu $k$-tem massebehaftetem Partikel $\mathbf{r}_k$, Stellkraft $\mathbf{F}_k$ entlang $\mathbf{r}_k$
+		\pause
+		\item virtuelle Arbeit $\delta W$, virtuelle Verschiebung von Partikel $\delta \mathbf{r}_k$ und Koordinate $\theta_{i}$
+	\end{itemize}
+	
+	\pause
+	\bigskip
+	\textbf{Prinzip der virtuellen Arbeit zur Bestimmung der $Q_i$:}
+	\begin{itemize}
+		\pause
+		\item  $\delta W = \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_1} \delta \theta_1 +\ldots + \sum_{k=1}^l \mathbf{F}_k \cdot \frac{\partial \mathbf{r}_k}{\partial \theta_n} \delta \theta_n$
+		\pause
+		\item $\delta \mathbf{r}_{k} = \sum_{i = 1}^{n} \frac{\partial\mathbf{r}_{k}}{\partial\theta_i} \delta \theta_i$
+		\pause
+		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
+		\pause
+		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+	\end{itemize}
 	

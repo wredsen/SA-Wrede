@@ -1,48 +1,21 @@
-\frametitle{\large Wissensrepräsentation (5): \underline {O}pen \underline {R}esearch \underline {K}nowledge \underline {G}raph}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-  \begin{itemize}
-  \item Projekt der Technischen Informationsbibliothek (TIB) Hannover
-%   ist die Deutsche Zentrale Fachbibliothek für Technik sowie Architektur, Chemie, Informatik, Mathematik und Physik mit Sitz in Hannover.
-   \item Selbstbeschreibung: \textit{Infrastruktur-Dienst zur Sammlung von akademischem Wissen in maschinenverarbeitbarer Form.}
-%    [and] thus enabling new possibilities for scholarly knowledge curation, publication and processing
-  \end{itemize}
-
-  \pause
-  \medskip
-Grundlegendes Schema:
-
-
-  \begin{textblock*}{40mm}[0.,0.](12mm,40mm)
-\visible<2->{
-  \includegraphics[width=40mm]{img/listing1.pdf}
-}
-\end{textblock*}
-
-\begin{textblock*}{40mm}[0.,0.](55mm,30mm)
-\visible<3>{
-  \includegraphics[width=100mm]{img/paper-graph-view.png}
-}
-\end{textblock*}
-
-
-\begin{textblock*}{100mm}[0.,0.](65mm,30mm)
-\visible<4>{
-\begin{center}
-
-Repräsentanz der Regelungstheorie:\\[1mm]
-
-\includegraphics[width=78mm]{img/researchfield_ordered_by_paper-hist}
-\end{center}
-}
-\end{textblock*}
-
-
-
-
-\begin{textblock*}{130mm}[0.,0.](12mm,75mm)
-\visible<5>{
-$\rightarrow$ Bisher nur „grobe“ Wissensrepräsentation möglich/üblich
-}
-\end{textblock*}
-
-
+	\textbf{Stellgesetze:}
+	\begin{enumerate}
+		\item Methode Moore-Penrose-PI:
+		\begin{equation*}
+			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{+}_{[6, 10]} (\boldsymbol{\theta}_{\text{ref}}) \ (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
+		\end{equation*}
+		\pause
+		\item Methode Selektions-PI:
+		\begin{equation*}
+			\boldsymbol{\tau} = \mathbf{u} = \mathbf{g}^{-1}_{[7, 10]}(\boldsymbol{\theta}_{\text{ref}}) \cdot \mathbf{S} \cdot (\ddot{\boldsymbol{\theta}}_{\text{ref}} - \mathbf{c}_{1} \mathbf{\dot{e}} - \mathbf{c}_{0} \mathbf{e} - \mathbf{f}_{[6, 10]}(\boldsymbol{\theta}_{\text{ref}})) = \textbf{func}(\mathbf{x}, \boldsymbol{\theta}_{\mathrm{ref}}, \dot{\boldsymbol{\theta}}_{\mathrm{ref}}, \ddot{\boldsymbol{\theta}}_{\mathrm{ref}})
+		\end{equation*}
+	\end{enumerate}
+	\pause
+	\begin{itemize}
+		\item[$\rightarrow$] keine Stabilität per Konstruktion und durch $\boldsymbol{\theta}_{\text{ref}} = \boldsymbol{\theta}_{\text{ref}}(t)$ \textbf{zeitvariantes} System
+		\pause
+		\item[$\rightarrow$] Ensemble-Simulationen (alternativ: zeitvarianter Stabilitätsnachweis)
+	\end{itemize}
+	

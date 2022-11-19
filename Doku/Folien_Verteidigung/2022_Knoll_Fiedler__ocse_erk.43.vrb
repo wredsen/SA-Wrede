@@ -1,42 +1,39 @@
-\frametitle{\large Analytisches Modell Einzelkran}
-\begin{textblock*}{80mm}[0.,0.](12mm,13mm)	
-		\visible<1->{
-			\includegraphics[width=64mm]{images/ODE_flatness_analysis_single_crane_diagram}
-		}
-		\bigskip
-		\visible<2->{
-			\begin{itemize}
-				\item Massen bei $\mathbf{S}_1 = (q_1, 0)^T$, $\mathbf{S}_2 = (p_1, p_2)^T$
-				\item variable Seillänge $l_1 = \sqrt{(p_1 - q_1)^2 + p_2^2}$\\
-				~
-			\end{itemize}
-		}
-	\end{textblock*}
+\frametitle{\large Flachheitsanalyse von MIMO-Systemen}
+
+	\textbf{Elimination von Systemgrößen- und Gleichungen:}
 	
-	\begin{textblock*}{80mm}[0.,0.](80mm,13mm)
-		
-		\visible<3->{	
-			\textbf{Energien:}			
-			\begin{itemize}
-				\item $T = \frac{m_1}{2} \dot{\mathbf{S}}_1^T \dot{\mathbf{S}}_1 + \frac{m_2}{2} \dot{\mathbf{S}}_2^T \dot{\mathbf{S}}_2 = \frac{m_{1} \dot{q}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{1}^{2}}{2} + \frac{m_{2} \dot{p}_{2}^{2}}{2}$
-				\item $V = m_2 g \ \mathbf{S}_2^T \mathbf{e}_y = m_{2} g p_{2}$
-			\end{itemize}
-		}
-		
-	\end{textblock*}
-	
-	\begin{textblock*}{80mm}[0.,0.](80mm,35mm)
-		
-		\visible<4->{
-			\textbf{Verallgemeinerte Kraft aus virtueller Arbeit:}
-			\begin{itemize}
-				\item $\mathbf{F}_1 =
-				\left(\tau_{1}, 0 \right)^T$,
-				$\mathbf{F}_2 =
-				\left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}} \right)^T$
-				\item[$\rightarrow$] $\mathbf{Q} = \left(\frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}}, \frac{p_{2} \tau_{2}}{l_{1}}, \tau_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} \right)^T$
-			\end{itemize}
-		}
-		
-	\end{textblock*}
+	\begin{itemize}
+		\item  Wie vorgehen, wenn keine solche Spalte auffindbar?
+		\pause
+		\item[$\rightarrow$] Transformation der Systemgleichungen mit Matrix $\mathbf{T}_i$: \\
+		\begin{equation*}
+			\mathbf{T}_i \mathbf{J}_i =
+			\begin{pmatrix}
+				\mathbf{I}_{m-(n-i)} \\
+				\hline
+				\mathbf{0}_{(n-m) \times (m-(n-i))}
+			\end{pmatrix}
+			=
+			\begin{pmatrix}
+				1 & 0 & \cdots & 0 & 0 \\
+				0 & 1 & \cdots & 0 & 0 \\
+				\vdots & & \ddots &  & \vdots \\
+				0 & 0 & \cdots & 1 & 0 \\
+				0 & 0 & \cdots & 0 & 1 \\
+				\hline
+				0 & 0 & \cdots & 0 & 0
+			\end{pmatrix}
+		\end{equation*}
+		\pause
+		\item[$\rightarrow$] Konstruktion von $\mathbf{T}_i$ aus linkem Orthokomplement $\mathbf{J}_i^{\mathrm{L} \perp}$ und Pseudoinverser $\mathbf{J}_i^{\mathrm{L} +}$: \\
+		\begin{equation*}
+			\mathbf{J}_i^{\mathrm{L} +} \mathbf{J}_i = \mathbf{I}_{m-(n-i)}, \quad
+			\mathbf{J}_i^{\mathrm{L} \perp} \mathbf{J}_i = \mathbf{0}_{(n-m) \times (m-(n-i))} \quad
+			\Rightarrow \mathbf{T}_i =
+			\begin{pmatrix}
+				\mathbf{J}_i^{\mathrm{L} +} \\
+				\mathbf{J}_i^{\mathrm{L} \perp}
+			\end{pmatrix}
+		\end{equation*}
+	\end{itemize}
 	

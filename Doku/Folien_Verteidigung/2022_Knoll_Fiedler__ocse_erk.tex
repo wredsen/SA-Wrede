@@ -2,7 +2,8 @@
 	ngerman,
 % 	english,
 	10pt,				% Schriftgröße anpassen, Standard ist 11pt, nicht weniger als 8pt verwenden!
-	aspectratio=169 	% für 16:9 Format
+	aspectratio=169, 	% für 16:9 Format
+	xcolor=dvipsnames
 ]{beamer}
 
 % MP4 videos in Latex PDFs: https://www.youtube.com/watch?v=BspamyoyjUk
@@ -436,11 +437,11 @@ showstringspaces=false,
 	\frametitle{System- und Problembeschreibung}
 	\textbf{Zielsetzung:}
 	\begin{itemize}
-		\item Ruckarme Überführung der Last zwischen Ruhelagen in der vertikalen Aufhängungsebene
+		\item Überführung der Last zwischen Ruhelagen in der vertikalen Aufhängungsebene
 		\pause
-		\item Zentrale Trajektorienplanung und Referenzregelstrategie unter Vorgabe von Sollposen der Last
+		\item zentrale Trajektorienfolgeregelung unter Vorgabe von Sollposen der Last
 		\pause
-		\item Modellierung des Versuchsstands als Mehrkörpersystem für den Regelungsentwurf
+		\item Reglerentwurf auf Basis eines Mehrkörpermodells
 	\end{itemize}
 \end{frame}
 
@@ -671,11 +672,13 @@ showstringspaces=false,
 		\pause
 		\item  nichtlineares MIMO-System mit Zustand $\mathbf{x} \in \mathbb{R}^n$ und Eingang $\mathbf{u} \in \mathbb{R}^m$
 		\pause
-		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine der $n$ Systemgleichungen
+		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ und je einer der $n$ Systemgleichungen
 		\pause
-		\item[$\rightarrow$] anschließend analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
+		\item anschließend analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
 		\pause
 		\item[$\rightarrow$] übrig bleiben $n - (n - m) = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
+		\pause
+		\item[$\rightarrow$] beliebige Trajektorien von $\mathbf{y}$ sind kompatibel mit Systemdynamik
 	\end{itemize}
 	
 	\bigskip
@@ -684,9 +687,7 @@ showstringspaces=false,
 	\textbf{2. Schritt - Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
 		\pause
-		\item Systemgleichungen in umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
-		\pause
-		\item bereits gewonnene Parametrisierungen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
+		\item sukzessives Einsetzen von $\mathbf{y}$ in eliminierte Systemgleichungen
 	\end{itemize}
 \end{frame}
 
@@ -696,8 +697,15 @@ showstringspaces=false,
 	
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 	\visible<1->{
-		\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 	}
+	\end{textblock*}
+
+	\begin{textblock*}{80mm}[0.,0.](100mm,35mm)	
+		\begin{align*}
+		\mathbf{x} &= (p_1, p_2, q_1)^T \\
+		\mathbf{u} &= (\tau_1, \tau_2)^T
+		\end{align*}
 	\end{textblock*}
 	
 	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
@@ -730,8 +738,15 @@ showstringspaces=false,
 	
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 		\visible<1->{
-			\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+			\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](100mm,35mm)	
+		\begin{align*}
+		\mathbf{x} &= (p_1, p_2, q_1)^T \\
+		\mathbf{u} &= (\tau_1, \tau_2)^T
+		\end{align*}
 	\end{textblock*}
 	
 	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
@@ -739,25 +754,26 @@ showstringspaces=false,
 	\begin{itemize}
 		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
-		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{green}{q_1}} = 0
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{OliveGreen}{q_1}} = 0
 		\end{align*}
+		\pause
 		\item[$\rightarrow$] folgende Menge an Systemgrößen $\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}$
 		\pause
-		\item[$\rightarrow$] Elimination von $\textcolor{green}{q_1}$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
+		\item[$\rightarrow$] Elimination von $\textcolor{OliveGreen}{q_1}$, da rein algebraisch $\rightarrow$ $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$
 	\end{itemize}
 	
 	\bigskip
 	\pause
 	
-	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$:}
 	\begin{itemize}
-		\item aus 2. substituierter Gleichung: $\textcolor{green}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}$
+		\item aus 2. substituierter Gleichung: $\textcolor{OliveGreen}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}} = \textcolor{OliveGreen}{q_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})$
 		\pause 
-		\item aus 1. Gleichung und Einsetzen von $\textcolor{green}{q_1}(\mathbf{y}, \ddot{\mathbf{y}})$: 
+		\item aus 1. Gleichung und Einsetzen von $\textcolor{OliveGreen}{q_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})$: 
 		\begin{equation*}
-			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - \textcolor{green}{q_1}\right)}{l_{1}} = 0
+			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - \textcolor{OliveGreen}{q_1}\right)}{l_{1}} = 0
 			\quad \Rightarrow \quad
-			\textcolor{blue}{\tau_{2}} = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+			\textcolor{blue}{\tau_{2}} = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}} = \textcolor{blue}{\tau_{2}}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})
 		\end{equation*}
 	\end{itemize}
 	
@@ -770,26 +786,29 @@ showstringspaces=false,
 	
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 		\visible<1->{
-			\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+			\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 		}
 	\end{textblock*}
 	
-	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$:}
 	\begin{itemize}
-		\item aus 3. Gleichung und Einsetzen von $\textcolor{green}{q_1}$, $\textcolor{green}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:  
+		\item aus 3. Gleichung und Einsetzen von $\textcolor{OliveGreen}{q_1}$, $\textcolor{OliveGreen}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:  
 		\begin{align*}
-		0 &= m_{1} \textcolor{green}{\ddot{q}_1} - \textcolor{red}{\tau_{1}} + \frac{\textcolor{blue}{\tau_2} \left(p_{1} - \textcolor{green}{\ddot{q}_1}\right)}{l_{1}} \\
+		0 &= m_{1} \textcolor{OliveGreen}{\ddot{q}_1} - \textcolor{red}{\tau_{1}} + \frac{\textcolor{blue}{\tau_2} \left(p_{1} - \textcolor{OliveGreen}{\ddot{q}_1}\right)}{l_{1}} \\
 		\Rightarrow
 		\textcolor{red}{\tau_1} &=
 		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
-		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1}\\ 
-		&- 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} + 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \\ 
-		&+ 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} - 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2}\\ 
-		&+ m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} \\ 
+		&- g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} + 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+		&- 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} - 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} \\
+		&+ 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} \\
+		&+ m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} \\
+		&- 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3}) = \textcolor{red}{\tau_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\dot{\mathbf{y}}}, \textcolor{Brown}{\ddot{\mathbf{y}}}, \textcolor{Brown}{\mathbf{y}^{(3)}}, \textcolor{Brown}{\mathbf{y}^{(4)}})
 		\end{align*}
-		\bigskip
+	\end{itemize}
+	\begin{itemize}
 		\pause
-		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\item[$\rightarrow$] alle Systemgrößen $(\tau_1, \tau_2, p_1, p_2, q_1)$ durch $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
 		\pause
 		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
 	\end{itemize}
@@ -811,17 +830,11 @@ showstringspaces=false,
 		\bigskip
 		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
 		\pause
-		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $p = n - m = 6$ Gleichungen
+		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $n - m = 6$ Gleichungen
 		\pause
-		\item Elimination von $p$ Zuständen $\rightarrow$ flacher Ausgang aus $m = 4$ Komponenten
+		\item Elimination von 6 Zustandskomponenten $\rightarrow$ $m = 4$ Komponenten von $\mathbf{x}$ übrig
 		\pause
-		\bigskip
-		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
-		\begin{equation*}
-			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
+		\item[$\rightarrow$] Wahl eines \textbf{flachen Ausgangs}: $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
 	\end{itemize}
 	
 \end{frame}
@@ -873,9 +886,9 @@ showstringspaces=false,
 	\frametitle{Steuerungs- und Regelungsentwurf}
 	\textbf{Allgemeines Vorgehen:}
 	\begin{itemize}
-		\item Planung polynombasierter Referenztrajektorien für den flachen Ausgang $\mathbf{y}$
+		\item Planung von Referenztrajektorien für den flachen Ausgang $\mathbf{y}$
 		\pause
-		\item Trajektorien der Systemeingänge $\boldsymbol{\tau}(t)$ folgen aus $\mathbf{y}(t)$
+		\item Trajektorien der Systemeingänge $t \mapsto \boldsymbol{\tau}(t)$ folgen aus $t \mapsto \mathbf{y}(t)$
 		\pause
 		\item[$\rightarrow$] Vor\textbf{steuerung} durch Parametrisierung aus Flachheitsnachweis möglich
 		\pause
@@ -891,11 +904,9 @@ showstringspaces=false,
 	\textbf{Anforderungen:}
 	\begin{itemize}
 		\pause
-		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
+		\item Überführung des Doppelkransystems zwischen Ruhelagen $(t_0, y_{i, 0})$ und $(t_e, y_{i, e})$
 		\pause
-		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
-		\pause
-		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
+		\item stetiger Verlauf von Eingangsgrößen $\boldsymbol{\tau}(t)$
 	\end{itemize}
 	
 	\pause
@@ -907,9 +918,7 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
 		\pause
-		\item[$\rightarrow$] stetiger Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
-		\pause
-		\item[$\rightarrow$] 2 x 3 bzw. 2 x 5 Randbedingungen für $y_i$ $\rightarrow$ Polynome der Ordnung 5 bzw. 9:
+		\item[$\rightarrow$] Wahl der Polynomansätze:
 		\begin{align*}
 			\begin{split}
 				y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
@@ -935,78 +944,25 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_2]{\large Trajektorienfolgeregelung}
-
-	\begin{textblock*}{42mm}[0.,0.](115mm, 16mm)
-		\visible<2->{
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
-				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
-				$\mathbf{y} = \mathbf{h}(\mathbf{x})$\\
-				$ \Rightarrow L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
-			\end{tcolorbox}
-		}
-	\end{textblock*}
-
-	\begin{itemize}
-		\item Bestimmung der Komponenten $r_i$ des \textbf{vektoriellen relativen Grades} $\mathbf{r}$:
-	\end{itemize}
-	\pause
-	\begin{align*}
-	y_i &= h_i(\mathbf{x}) \\
-	\dot{y}_i &= L_{\mathbf{f}} h_i(\mathbf{x}) \\
-	&\vdots \\
-	y_i^{(r_i - 1)} &= L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) \\
-	y_i^{(r_i)} &= L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m
-	\end{align*}
-	\pause
-
-	\begin{table}[htbp]%
-		\centering
-		%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
-		\label{tab:relative_degrees}
-		\begin{tabular}{c| c c c c}
-			\hline
-			Index $i$ & 1 & 2 & 3 & 4 \\ 
-			\hline
-			Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
-			\hline
-			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
-			\hline
-			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
-			\hline
-		\end{tabular}
-	\end{table}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}[t,fragile,label=trajektorienregelung_3]{\large Trajektorienfolgeregelung - Statische Rückführung}
 	
+	\pause
 	\begin{itemize}
 		\item System mit Eingangs-Ausgangs-Verhalten der Form
-	\end{itemize}
 	\begin{equation*}
-		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+		\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \quad \boldsymbol{\Gamma}(\mathbf{x}) := (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
 	\end{equation*}
 	\pause
-	\begin{itemize}
-		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
-	\end{itemize}
-	\pause
+	\item Entkopplung der Nichtlinearität und Auflösen nach $\mathbf{u}$:
 	\begin{equation*}
-		\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+		\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{y}^{(\mathbf{r})} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
 	\end{equation*}
-	\begin{itemize}
-		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\pause
+	\item Ansetzen stabilisierender linearer Fehlerdynamik der Ordnung $\mathbf{r}$ für $\mathbf{y}^{(\mathbf{r})}$
 	\end{itemize}
-	\begin{align*}
-			e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
-			\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
-	\end{align*}
 
 	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
-		\visible<1-1>{	
+		\visible<2-2>{	
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
 			$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
 			\end{tcolorbox}
@@ -1028,23 +984,20 @@ showstringspaces=false,
 \begin{frame}[t,fragile,label=trajektorienregelung_4]{\large Trajektorienfolgeregelung - Statische Rückführung}
 	
 	\begin{itemize}
-		\item Entkopplungsmatrix für das Doppelkransystem
-	\end{itemize}
-	\begin{align*}
-		\boldsymbol{\Lambda} = 
-		\left(\begin{smallmatrix}
-			0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
-			0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
-			0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
-			\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
-		\end{smallmatrix}\right)
-	\end{align*}
-	\pause
-	\begin{itemize}
-		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
-		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
+		\item Entkopplungsmatrix für das Doppelkransystem:
+		\begin{align*}
+			\boldsymbol{\Lambda} = 
+			\left(\begin{smallmatrix}
+				0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+				0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+				0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+				\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+			\end{smallmatrix}\right)
+		\end{align*}
 		\pause
-		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\item $\boldsymbol{\Lambda}$ nicht regulär $\rightarrow$ statische Rückführung mit $\boldsymbol{\Lambda}^{-1}$ nicht möglich
+		\pause
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\boldsymbol{\Lambda}$ invertierbar
 		\pause
 		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
 	\end{itemize}
@@ -1067,37 +1020,28 @@ showstringspaces=false,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[t,fragile,label=trajektorienregelung_5]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
-
-	\begin{textblock*}{80mm}[0.,0.](12mm,40mm)
-		\visible<1-1>{
-			\begin{table}[htbp]%
-				\centering
-				%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
-				\begin{tabular}{c| c c c c}
-					\hline
-					Index $i$ & 1 & 2 & 3 & 4 \\ 
-					\hline
-					Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
-					\hline
-					explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
-					\hline
-					$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
-					\hline
-				\end{tabular}
-			\end{table}
-		}
-	\end{textblock*}
 	
 	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
-	\visible<2->{
-		\includegraphics[width=72mm]{images/dynamic_extension}
+	\visible<1-1>{
+		\includegraphics[width=72mm]{images/dyn_extension_pics/dynamic_extension_start}
 	}
 	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
+	\visible<2-2>{
+		\includegraphics[width=72mm]{images/dyn_extension_pics/dynamic_extension_2}
+	}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
+	\visible<3->{
+		\includegraphics[width=72mm]{images/dyn_extension_pics/dynamic_extension_end}
+	}
+	\end{textblock*}
+
 	
 	\begin{textblock*}{72mm}[0.,0.](90mm,13mm)
-	\visible<1->{
+	\visible<2->{
 		\begin{itemize}
-			\item Vorschalten von Integratoren vor $\boldsymbol{\tau}$:
+			\item Einführung neuer Eingänge durch Doppelintegratoren:
 			\begin{align*}
 				\beta_1 &:= \dot{\alpha}_1 \hspace{1cm} \alpha_1 := \dot{\tau}_1 \\
 				\beta_3 &:= \dot{\alpha}_3 \hspace{1cm} \alpha_3 := \dot{\tau}_3 \\
@@ -1105,55 +1049,34 @@ showstringspaces=false,
 			\end{align*}
 		\end{itemize}
 	}
-	\visible<2->{
+	\visible<3->{
 		\begin{itemize}	
 			\item[$\rightarrow$] Erweiterung des ZRM $\mathbf{\tilde{f}}$, $\mathbf{\tilde{g}}$ mit $\tilde{\boldsymbol{\tau}}$, $\tilde{\mathbf{x}}$
-			\item[$\rightarrow$] $r_i = 4$ für $i = 1, \hdots, 4$
 		\end{itemize}
 	}
-	\visible<3->{
+	\visible<4->{
 		\begin{itemize}
 			\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
 			\begin{align*}
 				\tilde{\boldsymbol{\Lambda}} =
 				\left(\begin{matrix}
-					0 & * & * & * \\
-					0 & * & * & * \\
-					0 & * & * & * \\
-					* & * & 0 & 0 \\
+					0 & \textcolor{red}{*} & * & * \\
+					0 & \textcolor{red}{*} & * & * \\
+					0 & \textcolor{red}{*} & * & * \\
+					* & \textcolor{red}{*} & 0 & 0 \\
 				\end{matrix}\right)
 				\Rightarrow \text{regulär!}
 			\end{align*}
 		\end{itemize}
 	}
 	\end{textblock*}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[t,fragile,label=trajektorienregelung_6]{\large Trajektorienfolgeregelung - \textcolor{blue}{Dynamische} \textcolor{red}{Rückführung}}
-	
-	\begin{itemize}
-		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog statischer Rückführung:
-		\begin{align*}
-			\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
-		\end{align*}
-		\pause
-		\item funktionale Zusammenhänge der Folgeregelung:
-		\begin{align*}
-			\textcolor{blue}{\beta_1} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_3} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\textcolor{blue}{\beta_4} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
-			\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
-		\end{align*}
-		\pause
-		\item Anpassung der Trajektorienplanung, da Vorgabe von $\beta_i$ (Doppelintegratoren)
-		\pause
-		\item[$\rightarrow$] für alle $y_i$ nun 5 Bedingungen je Rand
-		\item[$\rightarrow$] Ansatz von Polynomen der Ordnung 9
-	\end{itemize}
-	
+	\begin{textblock*}{80mm}[0.,0.](12mm,71mm)
+	\visible<5->{
+		\begin{itemize}	
+			\item[$\rightarrow$] Stellgesetz: \framebox{$\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{y}^{(\mathbf{r})} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))$}
+		\end{itemize}
+	}
+	\end{textblock*}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1201,12 +1124,12 @@ showstringspaces=false,
 		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
 		\bigskip
 		\pause
-		\item hohe „Trägheit“ des Systems beim Ausregeln von Folgefehlern wegen Integratoren
-		\item[$\rightarrow$] Pole der Fehlerdynamik weiter in LHE platzieren
+		\item höhere „Trägheit“ beim Ausregeln von Folgefehlern wegen Integratoren
+		\item[$\rightarrow$] Einflussmöglichkeit über Polplatzierung der Fehlerdynamik
 		\bigskip
 		\pause
 		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
-		\item[$\rightarrow$] lange Simulationszeiten, hohe Hardwareanforderungen bei realer Umsetzung
+		\item[$\rightarrow$] lange Simulationszeiten, Umsetzbarkeit auf Versuchsstand noch offen
 		\pause
 		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
 	\end{itemize}
@@ -1222,6 +1145,7 @@ showstringspaces=false,
 		\begin{align*}
 			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
 		\end{align*}
+		\pause
 		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
 		\begin{align*}
 			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
@@ -1236,12 +1160,12 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] \textbf{Heuristik}: Annahme der Dynamik der \textbf{Ordnung 2} des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
 		\pause
-		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}^{-1}$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
+		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
 		
 	\end{itemize}
 	
 	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
-		\visible<2-2>{
+		\visible<2-3>{
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
 				$\mathbf{f}(\mathbf{x}) = 
 				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\ 
@@ -1268,7 +1192,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=trajektorienregelung_121]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 	
-	\textbf{Simulation:}
+	\textbf{Ensemble-Simulationen:}
 	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
 		\visible<1->{
 			\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
@@ -1286,7 +1210,7 @@ showstringspaces=false,
 
 \begin{frame}[t,fragile,label=trajektorienregelung_122]{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 	
-	\textbf{Simulation:}
+	\textbf{Ensemble-Simulationen:}
 	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
 		\visible<1->{
 			\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}
@@ -1309,11 +1233,11 @@ showstringspaces=false,
 		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
 		\bigskip
 		\pause
-		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{-1}(\mathbf{x}_{\mathrm{ref}}) = \boldsymbol{\Lambda }^{-1}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulation
+		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{+}(\mathbf{x}_{\mathrm{ref}}(t)) = \boldsymbol{\Lambda }^{+}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulationen
 		\pause
 		\bigskip
 		\item Stellgesetz mit weniger als 140 Operationen je Eingangskomponente
-		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Hardwareanforderungen bei realer Umsetzung
+		\item[$\rightarrow$] viel kürzere Simulationszeiten, vermutlich geringere Hardwareanforderungen bei realer Umsetzung
 	\end{itemize}
 
 \end{frame}
@@ -1342,36 +1266,23 @@ showstringspaces=false,
 \begin{frame}[label=Zusammenfassung1]
 	\frametitle{Zusammenfassung {\color<1->{mygray}und Ausblick}}
 	\begin{itemize}
-		\item Modellierung des Brückenkrans als nichtlineares Mehrgrößensystem in ODE-Form durch LG2
+		\item Modellierung des Brückenkrans in ODE-Form durch LG2
 		\item[$\rightarrow$] gute Eignung für Simulation und Flachheitsanalyse
 		\bigskip
 		\pause
-		\item Flachheitsanalyse und Ermittlung eines flachen Ausgangs $\mathbf{y}$ für das Doppelkransystem mit CAS SymPy
-		\bigskip
+		\item Ermittlung eines flachen Ausgangs $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$ für das Doppelkransystem
 		\pause
 		\item Planung polynombasierter Trajektorien für $\mathbf{y}$ zur Ruhelagenüberführung
-		\item[$\rightarrow$] Steuerung aus Parametrisierung des Eingangs $\boldsymbol{\tau}(\mathbf{y}, \dot{\mathbf{y}})$
-		
-	\end{itemize}
-	
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}[label=Zusammenfassung2]
-	\frametitle{Zusammenfassung {\color<1->{mygray}und Ausblick}}
-	\begin{itemize}
+		\item[$\rightarrow$] Steuerung aus Parametrisierung des Eingangs $\boldsymbol{\tau}(\mathbf{y}, \dot{\mathbf{y}}, ...)$
+		\bigskip
+		\pause
 		\item Regelung durch statische Rückführung nicht möglich
-		\item[$\rightarrow$] Entkopplungsmatrix $\boldsymbol{\Lambda}$ nicht invertierbar
 		\pause
 		\item dynamische Erweiterung mit linearer Fehlerdynamik
 		\item[$\rightarrow$] per Konstruktion stabil, allerdings relativ komplexes Stellgesetz
 		\pause
-		\item[$\rightarrow$] weiterer heuristischer Ansatz zur Vereinfachung
-		\pause
-		\item exact feedforward linearization mit Fehlerdynamik 2ter Ordnung in allen Koordinaten
-		\item[$\rightarrow$] relativ kompaktes Stellgesetz, Stabilität nur durch Ensemble-Simulationen untersucht
-		
+		\item exact feedforward linearization mit Fehlerdynamiken 2. Ordnung, Pseudoinverser
+		\item[$\rightarrow$] kompaktes Stellgesetz, Stabilität nur durch Ensemble-Simulationen untersucht
 	\end{itemize}
 	
 \end{frame}
@@ -1381,18 +1292,19 @@ showstringspaces=false,
 \begin{frame}[label=Ausblick]
 	\frametitle{Zusammenfassung und Ausblick}
 	\begin{itemize}
-		\item Implementierung auf Demonstratorsystem unter realen Echtzeitanforderungen
+		\item Implementierung auf Versuchsstand
 		\pause
-		\item Test reiner Vorsteuerung und Abschätzung der Größe der Modellabweichung
+		\item Test reiner Vorsteuerung und Abschätzung der Größe der Modellabweichungen
 		\pause
-		\item[$\rightarrow$] danach Regelungsansätze unter Stellgrößenbeschränkung und Überwachung der Stabilität
+		\item[$\rightarrow$] Regelungen unter Stellgrößenbeschränkung und Überwachung der Stabilität
+		\bigskip
 		\pause 
-		\item Stabilitätsuntersuchung der exact feedforward linearization als zeitvariantes System
-		\pause
-		\item bestärkendes Lernen als weiterer Ansatz ggf. mit Referenzlernen auf Basis bisheriger Regelungen
+		\item zeitvariante Stabilitätsuntersuchung der exact feedforward linearization
 		\pause
 		\item Untersuchung der Robustheit gegenüber Modellabweichungen, Störeingriffen
-		
+		\bigskip
+		\pause
+		\item bestärkendes (Referenz-)Lernen auf Basis bisheriger Regelungen
 	\end{itemize}
 	
 \end{frame}
@@ -1906,6 +1818,229 @@ showstringspaces=false,
 			\end{tcolorbox}
 		}
 	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_2]{\large Trajektorienfolgeregelung}
+	
+	\begin{textblock*}{42mm}[0.,0.](115mm, 16mm)
+		\visible<2->{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
+				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
+				$\mathbf{y} = \mathbf{h}(\mathbf{x})$\\
+				$ \Rightarrow L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+	\begin{itemize}
+		\item Bestimmung der Komponenten $r_i$ des \textbf{vektoriellen relativen Grades} $\mathbf{r}$:
+	\end{itemize}
+	\pause
+	\begin{align*}
+	y_i &= h_i(\mathbf{x}) \\
+	\dot{y}_i &= L_{\mathbf{f}} h_i(\mathbf{x}) \\
+	&\vdots \\
+	y_i^{(r_i - 1)} &= L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) \\
+	y_i^{(r_i)} &= L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m
+	\end{align*}
+	\pause
+	
+	\begin{table}[htbp]%
+		\centering
+		%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+		\label{tab:relative_degrees}
+		\begin{tabular}{c| c c c c}
+			\hline
+			Index $i$ & 1 & 2 & 3 & 4 \\ 
+			\hline
+			Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
+			\hline
+			explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+			\hline
+			$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_3]{\large Trajektorienfolgeregelung - Statische Rückführung}
+	
+	\begin{itemize}
+		\item System mit Eingangs-Ausgangs-Verhalten der Form
+	\end{itemize}
+	\begin{equation*}
+	\mathbf{y}^{(\mathbf{r})} = \boldsymbol{\Gamma}(\mathbf{x}) + \boldsymbol{\Lambda}(\mathbf{x}) \mathbf{u} \ \text{, } \ \boldsymbol{\Gamma}(\mathbf{x}) = (L_{\mathbf{f}}^{r_1} h_1(\mathbf{x}), ..., L_{\mathbf{f}}^{r_m} h_m(\mathbf{x}))^T
+	\end{equation*}
+	\pause
+	\begin{itemize}
+		\item Virtueller Eingang $\mathbf{v} \stackrel{!}{=} \mathbf{y}^{(\mathbf{r})}$ und Auflösen nach $\mathbf{u}$ (falls $\mathbf{r}$ wohldefiniert!)
+	\end{itemize}
+	\pause
+	\begin{equation*}
+	\Rightarrow \mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x})) \quad \textbf{(statische Rückführung)}
+	\end{equation*}
+	\begin{itemize}
+		\item Wahl von $\mathbf{v}$ nach stabilisierender Fehlerdynamik von $e_i := y_i - y_{i, \text{ref}}$
+	\end{itemize}
+	\begin{align*}
+	e_i^{(r_i)} + c_{i, r_i-1} \ e_i^{(r_i-1)} + ... + c_{i, 1} \ \dot{e}_i + c_{i, 0} \ e_i = 0 \\
+	\Leftrightarrow v_i = y_i^{(r_i)} = y_{i, \text{ref}}^{(r_i)} - c_{i, r_i-1} \ e_i^{(r_i-1)} - ... - c_{i, 1} \ \dot{e}_i - c_{i, 0} \ e_i
+	\end{align*}
+	
+	\begin{textblock*}{110mm}[0.,0.](12mm,30mm)
+		\visible<1-1>{	
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Ausgangsableitungen]
+				$y_i^{(r_i)} = L_{\mathbf{f}}^{r_i} h_i(\mathbf{x}) + L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_1 + \hdots + L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_i - 1} h_i(\mathbf{x}) u_m$
+			\end{tcolorbox}
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} = 
+				\left(\begin{smallmatrix}
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+				\vdots & \ddots & \vdots \\
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_4]{\large Trajektorienfolgeregelung - Statische Rückführung}
+	
+	\begin{itemize}
+		\item Entkopplungsmatrix für das Doppelkransystem
+	\end{itemize}
+	\begin{align*}
+	\boldsymbol{\Lambda} = 
+	\left(\begin{smallmatrix}
+	0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+	\end{smallmatrix}\right)
+	\end{align*}
+	\pause
+	\begin{itemize}
+		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
+		\pause
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\pause
+		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
+	\end{itemize}
+	
+	\begin{textblock*}{82mm}[0.,0.](12mm,50mm)
+		\visible<1-1>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} = 
+				\left(\begin{smallmatrix}
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+				\vdots & \ddots & \vdots \\
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
+			\end{tcolorbox}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_5]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
+	
+	\begin{textblock*}{80mm}[0.,0.](12mm,40mm)
+		\visible<1-1>{
+			\begin{table}[htbp]%
+				\centering
+				%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+				\begin{tabular}{c| c c c c}
+					\hline
+					Index $i$ & 1 & 2 & 3 & 4 \\ 
+					\hline
+					Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\ 
+					\hline
+					explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+					\hline
+					$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+					\hline
+				\end{tabular}
+			\end{table}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
+		\visible<2->{
+			\includegraphics[width=72mm]{images/dynamic_extension}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{72mm}[0.,0.](90mm,13mm)
+		\visible<1->{
+			\begin{itemize}
+				\item Vorschalten von Integratoren vor $\boldsymbol{\tau}$:
+				\begin{align*}
+				\beta_1 &:= \dot{\alpha}_1 \hspace{1cm} \alpha_1 := \dot{\tau}_1 \\
+				\beta_3 &:= \dot{\alpha}_3 \hspace{1cm} \alpha_3 := \dot{\tau}_3 \\
+				\beta_4 &:= \dot{\alpha}_4 \hspace{1cm} \alpha_4 := \dot{\tau}_4 
+				\end{align*}
+			\end{itemize}
+		}
+		\visible<2->{
+			\begin{itemize}	
+				\item[$\rightarrow$] Erweiterung des ZRM $\mathbf{\tilde{f}}$, $\mathbf{\tilde{g}}$ mit $\tilde{\boldsymbol{\tau}}$, $\tilde{\mathbf{x}}$
+				\item[$\rightarrow$] $r_i = 4$ für $i = 1, \hdots, 4$
+			\end{itemize}
+		}
+		\visible<3->{
+			\begin{itemize}
+				\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
+				\begin{align*}
+				\tilde{\boldsymbol{\Lambda}} =
+				\left(\begin{matrix}
+				0 & * & * & * \\
+				0 & * & * & * \\
+				0 & * & * & * \\
+				* & * & 0 & 0 \\
+				\end{matrix}\right)
+				\Rightarrow \text{regulär!}
+				\end{align*}
+			\end{itemize}
+		}
+	\end{textblock*}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=trajektorienregelung_6]{\large Trajektorienfolgeregelung - \textcolor{blue}{Dynamische} \textcolor{red}{Rückführung}}
+	
+	\begin{itemize}
+		\item mit $\tilde{\bullet}$~-Größen nun Entkopplung und Stabilisierung analog statischer Rückführung:
+		\begin{align*}
+		\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))
+		\end{align*}
+		\pause
+		\item funktionale Zusammenhänge der Folgeregelung:
+		\begin{align*}
+		\textcolor{blue}{\beta_1} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_1, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\textcolor{blue}{\beta_3} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\textcolor{blue}{\beta_4} &= \mathrm{func}(\mathbf{x}, \textcolor{red}{\tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4}, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)}) \\
+		\tau_2 &= \mathrm{func}(\mathbf{x}, \tau_1, \tau_3, \tau_4, \alpha_3, \alpha_4, \mathbf{y}_{\mathrm{ref}}, \dot{\mathbf{y}}_{\mathrm{ref}}, \ddot{\mathbf{y}}_{\mathrm{ref}}, \mathbf{y}_{\mathrm{ref}}^{(3)}, \mathbf{y}_{\mathrm{ref}}^{(4)})
+		\end{align*}
+		\pause
+		\item Anpassung der Trajektorienplanung, da Vorgabe von $\beta_i$ (Doppelintegratoren)
+		\pause
+		\item[$\rightarrow$] für alle $y_i$ nun 5 Bedingungen je Rand
+		\item[$\rightarrow$] Ansatz von Polynomen der Ordnung 9
+	\end{itemize}
 	
 \end{frame}
 

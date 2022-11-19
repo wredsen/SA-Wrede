@@ -2,8 +2,15 @@
 
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 		\visible<1->{
-			\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+			\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 		}
+	\end{textblock*}
+	
+	\begin{textblock*}{80mm}[0.,0.](100mm,35mm)	
+		\begin{align*}
+		\mathbf{x} &= (p_1, p_2, q_1)^T \\
+		\mathbf{u} &= (\tau_1, \tau_2)^T
+		\end{align*}
 	\end{textblock*}
 	
 	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}
@@ -11,25 +18,26 @@
 	\begin{itemize}
 		\item Elimination 2. Gleichung, dazu Einsetzen von $\textcolor{blue}{\tau_{2}}$ aus 1. Gl.:
 		\begin{align*}
-		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{green}{q_1}} = 0
+		g m_{2} + m_{2} \ddot{p}_{2} - \frac{m_2 p_{2} \ddot{p}_1}{p_1 - \textcolor{OliveGreen}{q_1}} = 0
 		\end{align*}
+		\pause
 		\item[$\rightarrow$] folgende Menge an Systemgrößen $\mathcal{M} = \{p_1, \ddot{p}_1, p_2, \ddot{p}_2, q_1 \}$
 		\pause
-		\item[$\rightarrow$] Elimination von $\textcolor{green}{q_1}$, da rein algebraisch $\rightarrow$ $\mathbf{y} = (p_1, p_2)^T$
+		\item[$\rightarrow$] Elimination von $\textcolor{OliveGreen}{q_1}$, da rein algebraisch $\rightarrow$ $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$
 	\end{itemize}
 	
 	\bigskip
 	\pause
 	
-	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$:}
 	\begin{itemize}
-		\item aus 2. substituierter Gleichung: $\textcolor{green}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}$
+		\item aus 2. substituierter Gleichung: $\textcolor{OliveGreen}{q_1} = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}} = \textcolor{OliveGreen}{q_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})$
 		\pause
-		\item aus 1. Gleichung und Einsetzen von $\textcolor{green}{q_1}(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\item aus 1. Gleichung und Einsetzen von $\textcolor{OliveGreen}{q_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})$:
 		\begin{equation*}
-			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - \textcolor{green}{q_1}\right)}{l_{1}} = 0
+			m_{2} \ddot{p}_{1} - \frac{\textcolor{blue}{\tau_{2}} \left(p_{1} - \textcolor{OliveGreen}{q_1}\right)}{l_{1}} = 0
 			\quad \Rightarrow \quad
-			\textcolor{blue}{\tau_{2}} = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
+			\textcolor{blue}{\tau_{2}} = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}} = \textcolor{blue}{\tau_{2}}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\ddot{\mathbf{y}}})
 		\end{equation*}
 	\end{itemize}
 	

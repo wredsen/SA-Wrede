@@ -5,10 +5,10 @@
 		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
 		\bigskip
 		\pause
-		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{-1}(\mathbf{x}_{\mathrm{ref}}) = \boldsymbol{\Lambda }^{-1}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulation
+		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{+}(\mathbf{x}_{\mathrm{ref}}(t)) = \boldsymbol{\Lambda }^{+}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulationen
 		\pause
 		\bigskip
 		\item Stellgesetz mit weniger als 140 Operationen je Eingangskomponente
-		\item[$\rightarrow$] viel kürzere Simulationszeiten, geringere Hardwareanforderungen bei realer Umsetzung
+		\item[$\rightarrow$] viel kürzere Simulationszeiten, vermutlich geringere Hardwareanforderungen bei realer Umsetzung
 	\end{itemize}
 

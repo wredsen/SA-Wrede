@@ -1,14 +1,17 @@
 \frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
 
-	\textbf{Simulation:}
-	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
-		\visible<1->{
-			\includegraphics[width=100mm]{images/dyn_controller_initial_error_flat_output}
-		}
-	\end{textblock*}
-	\begin{textblock*}{80mm}[0.,0.](111mm,28mm)	
-		\visible<1->{
-			\includegraphics[width=50mm]{images/double_crane_dynamic_coordinates}	
-		}
-	\end{textblock*}
-				
+	\textbf{Fazit:}
+	\begin{itemize}
+		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
+		\bigskip
+		\pause
+		\item höhere „Trägheit“ beim Ausregeln von Folgefehlern wegen Integratoren
+		\item[$\rightarrow$] Einflussmöglichkeit über Polplatzierung der Fehlerdynamik
+		\bigskip
+		\pause
+		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
+		\item[$\rightarrow$] lange Simulationszeiten, Umsetzbarkeit auf Versuchsstand noch offen
+		\pause
+		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
+	\end{itemize}
+	

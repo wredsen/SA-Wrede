@@ -1,14 +1,14 @@
 \frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Simulation:}
-	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
-		\visible<1->{
-			\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
-		}
-	\end{textblock*}
-	\begin{textblock*}{80mm}[0.,0.](98mm,22mm)	
-		\visible<1->{
-			\includegraphics[width=60mm]{images/double_crane_feedforwardlin_coordinates}	
-		}
-	\end{textblock*}
+	\textbf{Fazit:}
+	\begin{itemize}
+		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
+		\bigskip
+		\pause
+		\item kein Stabilitätsnachweis für zeitvariantes ($\boldsymbol{\Lambda }^{+}(\mathbf{x}_{\mathrm{ref}}(t)) = \boldsymbol{\Lambda }^{+}(t)$) System, aber auch kein Gegenbeispiel aus Ensemble-Simulationen
+		\pause
+		\bigskip
+		\item Stellgesetz mit weniger als 140 Operationen je Eingangskomponente
+		\item[$\rightarrow$] viel kürzere Simulationszeiten, vermutlich geringere Hardwareanforderungen bei realer Umsetzung
+	\end{itemize}
 

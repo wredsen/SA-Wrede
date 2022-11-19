@@ -3,11 +3,9 @@
 	\textbf{Anforderungen:}
 	\begin{itemize}
 		\pause
-		\item Überführung des Doppelkransystems zwischen zwei Ruhelagen
+		\item Überführung des Doppelkransystems zwischen Ruhelagen $(t_0, y_{i, 0})$ und $(t_e, y_{i, e})$
 		\pause
-		\item stetiger Verlauf von Eingangs- bzw. Stellgrößen
-		\pause
-		\item bisher keine formal spezifizierten Grenzwerte für Beschleunigungen etc.
+		\item stetiger Verlauf von Eingangsgrößen $\boldsymbol{\tau}(t)$
 	\end{itemize}
 	
 	\pause
@@ -19,9 +17,7 @@
 		\pause
 		\item[$\rightarrow$] höchste Ableitungen von $\mathbf{y}(t)$ in $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$
 		\pause
-		\item[$\rightarrow$] stetiger Verlauf von $\boldsymbol{\tau}(t)$ für Überführung von $(t_0, y_{i, 0})$ in $(t_e, y_{i, e})$
-		\pause
-		\item[$\rightarrow$] 2 x 3 bzw. 2 x 5 Randbedingungen für $y_i$ $\rightarrow$ Polynome der Ordnung 5 bzw. 9:
+		\item[$\rightarrow$] Wahl der Polynomansätze:
 		\begin{align*}
 			\begin{split}
 				y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\

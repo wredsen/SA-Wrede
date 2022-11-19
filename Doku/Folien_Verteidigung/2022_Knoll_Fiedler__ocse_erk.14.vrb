@@ -5,11 +5,13 @@
 		\pause
 		\item  nichtlineares MIMO-System mit Zustand $\mathbf{x} \in \mathbb{R}^n$ und Eingang $\mathbf{u} \in \mathbb{R}^m$
 		\pause
-		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ durch je eine der $n$ Systemgleichungen
+		\item sukzessive Elimination der $m$ Komponenten von $\mathbf{u}$ und je einer der $n$ Systemgleichungen
 		\pause
-		\item[$\rightarrow$] anschließend analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
+		\item anschließend analog Elimination von $n - m$ Komponenten von $\mathbf{x}$
 		\pause
 		\item[$\rightarrow$] übrig bleiben $n - (n - m) = m $ Zustandskomponenten als \textbf{flacher Ausgang} $\mathbf{y}$
+		\pause
+		\item[$\rightarrow$] beliebige Trajektorien von $\mathbf{y}$ sind kompatibel mit Systemdynamik
 	\end{itemize}
 	
 	\bigskip
@@ -18,7 +20,5 @@
 	\textbf{2. Schritt - Parametrisierung der Systemgrößen durch den flachen Ausgang:}
 	\begin{itemize}
 		\pause
-		\item Systemgleichungen in umgekehrter Reihenfolge zur Elimination nach Systemgrößen auflösen
-		\pause
-		\item bereits gewonnene Parametrisierungen oder deren Zeitableitungen ggf. in folgende Parametrisierungen einsetzen
+		\item sukzessives Einsetzen von $\mathbf{y}$ in eliminierte Systemgleichungen
 	\end{itemize}

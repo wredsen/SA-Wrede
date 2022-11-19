@@ -1,17 +1,14 @@
-\frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Fazit:}
-	\begin{itemize}
-		\item akkurate Trajektorienfolge und stationäre Genauigkeit auch bei Anfangsfehlern
-		\bigskip
-		\pause
-		\item hohe „Trägheit“ des Systems beim Ausregeln von Folgefehlern wegen Integratoren
-		\item[$\rightarrow$] Pole der Fehlerdynamik weiter in LHE platzieren
-		\bigskip
-		\pause
-		\item relativ komplexes Stellgesetz mit >20\,000 Operationen je Eingangsgröße
-		\item[$\rightarrow$] lange Simulationszeiten, hohe Hardwareanforderungen bei realer Umsetzung
-		\pause
-		\item[$\rightarrow$] vereinfachter heuristischer Ansatz mit \textbf{exact feedforward linearization}
-	\end{itemize}
-	
+	\textbf{Ensemble-Simulationen:}
+	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
+		\visible<1->{
+			\includegraphics[width=85mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output}
+		}
+	\end{textblock*}
+	\begin{textblock*}{80mm}[0.,0.](98mm,22mm)	
+		\visible<1->{
+			\includegraphics[width=60mm]{images/double_crane_feedforwardlin_coordinates}	
+		}
+	\end{textblock*}
+

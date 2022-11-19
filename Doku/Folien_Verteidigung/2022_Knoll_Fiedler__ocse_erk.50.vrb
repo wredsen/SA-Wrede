@@ -1,17 +1,29 @@
-\frametitle{\large Flachheitsanalyse am Einzelkran}
+\frametitle{\large Trajektorienplanung}
 
-	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
-	
+	\textbf{Vorgabe von Randbedingungen an $\mathbf{y}(t)$ für $\tau_2 = \theta_2 \left(y_1^{(4)}, y_2^{(4)}, y_3^{(4)}, \ddot{y}_4, ... \right)$:}
+	\begin{align*}
+		\begin{split}
+			y_i(t_0) &= y_{i, 0}  \quad \text{für } i = 1,2,3,4 \\
+			y_i(t_e) &= y_{i, e}  \quad \text{für } i = 1,2,3,4 \\
+			\dot{y}_i(t_0) &= \ddot{y}_i(t_0) = y_i^{(3)}(t_0) = y_i^{(4)}(t_0) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_i(t_e) &= \ddot{y}_i(t_e) = y_i^{(3)}(t_e) = y_i^{(4)}(t_e) = 0 \quad \text{für } i = 1,2,3 \\
+			\dot{y}_4(t_0) &= \ddot{y}_4(t_0) = \dot{y}_4(t_e) = \ddot{y}_4(t_e) = 0
+		\end{split}
+	\end{align*}
 	\begin{itemize}
 		\pause
-		\item aus letzter transformierter Systemgleichung:
-		\begin{equation*}
-		q_1 = \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}
-		\end{equation*}
+		\item[$\rightarrow$] Polynomansatz für $y_i(t)$ mit Ordnung $N_i - 1$ mit $N_i$ Anzahl der Randbedingungen:
+	\end{itemize}
+	\pause
+	\begin{align*}
+		\label{eq:polynomes_ref_trajectories}
+		\begin{split}
+			y_i(t) &= a_{i, 9} t^9 + a_{i, 8} t^8 + ... + a_{i, 0} \quad \text{für }  i = 1,2,3; \ t_0 < t < t_e \\
+			y_4(t) &= a_{4, 5} t^5 + a_{4, 4} t^4 + ... + a_{4, 0} \quad \text{für } t_0 < t < t_e.
+		\end{split}
+	\end{align*}
+	\begin{itemize}
 		\pause
-		\item aus erster transformierter Systemgleichung und Einsetzen von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$:
-		\begin{equation*}
-		\tau_2 = \frac{m_{2} \ddot{p}_{1} \sqrt{p_{2}^{2} + \left(p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}\right)^{2}}}{p_{1} - \frac{g p_{1} + p_{1} \ddot{p}_{2} - p_{2} \ddot{p}_{1}}{g + \ddot{p}_{2}}}
-		\end{equation*}
+		\item[$\rightarrow$] Bestimmung der $a_{i, j}$ aus linearem Gleichungssystem der Randbedingungen
 	\end{itemize}
 	

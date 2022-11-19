@@ -1,40 +1,36 @@
-\frametitle{\large Trajektorienfolgeregelung}
+\frametitle{\large Trajektorienfolgeregelung - Statische Rückführung}
 
-	\begin{block}{Vektorieller relativer Grad}
-		Ein Mehrgrößensystem mit $m$ Eingangskomponenten $u_1, ..., u_m$ und $m$ Ausgangskomponenten $y_1, ..., y_m$ der Form \\
-		\begin{centering}
-			$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}, \quad \mathbf{y} = \mathbf{h}(\mathbf{x})$ \\
-		\end{centering}
+	\begin{itemize}
+		\item Entkopplungsmatrix für das Doppelkransystem
+	\end{itemize}
+	\begin{align*}
+	\boldsymbol{\Lambda} =
+	\left(\begin{smallmatrix}
+	0 & \textcolor{red}{0} & \frac{p_{1} - q_{1} - s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - 	s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{- l_{0} + p_{1} - q_{2} + s_{2} \cos{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	0 & \textcolor{red}{0} & \frac{p_{2} - s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} - s_{2} 	\sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{p_{2} + s_{2} \sin{\left(p_{3} \right)}}{m_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	0 & \textcolor{red}{0} & \frac{s_{2} \left(p_{1} \sin{\left(p_{3} \right)} - p_{2} \cos{\left(p_{3} \right)} - 	q_{1} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & \frac{s_{2} \left(l_{0} \sin{\left(p_{3} \right)} - p_{1} \sin{\left(p_{3} \right)} + p_{2} \cos{\left(p_{3} \right)} + q_{2} \sin{\left(p_{3} \right)}\right)}{J_{2} \sqrt{\left(p_{2} + s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(l_{0} - p_{1} + q_{2} - s_{2} \cos{\left(p_{3} \right)}\right)^{2}}}\\
+	\frac{1}{m_{1}} & \textcolor{red}{0} & \frac{- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}}{m_{1} 	\sqrt{\left(p_{2} - s_{2} \sin{\left(p_{3} \right)}\right)^{2} + \left(- p_{1} + q_{1} + s_{2} \cos{\left(p_{3} \right)}\right)^{2}}} & 0
+	\end{smallmatrix}\right)
+	\end{align*}
+	\pause
+	\begin{itemize}
+		\item Nullspalte in $\boldsymbol{\Lambda}$ wegen „Defekt“ in Auftreten von $\tau_2$
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ nicht regulär, $\mathbf{r}$ nicht wohldefiniert, statische Rückführung also nicht anwendbar
 		\pause
-		mit $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{f}: \mathcal{M} \rightarrow \mathbb{R}^n$, ${\mathbf{h}: \mathcal{M} \rightarrow \mathbb{R}^m}$, $\mathbf{g} = (\mathbf{g}_1, ..., \mathbf{g}_m): \mathcal{M} \rightarrow \mathbb{R}^{n \times m}$ wobei $\mathcal{M} \subseteq \mathbb{R}^{n}$ hat an der Stelle $\boldsymbol{\gamma} \in \mathcal{M}$ den vektoriellen relativen Grad $\mathbf{r} = (r_1, ..., r_m)^T$, falls:
-		\begin{enumerate}
-			\pause
-			\item Die Lie-Ableitungen $L_{\mathbf{g}_j} L_{\mathbf{f}}^k h_i(\mathbf{x}) = 0$ für alle $\mathbf{x}$ aus einer Umgebung von $\boldsymbol{\gamma}$ sowie für alle $i,j \in \{1, ..., m\}$ und $k \in \{0, ..., r-2\}$ und
-			\pause
-			\item die Entkopplungsmatrix $\boldsymbol{\Lambda}$ im Punkt $\mathbf{x} = \boldsymbol{\gamma}$ regulär ist:
-			\begin{equation*}
-			\label{eq:decoupling_matrix}
-			\boldsymbol{\Lambda} =
-			\left(\begin{smallmatrix}
-			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
-			\vdots & \ddots & \vdots \\
-			L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
-			\end{smallmatrix}\right) .
-			\end{equation*}
-		\end{enumerate}
-	\end{block}
+		\item[$\rightarrow$] $\boldsymbol{\Lambda}$ Modifikation des Systems, so dass $\mathbf{r}$ wohldefiniert
+		\pause
+		\item[$\rightarrow$] \textbf{dynamische Erweiterung}
+	\end{itemize}
 	
-	\begin{textblock*}{42mm}[0.,0.](117mm,49mm)
-		\visible<3->{
-			
-			
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Lie-Ableitung]
-				$\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \mathbf{u}$\\
-				$\mathbf{y} = \mathbf{h}(\mathbf{x})$
-				
-				\vspace{3mm}
-				
-				$L_{\mathbf{f}} h_i = \mathrm{d} h_i^T \cdot \mathbf{f}$
+	\begin{textblock*}{82mm}[0.,0.](12mm,50mm)
+		\visible<1-1>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Entkopplungsmatrix \quad $\boldsymbol{\Lambda}$]
+				$ \boldsymbol{\Lambda} =
+				\left(\begin{smallmatrix}
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_1 -1} h_1(\mathbf{x}) \\
+				\vdots & \ddots & \vdots \\
+				L_{\mathbf{g}_1} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x}) & \hdots & L_{\mathbf{g}_m} L_{\mathbf{f}}^{r_m -1} h_m(\mathbf{x})
+				\end{smallmatrix}\right)$
 			\end{tcolorbox}
 		}
 	\end{textblock*}

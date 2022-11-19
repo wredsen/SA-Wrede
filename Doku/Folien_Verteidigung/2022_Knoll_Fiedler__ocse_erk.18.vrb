@@ -10,16 +10,10 @@
 		\bigskip
 		\item $n = 10$ Zustandskomponenten und -gleichungen, $m = 4$ Eingangskomponenten
 		\pause
-		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $p = n - m = 6$ Gleichungen
+		\item Elimination des Eingangs $\rightarrow$ autonomes System aus $n - m = 6$ Gleichungen
 		\pause
-		\item Elimination von $p$ Zuständen $\rightarrow$ flacher Ausgang aus $m = 4$ Komponenten
+		\item Elimination von 6 Zustandskomponenten $\rightarrow$ $m = 4$ Komponenten von $\mathbf{x}$ übrig
 		\pause
-		\bigskip
-		\item letzte übrige Gleichung enthält folgende Menge an Systemgrößen:
-		\begin{equation*}
-			\mathcal{M} = \{p_1, p_2, p_3, \ddot{p}_1, \ddot{p}_2, \ddot{p}_3, q_1, q_2 \}
-		\end{equation*}
-		\pause
-		\item[$\rightarrow$] algebraisches Auftreten von $q_1$, $q_2$ führt o. B. d. A. zur Wahl von $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
+		\item[$\rightarrow$] Wahl eines \textbf{flachen Ausgangs}: $\mathbf{y} = (p_1, p_2, p_3, q_1)^T$
 	\end{itemize}
 	

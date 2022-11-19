@@ -1,6 +1,6 @@
 \frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Simulation:}
+	\textbf{Ensemble-Simulationen:}
 	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
 		\visible<1->{
 			\includegraphics[width=95mm]{images/feedforward_lin_selection_initial_error_ensemble_flat_output_q}

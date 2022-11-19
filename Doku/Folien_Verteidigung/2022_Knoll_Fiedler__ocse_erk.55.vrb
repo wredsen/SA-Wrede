@@ -1,42 +1,62 @@
-\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
+\frametitle{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
 
-	\begin{itemize}
-		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
-		\begin{align*}
-			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
-		\end{align*}
-		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
-		\begin{align*}
-			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
-		\end{align*}
-		\pause
-		\item aus ZRM $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$:
-		\begin{align*}
-			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) + \mathbf{g}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) \ \mathbf{u}
-		\end{align*}
-		\pause
-		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
-	\end{itemize}
+	\begin{textblock*}{80mm}[0.,0.](12mm,40mm)
+		\visible<1-1>{
+			\begin{table}[htbp]%
+				\centering
+				%\caption{Relative Grade der Ausgänge und explizites Auftreten der Eingänge.}
+				\begin{tabular}{c| c c c c}
+					\hline
+					Index $i$ & 1 & 2 & 3 & 4 \\
+					\hline
+					Komponente des vektoriellen relativen Grades $r_i$ & 2 & 2 & 2 & 2\\
+					\hline
+					explizities Auftreten von $\tau_j$ bei $y_i^{(r_i)}$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_3, \tau_4$ & $\tau_1, \tau_3$ \\
+					\hline
+					$y_j^{(k)}$ mit minimalem $k$, bei dem $\tau_i$ zuerst auftritt & $y_4^{(2)}$ & \textcolor{red}{$y_{1,2,3}^{(4)}$} & $y_{1,2,3,4}^{(2)}$ & $y_{1,2,3}^{(2)}$\\
+					\hline
+				\end{tabular}
+			\end{table}
+		}
+	\end{textblock*}
 	
-	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
+	\begin{textblock*}{80mm}[0.,0.](12mm,13mm)
 		\visible<2->{
-			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
-				$\mathbf{f}(\mathbf{x}) =
-				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\
-				$\mathbf{g}(\mathbf{x}) =
+			\includegraphics[width=72mm]{images/dynamic_extension}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{72mm}[0.,0.](90mm,13mm)
+		\visible<1->{
+			\begin{itemize}
+				\item Vorschalten von Integratoren vor $\boldsymbol{\tau}$:
+				\begin{align*}
+				\beta_1 &:= \dot{\alpha}_1 \hspace{1cm} \alpha_1 := \dot{\tau}_1 \\
+				\beta_3 &:= \dot{\alpha}_3 \hspace{1cm} \alpha_3 := \dot{\tau}_3 \\
+				\beta_4 &:= \dot{\alpha}_4 \hspace{1cm} \alpha_4 := \dot{\tau}_4
+				\end{align*}
+			\end{itemize}
+		}
+		\visible<2->{
+			\begin{itemize}	
+				\item[$\rightarrow$] Erweiterung des ZRM $\mathbf{\tilde{f}}$, $\mathbf{\tilde{g}}$ mit $\tilde{\boldsymbol{\tau}}$, $\tilde{\mathbf{x}}$
+				\item[$\rightarrow$] $r_i = 4$ für $i = 1, \hdots, 4$
+			\end{itemize}
+		}
+		\visible<3->{
+			\begin{itemize}
+				\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
+				\begin{align*}
+				\tilde{\boldsymbol{\Lambda}} =
 				\left(\begin{matrix}
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					0 & 0 & 0 & 0\\
-					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
-					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
-					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
-					\textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0}\\
-					\textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*}
-				\end{matrix}\right)$
-			\end{tcolorbox}
+				0 & * & * & * \\
+				0 & * & * & * \\
+				0 & * & * & * \\
+				* & * & 0 & 0 \\
+				\end{matrix}\right)
+				\Rightarrow \text{regulär!}
+				\end{align*}
+			\end{itemize}
 		}
 	\end{textblock*}
 	

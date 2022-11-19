@@ -2,26 +2,29 @@
 
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 		\visible<1->{
-			\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+			\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 		}
 	\end{textblock*}
 	
-	\textbf{2. Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
+	\textbf{2. Parametisierung der Systemgrößen durch $\textcolor{Brown}{\mathbf{y}} = (\textcolor{Brown}{p_1}, \textcolor{Brown}{p_2})^T$:}
 	\begin{itemize}
-		\item aus 3. Gleichung und Einsetzen von $\textcolor{green}{q_1}$, $\textcolor{green}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:
+		\item aus 3. Gleichung und Einsetzen von $\textcolor{OliveGreen}{q_1}$, $\textcolor{OliveGreen}{\ddot{q}_1}$, $\textcolor{blue}{\tau_2}$:
 		\begin{align*}
-		0 &= m_{1} \textcolor{green}{\ddot{q}_1} - \textcolor{red}{\tau_{1}} + \frac{\textcolor{blue}{\tau_2} \left(p_{1} - \textcolor{green}{\ddot{q}_1}\right)}{l_{1}} \\
+		0 &= m_{1} \textcolor{OliveGreen}{\ddot{q}_1} - \textcolor{red}{\tau_{1}} + \frac{\textcolor{blue}{\tau_2} \left(p_{1} - \textcolor{OliveGreen}{\ddot{q}_1}\right)}{l_{1}} \\
 		\Rightarrow
 		\textcolor{red}{\tau_1} &=
 		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
-		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1}\\
-		&- 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} + 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \\
-		&+ 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} - 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2}\\
-		&+ m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} \\
+		&- g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} + 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+		&- 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} - 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} \\
+		&+ 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} \\
+		&+ m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} \\
+		&- 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3}) = \textcolor{red}{\tau_1}(\textcolor{Brown}{\mathbf{y}}, \textcolor{Brown}{\dot{\mathbf{y}}}, \textcolor{Brown}{\ddot{\mathbf{y}}}, \textcolor{Brown}{\mathbf{y}^{(3)}}, \textcolor{Brown}{\mathbf{y}^{(4)}})
 		\end{align*}
-		\bigskip
+	\end{itemize}
+	\begin{itemize}
 		\pause
-		\item[$\rightarrow$] alle Systemgrößen durch flachen Ausgang $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
+		\item[$\rightarrow$] alle Systemgrößen $(\tau_1, \tau_2, p_1, p_2, q_1)$ durch $\mathbf{y} = (p_1, p_2)^T$ parametrisiert
 		\pause
 		\item[$\rightarrow$] konstruktiver Flachheitsnachweis erbracht \quad $\Box$
 	\end{itemize}

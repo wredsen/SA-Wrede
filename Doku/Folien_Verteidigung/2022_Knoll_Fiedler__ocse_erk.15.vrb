@@ -2,8 +2,15 @@
 
 	\begin{textblock*}{80mm}[0.,0.](115mm,5mm)	
 	\visible<1->{
-		\includegraphics[width=44mm]{images/ODE_flatness_analysis_single_crane_diagram}
+		\includegraphics[width=44mm]{images/single_crane_diagram_flatness}
 	}
+	\end{textblock*}
+
+	\begin{textblock*}{80mm}[0.,0.](100mm,35mm)	
+		\begin{align*}
+		\mathbf{x} &= (p_1, p_2, q_1)^T \\
+		\mathbf{u} &= (\tau_1, \tau_2)^T
+		\end{align*}
 	\end{textblock*}
 	
 	\textbf{1. Elimination von Systemgrößen- und Gleichungen:}

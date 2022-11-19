@@ -1,14 +1,48 @@
-\frametitle{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+\frametitle{\large Trajektorienfolgeregelung - Exact feedforward linearization}
 
-	\textbf{Simulation:}
-	\begin{textblock*}{80mm}[0.,0.](12mm,18mm)	
-		\visible<1->{
-			\includegraphics[width=100mm]{images/dyn_controller_initial_error_inputs}
-		}
-	\end{textblock*}
-	\begin{textblock*}{80mm}[0.,0.](111mm,28mm)	
-		\visible<1->{
-			\includegraphics[width=50mm]{images/double_crane_dynamic_coordinates}	
+	\begin{itemize}
+		\item bisher Rückführung nach Prinzip der exakten Eingangs-Ausgangs-Linearisierung:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda }^{-1}(\mathbf{x}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}))
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] nun exact \textcolor{red}{feedforward} linearization:
+		\begin{align*}
+			\mathbf{u} = \boldsymbol{\Lambda}^{-1}(\mathbf{x}_{\textcolor{red}{\text{ref}}}) \cdot (\mathbf{v} - \boldsymbol{\Gamma}(\mathbf{x}_{\textcolor{red}{\text{ref}}}))
+		\end{align*}
+		\pause
+		\item aus ZRM $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}(\mathbf{x}) \ \mathbf{u}$ mit $\mathbf{x} = (\boldsymbol{\theta}, \dot{\boldsymbol{\theta}})^T$:
+		\begin{align*}
+			\ddot{\boldsymbol{\theta}} = \mathbf{f}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) + \mathbf{g}_{\textcolor{blue}{[6, 10]}}(\boldsymbol{\theta}) \ \mathbf{u}
+		\end{align*}
+		\pause
+		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
+		\pause
+		\item[$\rightarrow$] \textbf{Heuristik}: Annahme der Dynamik der \textbf{Ordnung 2} des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
+		\pause
+		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
+		
+	\end{itemize}
+	
+	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
+		\visible<2-3>{
+			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
+				$\mathbf{f}(\mathbf{x}) =
+				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\
+				$\mathbf{g}(\mathbf{x}) =
+				\left(\begin{matrix}
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					0 & 0 & 0 & 0\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{0} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{*}\\
+					\textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0}\\
+					\textcolor{blue}{0} & \textcolor{blue}{*} & \textcolor{blue}{0} & \textcolor{blue}{*}
+				\end{matrix}\right)$
+			\end{tcolorbox}
 		}
 	\end{textblock*}
 	

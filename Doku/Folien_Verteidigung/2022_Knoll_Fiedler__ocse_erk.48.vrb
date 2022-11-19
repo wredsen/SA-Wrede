@@ -1,42 +1,25 @@
 \frametitle{\large Flachheitsanalyse am Einzelkran}
 
-	\textbf{Elimination von Systemgrößen- und Gleichungen:}
+	\textbf{Parametisierung der Systemgrößen durch $\mathbf{y} = (p_1, p_2)^T$:}
 	
 	\begin{itemize}
-		\item {($i = 2$) Systemgleichungen und Jacobi-Matrix bezüglich $\mathbf{u}_1 = \tau_2$:}
-		\begin{align*}
-		\begin{split}
-		m_{2} \ddot{p}_{1} - \frac{\tau_{2} \left(p_{1} - q_{1}\right)}{l_{1}} &= 0\\
-		g m_{2} + m_{2} \ddot{p}_{2} - \frac{p_{2} \tau_{2}}{l_{1}} &= 0
-		\end{split}
-		\quad \Rightarrow \quad
-		\mathbf{J}_2 =
-		\left(\begin{matrix}
-		- \frac{p_{1} - q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}\\
-		- \frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
-		\end{matrix}\right)
-		\end{align*}		
+		\item aus zuerst eliminierter originaler Systemgleichung:
+		\begin{equation*}
+		\tau_1 = \frac{m_{1} \textcolor{red}{\ddot{q}_{1}} \sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}} + p_{1} \textcolor{red}{\tau_{2}} - \textcolor{red}{q_{1}} \textcolor{red}{\tau_{2}}}{\sqrt{p_{2}^{2} + \left(p_{1} - \textcolor{red}{q_{1}}\right)^{2}}}
+		\end{equation*}
 		\pause
-		\item[$\rightarrow$] keine Spalte mit nur einem nicht-Null-Eintrag, also Transformation $\mathbf{T}_2$ nötig:
-		\begin{align*}
-		\mathbf{J}_2^{\mathrm{L}+} &=
-		\left(
-		\left(\begin{matrix}
-		J_{2, (1,1)}
-		\end{matrix}\right)^{-1}	
-		\mathbf{0}_{1 \times 1}
-		\right), 		
-		\mathbf{J}_2^{\mathrm{L}\perp} =
-		\left(\begin{matrix}
-		-J_{2, (2,1)} & J_{2, (1,1)}
-		\end{matrix}\right) \\
-		\Rightarrow
-		\mathbf{T}_2 &=
-		\left(\begin{matrix}
-		\frac{\sqrt{p_{1}^{2} - 2 p_{1} q_{1} + p_{2}^{2} + q_{1}^{2}}}{- p_{1} + q_{1}} & 0\\
-		\frac{p_{2}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}} & \frac{- p_{1} + q_{1}}{\sqrt{p_{2}^{2} + \left(p_{1} - q_{1}\right)^{2}}}
-		\end{matrix}\right)
-		\end{align*}
-		
+		\item[$\rightarrow$] auch Größen $\textcolor{red}{q_1, \ddot{q}_1, \tau_2} \not\in \mathbf{y}$ in dieser Parametrisierung von $\tau_1$ enthalten
+		\pause
+		\item[$\rightarrow$] Einsetzen der zweiten Ableitung von $q_1(\mathbf{y}, \ddot{\mathbf{y}})$ und $\tau_2(\mathbf{y}, \ddot{\mathbf{y}})$:
+		\begin{flalign*}
+		\begin{split}
+		\tau_1 &=
+		\frac{1}{g^{3} + 3 g^{2} \ddot{p}_{2} + 3 g \ddot{p}_{2}^{2} + \ddot{p}_{2}^{3}}
+		(g^{3} m_{1} \ddot{p}_{1} + g^{3} m_{2} \ddot{p}_{1} - g^{2} m_{1} p_{2} \ddddot{p}_{1} - 2 g^{2} m_{1} \dddot{p}_{1} \dot{p}_{2} \\
+		&+ 2 g^{2} m_{1} \ddot{p}_{1} \ddot{p}_{2} + 3 g^{2} m_{2} \ddot{p}_{1} \ddot{p}_{2} - 2 g m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2} + g m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} + 2 g m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \\
+		&- 4 g m_{1} \dddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + 2 g m_{1} \dddot{p}_{2} \ddot{p}_{1} \dot{p}_{2} + g m_{1} \ddot{p}_{1} \ddot{p}_{2}^{2} + 3 g m_{2} \ddot{p}_{1} \ddot{p}_{2}^{2} - m_{1} p_{2} \ddddot{p}_{1} \ddot{p}_{2}^{2} + m_{1} p_{2} \ddddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \\
+		& + 2 m_{1} p_{2} \dddot{p}_{1} \dddot{p}_{2} \ddot{p}_{2} - 2 m_{1} p_{2} \dddot{p}_{2}^{2} \ddot{p}_{1} - 2 m_{1} \dddot{p}_{1} \ddot{p}_{2}^{2} \dot{p}_{2} + 2 m_{1} \dddot{p}_{2} \ddot{p}_{1} \ddot{p}_{2} \dot{p}_{2} + m_{2} \ddot{p}_{1} \ddot{p}_{2}^{3})
+		\end{split}
+		\end{flalign*}
 	\end{itemize}
 	
