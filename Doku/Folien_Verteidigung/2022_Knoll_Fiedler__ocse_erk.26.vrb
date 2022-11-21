@@ -35,7 +35,7 @@
 	}
 	\visible<4->{
 		\begin{itemize}
-			\item[$\rightarrow$] neue Entkokkplungsmatrix ($* \neq 0$):
+			\item[$\rightarrow$] neue Entkopplungsmatrix ($* \neq 0$):
 			\begin{align*}
 				\tilde{\boldsymbol{\Lambda}} =
 				\left(\begin{matrix}
