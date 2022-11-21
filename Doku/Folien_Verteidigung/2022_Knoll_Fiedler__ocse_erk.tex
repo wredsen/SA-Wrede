@@ -439,7 +439,7 @@ showstringspaces=false,
 	\begin{itemize}
 		\item Überführung der Last zwischen Ruhelagen in der vertikalen Aufhängungsebene
 		\pause
-		\item zentrale Trajektorienfolgeregelung unter Vorgabe von Sollposen der Last
+		\item zentrale Trajektorienplanung unter Vorgabe von Sollposen der Last
 		\pause
 		\item Reglerentwurf auf Basis eines Mehrkörpermodells
 	\end{itemize}
@@ -1073,7 +1073,7 @@ showstringspaces=false,
 	\begin{textblock*}{80mm}[0.,0.](12mm,71mm)
 	\visible<5->{
 		\begin{itemize}	
-			\item[$\rightarrow$] Stellgesetz: \framebox{$\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{y}^{(\mathbf{r})} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))$}
+			\item[$\rightarrow$] Stellgesetz: \framebox{$\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\tilde{\mathbf{x}}) \cdot (\mathbf{y}^{(\mathbf{r})} - \tilde{\boldsymbol{\Gamma}}(\tilde{\mathbf{x}}))$}
 		\end{itemize}
 	}
 	\end{textblock*}
@@ -1081,7 +1081,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_71]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+\begin{frame}[t,fragile,label=trajektorienregelung_71]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
 	
 	\textbf{Simulation:}
 	\begin{textblock*}{80mm}[0.,0.](12mm,17mm)	
@@ -1099,7 +1099,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_72]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+\begin{frame}[t,fragile,label=trajektorienregelung_72]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
 	
 	\textbf{Simulation:}
 	\begin{textblock*}{80mm}[0.,0.](12mm,18mm)	
@@ -1117,7 +1117,7 @@ showstringspaces=false,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[t,fragile,label=trajektorienregelung_8]{\large Trajektorienfolgeregelung - Dynamische Rückführung}
+\begin{frame}[t,fragile,label=trajektorienregelung_8]{\large Trajektorienfolgeregelung - Dynamische Erweiterung}
 	
 	\textbf{Fazit:}
 	\begin{itemize}
@@ -1158,14 +1158,14 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] \textbf{Heuristik}: Entkopplungsmatrix $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$
 		\pause
-		\item[$\rightarrow$] \textbf{Heuristik}: Annahme der Dynamik der \textbf{Ordnung 2} des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
+		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}})$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
 		\pause
-		\item[$\rightarrow$] Pseudoinverse für $\boldsymbol{\Lambda}(\mathbf{x}_{\text{ref}}) = \mathbf{g}_{[6, 10]}(\boldsymbol{\theta_{\text{ref}}})$ nötig, da $\mathbf{g}_{[6, 10]} \in \mathbb{R}^{5 \times 4}$
+		\item[$\rightarrow$] \textbf{Heuristik}: Annahme der Dynamik der \textbf{Ordnung 2} des Fehlers $\mathbf{e} := \boldsymbol{\theta} - \boldsymbol{\theta}_{\text{ref}}$ für \textbf{alle} Komponenten des Koordinatenvektors $\boldsymbol{\theta} = (p_1, p_2, p_3, q_1, q_2)^T$
 		
 	\end{itemize}
 	
 	\begin{textblock*}{50mm}[0.,0.](108mm, 18mm)
-		\visible<2-3>{
+		\visible<3-5>{
 			\begin{tcolorbox}[colback=lightgray,colframe=softblue,title=Brückenkransystem]
 				$\mathbf{f}(\mathbf{x}) = 
 				(\dot{\boldsymbol{\theta}}, \textcolor{blue}{0}, \textcolor{blue}{-g}, \textcolor{blue}{0}, \textcolor{blue}{0}, \textcolor{blue}{0})^T$, \\ 
@@ -1292,7 +1292,7 @@ showstringspaces=false,
 \begin{frame}[label=Ausblick]
 	\frametitle{Zusammenfassung und Ausblick}
 	\begin{itemize}
-		\item Implementierung auf Versuchsstand
+		\item Implementierungen auf Versuchsstand
 		\pause
 		\item Test reiner Vorsteuerung und Abschätzung der Größe der Modellabweichungen
 		\pause

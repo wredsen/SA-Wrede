@@ -52,7 +52,7 @@
 	\begin{textblock*}{80mm}[0.,0.](12mm,71mm)
 	\visible<5->{
 		\begin{itemize}	
-			\item[$\rightarrow$] Stellgesetz: \framebox{$\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\mathbf{x}) \cdot (\mathbf{y}^{(\mathbf{r})} - \tilde{\boldsymbol{\Gamma}}(\mathbf{x}))$}
+			\item[$\rightarrow$] Stellgesetz: \framebox{$\tilde{\boldsymbol{\tau}} = \mathbf{u} = \tilde{\boldsymbol{\Lambda }}^{-1}(\tilde{\mathbf{x}}) \cdot (\mathbf{y}^{(\mathbf{r})} - \tilde{\boldsymbol{\Gamma}}(\tilde{\mathbf{x}}))$}
 		\end{itemize}
 	}
 	\end{textblock*}
