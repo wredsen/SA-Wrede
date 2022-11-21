@@ -1,0 +1,5 @@
+\frametitle{\large Reinforcement Learning Ansatz}
+
+	\textbf{Fehler bei Sollwertsprung zwischen Ruhelagen:}
+	\includegraphics[width=90mm]{images/RL_simulation_errors}
+	

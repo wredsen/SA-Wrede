@@ -1381,7 +1381,7 @@ showstringspaces=false,
 		\pause
 		\item $\delta W = \sum_{k=1}^{l}\delta \mathbf{r}_k^T \mathbf{F}_k = Q_1 \delta \theta_1 + \ldots + Q_n\delta \theta_n$
 		\pause
-		\item[$\rightarrow$] $Q_i = \sum_{k=1}^l \left(\frac {\partial \mathbf{r_k}} {\partial \theta_i} \right)^T \mathbf {F}_{k} = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
+		\item[$\rightarrow$] $Q_i = \frac{\partial\delta W}{\partial \delta \theta_i} ,\quad i=1,\ldots, n$
 	\end{itemize}
 	
 \end{frame}
@@ -2147,6 +2147,48 @@ showstringspaces=false,
 		\pause
 		\item[$\rightarrow$] Ensemble-Simulationen (alternativ: zeitvarianter Stabilitätsnachweis)
 	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=CCodeGen]{\large Implementierung - C-Code-Generierung}
+	
+	\textbf{Generierung von C-Code aus SymPy expressions durch sympy.utilities.autowrap mit cython Backend:}
+	\begin{itemize}
+		\item Dynamische Erweiterung
+		\includegraphics[width=140mm]{images/C_Codegen/dyn_extension_comparison}
+	\end{itemize}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=CCodeGen]{\large Implementierung - C-Code-Generierung}
+	
+	\textbf{Generierung von C-Code aus SymPy expressions durch sympy.utilities.autowrap mit cython Backend:}
+	\begin{itemize}
+		\item exact feedforward linearization
+		\includegraphics[width=140mm]{images/C_Codegen/exact_ff_lin_comparison}
+	\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=CCodeGen]{\large Reinforcement Learning Ansatz}
+	
+	\textbf{Training mit festem Startwert, variablem Endwert:}
+	\includegraphics[width=75mm]{images/RL_reference_values}
+	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t,fragile,label=CCodeGen]{\large Reinforcement Learning Ansatz}
+	
+	\textbf{Fehler bei Sollwertsprung zwischen Ruhelagen:}
+	\includegraphics[width=90mm]{images/RL_simulation_errors}
 	
 \end{frame}
 
